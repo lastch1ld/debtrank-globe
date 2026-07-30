@@ -1,0 +1,19 @@
+[project]
+name = "debtrank-model"
+version = "0.1.0"
+description = "DebtRank and Eisenberg-Noe systemic risk models for sovereign debt networks"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+debtrank-simulate = "debtrank_model.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["debtrank_model*"]

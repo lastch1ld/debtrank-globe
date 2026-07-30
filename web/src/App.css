@@ -1,0 +1,73 @@
+.app {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.globe-pane {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.panel {
+  width: 340px;
+  flex: 0 0 auto;
+  padding: 24px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  background: var(--bg);
+  border-left: 1px solid var(--border);
+}
+
+.panel h1 {
+  font-size: 22px;
+  margin: 0 0 12px;
+  letter-spacing: normal;
+}
+
+.subtitle {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--text);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.controls select {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 8px;
+}
+
+.controls button {
+  padding: 8px 12px;
+}
+
+.results {
+  text-align: left;
+  font-size: 14px;
+}
+
+.results ol {
+  list-style: decimal;
+  padding-left: 20px;
+  margin: 12px 0 0;
+}
+
+.results li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 3px 0;
+}
+
+.results .level {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-h);
+}
