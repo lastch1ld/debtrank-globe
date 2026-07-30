@@ -22,7 +22,7 @@ import {
 import type { ExposureNetwork } from "./lib/debtrank";
 
 const glass =
-  "border border-sky-200/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.88),rgba(3,9,18,0.78))] shadow-[0_24px_80px_rgba(0,0,0,0.38)] backdrop-blur-xl";
+  "border border-sky-200/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400";
 const range =
@@ -163,7 +163,7 @@ function App() {
   }, [result, distress]);
 
   return (
-    <div className="relative h-dvh w-screen overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased">
+    <div className="relative h-dvh w-screen overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased selection:bg-sky-400/20 selection:text-slate-50">
       <div
         className={`absolute inset-y-0 left-0 transition-[right] duration-300 ${
           panelOpen ? "right-0 sm:right-[380px]" : "right-0"
@@ -182,7 +182,7 @@ function App() {
       </div>
 
       <nav
-        className={`${glass} fixed left-4 top-4 z-20 flex items-center justify-between rounded-2xl px-4 py-3 transition-[right] duration-300 ${
+        className={`${glass} fixed left-3 top-3 z-20 flex min-h-14 items-center justify-between rounded-2xl px-4 py-3 transition-[right] duration-300 sm:left-4 sm:top-4 ${
           panelOpen ? "right-4 sm:right-[396px]" : "right-4"
         }`}
       >
@@ -205,7 +205,7 @@ function App() {
       </nav>
 
       <aside
-        className={`fixed bottom-0 right-0 top-20 z-15 flex min-h-0 w-full flex-col gap-5 overflow-hidden border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.97),rgba(2,7,15,0.95))] px-5 pb-6 pt-5 shadow-[-24px_0_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl transition-transform duration-300 sm:top-0 sm:w-[380px] sm:px-6 ${
+        className={`fixed bottom-0 right-0 top-20 z-15 flex min-h-0 w-full flex-col gap-4 overflow-hidden border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.965),rgba(2,7,15,0.94))] px-4 pb-5 pt-4 shadow-[-24px_0_100px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-transform duration-300 motion-reduce:transition-none sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5 ${
           panelOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -225,12 +225,12 @@ function App() {
           </button>
         </div>
 
-        <div data-testid="sidebar-controls" className="flex shrink-0 flex-col gap-5">
+        <div data-testid="sidebar-controls" className="flex shrink-0 flex-col gap-4 sm:gap-5">
         <header className="flex shrink-0 flex-col">
           <span className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-400">
             Systemic risk simulation
           </span>
-          <p className="mb-5 text-[13px] leading-6 text-slate-400">
+          <p className="mb-4 text-[13px] leading-5 text-slate-400 sm:mb-5 sm:leading-6">
             Distress propagation over a real cross-border exposure network
             sourced from the World Bank and BIS. Click a country on the
             globe, or pick one below, to simulate a default.
@@ -325,7 +325,11 @@ function App() {
 
         {result ? (
           <div className="flex shrink-0 flex-col gap-3">
-            <div className="flex justify-between font-mono text-xs text-slate-400">
+            <div
+              role="status"
+              aria-live="polite"
+              className="flex items-center justify-between rounded-lg border border-sky-200/8 bg-sky-400/[0.035] px-2.5 py-2 font-mono text-xs text-slate-400"
+            >
               {result.kind === "debtrank" ? (
                 <>
                   <span>
@@ -431,14 +435,17 @@ function App() {
 
         {result && ranked.length > 0 && (
           <div
-            data-testid="ranked-results"
-            className="min-h-0 flex-1 overflow-y-auto border-t border-sky-200/10 pr-1 pt-3"
+            data-testid="ranked-results" className="min-h-0 flex-1 overflow-y-auto border-t border-sky-200/10 pr-1 pt-3 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
           >
-            <ol className="m-0 flex list-none flex-col gap-2 p-0">
+            <div className="sticky top-0 z-1 mb-2 flex items-center justify-between bg-[#06101d]/95 pb-2 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500 backdrop-blur">
+              <span>Propagation ranking</span>
+              <span>{ranked.length} affected</span>
+            </div>
+            <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
               {ranked.map((r) => (
                 <li
                   key={r.id}
-                  className="grid grid-cols-[minmax(0,1fr)_64px_44px] items-center gap-2.5 text-xs"
+                  className="group grid grid-cols-[minmax(0,1fr)_72px_46px] items-center gap-2.5 rounded-lg px-1.5 py-1 text-xs transition-colors hover:bg-sky-400/[0.045]"
                 >
                   <span
                     className={`truncate ${
