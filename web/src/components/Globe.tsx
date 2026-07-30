@@ -11,6 +11,7 @@ import {
 } from "@react-three/drei";
 import { AdditiveBlending, BackSide, BufferGeometry, Color, Float32BufferAttribute, type Group } from "three";
 import { countries, latLngToVector3, loadBorders, topExposureEdges, type YearSnapshot } from "../lib/network";
+import { ATMOSPHERE_LAYERS } from "./atmosphere";
 
 const RADIUS = 2;
 const ARC_COUNT = 140;
@@ -19,22 +20,35 @@ const ARC_COUNT = 140;
 // rises where the surface normal points away from the camera, giving a soft
 // halo at the limb instead of a flat, spray-painted edge.
 const AtmosphereMaterial = shaderMaterial(
-  { glowColor: new Color("#38bdf8"), intensity: 1.1 },
+  {
+    glowColor: new Color("#38bdf8"),
+    intensity: 0.68,
+    opacity: 0.38,
+    fresnelBias: 0.72,
+    fresnelPower: 3.2,
+  },
   /* glsl */ `
+    uniform float fresnelBias;
+    uniform float fresnelPower;
     varying float vIntensity;
+
     void main() {
       vec3 vNormal = normalize(normalMatrix * normal);
       vec3 viewDir = normalize((modelViewMatrix * vec4(position, 1.0)).xyz);
-      vIntensity = pow(0.75 - dot(vNormal, -viewDir), 3.0);
+      float rim = max(fresnelBias - dot(vNormal, -viewDir), 0.0);
+      vIntensity = pow(rim, fresnelPower);
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
   /* glsl */ `
     uniform vec3 glowColor;
     uniform float intensity;
+    uniform float opacity;
     varying float vIntensity;
+
     void main() {
-      gl_FragColor = vec4(glowColor, clamp(vIntensity * intensity, 0.0, 1.0));
+      float alpha = clamp(vIntensity * intensity * opacity, 0.0, opacity);
+      gl_FragColor = vec4(glowColor, alpha);
     }
   `,
 );
@@ -184,17 +198,23 @@ export function Globe({ yearData, distress, shockedId, onSelect }: GlobeProps) {
         <lineBasicMaterial color="#a8c4e8" transparent opacity={0.65} />
       </lineSegments>
 
-      {/* Fresnel atmosphere */}
-      <Sphere args={[RADIUS * 1.06, 48, 48]}>
-        <atmosphereMaterial
-          glowColor={new Color("#38bdf8")}
-          intensity={1.1}
-          side={BackSide}
-          transparent
-          blending={AdditiveBlending}
-          depthWrite={false}
-        />
-      </Sphere>
+      {/* Layered Fresnel atmosphere: a defined inner rim and broad, faint outer haze. */}
+      {ATMOSPHERE_LAYERS.map((layer, index) => (
+        <Sphere key={index} args={[RADIUS * layer.scale, 64, 64]}>
+          <atmosphereMaterial
+            glowColor={new Color("#38bdf8")}
+            intensity={layer.intensity}
+            opacity={layer.opacity}
+            fresnelBias={layer.bias}
+            fresnelPower={layer.power}
+            side={BackSide}
+            transparent
+            blending={AdditiveBlending}
+            depthWrite={false}
+            toneMapped={false}
+          />
+        </Sphere>
+      ))}
 
       {arcs.map((arc, i) => (
         <QuadraticBezierLine

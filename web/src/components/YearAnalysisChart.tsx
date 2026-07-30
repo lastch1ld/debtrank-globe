@@ -112,8 +112,9 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
   const crosshairX = hoverIndex !== null ? xFor(hoverIndex, points.length) : null;
 
   return (
-    <div className="analysis-chart">
+    <div className="relative rounded-xl border border-sky-200/10 bg-slate-950/25 px-3 pb-2 pt-3">
       <svg
+        className="block overflow-visible"
         viewBox={`0 0 ${WIDTH} ${TOTAL_HEIGHT}`}
         width="100%"
         onMouseMove={onMove}
@@ -124,14 +125,36 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
           const bandY = bandIndex * (BAND_HEIGHT + BAND_GAP);
           return (
             <g key={series.key} transform={`translate(0, ${bandY})`}>
-              <text x={0} y={10} className="analysis-chart-label" fill={series.color}>
+              <text
+                x={0}
+                y={10}
+                fill={series.color}
+                fontSize={8.5}
+                fontWeight={600}
+                letterSpacing="0.04em"
+              >
                 {series.label}
               </text>
-              <text x={WIDTH} y={10} textAnchor="end" className="analysis-chart-range">
+              <text
+                x={WIDTH}
+                y={10}
+                textAnchor="end"
+                fill="#94a3b8"
+                fillOpacity={0.7}
+                fontFamily="ui-monospace, Cascadia Code, Consolas, monospace"
+                fontSize={8}
+              >
                 {rangeLabel(values, series.format)}
               </text>
               <g transform={`translate(0, ${LABEL_HEIGHT})`}>
-                <line x1={0} y1={PLOT_HEIGHT} x2={WIDTH} y2={PLOT_HEIGHT} className="analysis-chart-baseline" />
+                <line
+                  x1={0}
+                  y1={PLOT_HEIGHT}
+                  x2={WIDTH}
+                  y2={PLOT_HEIGHT}
+                  stroke="rgba(148, 163, 184, 0.14)"
+                  strokeWidth={1}
+                />
                 <path
                   d={buildPath(values)}
                   fill="none"
@@ -151,19 +174,23 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
             y1={0}
             x2={crosshairX}
             y2={TOTAL_HEIGHT}
-            className="analysis-chart-crosshair"
+            stroke="#94a3b8"
+            strokeDasharray="2 2"
+            strokeOpacity={0.6}
+            strokeWidth={1}
+            pointerEvents="none"
           />
         )}
       </svg>
 
-      <div className="analysis-chart-x-labels">
+      <div className="flex justify-between px-0.5 pt-0.5 font-mono text-[10px] text-slate-500">
         <span>{points[0]?.year}</span>
         <span>{points[points.length - 1]?.year}</span>
       </div>
 
       {hover && (
-        <div className="analysis-chart-tooltip">
-          <strong>{hover.year}</strong>
+        <div className="pointer-events-none absolute right-2 top-2 flex flex-col gap-px rounded-lg border border-sky-200/10 bg-slate-950/95 px-2.5 py-2 font-mono text-[10.5px] shadow-xl">
+          <strong className="mb-0.5 font-sans text-slate-100">{hover.year}</strong>
           {SERIES.map((series) => {
             const v = hover[series.key];
             return (
