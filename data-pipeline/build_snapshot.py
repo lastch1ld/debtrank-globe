@@ -10,22 +10,13 @@ to hardcode every aggregate code).
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
 
 
-def main() -> None:
-    base = Path(__file__).parent / "out"
-    nodes_path = Path(sys.argv[1]) if len(sys.argv) > 1 else base / "nodes.json"
-    edges_path = Path(sys.argv[2]) if len(sys.argv) > 2 else base / "edges.json"
-    out_path = Path(sys.argv[3]) if len(sys.argv) > 3 else base / "network_snapshot.json"
-
-    nodes = json.loads(nodes_path.read_text(encoding="utf-8"))["nodes"]
-    edges_raw = json.loads(edges_path.read_text(encoding="utf-8"))["edges"]
-
-    # World Bank fetch doesn't currently keep iso2 -- refetch the mapping cheaply
-    # from the same country list source used by fetch_worldbank.py.
+def _fetch_iso2_to_iso3() -> dict[str, str]:
     import requests
 
     resp = requests.get(
@@ -35,8 +26,90 @@ def main() -> None:
     )
     resp.raise_for_status()
     _, countries = resp.json()
-    iso2_to_iso3 = {c["iso2Code"]: c["id"] for c in countries if c["region"]["id"] != "NA"}
+    return {c["iso2Code"]: c["id"] for c in countries if c["region"]["id"] != "NA"}
 
+
+def build_by_year(nodes_by_year_path: Path, edges_by_year_path: Path, out_dir: Path) -> None:
+    """One merged snapshot per year, for the historical scrubber. Written as
+    out_dir/{year}.json, each with the same {"nodes": [...], "edges": [...]}
+    shape as the single-year network_snapshot.json, so the web app's loader
+    doesn't need to know the difference."""
+    nodes_by_year = json.loads(nodes_by_year_path.read_text(encoding="utf-8"))["nodes"]
+    edges_by_year = json.loads(edges_by_year_path.read_text(encoding="utf-8"))
+
+    iso2_to_iso3 = _fetch_iso2_to_iso3()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    for year_str, edges_raw in edges_by_year.items():
+        year = int(year_str)
+
+        nodes = []
+        for n in nodes_by_year:
+            year_values = n["years"].get(year_str, {})
+            nodes.append({
+                "id": n["id"],
+                "name": n["name"],
+                "lat": n["lat"],
+                "lng": n["lng"],
+                "gdp_usd": year_values.get("gdp_usd"),
+                "reserves_usd": year_values.get("reserves_usd"),
+                "external_debt_usd": year_values.get("external_debt_usd"),
+            })
+        iso3_with_node = {n["id"] for n in nodes}
+
+        edges = []
+        for e in edges_raw:
+            creditor_iso3 = iso2_to_iso3.get(e["creditor"])
+            debtor_iso3 = iso2_to_iso3.get(e["debtor"])
+            if not creditor_iso3 or not debtor_iso3:
+                continue
+            if creditor_iso3 not in iso3_with_node or debtor_iso3 not in iso3_with_node:
+                continue
+            edges.append({
+                "creditor": creditor_iso3,
+                "debtor": debtor_iso3,
+                "period": e["period"],
+                "amount": e["amount"],
+            })
+
+        out_path = out_dir / f"{year}.json"
+        out_path.write_text(json.dumps({"nodes": nodes, "edges": edges}, separators=(",", ":")), encoding="utf-8")
+        print(f"{year}: {len(nodes)} nodes, {len(edges)} edges -> {out_path}", file=sys.stderr)
+
+
+def main() -> None:
+    by_year_parser = argparse.ArgumentParser(add_help=False)
+    by_year_parser.add_argument("--by-year", action="store_true")
+    known, _ = by_year_parser.parse_known_args()
+
+    if known.by_year:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--by-year", action="store_true")
+        parser.add_argument("nodes_by_year", nargs="?", default=None)
+        parser.add_argument("edges_by_year", nargs="?", default=None)
+        parser.add_argument("out_dir", nargs="?", default=None)
+        args = parser.parse_args()
+        base = Path(__file__).parent / "out"
+        build_by_year(
+            Path(args.nodes_by_year) if args.nodes_by_year else base / "nodes_by_year.json",
+            Path(args.edges_by_year) if args.edges_by_year else base / "edges_by_year.json",
+            Path(args.out_dir) if args.out_dir else base / "by_year",
+        )
+        return
+
+    _main_single_year()
+
+
+def _main_single_year() -> None:
+    base = Path(__file__).parent / "out"
+    nodes_path = Path(sys.argv[1]) if len(sys.argv) > 1 else base / "nodes.json"
+    edges_path = Path(sys.argv[2]) if len(sys.argv) > 2 else base / "edges.json"
+    out_path = Path(sys.argv[3]) if len(sys.argv) > 3 else base / "network_snapshot.json"
+
+    nodes = json.loads(nodes_path.read_text(encoding="utf-8"))["nodes"]
+    edges_raw = json.loads(edges_path.read_text(encoding="utf-8"))["edges"]
+
+    iso2_to_iso3 = _fetch_iso2_to_iso3()
     iso3_with_node = {n["id"] for n in nodes}
 
     edges = []

@@ -12,8 +12,9 @@ then runs published financial systemic-risk algorithms on it:
 - **Eisenberg–Noe clearing model** (Eisenberg & Noe, 2001) — fixed-point clearing vector for
   network default cascades, used as a secondary/comparison model.
 
-The result: pick a country, trigger a shock, and watch distress propagate through the real
-global debt network on an interactive 3D globe.
+The result: pick a country, dial in a shock magnitude, toggle between DebtRank and
+Eisenberg-Noe, and watch distress propagate through the real global debt network on an
+interactive 3D globe — for any year from 2005 to 2025 via the year scrubber.
 
 ## Structure
 
@@ -34,7 +35,10 @@ global debt network on an interactive 3D globe.
 
 ## Status
 
-Work in progress. See [`model/`](model) for the current correctness-validated core.
+Functional end-to-end: real data pipeline, correctness-tested DebtRank and Eisenberg-Noe
+models (Python reference + matching TypeScript ports), and an interactive globe with a
+model toggle, shock-magnitude control, and a 2005–2025 historical year scrubber. Not yet
+deployed as a static site (see `web/README.md` for running it locally).
 
 ## License
 
