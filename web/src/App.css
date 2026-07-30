@@ -321,6 +321,12 @@
   opacity: 0.75;
 }
 
+.market-check-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .market-check-value {
   font-family: var(--mono);
   color: var(--text-h);
@@ -330,10 +336,98 @@
   font-family: var(--sans);
   color: var(--text);
   font-style: italic;
+  opacity: 0.8;
 }
 
 .market-check-value strong {
   color: var(--accent);
+}
+
+.analysis-toggle {
+  align-self: flex-start;
+  padding: 6px 10px;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.analysis-toggle:hover {
+  border-color: var(--accent);
+}
+
+.analysis-chart {
+  position: relative;
+  padding: 10px 10px 4px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.analysis-chart svg {
+  display: block;
+  overflow: visible;
+}
+
+.analysis-chart-label {
+  font-size: 8.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.analysis-chart-range {
+  font-size: 8px;
+  font-family: var(--mono);
+  fill: var(--text);
+  opacity: 0.7;
+}
+
+.analysis-chart-baseline {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.analysis-chart-crosshair {
+  stroke: var(--text);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.analysis-chart-x-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--text);
+  opacity: 0.7;
+  padding: 2px 2px 0;
+}
+
+.analysis-chart-tooltip {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 6px 8px;
+  background: rgba(4, 6, 17, 0.92);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 10.5px;
+  font-family: var(--mono);
+  pointer-events: none;
+}
+
+.analysis-chart-tooltip strong {
+  color: var(--text-h);
+  font-family: var(--sans);
+  margin-bottom: 2px;
 }
 
 .results ol {

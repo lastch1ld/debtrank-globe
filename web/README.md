@@ -30,12 +30,22 @@ npm run build
   files fetched on demand from `public/data/network/{year}.json`
   (2005–2025), rather than one static snapshot — see `src/lib/network.ts`'s
   `loadYearData`.
-- **Market check**: shows the shocked country's real 10-year government bond
-  yield (FRED, `src/lib/bondYields.ts`) and its spread vs. US Treasuries for
-  the selected year, next to the model's predicted impact — e.g. shocking
-  Greece in 2011 shows both DebtRank's predicted contagion *and* the real
-  21% yield markets were pricing in at the time. Coverage is OECD-centric;
-  uncovered countries show an explicit "no data" note rather than nothing.
+- **Market check**: shows the shocked country's real 10-year bond yield
+  (+ spread vs. US Treasuries), short-term policy rate, and stock index
+  year-over-year change (all FRED, `src/lib/marketData.ts`) for the
+  selected year, next to the model's predicted impact — e.g. shocking
+  Greece in 2011 shows DebtRank's predicted contagion alongside the real
+  21% bond yield and -54.5% stock-index crash markets saw at the time.
+  Coverage differs per series (bond yields are OECD-only; policy rate and
+  stock index cover a broader set, e.g. Brazil, South Africa, Mexico);
+  each series shows its own "no data" note rather than hiding the section.
+- **Model-vs-market chart**: "View across years" (`src/lib/analysis.ts`,
+  `src/components/YearAnalysisChart.tsx`) re-runs the current shock against
+  all 21 years and plots the model's predicted impact next to all three
+  market series as small multiples (one axis per metric — a dual-axis
+  chart would be misleading here since the metrics are in different
+  units), with a shared crosshair/tooltip for reading a given year across
+  all four at once.
 
 ## Data
 

@@ -43,14 +43,15 @@ python build_snapshot.py --by-year
 cp out/by_year/*.json ../web/public/data/network/
 ```
 
-### Bond-yield market check
+### Market data (bond yields, policy rates, stock indices)
 
 ```bash
-# FRED 10Y government bond yield equivalents, no API key needed (public CSV export).
-# Coverage is OECD-centric -- non-covered countries are simply omitted.
-python fetch_bond_yields.py out/bond_yields.json
+# Three FRED series, no API key needed (public CSV export): 10Y government
+# bond yield, short-term/policy interest rate, and stock index YoY change.
+# Coverage differs per series (a country can have some and not others).
+python fetch_market_data.py out/market_data.json
 
-cp out/bond_yields.json ../web/src/data/bond_yields.json
+cp out/market_data.json ../web/src/data/market_data.json
 ```
 
 Output: `out/network_snapshot.json` — `{"nodes": [...], "edges": [...]}`,
@@ -72,8 +73,10 @@ Earth 1:110m, public domain) used to draw real country outlines on the globe.
 - Node "equity" (loss-absorbing buffer) for the model uses each country's
   FX reserves, falling back to 1% of GDP, then a small floor, when reserves
   data is missing.
-- FRED's `IRLTLT01` long-term interest rate series only covers ~35-40
-  mostly-OECD economies (confirmed 404 for Brazil, India, China, and most
-  smaller/developing countries) — `fetch_bond_yields.py` treats a 404 as
-  "not covered" rather than an error, and the web UI shows an explicit
-  "no data" note for uncovered countries instead of hiding the section.
+- FRED's `IRLTLT01` (bond yield) series only covers ~34 mostly-OECD
+  economies; `IRSTCI01` (policy rate) and `SPASTT01` (stock index) cover a
+  broader ~40, including some non-OECD countries (e.g. Brazil, South
+  Africa, Mexico) the bond series doesn't. `fetch_market_data.py` treats a
+  404 as "not covered" per series rather than an error, and the web UI
+  shows an explicit "no data" note per series instead of hiding the whole
+  market-check section when only some series are available.

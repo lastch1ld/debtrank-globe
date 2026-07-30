@@ -1,9 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Globe } from "./components/Globe";
-import { runDebtRank } from "./lib/debtrank";
-import { clearingVector } from "./lib/eisenbergNoe";
-import { getBondSpreadVsUS, getBondYield } from "./lib/bondYields";
+import { YearAnalysisChart } from "./components/YearAnalysisChart";
+import {
+  type Model,
+  type SimResult,
+  type YearPoint,
+  computeBaselineShortfall,
+  computeShockResult,
+  runAnalysisAcrossYears,
+} from "./lib/analysis";
+import { getBondSpreadVsUS, getBondYield, getPolicyRate, getStockChange } from "./lib/marketData";
 import {
   DEFAULT_YEAR,
   YEARS,
@@ -14,12 +21,6 @@ import {
 } from "./lib/network";
 import type { ExposureNetwork } from "./lib/debtrank";
 import "./App.css";
-
-type Model = "debtrank" | "eisenberg-noe";
-
-type SimResult =
-  | { kind: "debtrank"; nodeIds: string[]; history: number[][]; debtrank: number }
-  | { kind: "eisenberg-noe"; nodeIds: string[]; distress: number[]; iterations: number; aggregate: number };
 
 function App() {
   const [year, setYear] = useState(DEFAULT_YEAR);
@@ -36,27 +37,16 @@ function App() {
   const [panelOpen, setPanelOpen] = useState(false);
   const timerRef = useRef<number | null>(null);
 
+  const [analysisPoints, setAnalysisPoints] = useState<YearPoint[] | null>(null);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
+  const [analysisProgress, setAnalysisProgress] = useState<number | null>(null);
+
   const network = useMemo<ExposureNetwork | null>(
     () => (yearData ? buildExposureNetwork(yearData) : null),
     [yearData],
   );
 
-  // Real cross-border bank liabilities routinely dwarf a country's FX
-  // reserves, so an unshocked Eisenberg-Noe clearing vector already shows
-  // many countries "short" at baseline -- that's a data-scale mismatch
-  // (reserves aren't meant to cover gross private-sector bank claims), not
-  // contagion. We net the shocked result against this baseline so the UI
-  // shows only the shock's marginal effect, mirroring how DebtRank nets
-  // final distress against its initial state.
-  const baselineShortfall = useMemo(() => {
-    if (!network) return null;
-    const n = network.nodeIds.length;
-    const liabilities = Array.from({ length: n }, (_, a) =>
-      Array.from({ length: n }, (_, b) => network.exposure[b][a]),
-    );
-    const cv = clearingVector(network.nodeIds, liabilities, network.equity);
-    return cv.nominalLiabilities.map((pBar, i) => (pBar > 0 ? Math.max(0, (pBar - cv.payments[i]) / pBar) : 0));
-  }, [network]);
+  const baselineShortfall = useMemo(() => (network ? computeBaselineShortfall(network) : null), [network]);
 
   const sortedCountries = useMemo(
     () => [...countries].sort((a, b) => a.name.localeCompare(b.name)),
@@ -83,15 +73,17 @@ function App() {
   }
 
   function runShock(id: string, mag: number, mdl: Model) {
-    if (!network) return;
+    if (!network || !baselineShortfall) return;
     if (timerRef.current) window.clearInterval(timerRef.current);
     setPanelOpen(true);
     setShockedId(id);
     setIteration(0);
+    setAnalysisPoints(null);
 
-    if (mdl === "debtrank") {
-      const res = runDebtRank(network, { [id]: mag });
-      setResult({ kind: "debtrank", nodeIds: res.nodeIds, history: res.history, debtrank: res.debtrank });
+    const res = computeShockResult(network, id, mag, mdl, baselineShortfall);
+    setResult(res);
+
+    if (res.kind === "debtrank") {
       timerRef.current = window.setInterval(() => {
         setIteration((prev) => {
           if (prev >= res.history.length - 1) {
@@ -101,30 +93,7 @@ function App() {
           return prev + 1;
         });
       }, 500);
-      return;
     }
-
-    // Eisenberg-Noe: liabilities[a][b] = a's debt to b = exposure[b][a]
-    // (exposure[i][j] is i's claim on j, so the debtor/creditor roles flip).
-    const n = network.nodeIds.length;
-    const liabilities = Array.from({ length: n }, (_, a) =>
-      Array.from({ length: n }, (_, b) => network.exposure[b][a]),
-    );
-    const idx = network.nodeIds.indexOf(id);
-    const externalAssets = network.equity.slice();
-    if (idx >= 0) externalAssets[idx] *= 1 - mag;
-
-    const cv = clearingVector(network.nodeIds, liabilities, externalAssets);
-    const distress = cv.nominalLiabilities.map((pBar, i) => {
-      if (pBar <= 0) return 0;
-      const shockedShortfall = Math.max(0, (pBar - cv.payments[i]) / pBar);
-      const baseline = baselineShortfall?.[i] ?? 0;
-      return Math.max(0, shockedShortfall - baseline);
-    });
-    const totalEquity = network.equity.reduce((a, b) => a + b, 0);
-    const aggregate = distress.reduce((sum, d, i) => sum + d * (network.equity[i] / totalEquity), 0);
-
-    setResult({ kind: "eisenberg-noe", nodeIds: cv.nodeIds, distress, iterations: cv.iterations, aggregate });
   }
 
   function triggerShock(id: string) {
@@ -146,6 +115,17 @@ function App() {
     setShockedId(null);
     setResult(null);
     setIteration(0);
+    setAnalysisPoints(null);
+  }
+
+  async function viewAcrossYears() {
+    if (!shockedId) return;
+    setAnalysisLoading(true);
+    setAnalysisProgress(YEARS[0]);
+    const points = await runAnalysisAcrossYears(shockedId, magnitude, model, setAnalysisProgress);
+    setAnalysisPoints(points);
+    setAnalysisLoading(false);
+    setAnalysisProgress(null);
   }
 
   useEffect(() => {
@@ -304,24 +284,61 @@ function App() {
             {shockedId && (
               <div className="market-check">
                 <span className="market-check-label">Market check ({year})</span>
-                {getBondYield(shockedId, year) !== null ? (
+                <div className="market-check-rows">
                   <span className="market-check-value">
-                    10Y yield <strong>{getBondYield(shockedId, year)?.toFixed(2)}%</strong>
-                    {shockedId !== "USA" && getBondSpreadVsUS(shockedId, year) !== null && (
+                    10Y yield{" "}
+                    {getBondYield(shockedId, year) !== null ? (
                       <>
-                        {" "}
-                        &middot; spread vs US{" "}
-                        <strong>
-                          {(getBondSpreadVsUS(shockedId, year)! >= 0 ? "+" : "")}
-                          {getBondSpreadVsUS(shockedId, year)?.toFixed(2)}pp
-                        </strong>
+                        <strong>{getBondYield(shockedId, year)?.toFixed(2)}%</strong>
+                        {shockedId !== "USA" && getBondSpreadVsUS(shockedId, year) !== null && (
+                          <>
+                            {" "}
+                            &middot; spread vs US{" "}
+                            <strong>
+                              {(getBondSpreadVsUS(shockedId, year)! >= 0 ? "+" : "")}
+                              {getBondSpreadVsUS(shockedId, year)?.toFixed(2)}pp
+                            </strong>
+                          </>
+                        )}
                       </>
+                    ) : (
+                      <span className="muted">no data</span>
                     )}
                   </span>
-                ) : (
-                  <span className="market-check-value muted">no FRED bond-yield data for this country</span>
-                )}
+                  <span className="market-check-value">
+                    Policy rate{" "}
+                    {getPolicyRate(shockedId, year) !== null ? (
+                      <strong>{getPolicyRate(shockedId, year)?.toFixed(2)}%</strong>
+                    ) : (
+                      <span className="muted">no data</span>
+                    )}
+                  </span>
+                  <span className="market-check-value">
+                    Stock index (YoY){" "}
+                    {getStockChange(shockedId, year) !== null ? (
+                      <strong>
+                        {(getStockChange(shockedId, year)! >= 0 ? "+" : "")}
+                        {getStockChange(shockedId, year)?.toFixed(1)}%
+                      </strong>
+                    ) : (
+                      <span className="muted">no data</span>
+                    )}
+                  </span>
+                </div>
               </div>
+            )}
+
+            {analysisPoints ? (
+              <>
+                <YearAnalysisChart points={analysisPoints} />
+                <button className="analysis-toggle" onClick={() => setAnalysisPoints(null)}>
+                  Hide chart
+                </button>
+              </>
+            ) : (
+              <button className="analysis-toggle" onClick={viewAcrossYears} disabled={analysisLoading}>
+                {analysisLoading ? `Loading ${analysisProgress}…` : "View across years →"}
+              </button>
             )}
 
             <ol>
