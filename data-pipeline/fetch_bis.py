@@ -27,6 +27,7 @@ reports these in millions of USD; we convert to USD).
 """
 from __future__ import annotations
 
+import argparse
 import csv
 import json
 import sys
@@ -146,13 +147,90 @@ def extract_edges(csv_path: Path) -> list[dict]:
     return edge_list, country_names
 
 
-def main() -> None:
-    if len(sys.argv) < 2:
-        print("usage: fetch_bis.py <path-to-bulk-csv-or-zip> [out.json]", file=sys.stderr)
-        sys.exit(1)
+def extract_edges_by_year(csv_path: Path, years: list[int]) -> dict[int, list[dict]]:
+    """Single pass over the bulk CSV, taking each requested year's Q4 value
+    specifically (a consistent "year-end snapshot" convention) rather than
+    whatever the most recent reported quarter happens to be. One pass over
+    the ~600k-row file regardless of how many years are requested."""
+    raw, zf = _open_csv(csv_path)
+    text = raw if isinstance(raw, type(sys.stdin)) else __import__("io").TextIOWrapper(raw, encoding="utf-8")
 
-    csv_path = Path(sys.argv[1])
-    out_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path(__file__).parent / "out" / "edges.json"
+    reader = csv.reader(text)
+    header = next(reader)
+    idx = {name: i for i, name in enumerate(header)}
+    year_col = {year: idx.get(f"{year}-Q4") for year in years}
+
+    edges_by_year: dict[int, dict[tuple[str, str], float]] = {year: {} for year in years}
+    rows_scanned = 0
+
+    for row in reader:
+        rows_scanned += 1
+        if not all(row[idx[k]] == v for k, v in WANTED.items()):
+            continue
+
+        rep = row[idx["L_REP_CTY"]]
+        cp = row[idx["L_CP_COUNTRY"]]
+        if rep in AGGREGATE_CODES or cp in AGGREGATE_CODES or rep == cp:
+            continue
+        if len(rep) != 2 or len(cp) != 2:
+            continue
+
+        for year, col in year_col.items():
+            if col is None:
+                continue
+            val = row[col]
+            if not val:
+                continue
+            try:
+                num = float(val)
+            except ValueError:
+                continue
+            if not (num == num) or num < 0:  # NaN / negative-revision check
+                continue
+            edges_by_year[year][(rep, cp)] = num
+
+    if zf:
+        zf.close()
+
+    print(f"Scanned {rows_scanned} rows across {len(years)} years", file=sys.stderr)
+
+    return {
+        year: [
+            {"creditor": rep, "debtor": cp, "period": f"{year}-Q4", "amount": value * 1_000_000}
+            for (rep, cp), value in pairs.items()
+        ]
+        for year, pairs in edges_by_year.items()
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("csv_path")
+    parser.add_argument("out", nargs="?", default=None)
+    parser.add_argument(
+        "--by-year",
+        metavar="START:END",
+        help="Extract one Q4 snapshot per year in this range instead of the single "
+        "latest value (writes out/edges_by_year.json instead of out/edges.json)",
+    )
+    args = parser.parse_args()
+    csv_path = Path(args.csv_path)
+
+    if args.by_year:
+        start, end = (int(x) for x in args.by_year.split(":"))
+        out_path = Path(args.out) if args.out else Path(__file__).parent / "out" / "edges_by_year.json"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        edges_by_year = extract_edges_by_year(csv_path, list(range(start, end + 1)))
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump({str(y): edges for y, edges in edges_by_year.items()}, f)
+
+        for year, edges in edges_by_year.items():
+            print(f"  {year}: {len(edges)} edges", file=sys.stderr)
+        print(f"Wrote multi-year edges to {out_path}", file=sys.stderr)
+        return
+
+    out_path = Path(args.out) if args.out else Path(__file__).parent / "out" / "edges.json"
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     edges, country_names = extract_edges(csv_path)

@@ -3,6 +3,7 @@ the World Bank Indicators API (no auth required).
 """
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import time
@@ -57,12 +58,98 @@ def fetch_indicator_latest(indicator_code: str, year_range: str = "2015:2023") -
     return {iso3: val for iso3, (_, val) in values.items()}
 
 
+def fetch_indicator_by_year(indicator_code: str, year_range: str) -> dict[str, dict[str, float]]:
+    """Return {iso3: {year: value}} for the given indicator, keeping every
+    year in range rather than collapsing to the latest (used for the
+    historical year-scrubber snapshots).
+
+    Queried one year at a time rather than as a single wide date range --
+    a single ~217-country/1-year request comes back in well under a second,
+    whereas a 20-year combined range query was observed to reliably time
+    out server-side."""
+    start, end = (int(x) for x in year_range.split(":"))
+    values: dict[str, dict[str, float]] = {}
+    for year in range(start, end + 1):
+        # The API's response time for this endpoint is highly variable in
+        # practice (observed anywhere from ~0.1s to 45s+ for an identical
+        # query) -- retry generously with backoff rather than treat a slow
+        # response as a hard failure.
+        for attempt in range(5):
+            try:
+                resp = requests.get(
+                    f"{WB_BASE}/country/all/indicator/{indicator_code}",
+                    params={"format": "json", "per_page": 400, "date": str(year)},
+                    timeout=45,
+                )
+                resp.raise_for_status()
+                break
+            except requests.exceptions.RequestException as exc:
+                if attempt == 4:
+                    raise
+                print(f"  {indicator_code} {year}: retrying after {exc.__class__.__name__}", file=sys.stderr)
+                time.sleep(3 * (attempt + 1))
+        _, rows = resp.json()
+        for row in rows or []:
+            if row["value"] is None:
+                continue
+            iso3 = row["countryiso3code"]
+            if not iso3:
+                continue
+            values.setdefault(iso3, {})[row["date"]] = row["value"]
+        time.sleep(0.15)
+    return values
+
+
 def main() -> None:
-    out_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(__file__).parent / "out" / "nodes.json"
-    out_path.parent.mkdir(parents=True, exist_ok=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("out", nargs="?", default=None)
+    parser.add_argument(
+        "--by-year",
+        metavar="START:END",
+        help="Fetch a value per year in this range instead of the single latest value "
+        "(writes out/nodes_by_year.json instead of out/nodes.json)",
+    )
+    args = parser.parse_args()
 
     countries = fetch_countries()
     print(f"Fetched {len(countries)} countries", file=sys.stderr)
+
+    if args.by_year:
+        out_path = Path(args.out) if args.out else Path(__file__).parent / "out" / "nodes_by_year.json"
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+
+        indicator_by_year = {}
+        for field, code in INDICATORS.items():
+            print(f"Fetching {field} ({code}) for {args.by_year}...", file=sys.stderr)
+            indicator_by_year[field] = fetch_indicator_by_year(code, args.by_year)
+
+        nodes = []
+        for c in countries:
+            iso3 = c["id"]
+            years = set()
+            for field_values in indicator_by_year.values():
+                years.update(field_values.get(iso3, {}).keys())
+            nodes.append({
+                "id": iso3,
+                "name": c["name"],
+                "lat": float(c["latitude"]) if c["latitude"] else None,
+                "lng": float(c["longitude"]) if c["longitude"] else None,
+                "years": {
+                    year: {
+                        field: indicator_by_year[field].get(iso3, {}).get(year)
+                        for field in INDICATORS
+                    }
+                    for year in sorted(years)
+                },
+            })
+
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump({"nodes": nodes}, f, indent=2)
+        print(f"Wrote {len(nodes)} nodes (multi-year) to {out_path}", file=sys.stderr)
+        return
+
+    out_path = Path(args.out) if args.out else Path(__file__).parent / "out" / "nodes.json"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
     indicator_values = {}
     for field, code in INDICATORS.items():

@@ -19,10 +19,34 @@ python fetch_bis.py /path/to/WS_LBS_D_PUB_csv_col.csv out/edges.json
 
 # 3. Merge into the final ISO3-keyed network snapshot
 python build_snapshot.py
+
+# 4. Simplified country border outlines, for rendering coastlines on the globe
+python fetch_borders.py
+```
+
+### Historical year scrubber data
+
+The web app's year scrubber needs one network snapshot per year rather than
+a single latest-value snapshot:
+
+```bash
+# 1. Per-year node attributes (one value per year instead of "latest")
+python fetch_worldbank.py --by-year 2005:2025 out/nodes_by_year.json
+
+# 2. Per-year Q4 bilateral exposures, single pass over the bulk CSV
+python fetch_bis.py /path/to/WS_LBS_D_PUB_csv_col.csv out/edges_by_year.json --by-year 2005:2025
+
+# 3. Merge into out/by_year/{year}.json (same {"nodes":[...], "edges":[...]} shape)
+python build_snapshot.py --by-year
+
+# 4. Copy into the web app's static data dir, served at runtime via fetch()
+cp out/by_year/*.json ../web/public/data/network/
 ```
 
 Output: `out/network_snapshot.json` — `{"nodes": [...], "edges": [...]}`,
 ~4,400 real bilateral country-country exposure edges across ~215 countries.
+`out/world_borders.json` holds simplified coastline/border rings (Natural
+Earth 1:110m, public domain) used to draw real country outlines on the globe.
 
 ## Notes / known data caveats
 
