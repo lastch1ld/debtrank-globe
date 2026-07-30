@@ -20,7 +20,14 @@ import {
   type YearSnapshot,
 } from "./lib/network";
 import type { ExposureNetwork } from "./lib/debtrank";
-import "./App.css";
+
+const glass =
+  "border border-sky-200/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.88),rgba(3,9,18,0.78))] shadow-[0_24px_80px_rgba(0,0,0,0.38)] backdrop-blur-xl";
+const focus =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400";
+const range =
+  "h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-400/15 outline-none [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-sky-400 [&::-moz-range-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)] [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-sky-400 [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)]";
+const secondaryButton = `${focus} rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-300 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-50 disabled:cursor-default disabled:opacity-35 disabled:hover:border-sky-200/10 disabled:hover:bg-slate-950/25 disabled:hover:text-slate-300`;
 
 function App() {
   const [year, setYear] = useState(DEFAULT_YEAR);
@@ -156,54 +163,71 @@ function App() {
   }, [result, distress]);
 
   return (
-    <div className="app">
-      <div className="globe-pane">
+    <div className="relative h-dvh w-screen overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased">
+      <div className="absolute inset-0">
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
             <Globe yearData={yearData} distress={distress} shockedId={shockedId} onSelect={triggerShock} />
           </Canvas>
         )}
-        {yearLoading && <div className="year-loading">Loading {displayYear}&hellip;</div>}
+        {yearLoading && (
+          <div className={`${glass} absolute bottom-5 left-5 z-10 rounded-xl px-3 py-1.5 font-mono text-xs text-slate-300`}>
+            Loading {displayYear}&hellip;
+          </div>
+        )}
       </div>
 
-      <nav className="navbar">
-        <span className="navbar-title">debtrank-globe</span>
+      <nav className={`${glass} fixed left-4 right-4 top-4 z-20 flex items-center justify-between rounded-2xl px-4 py-3`}>
+        <span className="font-mono text-[14.5px] font-semibold tracking-[-0.02em] text-slate-100">
+          debt<span className="text-sky-400">rank</span>
+          <span className="text-slate-500">-globe</span>
+        </span>
         <button
-          className="menu-button"
+          className={`${focus} group flex size-9 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-sky-200/10 bg-slate-950/25 transition hover:border-sky-400/50 hover:bg-sky-400/5`}
           aria-label={panelOpen ? "Close controls" : "Open controls"}
           aria-expanded={panelOpen}
           onClick={() => setPanelOpen((v) => !v)}
         >
-          <span />
-          <span />
-          <span />
+          <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:translate-y-[5px] group-aria-expanded:rotate-45" />
+          <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:opacity-0" />
+          <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:-translate-y-[5px] group-aria-expanded:-rotate-45" />
         </button>
       </nav>
 
-      <aside className={`panel${panelOpen ? " open" : ""}`}>
-        <header className="panel-head">
-          <p className="subtitle">
+      <aside
+        className={`fixed inset-y-0 right-0 z-15 flex w-full flex-col gap-5 overflow-y-auto border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.94),rgba(2,7,15,0.9))] px-5 pb-6 pt-24 shadow-[-24px_0_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl transition-transform duration-300 sm:w-[380px] sm:px-6 ${
+          panelOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <header className="flex flex-col">
+          <span className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-400">
+            Systemic risk simulation
+          </span>
+          <p className="mb-5 text-[13px] leading-6 text-slate-400">
             Distress propagation over a real cross-border exposure network
             sourced from the World Bank and BIS. Click a country on the
             globe, or pick one below, to simulate a default.
           </p>
-          <dl className="stats">
+          <dl className="flex gap-8 border-t border-sky-200/10 pt-4">
             <div>
-              <dt>Countries</dt>
-              <dd>{countries.length}</dd>
+              <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">Countries</dt>
+              <dd className="mt-1 font-mono text-lg tabular-nums text-slate-100">{countries.length}</dd>
             </div>
             <div>
-              <dt>Exposure edges</dt>
-              <dd>{(yearData?.edges.length ?? 0).toLocaleString()}</dd>
+              <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">Exposure edges</dt>
+              <dd className="mt-1 font-mono text-lg tabular-nums text-slate-100">
+                {(yearData?.edges.length ?? 0).toLocaleString()}
+              </dd>
             </div>
           </dl>
         </header>
 
-        <label className="year-scrubber">
-          <span>
-            Network year <strong>{displayYear}</strong>
+        <label className="flex flex-col gap-2.5 text-xs text-slate-400">
+          <span className="flex items-center justify-between">
+            Network year <strong className="font-mono text-sm font-medium text-slate-100">{displayYear}</strong>
           </span>
           <input
+            className={range}
             type="range"
             min={YEARS[0]}
             max={YEARS[YEARS.length - 1]}
@@ -213,23 +237,32 @@ function App() {
           />
         </label>
 
-        <div className="model-toggle" role="group" aria-label="Contagion model">
+        <div className="flex overflow-hidden rounded-xl border border-sky-200/10 bg-slate-950/25 p-1" role="group" aria-label="Contagion model">
           <button
-            className={model === "debtrank" ? "active" : undefined}
+            className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
+              model === "debtrank"
+                ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
+                : "text-slate-500 hover:text-slate-200"
+            }`}
             onClick={() => onModelChange("debtrank")}
           >
             DebtRank
           </button>
           <button
-            className={model === "eisenberg-noe" ? "active" : undefined}
+            className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
+              model === "eisenberg-noe"
+                ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
+                : "text-slate-500 hover:text-slate-200"
+            }`}
             onClick={() => onModelChange("eisenberg-noe")}
           >
             Eisenberg-Noe
           </button>
         </div>
 
-        <div className="controls">
+        <div className="flex gap-2">
           <select
+            className={`${focus} min-w-0 flex-1 appearance-none rounded-xl border border-sky-200/10 bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`}
             value={shockedId ?? ""}
             onChange={(e) => e.target.value && triggerShock(e.target.value)}
           >
@@ -240,16 +273,20 @@ function App() {
               </option>
             ))}
           </select>
-          <button onClick={reset} disabled={!result}>
+          <button className={`${secondaryButton} px-4 py-2.5 text-[13px]`} onClick={reset} disabled={!result}>
             Reset
           </button>
         </div>
 
-        <label className="magnitude">
-          <span>
-            Shock magnitude <strong>{Math.round(magnitude * 100)}%</strong>
+        <label className="flex flex-col gap-2.5 text-xs text-slate-400">
+          <span className="flex items-center justify-between">
+            Shock magnitude{" "}
+            <strong className="font-mono text-sm font-medium text-slate-100">
+              {Math.round(magnitude * 100)}%
+            </strong>
           </span>
           <input
+            className={range}
             type="range"
             min={5}
             max={100}
@@ -260,32 +297,34 @@ function App() {
         </label>
 
         {result ? (
-          <div className="results">
-            <div className="results-head">
+          <div className="flex min-h-0 flex-col gap-3">
+            <div className="flex justify-between font-mono text-xs text-slate-400">
               {result.kind === "debtrank" ? (
                 <>
                   <span>
                     Iteration {iteration} / {result.history.length - 1}
                   </span>
-                  <span className="impact">
-                    impact <strong>{result.debtrank.toFixed(4)}</strong>
+                  <span>
+                    impact <strong className="font-semibold text-amber-400">{result.debtrank.toFixed(4)}</strong>
                   </span>
                 </>
               ) : (
                 <>
                   <span>Converged in {result.iterations} iterations</span>
-                  <span className="impact">
-                    shortfall <strong>{result.aggregate.toFixed(4)}</strong>
+                  <span>
+                    shortfall <strong className="font-semibold text-amber-400">{result.aggregate.toFixed(4)}</strong>
                   </span>
                 </>
               )}
             </div>
 
             {shockedId && (
-              <div className="market-check">
-                <span className="market-check-label">Market check ({year})</span>
-                <div className="market-check-rows">
-                  <span className="market-check-value">
+              <div className="flex flex-col gap-1 rounded-xl border border-sky-200/10 bg-slate-950/25 px-3 py-2.5 text-xs">
+                <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">
+                  Market check ({year})
+                </span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-mono text-slate-200 [&_strong]:font-semibold [&_strong]:text-sky-400">
                     10Y yield{" "}
                     {getBondYield(shockedId, year) !== null ? (
                       <>
@@ -302,18 +341,18 @@ function App() {
                         )}
                       </>
                     ) : (
-                      <span className="muted">no data</span>
+                      <span className="font-sans italic text-slate-500">no data</span>
                     )}
                   </span>
-                  <span className="market-check-value">
+                  <span className="font-mono text-slate-200 [&_strong]:font-semibold [&_strong]:text-sky-400">
                     Policy rate{" "}
                     {getPolicyRate(shockedId, year) !== null ? (
                       <strong>{getPolicyRate(shockedId, year)?.toFixed(2)}%</strong>
                     ) : (
-                      <span className="muted">no data</span>
+                      <span className="font-sans italic text-slate-500">no data</span>
                     )}
                   </span>
-                  <span className="market-check-value">
+                  <span className="font-mono text-slate-200 [&_strong]:font-semibold [&_strong]:text-sky-400">
                     Stock index (YoY){" "}
                     {getStockChange(shockedId, year) !== null ? (
                       <strong>
@@ -321,7 +360,7 @@ function App() {
                         {getStockChange(shockedId, year)?.toFixed(1)}%
                       </strong>
                     ) : (
-                      <span className="muted">no data</span>
+                      <span className="font-sans italic text-slate-500">no data</span>
                     )}
                   </span>
                 </div>
@@ -331,33 +370,56 @@ function App() {
             {analysisPoints ? (
               <>
                 <YearAnalysisChart points={analysisPoints} />
-                <button className="analysis-toggle" onClick={() => setAnalysisPoints(null)}>
+                <button
+                  className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-sky-400`}
+                  onClick={() => setAnalysisPoints(null)}
+                >
                   Hide chart
                 </button>
               </>
             ) : (
-              <button className="analysis-toggle" onClick={viewAcrossYears} disabled={analysisLoading}>
+              <button
+                className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-sky-400`}
+                onClick={viewAcrossYears}
+                disabled={analysisLoading}
+              >
                 {analysisLoading ? `Loading ${analysisProgress}…` : "View across years →"}
               </button>
             )}
 
-            <ol>
+            <ol className="m-0 flex list-none flex-col gap-2 p-0">
               {ranked.map((r) => (
-                <li key={r.id} className={r.id === shockedId ? "shocked" : undefined}>
-                  <span className="name">{r.name}</span>
-                  <span className="bar-track">
-                    <span className="bar-fill" style={{ transform: `scaleX(${r.level})` }} />
+                <li
+                  key={r.id}
+                  className="grid grid-cols-[minmax(0,1fr)_64px_44px] items-center gap-2.5 text-xs"
+                >
+                  <span
+                    className={`truncate ${
+                      r.id === shockedId ? "font-semibold text-amber-400" : "text-slate-200"
+                    }`}
+                  >
+                    {r.name}
                   </span>
-                  <span className="level">{(r.level * 100).toFixed(1)}%</span>
+                  <span className="relative h-1.5 overflow-hidden rounded-full bg-slate-400/10">
+                    <span
+                      className="absolute inset-0 origin-left rounded-full bg-linear-to-r from-amber-400 to-red-500 transition-transform duration-400"
+                      style={{ transform: `scaleX(${r.level})` }}
+                    />
+                  </span>
+                  <span className="text-right font-mono text-slate-400 tabular-nums">
+                    {(r.level * 100).toFixed(1)}%
+                  </span>
                 </li>
               ))}
             </ol>
           </div>
         ) : (
-          <div className="legend">
-            <span className="legend-title">Distress scale</span>
-            <div className="legend-gradient" />
-            <div className="legend-labels">
+          <div className="flex flex-col gap-2 pt-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">
+              Distress scale
+            </span>
+            <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-amber-400 to-red-500" />
+            <div className="flex justify-between text-[11px] text-slate-500">
               <span>stable</span>
               <span>default</span>
             </div>
