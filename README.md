@@ -18,7 +18,7 @@ The result: pick a country, dial in a shock magnitude, toggle between DebtRank a
 Eisenberg-Noe, and watch distress propagate through the real global debt network on an
 interactive 3D globe — for any year from 2005 to 2025 via the year scrubber.
 
-![debtrank-globe: an Australia shock propagating through the DebtRank model, shown on the 3D globe with a ranked distress list](docs/screenshot.png)
+![debtrank-globe: a Belgium shock propagating through the DebtRank model, shown on the 3D globe with market indicators and a ranked distress list](docs/screenshot.png)
 
 ## Structure
 
@@ -41,8 +41,8 @@ interactive 3D globe — for any year from 2005 to 2025 via the year scrubber.
 
 Functional end-to-end: real data pipeline, correctness-tested DebtRank and Eisenberg-Noe
 models (Python reference + matching TypeScript ports), and an interactive globe with a
-model toggle, shock-magnitude control, and a 2005–2025 historical year scrubber. Not yet
-deployed as a static site (see `web/README.md` for running it locally).
+model toggle, shock-magnitude control, market comparison, and a 2005–2025 historical year
+scrubber. The static application is deployed publicly through GitHub Pages.
 
 ## License
 
