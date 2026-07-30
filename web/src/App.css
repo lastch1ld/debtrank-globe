@@ -303,6 +303,39 @@
   color: var(--amber);
 }
 
+.market-check {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.market-check-label {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 10.5px;
+  color: var(--text);
+  opacity: 0.75;
+}
+
+.market-check-value {
+  font-family: var(--mono);
+  color: var(--text-h);
+}
+
+.market-check-value.muted {
+  font-family: var(--sans);
+  color: var(--text);
+  font-style: italic;
+}
+
+.market-check-value strong {
+  color: var(--accent);
+}
+
 .results ol {
   list-style: none;
   padding: 0;
