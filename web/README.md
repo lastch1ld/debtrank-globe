@@ -30,6 +30,12 @@ npm run build
   files fetched on demand from `public/data/network/{year}.json`
   (2005–2025), rather than one static snapshot — see `src/lib/network.ts`'s
   `loadYearData`.
+- **Market check**: shows the shocked country's real 10-year government bond
+  yield (FRED, `src/lib/bondYields.ts`) and its spread vs. US Treasuries for
+  the selected year, next to the model's predicted impact — e.g. shocking
+  Greece in 2011 shows both DebtRank's predicted contagion *and* the real
+  21% yield markets were pricing in at the time. Coverage is OECD-centric;
+  uncovered countries show an explicit "no data" note rather than nothing.
 
 ## Data
 
