@@ -2,6 +2,8 @@
 
 An interactive, model-driven visualization of sovereign external debt contagion risk.
 
+**Live application:** [lastch1ld.github.io/debtrank-globe](https://lastch1ld.github.io/debtrank-globe/)
+
 Instead of just charting external debt statistics (à la [JEDH](https://www.jedh.org/)), this
 project builds a real cross-border debt exposure network from public World Bank and BIS data,
 then runs published financial systemic-risk algorithms on it:
