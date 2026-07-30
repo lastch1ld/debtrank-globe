@@ -164,7 +164,11 @@ function App() {
 
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased">
-      <div className="absolute inset-0">
+      <div
+        className={`absolute inset-y-0 left-0 transition-[right] duration-300 ${
+          panelOpen ? "right-0 sm:right-[380px]" : "right-0"
+        }`}
+      >
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
             <Globe yearData={yearData} distress={distress} shockedId={shockedId} onSelect={triggerShock} />
@@ -177,13 +181,19 @@ function App() {
         )}
       </div>
 
-      <nav className={`${glass} fixed left-4 right-4 top-4 z-20 flex items-center justify-between rounded-2xl px-4 py-3`}>
+      <nav
+        className={`${glass} fixed left-4 top-4 z-20 flex items-center justify-between rounded-2xl px-4 py-3 transition-[right] duration-300 ${
+          panelOpen ? "right-4 sm:right-[396px]" : "right-4"
+        }`}
+      >
         <span className="font-mono text-[14.5px] font-semibold tracking-[-0.02em] text-slate-100">
           debt<span className="text-sky-400">rank</span>
           <span className="text-slate-500">-globe</span>
         </span>
         <button
-          className={`${focus} group flex size-9 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-sky-200/10 bg-slate-950/25 transition hover:border-sky-400/50 hover:bg-sky-400/5`}
+          className={`${focus} group flex size-9 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-sky-200/10 bg-slate-950/25 transition hover:border-sky-400/50 hover:bg-sky-400/5 ${
+            panelOpen ? "sm:hidden" : ""
+          }`}
           aria-label={panelOpen ? "Close controls" : "Open controls"}
           aria-expanded={panelOpen}
           onClick={() => setPanelOpen((v) => !v)}
@@ -195,11 +205,28 @@ function App() {
       </nav>
 
       <aside
-        className={`fixed inset-y-0 right-0 z-15 flex w-full flex-col gap-5 overflow-y-auto border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.94),rgba(2,7,15,0.9))] px-5 pb-6 pt-24 shadow-[-24px_0_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl transition-transform duration-300 sm:w-[380px] sm:px-6 ${
+        className={`fixed bottom-0 right-0 top-20 z-15 flex min-h-0 w-full flex-col gap-5 overflow-hidden border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.97),rgba(2,7,15,0.95))] px-5 pb-6 pt-5 shadow-[-24px_0_80px_rgba(0,0,0,0.32)] backdrop-blur-2xl transition-transform duration-300 sm:top-0 sm:w-[380px] sm:px-6 ${
           panelOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <header className="flex flex-col">
+        <div className="hidden shrink-0 items-center justify-between sm:flex">
+          <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+            Controls
+          </span>
+          <button
+            className={`${focus} flex size-9 cursor-pointer items-center justify-center rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-400 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-100`}
+            aria-label="Close controls"
+            onClick={() => setPanelOpen(false)}
+          >
+            <span className="relative block size-4">
+              <span className="absolute left-0 top-1/2 block h-px w-4 -translate-y-1/2 rotate-45 rounded-full bg-current" />
+              <span className="absolute left-0 top-1/2 block h-px w-4 -translate-y-1/2 -rotate-45 rounded-full bg-current" />
+            </span>
+          </button>
+        </div>
+
+        <div data-testid="sidebar-controls" className="flex shrink-0 flex-col gap-5">
+        <header className="flex shrink-0 flex-col">
           <span className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-400">
             Systemic risk simulation
           </span>
@@ -222,7 +249,7 @@ function App() {
           </dl>
         </header>
 
-        <label className="flex flex-col gap-2.5 text-xs text-slate-400">
+        <label className="flex shrink-0 flex-col gap-2.5 text-xs text-slate-400">
           <span className="flex items-center justify-between">
             Network year <strong className="font-mono text-sm font-medium text-slate-100">{displayYear}</strong>
           </span>
@@ -237,7 +264,7 @@ function App() {
           />
         </label>
 
-        <div className="flex overflow-hidden rounded-xl border border-sky-200/10 bg-slate-950/25 p-1" role="group" aria-label="Contagion model">
+        <div className="flex shrink-0 overflow-hidden rounded-xl border border-sky-200/10 bg-slate-950/25 p-1" role="group" aria-label="Contagion model">
           <button
             className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
               model === "debtrank"
@@ -260,7 +287,7 @@ function App() {
           </button>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex shrink-0 gap-2">
           <select
             className={`${focus} min-w-0 flex-1 appearance-none rounded-xl border border-sky-200/10 bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`}
             value={shockedId ?? ""}
@@ -278,7 +305,7 @@ function App() {
           </button>
         </div>
 
-        <label className="flex flex-col gap-2.5 text-xs text-slate-400">
+        <label className="flex shrink-0 flex-col gap-2.5 text-xs text-slate-400">
           <span className="flex items-center justify-between">
             Shock magnitude{" "}
             <strong className="font-mono text-sm font-medium text-slate-100">
@@ -297,7 +324,7 @@ function App() {
         </label>
 
         {result ? (
-          <div className="flex min-h-0 flex-col gap-3">
+          <div className="flex shrink-0 flex-col gap-3">
             <div className="flex justify-between font-mono text-xs text-slate-400">
               {result.kind === "debtrank" ? (
                 <>
@@ -387,6 +414,26 @@ function App() {
               </button>
             )}
 
+          </div>
+        ) : (
+          <div className="flex flex-col gap-2 pt-1">
+            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">
+              Distress scale
+            </span>
+            <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-amber-400 to-red-500" />
+            <div className="flex justify-between text-[11px] text-slate-500">
+              <span>stable</span>
+              <span>default</span>
+            </div>
+          </div>
+        )}
+        </div>
+
+        {result && ranked.length > 0 && (
+          <div
+            data-testid="ranked-results"
+            className="min-h-0 flex-1 overflow-y-auto border-t border-sky-200/10 pr-1 pt-3"
+          >
             <ol className="m-0 flex list-none flex-col gap-2 p-0">
               {ranked.map((r) => (
                 <li
@@ -412,17 +459,6 @@ function App() {
                 </li>
               ))}
             </ol>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-2 pt-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">
-              Distress scale
-            </span>
-            <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-amber-400 to-red-500" />
-            <div className="flex justify-between text-[11px] text-slate-500">
-              <span>stable</span>
-              <span>default</span>
-            </div>
           </div>
         )}
       </aside>
