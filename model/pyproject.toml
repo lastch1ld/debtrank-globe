@@ -1,6 +1,6 @@
 [project]
 name = "debtrank-model"
-version = "0.1.0"
+version = "0.1.1"
 description = "DebtRank and Eisenberg-Noe systemic risk models for sovereign debt networks"
 requires-python = ">=3.10"
 dependencies = ["numpy>=1.26"]
