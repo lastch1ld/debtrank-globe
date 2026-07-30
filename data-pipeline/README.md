@@ -43,6 +43,16 @@ python build_snapshot.py --by-year
 cp out/by_year/*.json ../web/public/data/network/
 ```
 
+### Bond-yield market check
+
+```bash
+# FRED 10Y government bond yield equivalents, no API key needed (public CSV export).
+# Coverage is OECD-centric -- non-covered countries are simply omitted.
+python fetch_bond_yields.py out/bond_yields.json
+
+cp out/bond_yields.json ../web/src/data/bond_yields.json
+```
+
 Output: `out/network_snapshot.json` — `{"nodes": [...], "edges": [...]}`,
 ~4,400 real bilateral country-country exposure edges across ~215 countries.
 `out/world_borders.json` holds simplified coastline/border rings (Natural
@@ -62,3 +72,8 @@ Earth 1:110m, public domain) used to draw real country outlines on the globe.
 - Node "equity" (loss-absorbing buffer) for the model uses each country's
   FX reserves, falling back to 1% of GDP, then a small floor, when reserves
   data is missing.
+- FRED's `IRLTLT01` long-term interest rate series only covers ~35-40
+  mostly-OECD economies (confirmed 404 for Brazil, India, China, and most
+  smaller/developing countries) — `fetch_bond_yields.py` treats a 404 as
+  "not covered" rather than an error, and the web UI shows an explicit
+  "no data" note for uncovered countries instead of hiding the section.
