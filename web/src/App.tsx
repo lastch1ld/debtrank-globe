@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Globe } from "./components/Globe";
 import { runDebtRank } from "./lib/debtrank";
 import { clearingVector } from "./lib/eisenbergNoe";
+import { getBondSpreadVsUS, getBondYield } from "./lib/bondYields";
 import {
   DEFAULT_YEAR,
   YEARS,
@@ -299,6 +300,30 @@ function App() {
                 </>
               )}
             </div>
+
+            {shockedId && (
+              <div className="market-check">
+                <span className="market-check-label">Market check ({year})</span>
+                {getBondYield(shockedId, year) !== null ? (
+                  <span className="market-check-value">
+                    10Y yield <strong>{getBondYield(shockedId, year)?.toFixed(2)}%</strong>
+                    {shockedId !== "USA" && getBondSpreadVsUS(shockedId, year) !== null && (
+                      <>
+                        {" "}
+                        &middot; spread vs US{" "}
+                        <strong>
+                          {(getBondSpreadVsUS(shockedId, year)! >= 0 ? "+" : "")}
+                          {getBondSpreadVsUS(shockedId, year)?.toFixed(2)}pp
+                        </strong>
+                      </>
+                    )}
+                  </span>
+                ) : (
+                  <span className="market-check-value muted">no FRED bond-yield data for this country</span>
+                )}
+              </div>
+            )}
+
             <ol>
               {ranked.map((r) => (
                 <li key={r.id} className={r.id === shockedId ? "shocked" : undefined}>
