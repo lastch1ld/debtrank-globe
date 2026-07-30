@@ -16,6 +16,8 @@ The result: pick a country, dial in a shock magnitude, toggle between DebtRank a
 Eisenberg-Noe, and watch distress propagate through the real global debt network on an
 interactive 3D globe — for any year from 2005 to 2025 via the year scrubber.
 
+![debtrank-globe: an Australia shock propagating through the DebtRank model, shown on the 3D globe with a ranked distress list](docs/screenshot.png)
+
 ## Structure
 
 - [`data-pipeline/`](data-pipeline) — fetches and normalizes World Bank (external debt, reserves,
