@@ -164,11 +164,7 @@ function App() {
 
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased selection:bg-sky-400/20 selection:text-slate-50">
-      <div
-        className={`absolute inset-y-0 left-0 transition-[right] duration-300 ${
-          panelOpen ? "right-0 sm:right-[380px]" : "right-0"
-        }`}
-      >
+      <div className="absolute inset-0">
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
             <Globe yearData={yearData} distress={distress} shockedId={shockedId} onSelect={triggerShock} />
@@ -182,9 +178,7 @@ function App() {
       </div>
 
       <nav
-        className={`${glass} fixed left-3 top-3 z-20 flex min-h-14 items-center justify-between rounded-2xl px-4 py-3 transition-[right] duration-300 sm:left-4 sm:top-4 ${
-          panelOpen ? "right-4 sm:right-[396px]" : "right-4"
-        }`}
+        className={`${glass} fixed left-3 right-3 top-3 z-20 flex min-h-14 items-center justify-between rounded-2xl px-4 py-3 sm:left-4 sm:right-4 sm:top-4`}
       >
         <span className="font-mono text-[14.5px] font-semibold tracking-[-0.02em] text-slate-100">
           debt<span className="text-sky-400">rank</span>
@@ -205,7 +199,7 @@ function App() {
       </nav>
 
       <aside
-        className={`fixed bottom-0 right-0 top-20 z-15 flex min-h-0 w-full flex-col gap-4 overflow-hidden border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.965),rgba(2,7,15,0.94))] px-4 pb-5 pt-4 shadow-[-24px_0_100px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-transform duration-300 motion-reduce:transition-none sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5 ${
+        className={`fixed bottom-0 right-0 top-20 z-30 flex min-h-0 w-full flex-col gap-4 overflow-hidden border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.985),rgba(2,7,15,0.98))] px-4 pb-5 pt-4 shadow-[-24px_0_100px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-transform duration-300 ease-out motion-reduce:transition-none sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5 ${
           panelOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -434,13 +428,18 @@ function App() {
         </div>
 
         {result && ranked.length > 0 && (
-          <div
-            data-testid="ranked-results" className="min-h-0 flex-1 overflow-y-auto border-t border-sky-200/10 pr-1 pt-3 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
-          >
-            <div className="sticky top-0 z-1 mb-2 flex items-center justify-between bg-[#06101d]/95 pb-2 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500 backdrop-blur">
+          <div className="flex min-h-0 flex-1 flex-col border-t border-sky-200/10">
+            <div
+              data-testid="ranking-header"
+              className="flex shrink-0 items-center justify-between bg-[#06101d] py-3 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500"
+            >
               <span>Propagation ranking</span>
               <span>{ranked.length} affected</span>
             </div>
+            <div
+              data-testid="ranked-results"
+              className="min-h-0 flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
+            >
             <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
               {ranked.map((r) => (
                 <li
@@ -466,6 +465,7 @@ function App() {
                 </li>
               ))}
             </ol>
+            </div>
           </div>
         )}
       </aside>

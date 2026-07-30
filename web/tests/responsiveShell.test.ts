@@ -5,8 +5,9 @@ import { describe, expect, it } from "vitest";
 const app = readFileSync(resolve(import.meta.dirname, "../src/App.tsx"), "utf8");
 
 describe("responsive application shell", () => {
-  it("reserves desktop space for an open 380px sidebar", () => {
-    expect(app).toContain("sm:right-[380px]");
+  it("overlays the 380px desktop sidebar without resizing the globe", () => {
+    expect(app).toContain('className="absolute inset-0"');
+    expect(app).not.toContain("sm:right-[380px]");
     expect(app).toContain("sm:w-[380px]");
   });
 
