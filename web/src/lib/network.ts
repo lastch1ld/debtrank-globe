@@ -49,7 +49,8 @@ const yearCache = new Map<number, YearSnapshot>();
 export async function loadYearData(year: number): Promise<YearSnapshot> {
   const cached = yearCache.get(year);
   if (cached) return cached;
-  const res = await fetch(`/data/network/${year}.json`);
+  const dataUrl = `${import.meta.env.BASE_URL}data/network/${year}.json`;
+  const res = await fetch(dataUrl);
   if (!res.ok) throw new Error(`Failed to load network data for ${year}`);
   const data = (await res.json()) as YearSnapshot;
   yearCache.set(year, data);
