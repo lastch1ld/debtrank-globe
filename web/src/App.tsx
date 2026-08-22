@@ -135,6 +135,10 @@ function App() {
   // immediately; otherwise set state and let the existing
   // `runShock` on network-change effect fire once that year's data arrives.
   function applyScenario(s: { year: number; countryId: string; magnitude: number; model: Model }) {
+    // A pending year-slider debounce (see onYearChange) would otherwise fire
+    // ~250ms later and silently overwrite this scenario's year with
+    // whatever the slider was mid-drag to.
+    if (yearDebounceRef.current) window.clearTimeout(yearDebounceRef.current);
     setModel(s.model);
     setMagnitude(s.magnitude);
     setDisplayYear(s.year);
@@ -288,7 +292,10 @@ function App() {
           </button>
         </div>
 
-        <div data-testid="sidebar-controls" className="flex shrink-0 flex-col gap-4 sm:gap-5">
+        <div
+          data-testid="sidebar-controls"
+          className="flex min-h-0 shrink flex-col gap-4 overflow-y-auto sm:gap-5"
+        >
         <header className="flex shrink-0 flex-col">
           <span className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-400">
             Systemic risk simulation
@@ -530,7 +537,7 @@ function App() {
         </div>
 
         {result && rankedAll.length > 0 && (
-          <div className="flex min-h-0 flex-1 flex-col border-t border-sky-200/10">
+          <div className="flex min-h-[240px] flex-1 flex-col overflow-y-auto border-t border-sky-200/10">
             <div
               data-testid="ranking-header"
               className="flex shrink-0 items-center justify-between bg-[#06101d] py-3 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500"
@@ -580,7 +587,7 @@ function App() {
             ) : (
             <div
               data-testid="ranked-results"
-              className="min-h-0 flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
+              className="min-h-[140px] flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
             >
             <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
               {ranked.map((r) => {
