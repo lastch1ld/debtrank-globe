@@ -7,14 +7,16 @@ shipped; unchecked items haven't been started yet.
 
 ## Trust & transparency
 
-- [ ] **Data provenance indicator** — a country's equity today could be real
+- [x] **Data provenance indicator** — a country's equity today could be real
       reserves, a GDP-derived guess, or a capital-ratio floor, with no way to
       tell which from the UI. Surface the source (badge/tooltip) in the
-      ranking list and on hover.
-- [ ] **Confidence-weighted ranking** — render floor/estimated-equity
+      ranking list and on hover. Shipped: hover any ranked country for its
+      exact `equitySource`.
+- [x] **Confidence-weighted ranking** — render floor/estimated-equity
       countries with a visually distinct (e.g. hatched) bar in the ranking
       list, separate from the "hide financial centers" toggle, so estimated
-      vs. reported is legible even when shown.
+      vs. reported is legible even when shown. Shipped alongside the
+      provenance indicator (same underlying data).
 
 ## Model realism
 
@@ -22,30 +24,45 @@ shipped; unchecked items haven't been started yet.
       bank-to-bank loans. IMF's Coordinated Portfolio Investment Survey
       covers cross-border bond/equity holdings, which is how sovereign debt
       contagion actually spread in cases like Greece 2010. Add as a
-      togglable second network layer.
+      togglable second network layer. Deferred: needs its own research pass
+      into a new external API (auth, coverage, shape) before implementation
+      planning makes sense.
 - [ ] **Multi-country / sequential shocks** — shock two or more countries at
       once, or in a delayed sequence, to replay scenarios like "Greece then
-      Portugal then Ireland."
-- [ ] **Historical scenario presets** — a dropdown of real crises (2008
-      Lehman, 2010 Greek debt crisis, 2020 COVID shock) that jumps to the
-      right year and pre-fills a shock magnitude calibrated to what actually
-      happened.
+      Portugal then Ireland." Deferred: the DebtRank engine already supports
+      multiple shocked nodes internally, but Eisenberg-Noe, `App.tsx` state,
+      and the whole shock-selection UI are single-country throughout —
+      widening that is a real interaction-design decision (how do you pick
+      N countries + N magnitudes?) that deserves its own scoping pass.
+- [x] **Historical scenario presets** — a dropdown of real crises (2008 GFC,
+      2010 Greek debt crisis, 2015-16 China slowdown, 2020 COVID shock) that
+      jumps to the right year and pre-fills an illustrative shock magnitude.
+      Magnitudes are round numbers, not empirically calibrated to actual
+      losses (stated in the UI) — true calibration would need its own pass.
 
 ## Engineering health
 
-- [ ] **Test/lint coverage for `data-pipeline/`** — the only untested part of
-      the repo (CI currently only runs `model` and `web`). Unit tests for
-      `fetch_bis.py`/`build_snapshot.py` would catch silent-drop and
-      staleness bugs mechanically instead of by hand.
+- [x] **Test coverage for `data-pipeline/`** — the only untested part of the
+      repo (CI now runs a `data-pipeline` job alongside `model` and `web`).
+      Writing the tests surfaced and fixed a real latent bug: `fetch_bis.py`
+      crashed decoding a plain (non-zip) CSV in any context where
+      `sys.stdin` isn't a plain `TextIOWrapper` (e.g. under pytest). Linting
+      deferred as a separate, smaller follow-up (picking/wiring a Python
+      linter is its own decision).
 - [ ] **Scheduled data refresh** — a periodic GitHub Actions job that reruns
       the World Bank fetch and opens a PR if reserves/GDP/capital-ratio
       values changed, so the LOCF fix doesn't quietly go stale again.
+      Deferred: the BIS edges side needs a manually-downloaded 120MB file,
+      so full automation isn't achievable without first deciding what a
+      partial (World-Bank-only) auto-refresh should do.
 
 ## Product/UX
 
-- [ ] **Shareable scenario links** — encode
+- [x] **Shareable scenario links** — encode
       `?year=2025&shock=DEU&magnitude=0.6&model=debtrank` in the URL so a
       specific scenario can be linked and reproduced, not just described.
-- [ ] **"Why did X rank here?" drill-down** — clicking a ranked country shows
-      its direct exposure path back to the shocked node, turning the ranking
+      Shipped with a "Copy link" button next to Reset.
+- [x] **"Why did X rank here?" drill-down** — clicking a ranked country shows
+      its direct bilateral exposure to the shocked country (or the strongest
+      one-hop intermediary if there's no direct link), turning the ranking
       from an opaque number into something explorable.
