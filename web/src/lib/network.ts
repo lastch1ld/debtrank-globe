@@ -1,4 +1,4 @@
-import type { ExposureNetwork } from "./debtrank";
+import type { EquitySource, ExposureNetwork } from "./debtrank";
 import countryList from "../data/network_snapshot.json";
 import borders from "../data/world_borders.json";
 
@@ -88,12 +88,21 @@ export async function loadYearData(year: number): Promise<YearSnapshot> {
 // cross-border financial centres".
 const DEFAULT_CAPITAL_RATIO = 0.08;
 
-function equityFor(n: YearNode | undefined, grossFootprint: number): number {
+function equityFor(n: YearNode | undefined, grossFootprint: number): { value: number; source: EquitySource } {
   const reserves = n?.reserves_usd ?? 0;
   const gdpFallback = n?.gdp_usd ? n.gdp_usd * 0.01 : 0;
   const capitalRatio = n?.bank_capital_ratio_pct ? n.bank_capital_ratio_pct / 100 : DEFAULT_CAPITAL_RATIO;
   const footprintFloor = grossFootprint * capitalRatio;
-  return Math.max(reserves, gdpFallback, footprintFloor, 1e6);
+
+  const candidates: [number, EquitySource][] = [
+    [reserves, "reserves"],
+    [gdpFallback, "gdp"],
+    [footprintFloor, "capital_ratio"],
+    [1e6, "floor"],
+  ];
+  let winner = candidates[0];
+  for (const c of candidates) if (c[0] > winner[0]) winner = c;
+  return { value: winner[0], source: winner[1] };
 }
 
 export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
@@ -113,9 +122,11 @@ export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
     grossFootprint[j] += e.amount;
   }
 
-  const equity = nodeIds.map((id, i) => equityFor(byId.get(id), grossFootprint[i]));
+  const resolved = nodeIds.map((id, i) => equityFor(byId.get(id), grossFootprint[i]));
+  const equity = resolved.map((r) => r.value);
+  const equitySource = resolved.map((r) => r.source);
 
-  return { nodeIds, exposure, equity };
+  return { nodeIds, exposure, equity, equitySource };
 }
 
 /** Total in + out exposure for a country, used to size its marker. */

@@ -19,8 +19,17 @@ import {
   loadYearData,
   type YearSnapshot,
 } from "./lib/network";
-import type { ExposureNetwork } from "./lib/debtrank";
+import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
+
+// Only "reserves" is a real observed figure -- the others are modeled
+// proxies (see equityFor() in lib/network.ts for the full rationale).
+const EQUITY_SOURCE_LABEL: Record<EquitySource, string> = {
+  reserves: "Equity source: FX reserves (reported)",
+  gdp: "Equity source: estimated from GDP (no reserves data)",
+  capital_ratio: "Equity source: estimated from bank capital ratio (no reserves data)",
+  floor: "Equity source: floor estimate (no reserves, GDP, or capital-ratio data)",
+};
 
 const glass =
   "border border-sky-200/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
@@ -157,12 +166,17 @@ function App() {
       : result.distress;
 
   const rankedAll = useMemo(() => {
-    if (!result) return [];
+    if (!result || !network) return [];
     return result.nodeIds
-      .map((id, i) => ({ id, name: countries.find((c) => c.id === id)?.name ?? id, level: distress[i] }))
+      .map((id, i) => ({
+        id,
+        name: countries.find((c) => c.id === id)?.name ?? id,
+        level: distress[i],
+        source: network.equitySource?.[i],
+      }))
       .filter((r) => r.level > 1e-6)
       .sort((a, b) => b.level - a.level);
-  }, [result, distress]);
+  }, [result, distress, network]);
 
   const ranked = useMemo(
     () => (hideFinancialCenters ? rankedAll.filter((r) => !isFinancialCenter(r.id)) : rankedAll),
@@ -474,6 +488,12 @@ function App() {
                 .
               </p>
             )}
+            {rankedAll.some((r) => r.source && r.source !== "reserves") && (
+              <p className="mb-2.5 shrink-0 text-[10.5px] leading-4 text-slate-500">
+                Hatched bars use estimated, not directly reported, loss-buffer
+                data -- hover a country for its exact source.
+              </p>
+            )}
             {ranked.length === 0 ? (
               <p className="pb-2 text-xs italic text-slate-500">
                 All affected countries are financial centers, hidden above.
@@ -493,15 +513,28 @@ function App() {
                     className={`truncate ${
                       r.id === shockedId ? "font-semibold text-amber-400" : "text-slate-200"
                     }`}
-                    title={isFinancialCenter(r.id) ? "Cross-border financial centre" : undefined}
+                    title={
+                      [
+                        isFinancialCenter(r.id) ? "Cross-border financial centre" : null,
+                        r.source ? EQUITY_SOURCE_LABEL[r.source] : null,
+                      ]
+                        .filter(Boolean)
+                        .join(" · ") || undefined
+                    }
                   >
                     {r.name}
                     {isFinancialCenter(r.id) && <span className="ml-1 text-slate-600">*</span>}
                   </span>
                   <span className="relative h-1.5 overflow-hidden rounded-full bg-slate-400/10">
                     <span
-                      className="absolute inset-0 origin-left rounded-full bg-linear-to-r from-amber-400 to-red-500 transition-transform duration-400"
-                      style={{ transform: `scaleX(${r.level})` }}
+                      className="absolute inset-0 origin-left rounded-full transition-transform duration-400"
+                      style={{
+                        transform: `scaleX(${r.level})`,
+                        backgroundImage:
+                          r.source && r.source !== "reserves"
+                            ? "linear-gradient(to right, #fbbf24, #ef4444), repeating-linear-gradient(135deg, rgba(2,5,12,0.4) 0px, rgba(2,5,12,0.4) 2px, transparent 2px, transparent 5px)"
+                            : "linear-gradient(to right, #fbbf24, #ef4444)",
+                      }}
                     />
                   </span>
                   <span className="text-right font-mono text-slate-400 tabular-nums">

@@ -6,12 +6,20 @@
  * see debtrank.test.ts.
  */
 
+/** Which fallback in equityFor()'s chain actually produced a node's equity
+ * value. Only "reserves" is a real observed figure; the rest are modeled
+ * proxies -- UI-only metadata, never read by the algorithm below, so there's
+ * no Python-side equivalent (same as financialCenters.ts). */
+export type EquitySource = "reserves" | "gdp" | "capital_ratio" | "floor";
+
 export interface ExposureNetwork {
   nodeIds: string[];
   /** exposure[i][j] = economic value of node i's exposure to node j. */
   exposure: number[][];
   /** equity[i] = node i's loss-absorbing buffer. */
   equity: number[];
+  /** equitySource[i] = provenance of equity[i], for UI transparency only. */
+  equitySource?: EquitySource[];
 }
 
 export interface DebtRankResult {
