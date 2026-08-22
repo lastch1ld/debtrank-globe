@@ -57,29 +57,53 @@ export async function loadYearData(year: number): Promise<YearSnapshot> {
   return data;
 }
 
-// Same equity fallback as model/debtrank_model/cli.py: reserves are the
-// natural sovereign loss-absorbing buffer, falling back to a slice of GDP,
-// then a floor, so every node has strictly positive equity.
-function equityFor(n: YearNode | undefined): number {
-  if (n?.reserves_usd) return n.reserves_usd;
-  if (n?.gdp_usd) return n.gdp_usd * 0.01;
-  return 1e6;
+// Basel III Pillar 1 minimum capital ratio (common equity + capital held
+// against risk-weighted assets). Same fallback as model/debtrank_model/cli.py:
+// reserves are the natural sovereign loss-absorbing buffer, falling back to a
+// slice of GDP, then a floor tied to the node's own cross-border banking
+// footprint, so every node has strictly positive equity.
+//
+// The footprint floor exists because reserves/GDP are meaningless proxies for
+// cross-border financial centres (Isle of Man, Cayman, BVI, Luxembourg, Hong
+// Kong SAR, ...): BIS counts every bank *resident* there, so their reported
+// claims/liabilities routinely run to multiples of local GDP, while several
+// (e.g. Isle of Man) report no GDP or reserves to the World Bank at all and
+// fell back to a flat $1e6 floor. Against tens of billions in real exposure
+// that made exposure[i][j] / equity[i] saturate the impact matrix at 1 for
+// nearly every edge, so those nodes hit full distress from almost any shock
+// and dominated the propagation ranking regardless of which country was
+// clicked. Flooring equity at 8% of the node's own gross cross-border
+// exposure (a Basel-style capital-adequacy proxy) keeps it from collapsing to
+// an arbitrary constant while never *lowering* equity below the old
+// reserves/GDP estimate. See BIS Working Papers No. 1035 and BIS Quarterly
+// Review, June 2022, "The outsize role of cross-border financial centres".
+const MIN_CAPITAL_RATIO = 0.08;
+
+function equityFor(n: YearNode | undefined, grossFootprint: number): number {
+  const reserves = n?.reserves_usd ?? 0;
+  const gdpFallback = n?.gdp_usd ? n.gdp_usd * 0.01 : 0;
+  const footprintFloor = grossFootprint * MIN_CAPITAL_RATIO;
+  return Math.max(reserves, gdpFallback, footprintFloor, 1e6);
 }
 
 export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
   const nodeIds = countries.map((c) => c.id);
   const index = new Map(nodeIds.map((id, i) => [id, i]));
   const byId = new Map(yearData.nodes.map((n) => [n.id, n]));
-  const equity = nodeIds.map((id) => equityFor(byId.get(id)));
 
   const n = nodeIds.length;
   const exposure: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
+  const grossFootprint = new Array(n).fill(0);
   for (const e of yearData.edges) {
     const i = index.get(e.creditor);
     const j = index.get(e.debtor);
     if (i === undefined || j === undefined) continue;
     exposure[i][j] += e.amount;
+    grossFootprint[i] += e.amount;
+    grossFootprint[j] += e.amount;
   }
+
+  const equity = nodeIds.map((id, i) => equityFor(byId.get(id), grossFootprint[i]));
 
   return { nodeIds, exposure, equity };
 }

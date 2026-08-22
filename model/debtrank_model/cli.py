@@ -18,21 +18,38 @@ def _load_snapshot(path: str) -> ExposureNetwork:
     index = {nid: i for i, nid in enumerate(node_ids)}
     n = len(node_ids)
 
-    def _equity(n_: dict) -> float:
-        # Reserves are the natural loss-absorbing buffer for a sovereign; fall
-        # back to a small fraction of GDP, then a floor, when reserves are
-        # missing so every node still has strictly positive equity.
-        if n_.get("reserves_usd"):
-            return float(n_["reserves_usd"])
-        if n_.get("gdp_usd"):
-            return float(n_["gdp_usd"]) * 0.01
-        return 1e6
-
-    equity = np.array([_equity(n_) for n_ in snapshot["nodes"]], dtype=float)
     exposure = np.zeros((n, n))
+    gross_footprint = np.zeros(n)
     for edge in snapshot["edges"]:
         i, j = index[edge["creditor"]], index[edge["debtor"]]
         exposure[i, j] += edge["amount"]
+        gross_footprint[i] += edge["amount"]
+        gross_footprint[j] += edge["amount"]
+
+    # Basel III Pillar 1 minimum capital ratio, used as an equity floor tied
+    # to each node's own cross-border banking footprint. Reserves/GDP are the
+    # natural loss-absorbing buffer for an ordinary sovereign, but they're
+    # meaningless proxies for cross-border financial centres (Isle of Man,
+    # Cayman, Luxembourg, Hong Kong SAR, ...): BIS counts every bank resident
+    # there, so reported claims/liabilities run to multiples of local GDP,
+    # and some report no GDP/reserves to the World Bank at all. Without this
+    # floor those nodes fall back to a flat constant against tens of billions
+    # in real exposure, saturating the impact matrix at 1 for nearly every
+    # edge -- see web/src/lib/network.ts for the mirrored TS implementation
+    # and full rationale (BIS Working Papers No. 1035 / BIS Quarterly Review,
+    # June 2022, "The outsize role of cross-border financial centres").
+    MIN_CAPITAL_RATIO = 0.08
+
+    def _equity(n_: dict, footprint: float) -> float:
+        reserves = float(n_["reserves_usd"]) if n_.get("reserves_usd") else 0.0
+        gdp_fallback = float(n_["gdp_usd"]) * 0.01 if n_.get("gdp_usd") else 0.0
+        footprint_floor = footprint * MIN_CAPITAL_RATIO
+        return max(reserves, gdp_fallback, footprint_floor, 1e6)
+
+    equity = np.array(
+        [_equity(n_, gross_footprint[i]) for i, n_ in enumerate(snapshot["nodes"])],
+        dtype=float,
+    )
 
     return ExposureNetwork(node_ids=node_ids, exposure=exposure, equity=equity)
 

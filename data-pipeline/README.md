@@ -71,8 +71,16 @@ Earth 1:110m, public domain) used to draw real country outlines on the globe.
   edge that doesn't map to a real country in the World Bank node set, which
   removes these automatically.
 - Node "equity" (loss-absorbing buffer) for the model uses each country's
-  FX reserves, falling back to 1% of GDP, then a small floor, when reserves
-  data is missing.
+  FX reserves, falling back to 1% of GDP, then 8% of the node's own gross
+  cross-border exposure (a Basel-style capital-adequacy floor), when reserves
+  data is missing. The exposure-based floor matters most for cross-border
+  financial centres (Isle of Man, Cayman, Luxembourg, Hong Kong/Macao SAR,
+  ...), whose BIS-reported banking claims run to multiples of local GDP and
+  which sometimes report no GDP/reserves to the World Bank at all -- without
+  it they saturate the DebtRank impact matrix and dominate every shock
+  scenario. See the equityFor() comment in web/src/lib/network.ts and
+  web/src/lib/financialCenters.ts (which powers an optional "hide financial
+  centers" toggle in the UI) for details.
 - FRED's `IRLTLT01` (bond yield) series only covers ~34 mostly-OECD
   economies; `IRSTCI01` (policy rate) and `SPASTT01` (stock index) cover a
   broader ~40, including some non-OECD countries (e.g. Brazil, South

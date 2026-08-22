@@ -20,6 +20,7 @@ import {
   type YearSnapshot,
 } from "./lib/network";
 import type { ExposureNetwork } from "./lib/debtrank";
+import { isFinancialCenter } from "./lib/financialCenters";
 
 const glass =
   "border border-sky-200/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
@@ -47,6 +48,7 @@ function App() {
   const [analysisPoints, setAnalysisPoints] = useState<YearPoint[] | null>(null);
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState<number | null>(null);
+  const [hideFinancialCenters, setHideFinancialCenters] = useState(false);
 
   const network = useMemo<ExposureNetwork | null>(
     () => (yearData ? buildExposureNetwork(yearData) : null),
@@ -154,13 +156,20 @@ function App() {
       ? result.history[iteration]
       : result.distress;
 
-  const ranked = useMemo(() => {
+  const rankedAll = useMemo(() => {
     if (!result) return [];
     return result.nodeIds
       .map((id, i) => ({ id, name: countries.find((c) => c.id === id)?.name ?? id, level: distress[i] }))
       .filter((r) => r.level > 1e-6)
       .sort((a, b) => b.level - a.level);
   }, [result, distress]);
+
+  const ranked = useMemo(
+    () => (hideFinancialCenters ? rankedAll.filter((r) => !isFinancialCenter(r.id)) : rankedAll),
+    [rankedAll, hideFinancialCenters],
+  );
+
+  const hiddenFinancialCenterCount = rankedAll.length - ranked.length;
 
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased selection:bg-sky-400/20 selection:text-slate-50">
@@ -427,7 +436,7 @@ function App() {
         )}
         </div>
 
-        {result && ranked.length > 0 && (
+        {result && rankedAll.length > 0 && (
           <div className="flex min-h-0 flex-1 flex-col border-t border-sky-200/10">
             <div
               data-testid="ranking-header"
@@ -436,6 +445,40 @@ function App() {
               <span>Propagation ranking</span>
               <span>{ranked.length} affected</span>
             </div>
+            <label className="flex shrink-0 cursor-pointer items-center gap-2 pb-2.5 text-[11px] text-slate-400">
+              <input
+                type="checkbox"
+                className="size-3.5 cursor-pointer rounded border-sky-200/20 bg-slate-950/45 text-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+                checked={hideFinancialCenters}
+                onChange={(e) => setHideFinancialCenters(e.target.checked)}
+              />
+              Hide financial centers
+              {hideFinancialCenters && hiddenFinancialCenterCount > 0 && (
+                <span className="font-mono text-slate-600">({hiddenFinancialCenterCount} hidden)</span>
+              )}
+            </label>
+            {!hideFinancialCenters && rankedAll.some((r) => isFinancialCenter(r.id)) && (
+              <p className="mb-2.5 shrink-0 text-[10.5px] leading-4 text-slate-500">
+                Marked entries are cross-border financial centres (e.g. Isle
+                of Man, Hong Kong SAR) whose gross banking exposure runs to
+                multiples of local GDP -- they tend to rank high for almost
+                any shock. See{" "}
+                <a
+                  className="underline decoration-slate-600 underline-offset-2 hover:text-sky-400"
+                  href="https://www.bis.org/publ/qtrpdf/r_qt2206b.htm"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  BIS, June 2022
+                </a>
+                .
+              </p>
+            )}
+            {ranked.length === 0 ? (
+              <p className="pb-2 text-xs italic text-slate-500">
+                All affected countries are financial centers, hidden above.
+              </p>
+            ) : (
             <div
               data-testid="ranked-results"
               className="min-h-0 flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
@@ -450,8 +493,10 @@ function App() {
                     className={`truncate ${
                       r.id === shockedId ? "font-semibold text-amber-400" : "text-slate-200"
                     }`}
+                    title={isFinancialCenter(r.id) ? "Cross-border financial centre" : undefined}
                   >
                     {r.name}
+                    {isFinancialCenter(r.id) && <span className="ml-1 text-slate-600">*</span>}
                   </span>
                   <span className="relative h-1.5 overflow-hidden rounded-full bg-slate-400/10">
                     <span
@@ -466,6 +511,7 @@ function App() {
               ))}
             </ol>
             </div>
+            )}
           </div>
         )}
       </aside>
