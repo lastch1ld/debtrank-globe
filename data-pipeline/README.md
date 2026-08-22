@@ -85,16 +85,18 @@ Earth 1:110m, public domain) used to draw real country outlines on the globe.
   year-range upper bound was a hardcoded constant that goes stale every
   year the pipeline is rerun; it's now derived from today's date.
 - Node "equity" (loss-absorbing buffer) for the model uses each country's
-  FX reserves, falling back to 1% of GDP, then 8% of the node's own gross
-  cross-border exposure (a Basel-style capital-adequacy floor), when reserves
-  data is missing. The exposure-based floor matters most for cross-border
-  financial centres (Isle of Man, Cayman, Luxembourg, Hong Kong/Macao SAR,
-  ...), whose BIS-reported banking claims run to multiples of local GDP and
-  which sometimes report no GDP/reserves to the World Bank at all -- without
-  it they saturate the DebtRank impact matrix and dominate every shock
-  scenario. See the equityFor() comment in web/src/lib/network.ts and
-  web/src/lib/financialCenters.ts (which powers an optional "hide financial
-  centers" toggle in the UI) for details.
+  FX reserves, falling back to 1% of GDP, then a floor equal to its own
+  bank-capital-to-assets ratio (World Bank `FB.BNK.CAPA.ZS` / IMF Financial
+  Soundness Indicators, real coverage ~4-10%) applied to its gross
+  cross-border exposure, or the Basel III Pillar 1 minimum (8%) for the
+  handful of jurisdictions with no data under any of these indicators, when
+  reserves data is missing. The exposure-based floor matters most for
+  cross-border financial centres (Isle of Man, Cayman, Luxembourg, Hong
+  Kong/Macao SAR, ...), whose BIS-reported banking claims run to multiples
+  of local GDP -- without it they saturate the DebtRank impact matrix and
+  dominate every shock scenario. See the equityFor() comment in
+  web/src/lib/network.ts and web/src/lib/financialCenters.ts (which powers
+  an optional "hide financial centers" toggle in the UI) for details.
 - FRED's `IRLTLT01` (bond yield) series only covers ~34 mostly-OECD
   economies; `IRSTCI01` (policy rate) and `SPASTT01` (stock index) cover a
   broader ~40, including some non-OECD countries (e.g. Brazil, South

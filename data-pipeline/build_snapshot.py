@@ -29,7 +29,7 @@ def _fetch_iso2_to_iso3() -> dict[str, str]:
     return {c["iso2Code"]: c["id"] for c in countries if c["region"]["id"] != "NA"}
 
 
-FILL_FIELDS = ("gdp_usd", "reserves_usd", "external_debt_usd")
+FILL_FIELDS = ("gdp_usd", "reserves_usd", "external_debt_usd", "bank_capital_ratio_pct")
 MAX_CARRY_FORWARD_YEARS = 3
 
 
@@ -89,6 +89,7 @@ def build_by_year(nodes_by_year_path: Path, edges_by_year_path: Path, out_dir: P
                 "gdp_usd": year_values.get("gdp_usd"),
                 "reserves_usd": year_values.get("reserves_usd"),
                 "external_debt_usd": year_values.get("external_debt_usd"),
+                "bank_capital_ratio_pct": year_values.get("bank_capital_ratio_pct"),
             })
         iso3_with_node = {n["id"] for n in nodes}
 

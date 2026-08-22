@@ -34,6 +34,7 @@ interface YearNode {
   gdp_usd: number | null;
   reserves_usd: number | null;
   external_debt_usd: number | null;
+  bank_capital_ratio_pct: number | null;
 }
 
 export interface YearSnapshot {
@@ -57,11 +58,10 @@ export async function loadYearData(year: number): Promise<YearSnapshot> {
   return data;
 }
 
-// Basel III Pillar 1 minimum capital ratio (common equity + capital held
-// against risk-weighted assets). Same fallback as model/debtrank_model/cli.py:
-// reserves are the natural sovereign loss-absorbing buffer, falling back to a
-// slice of GDP, then a floor tied to the node's own cross-border banking
-// footprint, so every node has strictly positive equity.
+// Same fallback chain as model/debtrank_model/cli.py: reserves are the
+// natural sovereign loss-absorbing buffer, falling back to a slice of GDP,
+// then a floor tied to the node's own cross-border banking footprint, so
+// every node has strictly positive equity.
 //
 // The footprint floor exists because reserves/GDP are meaningless proxies for
 // cross-border financial centres (Isle of Man, Cayman, BVI, Luxembourg, Hong
@@ -72,17 +72,27 @@ export async function loadYearData(year: number): Promise<YearSnapshot> {
 // that made exposure[i][j] / equity[i] saturate the impact matrix at 1 for
 // nearly every edge, so those nodes hit full distress from almost any shock
 // and dominated the propagation ranking regardless of which country was
-// clicked. Flooring equity at 8% of the node's own gross cross-border
-// exposure (a Basel-style capital-adequacy proxy) keeps it from collapsing to
-// an arbitrary constant while never *lowering* equity below the old
-// reserves/GDP estimate. See BIS Working Papers No. 1035 and BIS Quarterly
-// Review, June 2022, "The outsize role of cross-border financial centres".
-const MIN_CAPITAL_RATIO = 0.08;
+// clicked.
+//
+// The floor's ratio is the country's own bank-capital-to-assets ratio
+// (World Bank FB.BNK.CAPA.ZS, sourced from IMF Financial Soundness
+// Indicators) applied to its gross cross-border footprint, when that's
+// available -- real coverage runs from ~4% (e.g. Macao SAR, Japan) to ~10%
+// (e.g. Ireland, Luxembourg), so a per-country figure is meaningfully more
+// accurate than one flat assumption. Only the handful of jurisdictions with
+// no World Bank data under *any* of these indicators (Isle of Man, Cayman,
+// Bermuda, ...) fall back to the Basel III Pillar 1 minimum (8% of
+// risk-weighted assets) as a last resort. Either way this never *lowers*
+// equity below the old reserves/GDP estimate. See BIS Working Papers No.
+// 1035 and BIS Quarterly Review, June 2022, "The outsize role of
+// cross-border financial centres".
+const DEFAULT_CAPITAL_RATIO = 0.08;
 
 function equityFor(n: YearNode | undefined, grossFootprint: number): number {
   const reserves = n?.reserves_usd ?? 0;
   const gdpFallback = n?.gdp_usd ? n.gdp_usd * 0.01 : 0;
-  const footprintFloor = grossFootprint * MIN_CAPITAL_RATIO;
+  const capitalRatio = n?.bank_capital_ratio_pct ? n.bank_capital_ratio_pct / 100 : DEFAULT_CAPITAL_RATIO;
+  const footprintFloor = grossFootprint * capitalRatio;
   return Math.max(reserves, gdpFallback, footprintFloor, 1e6);
 }
 

@@ -7,7 +7,8 @@
       "lng": -70.0167,
       "gdp_usd": 4167588070.29217,
       "reserves_usd": 2231431960,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "AFG",
@@ -16,7 +17,8 @@
       "lng": 69.1761,
       "gdp_usd": 17778508875.7396,
       "reserves_usd": 9748946326.71795,
-      "external_debt_usd": 3344095867.1
+      "external_debt_usd": 3344095867.1,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "AGO",
@@ -25,7 +27,8 @@
       "lng": 13.242,
       "gdp_usd": 122174889423.635,
       "reserves_usd": 13536065181.9187,
-      "external_debt_usd": 58733063313.6
+      "external_debt_usd": 58733063313.6,
+      "bank_capital_ratio_pct": 11.9500523511903
     },
     {
       "id": "ALB",
@@ -34,7 +37,8 @@
       "lng": 19.8172,
       "gdp_usd": 30540188271.3421,
       "reserves_usd": 8601612921.35767,
-      "external_debt_usd": 10712630800.8
+      "external_debt_usd": 10712630800.8,
+      "bank_capital_ratio_pct": 9.19407652195526
     },
     {
       "id": "AND",
@@ -43,7 +47,8 @@
       "lng": 1.5218,
       "gdp_usd": 4500982731.80784,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "ARE",
@@ -52,7 +57,8 @@
       "lng": 54.3705,
       "gdp_usd": 552324919095.872,
       "reserves_usd": 292319262021.321,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 11.2780232919953
     },
     {
       "id": "ARG",
@@ -61,7 +67,8 @@
       "lng": -58.4173,
       "gdp_usd": 683097891618.597,
       "reserves_usd": 40998763986.6338,
-      "external_debt_usd": 242357155703.1
+      "external_debt_usd": 242357155703.1,
+      "bank_capital_ratio_pct": 19.7111557567288
     },
     {
       "id": "ARM",
@@ -70,7 +77,8 @@
       "lng": 44.509,
       "gdp_usd": 29243452882.3545,
       "reserves_usd": 5088260146.30167,
-      "external_debt_usd": 16396165488.7
+      "external_debt_usd": 16396165488.7,
+      "bank_capital_ratio_pct": 14.0898349963827
     },
     {
       "id": "ASM",
@@ -79,7 +87,8 @@
       "lng": -170.691,
       "gdp_usd": 871000000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "ATG",
@@ -88,7 +97,8 @@
       "lng": -61.8456,
       "gdp_usd": 2338196296.2963,
       "reserves_usd": 378519316.134911,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 12.776453
     },
     {
       "id": "AUS",
@@ -97,7 +107,8 @@
       "lng": 149.129,
       "gdp_usd": 1798518933689.21,
       "reserves_usd": 72632706749.9792,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.5709088681729
     },
     {
       "id": "AUT",
@@ -106,7 +117,8 @@
       "lng": 16.3798,
       "gdp_usd": 579470021095.418,
       "reserves_usd": 53437030354.0066,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.53540044679741
     },
     {
       "id": "AZE",
@@ -115,7 +127,8 @@
       "lng": 49.8932,
       "gdp_usd": 75937647058.8235,
       "reserves_usd": 13555767940.9545,
-      "external_debt_usd": 12199421517.2
+      "external_debt_usd": 12199421517.2,
+      "bank_capital_ratio_pct": 8.65564600004157
     },
     {
       "id": "BDI",
@@ -124,7 +137,8 @@
       "lng": 29.3639,
       "gdp_usd": 3364713864.08488,
       "reserves_usd": 90349885.1781753,
-      "external_debt_usd": 1023879227.4
+      "external_debt_usd": 1023879227.4,
+      "bank_capital_ratio_pct": 10.0337625878036
     },
     {
       "id": "BEL",
@@ -133,7 +147,8 @@
       "lng": 4.36761,
       "gdp_usd": 725466462859.646,
       "reserves_usd": 56392530499.2024,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.9211545290661
     },
     {
       "id": "BEN",
@@ -142,7 +157,8 @@
       "lng": 2.6323,
       "gdp_usd": 24566420903.5337,
       "reserves_usd": null,
-      "external_debt_usd": 14162933686.6
+      "external_debt_usd": 14162933686.6,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "BFA",
@@ -151,7 +167,8 @@
       "lng": -1.53395,
       "gdp_usd": 27627297461.3181,
       "reserves_usd": null,
-      "external_debt_usd": 10845161721.4
+      "external_debt_usd": 10845161721.4,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "BGD",
@@ -160,7 +177,8 @@
       "lng": 90.4113,
       "gdp_usd": 456319229255.578,
       "reserves_usd": 28562651500.7357,
-      "external_debt_usd": 104486886261.1
+      "external_debt_usd": 104486886261.1,
+      "bank_capital_ratio_pct": 2.29413315478589
     },
     {
       "id": "BGR",
@@ -169,7 +187,8 @@
       "lng": 23.3238,
       "gdp_usd": 130777235529.606,
       "reserves_usd": 47145331735.8056,
-      "external_debt_usd": 47206483345.4
+      "external_debt_usd": 47206483345.4,
+      "bank_capital_ratio_pct": 11.4218680217742
     },
     {
       "id": "BHR",
@@ -178,7 +197,8 @@
       "lng": 50.5354,
       "gdp_usd": 48965725531.9149,
       "reserves_usd": 5269794300.5237,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "BHS",
@@ -187,7 +207,8 @@
       "lng": -77.339,
       "gdp_usd": 15832800000,
       "reserves_usd": 2632098082.6404,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "BIH",
@@ -196,7 +217,8 @@
       "lng": 18.4214,
       "gdp_usd": 32599982936.3931,
       "reserves_usd": 9418858050.22744,
-      "external_debt_usd": 13888491676.4
+      "external_debt_usd": 13888491676.4,
+      "bank_capital_ratio_pct": 10.6451086481249
     },
     {
       "id": "BLR",
@@ -205,7 +227,8 @@
       "lng": 27.5766,
       "gdp_usd": 93397215864.198,
       "reserves_usd": 14519884903.0865,
-      "external_debt_usd": 34217084774.6
+      "external_debt_usd": 34217084774.6,
+      "bank_capital_ratio_pct": 12.7392328292616
     },
     {
       "id": "BLZ",
@@ -214,7 +237,8 @@
       "lng": -88.7713,
       "gdp_usd": 3326500000,
       "reserves_usd": 559427087.788742,
-      "external_debt_usd": 1558943630.7
+      "external_debt_usd": 1558943630.7,
+      "bank_capital_ratio_pct": 9.61941289736902
     },
     {
       "id": "BMU",
@@ -223,7 +247,8 @@
       "lng": -64.706,
       "gdp_usd": 9194499000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "BOL",
@@ -232,7 +257,8 @@
       "lng": -66.1936,
       "gdp_usd": 64768947525.3256,
       "reserves_usd": 579906699.89203,
-      "external_debt_usd": 15717587538.6
+      "external_debt_usd": 15717587538.6,
+      "bank_capital_ratio_pct": 7.04239653639851
     },
     {
       "id": "BRA",
@@ -241,7 +267,8 @@
       "lng": -47.9292,
       "gdp_usd": 2279920092492.13,
       "reserves_usd": 358513128727.455,
-      "external_debt_usd": 605463780812.8
+      "external_debt_usd": 605463780812.8,
+      "bank_capital_ratio_pct": 8.34632699705756
     },
     {
       "id": "BRB",
@@ -250,7 +277,8 @@
       "lng": -59.6105,
       "gdp_usd": 8016550000,
       "reserves_usd": 1653675115.41191,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 11.2318558867574
     },
     {
       "id": "BRN",
@@ -259,7 +287,8 @@
       "lng": 114.946,
       "gdp_usd": 15031980994.1121,
       "reserves_usd": 5488659508.70276,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 9.73541207560586
     },
     {
       "id": "BTN",
@@ -268,7 +297,8 @@
       "lng": 89.6177,
       "gdp_usd": 3579320145.13077,
       "reserves_usd": 1191252357.26907,
-      "external_debt_usd": 3400087106.3
+      "external_debt_usd": 3400087106.3,
+      "bank_capital_ratio_pct": 7.89731959636914
     },
     {
       "id": "BWA",
@@ -277,7 +307,8 @@
       "lng": 25.9201,
       "gdp_usd": 19928479839.4476,
       "reserves_usd": 3455661776.33964,
-      "external_debt_usd": 2317990593
+      "external_debt_usd": 2317990593,
+      "bank_capital_ratio_pct": 9.47724860394496
     },
     {
       "id": "CAF",
@@ -286,7 +317,8 @@
       "lng": 21.6407,
       "gdp_usd": 3066109226.40165,
       "reserves_usd": 489286576.286085,
-      "external_debt_usd": 1045905200.4
+      "external_debt_usd": 1045905200.4,
+      "bank_capital_ratio_pct": 11.1229153798641
     },
     {
       "id": "CAN",
@@ -295,7 +327,8 @@
       "lng": -75.6919,
       "gdp_usd": 2319899772425.92,
       "reserves_usd": 125626898210.334,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 4.85847750201986
     },
     {
       "id": "CHE",
@@ -304,7 +337,8 @@
       "lng": 7.44821,
       "gdp_usd": 1043529899250.92,
       "reserves_usd": 1075680064272.89,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.55866565327746
     },
     {
       "id": "CHI",
@@ -313,7 +347,8 @@
       "lng": null,
       "gdp_usd": 12507320838.3932,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "CHL",
@@ -322,7 +357,8 @@
       "lng": -70.6475,
       "gdp_usd": 357371159574.862,
       "reserves_usd": 49449773295.6302,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 9.05727885615525
     },
     {
       "id": "CHN",
@@ -331,7 +367,8 @@
       "lng": 116.286,
       "gdp_usd": 19498039388042.6,
       "reserves_usd": 3748744952817.94,
-      "external_debt_usd": 2419835436491.8
+      "external_debt_usd": 2419835436491.8,
+      "bank_capital_ratio_pct": 7.75345301609578
     },
     {
       "id": "CIV",
@@ -340,7 +377,8 @@
       "lng": -4.0305,
       "gdp_usd": 99773555666.1988,
       "reserves_usd": null,
-      "external_debt_usd": 40560965965.1
+      "external_debt_usd": 40560965965.1,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "CMR",
@@ -349,7 +387,8 @@
       "lng": 11.5174,
       "gdp_usd": 58933453923.761,
       "reserves_usd": 5061511549.89538,
-      "external_debt_usd": 15770789430.1
+      "external_debt_usd": 15770789430.1,
+      "bank_capital_ratio_pct": 6.6466485170834
     },
     {
       "id": "COD",
@@ -358,7 +397,8 @@
       "lng": 15.3222,
       "gdp_usd": 91030531316.9936,
       "reserves_usd": 5104181646.5526,
-      "external_debt_usd": 12484889882.1
+      "external_debt_usd": 12484889882.1,
+      "bank_capital_ratio_pct": 8.19407026913911
     },
     {
       "id": "COG",
@@ -367,7 +407,8 @@
       "lng": 15.2662,
       "gdp_usd": 16306633778.765,
       "reserves_usd": 758550233.065437,
-      "external_debt_usd": 6728317971.4
+      "external_debt_usd": 6728317971.4,
+      "bank_capital_ratio_pct": 8.86472326776593
     },
     {
       "id": "COL",
@@ -376,7 +417,8 @@
       "lng": -74.082,
       "gdp_usd": 457410034202.523,
       "reserves_usd": 65806277188.961,
-      "external_debt_usd": 201763641280.4
+      "external_debt_usd": 201763641280.4,
+      "bank_capital_ratio_pct": 10.1429784973284
     },
     {
       "id": "COM",
@@ -385,7 +427,8 @@
       "lng": 43.2418,
       "gdp_usd": 1814920856.27026,
       "reserves_usd": 409067424.497452,
-      "external_debt_usd": 385570286.6
+      "external_debt_usd": 385570286.6,
+      "bank_capital_ratio_pct": 8.85294383335538
     },
     {
       "id": "CPV",
@@ -394,7 +437,8 @@
       "lng": -23.5087,
       "gdp_usd": 3056630435.32463,
       "reserves_usd": 1258902686.26313,
-      "external_debt_usd": 2359581722.2
+      "external_debt_usd": 2359581722.2,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "CRI",
@@ -403,7 +447,8 @@
       "lng": -84.0089,
       "gdp_usd": 102904921157.478,
       "reserves_usd": 17086422923.2621,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 10.7671807391626
     },
     {
       "id": "CUB",
@@ -412,7 +457,8 @@
       "lng": -82.3667,
       "gdp_usd": 107352000000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "CUW",
@@ -421,7 +467,8 @@
       "lng": null,
       "gdp_usd": 3561178212.2905,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 11.267248645331
     },
     {
       "id": "CYM",
@@ -430,7 +477,8 @@
       "lng": -81.3857,
       "gdp_usd": 7765336505.34319,
       "reserves_usd": 252096650.4,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "CYP",
@@ -439,7 +487,8 @@
       "lng": 33.3736,
       "gdp_usd": 41225787247.3309,
       "reserves_usd": 2947568615.4458,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 9.54154137760599
     },
     {
       "id": "CZE",
@@ -448,7 +497,8 @@
       "lng": 14.4205,
       "gdp_usd": 391026962800.475,
       "reserves_usd": 176325883579.118,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.89304494346746
     },
     {
       "id": "DEU",
@@ -457,7 +507,8 @@
       "lng": 13.4115,
       "gdp_usd": 5050922925047.05,
       "reserves_usd": 572201958133.157,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.48886682479448
     },
     {
       "id": "DJI",
@@ -466,7 +517,8 @@
       "lng": 43.1425,
       "gdp_usd": 4624533092.31886,
       "reserves_usd": 655743660.361958,
-      "external_debt_usd": 3457016382.4
+      "external_debt_usd": 3457016382.4,
+      "bank_capital_ratio_pct": 7.92160358199741
     },
     {
       "id": "DMA",
@@ -475,7 +527,8 @@
       "lng": -61.39,
       "gdp_usd": 723859259.259259,
       "reserves_usd": 164687978.337178,
-      "external_debt_usd": 569530343
+      "external_debt_usd": 569530343,
+      "bank_capital_ratio_pct": 10.543417
     },
     {
       "id": "DNK",
@@ -484,7 +537,8 @@
       "lng": 12.5681,
       "gdp_usd": 462526660468.393,
       "reserves_usd": 127756364612.297,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.31620625665904
     },
     {
       "id": "DOM",
@@ -493,7 +547,8 @@
       "lng": -69.8908,
       "gdp_usd": 127407463759.043,
       "reserves_usd": 14779137046.966,
-      "external_debt_usd": 53293949023.3
+      "external_debt_usd": 53293949023.3,
+      "bank_capital_ratio_pct": 9.78190275658669
     },
     {
       "id": "DZA",
@@ -502,7 +557,8 @@
       "lng": 3.05097,
       "gdp_usd": 287031225987.736,
       "reserves_usd": 72495669205.7541,
-      "external_debt_usd": 6898271361
+      "external_debt_usd": 6898271361,
+      "bank_capital_ratio_pct": 9.10587939405734
     },
     {
       "id": "ECU",
@@ -511,7 +567,8 @@
       "lng": -78.5243,
       "gdp_usd": 130320560400,
       "reserves_usd": 9797930670.32856,
-      "external_debt_usd": 60364730466.4
+      "external_debt_usd": 60364730466.4,
+      "bank_capital_ratio_pct": 10.8504159917523
     },
     {
       "id": "EGY",
@@ -520,7 +577,8 @@
       "lng": 31.2461,
       "gdp_usd": 365254630179.737,
       "reserves_usd": 48875494539.269,
-      "external_debt_usd": 155972716013.2
+      "external_debt_usd": 155972716013.2,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "ERI",
@@ -529,7 +587,8 @@
       "lng": 38.9183,
       "gdp_usd": null,
       "reserves_usd": 191694416.403147,
-      "external_debt_usd": 693278616.9
+      "external_debt_usd": 693278616.9,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "ESP",
@@ -538,7 +597,8 @@
       "lng": -3.70327,
       "gdp_usd": 1906453309985.88,
       "reserves_usd": 128593472896.352,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.74175050834882
     },
     {
       "id": "EST",
@@ -547,7 +607,8 @@
       "lng": 24.7586,
       "gdp_usd": 47030833798.5866,
       "reserves_usd": 2438823527.1556,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.51742118758183
     },
     {
       "id": "ETH",
@@ -556,7 +617,8 @@
       "lng": 38.7468,
       "gdp_usd": 126358758448.356,
       "reserves_usd": 3784387425.19121,
-      "external_debt_usd": 36548259483.3
+      "external_debt_usd": 36548259483.3,
+      "bank_capital_ratio_pct": 7.05751396667351
     },
     {
       "id": "FIN",
@@ -565,7 +627,8 @@
       "lng": 24.9525,
       "gdp_usd": 317039368819.607,
       "reserves_usd": 22457097709.867,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 6.34138513188216
     },
     {
       "id": "FJI",
@@ -574,7 +637,8 @@
       "lng": 178.399,
       "gdp_usd": 6198013062.06553,
       "reserves_usd": 1658916057.47344,
-      "external_debt_usd": 3868919895.3
+      "external_debt_usd": 3868919895.3,
+      "bank_capital_ratio_pct": 10.7835447006076
     },
     {
       "id": "FRA",
@@ -583,7 +647,8 @@
       "lng": 2.35097,
       "gdp_usd": 3366315927447.33,
       "reserves_usd": 428208373515.726,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.55510796222175
     },
     {
       "id": "FRO",
@@ -592,7 +657,8 @@
       "lng": -6.91181,
       "gdp_usd": 4052937169.76536,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "FSM",
@@ -601,7 +667,8 @@
       "lng": 158.185,
       "gdp_usd": 501797600,
       "reserves_usd": 497434120.418255,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.85244665312143
     },
     {
       "id": "GAB",
@@ -610,7 +677,8 @@
       "lng": 9.45162,
       "gdp_usd": 21427119323.2764,
       "reserves_usd": 638788434.429856,
-      "external_debt_usd": 6816627454.3
+      "external_debt_usd": 6816627454.3,
+      "bank_capital_ratio_pct": 8.5860735562067
     },
     {
       "id": "GBR",
@@ -619,7 +687,8 @@
       "lng": -0.126236,
       "gdp_usd": 4002587541846.01,
       "reserves_usd": 214355349052.166,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.62023432006482
     },
     {
       "id": "GEO",
@@ -628,7 +697,8 @@
       "lng": 44.793,
       "gdp_usd": 38143612855.1367,
       "reserves_usd": 6157188673.62864,
-      "external_debt_usd": 25163122115.7
+      "external_debt_usd": 25163122115.7,
+      "bank_capital_ratio_pct": 15.1933970183347
     },
     {
       "id": "GHA",
@@ -637,7 +707,8 @@
       "lng": -0.20795,
       "gdp_usd": 114209905278.717,
       "reserves_usd": 4472457558.56406,
-      "external_debt_usd": 37414621429.7
+      "external_debt_usd": 37414621429.7,
+      "bank_capital_ratio_pct": 6.6024440112726
     },
     {
       "id": "GIB",
@@ -646,7 +717,8 @@
       "lng": null,
       "gdp_usd": null,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "GIN",
@@ -655,7 +727,8 @@
       "lng": -13.7,
       "gdp_usd": 28346024753.2924,
       "reserves_usd": 1345598715.8962,
-      "external_debt_usd": 5388299536.1
+      "external_debt_usd": 5388299536.1,
+      "bank_capital_ratio_pct": 11.3530933851907
     },
     {
       "id": "GMB",
@@ -664,7 +737,8 @@
       "lng": -16.5885,
       "gdp_usd": 2593673987.53306,
       "reserves_usd": 628849157.476695,
-      "external_debt_usd": 1642671191.3
+      "external_debt_usd": 1642671191.3,
+      "bank_capital_ratio_pct": 12.1461423511356
     },
     {
       "id": "GNB",
@@ -673,7 +747,8 @@
       "lng": -15.1804,
       "gdp_usd": 2527930272.92988,
       "reserves_usd": null,
-      "external_debt_usd": 1433190116.5
+      "external_debt_usd": 1433190116.5,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "GNQ",
@@ -682,7 +757,8 @@
       "lng": 8.7741,
       "gdp_usd": 12823210425.9217,
       "reserves_usd": 1076807833.41514,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": -6.40252879823414
     },
     {
       "id": "GRC",
@@ -691,7 +767,8 @@
       "lng": 23.7166,
       "gdp_usd": 280635521324.441,
       "reserves_usd": 24047515202.452,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.60733180460098
     },
     {
       "id": "GRD",
@@ -700,7 +777,8 @@
       "lng": -61.7449,
       "gdp_usd": 1420173228.56948,
       "reserves_usd": 408148184.577921,
-      "external_debt_usd": 863278627.6
+      "external_debt_usd": 863278627.6,
+      "bank_capital_ratio_pct": 11.237035
     },
     {
       "id": "GRL",
@@ -709,7 +787,8 @@
       "lng": -51.7214,
       "gdp_usd": 3326543974.39193,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "GTM",
@@ -718,7 +797,8 @@
       "lng": -90.5328,
       "gdp_usd": 123306008821.471,
       "reserves_usd": 32753590398.8181,
-      "external_debt_usd": 27058876458.5
+      "external_debt_usd": 27058876458.5,
+      "bank_capital_ratio_pct": 6.99289998838997
     },
     {
       "id": "GUM",
@@ -727,7 +807,8 @@
       "lng": 144.794,
       "gdp_usd": 6910000000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "GUY",
@@ -736,7 +817,8 @@
       "lng": -58.1548,
       "gdp_usd": 27097477218.2254,
       "reserves_usd": 1356212379.05664,
-      "external_debt_usd": 3681569057.1
+      "external_debt_usd": 3681569057.1,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "HKG",
@@ -745,7 +827,8 @@
       "lng": 114.109,
       "gdp_usd": 427310315921.993,
       "reserves_usd": 425554111033.182,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.93221748379387
     },
     {
       "id": "HND",
@@ -754,7 +837,8 @@
       "lng": -87.4667,
       "gdp_usd": 39601409103.3005,
       "reserves_usd": 10204178100.1231,
-      "external_debt_usd": 14299817842.8
+      "external_debt_usd": 14299817842.8,
+      "bank_capital_ratio_pct": 6.02509453840585
     },
     {
       "id": "HRV",
@@ -763,7 +847,8 @@
       "lng": 15.9614,
       "gdp_usd": 105060182186.274,
       "reserves_usd": 4216234683.48051,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.6372038298524
     },
     {
       "id": "HTI",
@@ -772,7 +857,8 @@
       "lng": -72.3288,
       "gdp_usd": 32077278409.2339,
       "reserves_usd": 3393059214.4675,
-      "external_debt_usd": 944741012.3
+      "external_debt_usd": 944741012.3,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "HUN",
@@ -781,7 +867,8 @@
       "lng": 19.0408,
       "gdp_usd": 246490213513.054,
       "reserves_usd": 59094575606.7599,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 9.09051603572696
     },
     {
       "id": "IDN",
@@ -790,7 +877,8 @@
       "lng": 106.83,
       "gdp_usd": 1445642584163.81,
       "reserves_usd": 156542507869.671,
-      "external_debt_usd": 421059208493.8
+      "external_debt_usd": 421059208493.8,
+      "bank_capital_ratio_pct": 13.0097568990606
     },
     {
       "id": "IMN",
@@ -799,7 +887,8 @@
       "lng": -4.47928,
       "gdp_usd": 7576129932.79381,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "IND",
@@ -808,7 +897,8 @@
       "lng": 77.225,
       "gdp_usd": 3956067115771.63,
       "reserves_usd": 700073798240.701,
-      "external_debt_usd": 716456023890.4
+      "external_debt_usd": 716456023890.4,
+      "bank_capital_ratio_pct": 8.51794922790103
     },
     {
       "id": "IRL",
@@ -817,7 +907,8 @@
       "lng": -6.26749,
       "gdp_usd": 721701359046.313,
       "reserves_usd": 13659404386.8068,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 9.5119189688455
     },
     {
       "id": "IRN",
@@ -826,7 +917,8 @@
       "lng": 51.4447,
       "gdp_usd": 362682115433.364,
       "reserves_usd": null,
-      "external_debt_usd": 9654298895.5
+      "external_debt_usd": 9654298895.5,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "IRQ",
@@ -835,7 +927,8 @@
       "lng": 44.394,
       "gdp_usd": 254367293538.462,
       "reserves_usd": 100690954781.588,
-      "external_debt_usd": 17517006333
+      "external_debt_usd": 17517006333,
+      "bank_capital_ratio_pct": 13.8615112768946
     },
     {
       "id": "ISL",
@@ -844,7 +937,8 @@
       "lng": -21.8952,
       "gdp_usd": 38582528789.0033,
       "reserves_usd": 7732180037.18594,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 12.9833091457012
     },
     {
       "id": "ISR",
@@ -853,7 +947,8 @@
       "lng": 35.2035,
       "gdp_usd": 610777842873.595,
       "reserves_usd": 229486904238.885,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.30932068090567
     },
     {
       "id": "ITA",
@@ -862,7 +957,8 @@
       "lng": 12.4823,
       "gdp_usd": 2551556954100.35,
       "reserves_usd": 434014519754.791,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 6.25476502974826
     },
     {
       "id": "JAM",
@@ -871,7 +967,8 @@
       "lng": -76.792,
       "gdp_usd": 22704903217.5631,
       "reserves_usd": 6303188596.9515,
-      "external_debt_usd": 14836981078.4
+      "external_debt_usd": 14836981078.4,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "JOR",
@@ -880,7 +977,8 @@
       "lng": 35.9263,
       "gdp_usd": 61610052535.2113,
       "reserves_usd": 26557371377.9991,
-      "external_debt_usd": 46966040104.7
+      "external_debt_usd": 46966040104.7,
+      "bank_capital_ratio_pct": 10.49401839923
     },
     {
       "id": "JPN",
@@ -889,7 +987,8 @@
       "lng": 139.77,
       "gdp_usd": 4435162999976.94,
       "reserves_usd": 1371402218767.58,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 4.067677427737
     },
     {
       "id": "KAZ",
@@ -898,7 +997,8 @@
       "lng": 71.4382,
       "gdp_usd": 306239209650.024,
       "reserves_usd": 66068640110.4733,
-      "external_debt_usd": 167535209792.2
+      "external_debt_usd": 167535209792.2,
+      "bank_capital_ratio_pct": 14.4696522424615
     },
     {
       "id": "KEN",
@@ -907,7 +1007,8 @@
       "lng": 36.8126,
       "gdp_usd": 135941278878.815,
       "reserves_usd": 12394288741.4979,
-      "external_debt_usd": 42886127218.3
+      "external_debt_usd": 42886127218.3,
+      "bank_capital_ratio_pct": 11.6896167282259
     },
     {
       "id": "KGZ",
@@ -916,7 +1017,8 @@
       "lng": 74.6057,
       "gdp_usd": 22623752095.4613,
       "reserves_usd": 5088723593.73523,
-      "external_debt_usd": 11689916629.6
+      "external_debt_usd": 11689916629.6,
+      "bank_capital_ratio_pct": 14.3586472566685
     },
     {
       "id": "KHM",
@@ -925,7 +1027,8 @@
       "lng": 104.874,
       "gdp_usd": 51267065842.9641,
       "reserves_usd": 27524430820.5103,
-      "external_debt_usd": 20977325204.1
+      "external_debt_usd": 20977325204.1,
+      "bank_capital_ratio_pct": 14.3603842208196
     },
     {
       "id": "KIR",
@@ -934,7 +1037,8 @@
       "lng": 172.979,
       "gdp_usd": 349227254.158833,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "KNA",
@@ -943,7 +1047,8 @@
       "lng": -62.7309,
       "gdp_usd": 1183514814.81481,
       "reserves_usd": 282052160.571684,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 13.07084
     },
     {
       "id": "KOR",
@@ -952,7 +1057,8 @@
       "lng": 126.957,
       "gdp_usd": 1872374961553.15,
       "reserves_usd": 436572785443.925,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 6.2899613496518
     },
     {
       "id": "KWT",
@@ -961,7 +1067,8 @@
       "lng": 47.9824,
       "gdp_usd": 157209026926.418,
       "reserves_usd": 51737963291.5741,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 11.4074487989589
     },
     {
       "id": "LAO",
@@ -970,7 +1077,8 @@
       "lng": 102.177,
       "gdp_usd": 18302970218.5902,
       "reserves_usd": 2213001000.16953,
-      "external_debt_usd": 17836681019.8
+      "external_debt_usd": 17836681019.8,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "LBN",
@@ -979,7 +1087,8 @@
       "lng": 35.5134,
       "gdp_usd": 25971643441.3408,
       "reserves_usd": 33301277509.6206,
-      "external_debt_usd": 67389006707.2
+      "external_debt_usd": 67389006707.2,
+      "bank_capital_ratio_pct": 8.56312376259306
     },
     {
       "id": "LBR",
@@ -988,7 +1097,8 @@
       "lng": -10.7957,
       "gdp_usd": 5245938900,
       "reserves_usd": 338800671.9524,
-      "external_debt_usd": 2234742478.9
+      "external_debt_usd": 2234742478.9,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "LBY",
@@ -997,7 +1107,8 @@
       "lng": 13.1072,
       "gdp_usd": 48098909613.6316,
       "reserves_usd": 104656885592.809,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "LCA",
@@ -1006,7 +1117,8 @@
       "lng": -60.9832,
       "gdp_usd": 2656444444.44444,
       "reserves_usd": 447150519.268178,
-      "external_debt_usd": 1193706001.5
+      "external_debt_usd": 1193706001.5,
+      "bank_capital_ratio_pct": 9.584688
     },
     {
       "id": "LIE",
@@ -1015,7 +1127,8 @@
       "lng": 9.52148,
       "gdp_usd": 8905764270.4054,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.32845236511595
     },
     {
       "id": "LKA",
@@ -1024,7 +1137,8 @@
       "lng": 79.8528,
       "gdp_usd": 108825231671.196,
       "reserves_usd": 6093946546.37437,
-      "external_debt_usd": 56827528393.8
+      "external_debt_usd": 56827528393.8,
+      "bank_capital_ratio_pct": 6.91973940003828
     },
     {
       "id": "LSO",
@@ -1033,7 +1147,8 @@
       "lng": 27.7167,
       "gdp_usd": 2573572920.05159,
       "reserves_usd": 1007862057.19677,
-      "external_debt_usd": 1773147342.7
+      "external_debt_usd": 1773147342.7,
+      "bank_capital_ratio_pct": 11.1573393670899
     },
     {
       "id": "LTU",
@@ -1042,7 +1157,8 @@
       "lng": 25.2799,
       "gdp_usd": 95210150818.3512,
       "reserves_usd": 7059127324.71898,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 6.03173048101243
     },
     {
       "id": "LUX",
@@ -1051,7 +1167,8 @@
       "lng": 6.1296,
       "gdp_usd": 101157829491.107,
       "reserves_usd": 3055208156.8508,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 9.25248704084792
     },
     {
       "id": "LVA",
@@ -1060,7 +1177,8 @@
       "lng": 24.1048,
       "gdp_usd": 48618869160.3254,
       "reserves_usd": 6099392942.08427,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.89048664958248
     },
     {
       "id": "MAC",
@@ -1069,7 +1187,8 @@
       "lng": 113.55,
       "gdp_usd": 52061007670.169,
       "reserves_usd": 30638010000,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 3.74088390782674
     },
     {
       "id": "MAF",
@@ -1078,7 +1197,8 @@
       "lng": null,
       "gdp_usd": 649206262.847519,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "MAR",
@@ -1087,7 +1207,8 @@
       "lng": -6.8704,
       "gdp_usd": 182374250612.28,
       "reserves_usd": 48453629604.878,
-      "external_debt_usd": 67993946129.4
+      "external_debt_usd": 67993946129.4,
+      "bank_capital_ratio_pct": 8.43299041353463
     },
     {
       "id": "MCO",
@@ -1096,7 +1217,8 @@
       "lng": 7.41891,
       "gdp_usd": 11125788838.2812,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 4.60213145217644
     },
     {
       "id": "MDA",
@@ -1105,7 +1227,8 @@
       "lng": 28.8497,
       "gdp_usd": 20351796275.2943,
       "reserves_usd": 6006124070.06262,
-      "external_debt_usd": 10491120731.8
+      "external_debt_usd": 10491120731.8,
+      "bank_capital_ratio_pct": 11.6405466410203
     },
     {
       "id": "MDG",
@@ -1114,7 +1237,8 @@
       "lng": 45.7167,
       "gdp_usd": 19620352035.7899,
       "reserves_usd": 2784591092.62259,
-      "external_debt_usd": 6653640488.3
+      "external_debt_usd": 6653640488.3,
+      "bank_capital_ratio_pct": 7.46420560770474
     },
     {
       "id": "MDV",
@@ -1123,7 +1247,8 @@
       "lng": 73.5109,
       "gdp_usd": 7741066860.6337,
       "reserves_usd": 984573591.713979,
-      "external_debt_usd": 4692462747.8
+      "external_debt_usd": 4692462747.8,
+      "bank_capital_ratio_pct": 17.4227754886273
     },
     {
       "id": "MEX",
@@ -1132,7 +1257,8 @@
       "lng": -99.1276,
       "gdp_usd": 1832641364775.52,
       "reserves_usd": 256178680249.028,
-      "external_debt_usd": 591255026725
+      "external_debt_usd": 591255026725,
+      "bank_capital_ratio_pct": 10.4993290331307
     },
     {
       "id": "MHL",
@@ -1141,7 +1267,8 @@
       "lng": 171.135,
       "gdp_usd": 308000000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "MKD",
@@ -1150,7 +1277,8 @@
       "lng": 21.4361,
       "gdp_usd": 19101199817.0174,
       "reserves_usd": 5803955793.72208,
-      "external_debt_usd": 12837215392.3
+      "external_debt_usd": 12837215392.3,
+      "bank_capital_ratio_pct": 12.3054800538113
     },
     {
       "id": "MLI",
@@ -1159,7 +1287,8 @@
       "lng": -7.50034,
       "gdp_usd": 30069148580.7688,
       "reserves_usd": null,
-      "external_debt_usd": 6439962214.4
+      "external_debt_usd": 6439962214.4,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "MLT",
@@ -1168,7 +1297,8 @@
       "lng": 14.5189,
       "gdp_usd": 27771821560.9411,
       "reserves_usd": 1543517156.32491,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.02409163757967
     },
     {
       "id": "MMR",
@@ -1177,7 +1307,8 @@
       "lng": 95.9562,
       "gdp_usd": 81665773809.5238,
       "reserves_usd": 9337819633.15963,
-      "external_debt_usd": 11174807782.3
+      "external_debt_usd": 11174807782.3,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "MNE",
@@ -1186,7 +1317,8 @@
       "lng": 19.2595,
       "gdp_usd": 9232801464.79257,
       "reserves_usd": 2196370744.61095,
-      "external_debt_usd": 8741348456.1
+      "external_debt_usd": 8741348456.1,
+      "bank_capital_ratio_pct": 9.8984725933545
     },
     {
       "id": "MNG",
@@ -1195,7 +1327,8 @@
       "lng": 106.937,
       "gdp_usd": 25369107325.4549,
       "reserves_usd": 7004095384.43435,
-      "external_debt_usd": 38016581521.2
+      "external_debt_usd": 38016581521.2,
+      "bank_capital_ratio_pct": 9.09092680776759
     },
     {
       "id": "MNP",
@@ -1204,7 +1337,8 @@
       "lng": 145.765,
       "gdp_usd": 1096000000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "MOZ",
@@ -1213,7 +1347,8 @@
       "lng": 32.5713,
       "gdp_usd": 22337997046.1913,
       "reserves_usd": 3842807100.82527,
-      "external_debt_usd": 69765373429.6
+      "external_debt_usd": 69765373429.6,
+      "bank_capital_ratio_pct": 12.8836148775279
     },
     {
       "id": "MRT",
@@ -1222,7 +1357,8 @@
       "lng": -15.9824,
       "gdp_usd": 11679910946.4371,
       "reserves_usd": 2038562789.40175,
-      "external_debt_usd": 4459916731.6
+      "external_debt_usd": 4459916731.6,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "MUS",
@@ -1231,7 +1367,8 @@
       "lng": 57.4977,
       "gdp_usd": 16157804491.7614,
       "reserves_usd": 10308130278.8725,
-      "external_debt_usd": 20364236675.8
+      "external_debt_usd": 20364236675.8,
+      "bank_capital_ratio_pct": 9.05830164121584
     },
     {
       "id": "MWI",
@@ -1240,7 +1377,8 @@
       "lng": 33.7703,
       "gdp_usd": 14918276698.303,
       "reserves_usd": 594498493.623211,
-      "external_debt_usd": 3743648285.8
+      "external_debt_usd": 3743648285.8,
+      "bank_capital_ratio_pct": 8.23216208972469
     },
     {
       "id": "MYS",
@@ -1249,7 +1387,8 @@
       "lng": 101.684,
       "gdp_usd": 472193128644.597,
       "reserves_usd": 125629250346.156,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.30726884155786
     },
     {
       "id": "NAM",
@@ -1258,7 +1397,8 @@
       "lng": 17.0931,
       "gdp_usd": 15080340653.5276,
       "reserves_usd": 3104525016.06736,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 11.0554492629511
     },
     {
       "id": "NCL",
@@ -1267,7 +1407,8 @@
       "lng": 166.464,
       "gdp_usd": 8548919387.12607,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "NER",
@@ -1276,7 +1417,8 @@
       "lng": 2.1073,
       "gdp_usd": 21646191388.2507,
       "reserves_usd": null,
-      "external_debt_usd": 5308857136.5
+      "external_debt_usd": 5308857136.5,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "NGA",
@@ -1285,7 +1427,8 @@
       "lng": 7.48906,
       "gdp_usd": 290794361542.112,
       "reserves_usd": 46024916767.4055,
-      "external_debt_usd": 108757630161.5
+      "external_debt_usd": 108757630161.5,
+      "bank_capital_ratio_pct": 4.54876583425726
     },
     {
       "id": "NIC",
@@ -1294,7 +1437,8 @@
       "lng": -86.2734,
       "gdp_usd": 22237167113.0916,
       "reserves_usd": 8324385226.76038,
-      "external_debt_usd": 15490530047.6
+      "external_debt_usd": 15490530047.6,
+      "bank_capital_ratio_pct": 9.1631826944434
     },
     {
       "id": "NLD",
@@ -1303,7 +1447,8 @@
       "lng": 4.89095,
       "gdp_usd": 1332767651100.39,
       "reserves_usd": 118056683477.992,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 6.0262473950167
     },
     {
       "id": "NOR",
@@ -1312,7 +1457,8 @@
       "lng": 10.7387,
       "gdp_usd": 530755719438.879,
       "reserves_usd": 85494772693.8953,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.76785722961162
     },
     {
       "id": "NPL",
@@ -1321,7 +1467,8 @@
       "lng": 85.3157,
       "gdp_usd": 45489810283.1132,
       "reserves_usd": 21100332321.6852,
-      "external_debt_usd": 10152157325.7
+      "external_debt_usd": 10152157325.7,
+      "bank_capital_ratio_pct": 6.01454937093967
     },
     {
       "id": "NRU",
@@ -1330,7 +1477,8 @@
       "lng": 166.920867,
       "gdp_usd": 176040043.932346,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "NZL",
@@ -1339,7 +1487,8 @@
       "lng": 174.776,
       "gdp_usd": 264057413739.965,
       "reserves_usd": 28152498623.6497,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "OMN",
@@ -1348,7 +1497,8 @@
       "lng": 58.5874,
       "gdp_usd": 109604780696.23,
       "reserves_usd": 18286526117.9972,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "PAK",
@@ -1357,7 +1507,8 @@
       "lng": 72.8,
       "gdp_usd": 407307214476.222,
       "reserves_usd": 26455819675.7312,
-      "external_debt_usd": 129717513746.7
+      "external_debt_usd": 129717513746.7,
+      "bank_capital_ratio_pct": 5.20778535671514
     },
     {
       "id": "PAN",
@@ -1366,7 +1517,8 @@
       "lng": -79.5188,
       "gdp_usd": 90462600000,
       "reserves_usd": 6240895468.02847,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 12.9230377613039
     },
     {
       "id": "PER",
@@ -1375,7 +1527,8 @@
       "lng": -77.0465,
       "gdp_usd": 334854659181.893,
       "reserves_usd": 90393720332.2317,
-      "external_debt_usd": 93268743431.7
+      "external_debt_usd": 93268743431.7,
+      "bank_capital_ratio_pct": 11.686881842464
     },
     {
       "id": "PHL",
@@ -1384,7 +1537,8 @@
       "lng": 121.035,
       "gdp_usd": 487086123720.417,
       "reserves_usd": 110928780532.07,
-      "external_debt_usd": 137018240525.2
+      "external_debt_usd": 137018240525.2,
+      "bank_capital_ratio_pct": 9.2220093869479
     },
     {
       "id": "PLW",
@@ -1393,7 +1547,8 @@
       "lng": 134.479,
       "gdp_usd": 345000000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "PNG",
@@ -1402,7 +1557,8 @@
       "lng": 147.194,
       "gdp_usd": 32498658653.8415,
       "reserves_usd": 3708907022.18138,
-      "external_debt_usd": 12854160687.9
+      "external_debt_usd": 12854160687.9,
+      "bank_capital_ratio_pct": 12.341195085906
     },
     {
       "id": "POL",
@@ -1411,7 +1567,8 @@
       "lng": 21.02,
       "gdp_usd": 1035491784197.44,
       "reserves_usd": 271805173253.091,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 6.12415416292432
     },
     {
       "id": "PRI",
@@ -1420,7 +1577,8 @@
       "lng": -66.0,
       "gdp_usd": 129368484000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "PRK",
@@ -1429,7 +1587,8 @@
       "lng": 125.754,
       "gdp_usd": null,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "PRT",
@@ -1438,7 +1597,8 @@
       "lng": -9.13552,
       "gdp_usd": 346639825141.821,
       "reserves_usd": 68839157118.0358,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.53056614995063
     },
     {
       "id": "PRY",
@@ -1447,7 +1607,8 @@
       "lng": -57.6362,
       "gdp_usd": 49278227554.3339,
       "reserves_usd": 9567715594.05829,
-      "external_debt_usd": 29963457224.3
+      "external_debt_usd": 29963457224.3,
+      "bank_capital_ratio_pct": 9.05769011633023
     },
     {
       "id": "PSE",
@@ -1456,7 +1617,8 @@
       "lng": null,
       "gdp_usd": 17167100000,
       "reserves_usd": 1825200000,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.50632541476352
     },
     {
       "id": "PYF",
@@ -1465,7 +1627,8 @@
       "lng": -149.57,
       "gdp_usd": 6323716355.05009,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "QAT",
@@ -1474,7 +1637,8 @@
       "lng": 51.5082,
       "gdp_usd": 215559615384.615,
       "reserves_usd": 55847316824.2018,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "ROU",
@@ -1483,7 +1647,8 @@
       "lng": 26.0979,
       "gdp_usd": 428677977854.826,
       "reserves_usd": 90648371894.6505,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.56697770310014
     },
     {
       "id": "RUS",
@@ -1492,7 +1657,8 @@
       "lng": 37.6176,
       "gdp_usd": 2561310169358.74,
       "reserves_usd": 608360767884.902,
-      "external_debt_usd": 376117000821.9
+      "external_debt_usd": 376117000821.9,
+      "bank_capital_ratio_pct": 8.08279468348291
     },
     {
       "id": "RWA",
@@ -1501,7 +1667,8 @@
       "lng": 30.0587,
       "gdp_usd": 16372132990.2271,
       "reserves_usd": 1962663787.86036,
-      "external_debt_usd": 13050400791.1
+      "external_debt_usd": 13050400791.1,
+      "bank_capital_ratio_pct": 12.3846237963325
     },
     {
       "id": "SAU",
@@ -1510,7 +1677,8 @@
       "lng": 46.6977,
       "gdp_usd": 1276942933333.33,
       "reserves_usd": 505163993094.995,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 13.8606363304895
     },
     {
       "id": "SDN",
@@ -1519,7 +1687,8 @@
       "lng": 32.5363,
       "gdp_usd": 60162634574.4689,
       "reserves_usd": 177933851.813136,
-      "external_debt_usd": 22020660462.5
+      "external_debt_usd": 22020660462.5,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "SEN",
@@ -1528,7 +1697,8 @@
       "lng": -17.4734,
       "gdp_usd": 37006536238.3731,
       "reserves_usd": null,
-      "external_debt_usd": 47146494529.5
+      "external_debt_usd": 47146494529.5,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "SGP",
@@ -1537,7 +1707,8 @@
       "lng": 103.85,
       "gdp_usd": 603869516998.738,
       "reserves_usd": 432113578989.259,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 8.23996458301581
     },
     {
       "id": "SLB",
@@ -1546,7 +1717,8 @@
       "lng": 159.949,
       "gdp_usd": 1749572442.95016,
       "reserves_usd": 685807870.563439,
-      "external_debt_usd": 596145038
+      "external_debt_usd": 596145038,
+      "bank_capital_ratio_pct": 14.4557361760496
     },
     {
       "id": "SLE",
@@ -1555,7 +1727,8 @@
       "lng": -13.2134,
       "gdp_usd": 7464157904.43509,
       "reserves_usd": 433270129.080483,
-      "external_debt_usd": 2329744049.4
+      "external_debt_usd": 2329744049.4,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "SLV",
@@ -1564,7 +1737,8 @@
       "lng": -89.2073,
       "gdp_usd": 36708110000,
       "reserves_usd": 4816331848.37457,
-      "external_debt_usd": 24961880871.3
+      "external_debt_usd": 24961880871.3,
+      "bank_capital_ratio_pct": 8.38108058498597
     },
     {
       "id": "SMR",
@@ -1573,7 +1747,8 @@
       "lng": 12.4486,
       "gdp_usd": 2027243193.5116,
       "reserves_usd": 861236140.049186,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 6.5136840216726
     },
     {
       "id": "SOM",
@@ -1582,7 +1757,8 @@
       "lng": 45.3254,
       "gdp_usd": 12995200000.2658,
       "reserves_usd": null,
-      "external_debt_usd": 1799443760.8
+      "external_debt_usd": 1799443760.8,
+      "bank_capital_ratio_pct": 11.7591888832857
     },
     {
       "id": "SRB",
@@ -1591,7 +1767,8 @@
       "lng": 20.4656,
       "gdp_usd": 99953324472.9042,
       "reserves_usd": 34150990742.9314,
-      "external_debt_usd": 51983619466.8
+      "external_debt_usd": 51983619466.8,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "SSD",
@@ -1600,7 +1777,8 @@
       "lng": 31.6,
       "gdp_usd": 11997800760.2242,
       "reserves_usd": 15961778.4894403,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "STP",
@@ -1609,7 +1787,8 @@
       "lng": 6.6071,
       "gdp_usd": 981293586.906408,
       "reserves_usd": 58787511.7763146,
-      "external_debt_usd": 326406625.8
+      "external_debt_usd": 326406625.8,
+      "bank_capital_ratio_pct": 16.681327548091
     },
     {
       "id": "SUR",
@@ -1618,7 +1797,8 @@
       "lng": -55.1679,
       "gdp_usd": 4523657796.86421,
       "reserves_usd": 1615758213.36348,
-      "external_debt_usd": 4047562766.7
+      "external_debt_usd": 4047562766.7,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "SVK",
@@ -1627,7 +1807,8 @@
       "lng": 17.1073,
       "gdp_usd": 154530066506.895,
       "reserves_usd": 18161989981.1754,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.45942374543731
     },
     {
       "id": "SVN",
@@ -1636,7 +1817,8 @@
       "lng": 14.5044,
       "gdp_usd": 79648204979.3618,
       "reserves_usd": 3549845300.95317,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 10.3203712655124
     },
     {
       "id": "SWE",
@@ -1645,7 +1827,8 @@
       "lng": 18.0645,
       "gdp_usd": 668998664082.081,
       "reserves_usd": 74195224037.4302,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 5.82829459723212
     },
     {
       "id": "SWZ",
@@ -1654,7 +1837,8 @@
       "lng": 31.4659,
       "gdp_usd": 5160679612.81734,
       "reserves_usd": 536572585.913259,
-      "external_debt_usd": 1238600512.2
+      "external_debt_usd": 1238600512.2,
+      "bank_capital_ratio_pct": 11.4036566673709
     },
     {
       "id": "SXM",
@@ -1663,7 +1847,8 @@
       "lng": null,
       "gdp_usd": 1887728480.44693,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "SYC",
@@ -1672,7 +1857,8 @@
       "lng": 55.4466,
       "gdp_usd": 2387022853.48583,
       "reserves_usd": 773677575.743445,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 7.33471773727753
     },
     {
       "id": "SYR",
@@ -1681,7 +1867,8 @@
       "lng": 36.3119,
       "gdp_usd": 23737634644.3994,
       "reserves_usd": null,
-      "external_debt_usd": 4756737935.6
+      "external_debt_usd": 4756737935.6,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "TCA",
@@ -1690,7 +1877,8 @@
       "lng": -71.141389,
       "gdp_usd": 1745378000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "TCD",
@@ -1699,7 +1887,8 @@
       "lng": 15.0445,
       "gdp_usd": 21472835225.4338,
       "reserves_usd": 1547604928.86707,
-      "external_debt_usd": 3348359914.3
+      "external_debt_usd": 3348359914.3,
+      "bank_capital_ratio_pct": -1.04362734862471
     },
     {
       "id": "TGO",
@@ -1708,7 +1897,8 @@
       "lng": 1.2255,
       "gdp_usd": 11889949067.4697,
       "reserves_usd": null,
-      "external_debt_usd": 4294139883.4
+      "external_debt_usd": 4294139883.4,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "THA",
@@ -1717,7 +1907,8 @@
       "lng": 100.521,
       "gdp_usd": 577009981112.015,
       "reserves_usd": 282261124353.135,
-      "external_debt_usd": 191827376401.5
+      "external_debt_usd": 191827376401.5,
+      "bank_capital_ratio_pct": 11.125634912273
     },
     {
       "id": "TJK",
@@ -1726,7 +1917,8 @@
       "lng": 68.7864,
       "gdp_usd": 17660626562.4832,
       "reserves_usd": 4309985679.29893,
-      "external_debt_usd": 6977429758.2
+      "external_debt_usd": 6977429758.2,
+      "bank_capital_ratio_pct": 20.9222699816233
     },
     {
       "id": "TKM",
@@ -1735,7 +1927,8 @@
       "lng": 58.3794,
       "gdp_usd": 49828621355.6516,
       "reserves_usd": null,
-      "external_debt_usd": 3320400762
+      "external_debt_usd": 3320400762,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "TLS",
@@ -1744,7 +1937,8 @@
       "lng": 125.567,
       "gdp_usd": 1902180257.82737,
       "reserves_usd": 850559733.202912,
-      "external_debt_usd": 296673869.1
+      "external_debt_usd": 296673869.1,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "TON",
@@ -1753,7 +1947,8 @@
       "lng": -175.216,
       "gdp_usd": 679218218.578017,
       "reserves_usd": 412716557.109435,
-      "external_debt_usd": 173176112.1
+      "external_debt_usd": 173176112.1,
+      "bank_capital_ratio_pct": 15.0845727400077
     },
     {
       "id": "TTO",
@@ -1762,7 +1957,8 @@
       "lng": -61.4789,
       "gdp_usd": 25942749718.4685,
       "reserves_usd": 5601120709.15512,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 11.9168829755513
     },
     {
       "id": "TUN",
@@ -1771,7 +1967,8 @@
       "lng": 10.21,
       "gdp_usd": 57502836548.0878,
       "reserves_usd": 9343597097.75793,
-      "external_debt_usd": 40459855368.3
+      "external_debt_usd": 40459855368.3,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "TUR",
@@ -1780,7 +1977,8 @@
       "lng": 32.3606,
       "gdp_usd": 1597293229287,
       "reserves_usd": 185567690700.458,
-      "external_debt_usd": 514989218110.8
+      "external_debt_usd": 514989218110.8,
+      "bank_capital_ratio_pct": 6.67005773491148
     },
     {
       "id": "TUV",
@@ -1789,7 +1987,8 @@
       "lng": 179.089567,
       "gdp_usd": 57345434.7234984,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "TZA",
@@ -1798,7 +1997,8 @@
       "lng": 35.7382,
       "gdp_usd": 90143496090.4411,
       "reserves_usd": 5049646420.4773,
-      "external_debt_usd": 36343119611.6
+      "external_debt_usd": 36343119611.6,
+      "bank_capital_ratio_pct": 12.4505223875823
     },
     {
       "id": "UGA",
@@ -1807,7 +2007,8 @@
       "lng": 32.5729,
       "gdp_usd": 61985829288.1496,
       "reserves_usd": 3482906765.58962,
-      "external_debt_usd": 20534369198
+      "external_debt_usd": 20534369198,
+      "bank_capital_ratio_pct": 15.4853553307953
     },
     {
       "id": "UKR",
@@ -1816,7 +2017,8 @@
       "lng": 30.5038,
       "gdp_usd": 214233312784.397,
       "reserves_usd": 57268434039.4417,
-      "external_debt_usd": 193492461258.9
+      "external_debt_usd": 193492461258.9,
+      "bank_capital_ratio_pct": 6.89533453572279
     },
     {
       "id": "URY",
@@ -1825,7 +2027,8 @@
       "lng": -56.0675,
       "gdp_usd": 85347696277.6859,
       "reserves_usd": 18987045163.6795,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 10.460301084212
     },
     {
       "id": "USA",
@@ -1834,7 +2037,8 @@
       "lng": -77.032,
       "gdp_usd": 30769700000000,
       "reserves_usd": 1385447111476.7,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": 9.17401570770544
     },
     {
       "id": "UZB",
@@ -1843,7 +2047,8 @@
       "lng": 69.269,
       "gdp_usd": 147038081129.405,
       "reserves_usd": 41236890133.3347,
-      "external_debt_usd": 70256401083.6
+      "external_debt_usd": 70256401083.6,
+      "bank_capital_ratio_pct": 13.3385802562713
     },
     {
       "id": "VCT",
@@ -1852,7 +2057,8 @@
       "lng": -61.2653,
       "gdp_usd": 1255222222.22222,
       "reserves_usd": 281217907.470522,
-      "external_debt_usd": 806447451.4
+      "external_debt_usd": 806447451.4,
+      "bank_capital_ratio_pct": 7.467105
     },
     {
       "id": "VEN",
@@ -1861,7 +2067,8 @@
       "lng": -69.8371,
       "gdp_usd": 99661244155.6306,
       "reserves_usd": 9794062064.62109,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "VGB",
@@ -1870,7 +2077,8 @@
       "lng": -64.623056,
       "gdp_usd": null,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "VIR",
@@ -1879,7 +2087,8 @@
       "lng": -64.8963,
       "gdp_usd": 4672000000,
       "reserves_usd": null,
-      "external_debt_usd": null
+      "external_debt_usd": null,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "VNM",
@@ -1888,7 +2097,8 @@
       "lng": 105.825,
       "gdp_usd": 514697215165.065,
       "reserves_usd": 85580367980.9694,
-      "external_debt_usd": 132907340372.3
+      "external_debt_usd": 132907340372.3,
+      "bank_capital_ratio_pct": 8.55370173162123
     },
     {
       "id": "VUT",
@@ -1897,7 +2107,8 @@
       "lng": 168.321,
       "gdp_usd": 1353658840.63993,
       "reserves_usd": 614649778.922429,
-      "external_debt_usd": 519876544.1
+      "external_debt_usd": 519876544.1,
+      "bank_capital_ratio_pct": 10.258497206666
     },
     {
       "id": "WSM",
@@ -1906,7 +2117,8 @@
       "lng": -171.752,
       "gdp_usd": 1287936621.64619,
       "reserves_usd": 598336707.938962,
-      "external_debt_usd": 394938377.5
+      "external_debt_usd": 394938377.5,
+      "bank_capital_ratio_pct": 9.8074595592965
     },
     {
       "id": "XKX",
@@ -1915,7 +2127,8 @@
       "lng": 20.926,
       "gdp_usd": 12456403306.8191,
       "reserves_usd": 1516143666.30716,
-      "external_debt_usd": 4395488576.1
+      "external_debt_usd": 4395488576.1,
+      "bank_capital_ratio_pct": 9.69990964955755
     },
     {
       "id": "YEM",
@@ -1924,7 +2137,8 @@
       "lng": 44.2075,
       "gdp_usd": 21606160663.0318,
       "reserves_usd": 1250826378.53556,
-      "external_debt_usd": 7086874767.4
+      "external_debt_usd": 7086874767.4,
+      "bank_capital_ratio_pct": null
     },
     {
       "id": "ZAF",
@@ -1933,7 +2147,8 @@
       "lng": 28.1871,
       "gdp_usd": 427184325997.307,
       "reserves_usd": 76023398333.6109,
-      "external_debt_usd": 175895546993.5
+      "external_debt_usd": 175895546993.5,
+      "bank_capital_ratio_pct": 7.81376716672933
     },
     {
       "id": "ZMB",
@@ -1942,7 +2157,8 @@
       "lng": 28.2937,
       "gdp_usd": 28879806220.1264,
       "reserves_usd": 4089834507.97439,
-      "external_debt_usd": 28117735300.5
+      "external_debt_usd": 28117735300.5,
+      "bank_capital_ratio_pct": 12.6013101326149
     },
     {
       "id": "ZWE",
@@ -1951,7 +2167,8 @@
       "lng": 31.0672,
       "gdp_usd": 51215643905.5886,
       "reserves_usd": 484972804.72655,
-      "external_debt_usd": 14403740329.7
+      "external_debt_usd": 14403740329.7,
+      "bank_capital_ratio_pct": null
     }
   ]
 }

@@ -18,6 +18,13 @@ INDICATORS = {
     "external_debt_usd": "DT.DOD.DECT.CD",
     "reserves_usd": "FI.RES.TOTL.CD",
     "gdp_usd": "NY.GDP.MKTP.CD",
+    # Bank capital to assets ratio (%, IMF Financial Soundness Indicators via
+    # World Bank). Used by the model as the country-specific loss-absorption
+    # ratio for its cross-border banking footprint when reserves/GDP aren't
+    # a good proxy -- see equityFor() in web/src/lib/network.ts. Falls back
+    # to a flat Basel III assumption for the handful of jurisdictions (Isle
+    # of Man, Cayman, Bermuda, ...) with no data under this indicator either.
+    "bank_capital_ratio_pct": "FB.BNK.CAPA.ZS",
 }
 
 
@@ -180,6 +187,7 @@ def main() -> None:
             "gdp_usd": indicator_values["gdp_usd"].get(iso3),
             "reserves_usd": indicator_values["reserves_usd"].get(iso3),
             "external_debt_usd": indicator_values["external_debt_usd"].get(iso3),
+            "bank_capital_ratio_pct": indicator_values["bank_capital_ratio_pct"].get(iso3),
         }
         nodes.append(node)
 

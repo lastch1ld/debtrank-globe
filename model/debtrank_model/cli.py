@@ -26,24 +26,35 @@ def _load_snapshot(path: str) -> ExposureNetwork:
         gross_footprint[i] += edge["amount"]
         gross_footprint[j] += edge["amount"]
 
-    # Basel III Pillar 1 minimum capital ratio, used as an equity floor tied
-    # to each node's own cross-border banking footprint. Reserves/GDP are the
-    # natural loss-absorbing buffer for an ordinary sovereign, but they're
-    # meaningless proxies for cross-border financial centres (Isle of Man,
-    # Cayman, Luxembourg, Hong Kong SAR, ...): BIS counts every bank resident
-    # there, so reported claims/liabilities run to multiples of local GDP,
-    # and some report no GDP/reserves to the World Bank at all. Without this
-    # floor those nodes fall back to a flat constant against tens of billions
-    # in real exposure, saturating the impact matrix at 1 for nearly every
-    # edge -- see web/src/lib/network.ts for the mirrored TS implementation
-    # and full rationale (BIS Working Papers No. 1035 / BIS Quarterly Review,
-    # June 2022, "The outsize role of cross-border financial centres").
-    MIN_CAPITAL_RATIO = 0.08
+    # Reserves/GDP are the natural loss-absorbing buffer for an ordinary
+    # sovereign, but they're meaningless proxies for cross-border financial
+    # centres (Isle of Man, Cayman, Luxembourg, Hong Kong SAR, ...): BIS
+    # counts every bank resident there, so reported claims/liabilities run
+    # to multiples of local GDP, and some report no GDP/reserves to the
+    # World Bank at all. Without a floor those nodes fall back to a flat
+    # constant against tens of billions in real exposure, saturating the
+    # impact matrix at 1 for nearly every edge -- see web/src/lib/network.ts
+    # for the mirrored TS implementation and full rationale (BIS Working
+    # Papers No. 1035 / BIS Quarterly Review, June 2022, "The outsize role
+    # of cross-border financial centres").
+    #
+    # The floor's ratio is the country's own bank-capital-to-assets ratio
+    # (World Bank FB.BNK.CAPA.ZS / IMF Financial Soundness Indicators)
+    # applied to its gross cross-border footprint when available -- real
+    # coverage runs ~4-10%, meaningfully more accurate per-country than one
+    # flat number. Only jurisdictions with no World Bank data under any of
+    # these indicators fall back to the Basel III Pillar 1 minimum (8%).
+    DEFAULT_CAPITAL_RATIO = 0.08
 
     def _equity(n_: dict, footprint: float) -> float:
         reserves = float(n_["reserves_usd"]) if n_.get("reserves_usd") else 0.0
         gdp_fallback = float(n_["gdp_usd"]) * 0.01 if n_.get("gdp_usd") else 0.0
-        footprint_floor = footprint * MIN_CAPITAL_RATIO
+        capital_ratio = (
+            float(n_["bank_capital_ratio_pct"]) / 100
+            if n_.get("bank_capital_ratio_pct")
+            else DEFAULT_CAPITAL_RATIO
+        )
+        footprint_floor = footprint * capital_ratio
         return max(reserves, gdp_fallback, footprint_floor, 1e6)
 
     equity = np.array(
