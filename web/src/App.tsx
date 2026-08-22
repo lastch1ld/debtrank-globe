@@ -202,7 +202,7 @@ function App() {
   // Mirror the live scenario into the URL so it's always a copyable link;
   // cleared (not written) once there's no active shock to describe.
   useEffect(() => {
-    if (shockedId) writeScenarioToUrl({ year, shockId, magnitude, model });
+    if (shockedId) writeScenarioToUrl({ year, shockId: shockedId, magnitude, model });
   }, [year, shockedId, magnitude, model]);
 
   const distress = !result
