@@ -16,9 +16,11 @@ import {
   YEARS,
   buildExposureNetwork,
   countries,
+  explainExposure,
   loadYearData,
   type YearSnapshot,
 } from "./lib/network";
+import { formatUsd } from "./lib/format";
 import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
 import { clearScenarioFromUrl, parseScenarioFromUrl, writeScenarioToUrl } from "./lib/scenarioUrl";
@@ -65,6 +67,7 @@ function App() {
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState<number | null>(null);
   const [hideFinancialCenters, setHideFinancialCenters] = useState(false);
+  const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
 
   const network = useMemo<ExposureNetwork | null>(
     () => (yearData ? buildExposureNetwork(yearData) : null),
@@ -104,6 +107,7 @@ function App() {
     setShockedId(id);
     setIteration(0);
     setAnalysisPoints(null);
+    setExpandedRowId(null);
 
     const res = computeShockResult(network, id, mag, mdl, baselineShortfall);
     setResult(res);
@@ -579,10 +583,15 @@ function App() {
               className="min-h-0 flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
             >
             <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
-              {ranked.map((r) => (
+              {ranked.map((r) => {
+                const canExpand = shockedId !== null && r.id !== shockedId;
+                return (
                 <li
                   key={r.id}
-                  className="group grid grid-cols-[minmax(0,1fr)_72px_46px] items-center gap-2.5 rounded-lg px-1.5 py-1 text-xs transition-colors hover:bg-sky-400/[0.045]"
+                  className={`group grid grid-cols-[minmax(0,1fr)_72px_46px] items-center gap-2.5 rounded-lg px-1.5 py-1 text-xs transition-colors hover:bg-sky-400/[0.045] ${
+                    canExpand ? "cursor-pointer" : ""
+                  }`}
+                  onClick={() => canExpand && setExpandedRowId((id) => (id === r.id ? null : r.id))}
                 >
                   <span
                     className={`truncate ${
@@ -615,8 +624,42 @@ function App() {
                   <span className="text-right font-mono text-slate-400 tabular-nums">
                     {(r.level * 100).toFixed(1)}%
                   </span>
+                  {expandedRowId === r.id && network && shockedId && (() => {
+                    const shockedName = countries.find((c) => c.id === shockedId)?.name ?? shockedId;
+                    const explanation = explainExposure(network, r.id, shockedId);
+                    return (
+                      <div className="col-span-3 -mt-1 flex flex-col gap-0.5 rounded-lg bg-slate-950/40 px-2.5 py-2 font-mono text-[11px] text-slate-400">
+                        {explanation.claimOnShocked > 0 || explanation.owedToShocked > 0 ? (
+                          <>
+                            {explanation.claimOnShocked > 0 && (
+                              <span>
+                                Claim on {shockedName}:{" "}
+                                <strong className="text-slate-200">{formatUsd(explanation.claimOnShocked)}</strong>
+                              </span>
+                            )}
+                            {explanation.owedToShocked > 0 && (
+                              <span>
+                                Owes {shockedName}:{" "}
+                                <strong className="text-slate-200">{formatUsd(explanation.owedToShocked)}</strong>
+                              </span>
+                            )}
+                          </>
+                        ) : explanation.viaCountry ? (
+                          <span className="font-sans italic">
+                            No direct exposure -- likely indirect, via{" "}
+                            {countries.find((c) => c.id === explanation.viaCountry)?.name ?? explanation.viaCountry}
+                          </span>
+                        ) : (
+                          <span className="font-sans italic">
+                            No direct or strongly-inferred indirect link in this year's data.
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </li>
-              ))}
+                );
+              })}
             </ol>
             </div>
             )}

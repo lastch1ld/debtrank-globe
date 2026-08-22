@@ -129,6 +129,50 @@ export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
   return { nodeIds, exposure, equity, equitySource };
 }
 
+export interface ExposureExplanation {
+  /** fromId's claim on toId -- the direct DebtRank contagion channel (i's
+   * own loss when it holds an asset issued by a defaulting counterparty). */
+  claimOnShocked: number;
+  /** toId's claim on fromId -- shown for context, not itself a channel by
+   * which fromId is distressed under this model's mechanics. */
+  owedToShocked: number;
+  /** When neither direct figure is nonzero, the single intermediate country
+   * connecting them most strongly (min of the two hop exposures, larger of
+   * the two directions) -- an approximate explanation, not a literal
+   * decomposition of DebtRank's multi-hop propagation. */
+  viaCountry: string | null;
+}
+
+/** Explains why `fromId` might be exposed to `toId` (typically the shocked
+ * country) for the ranking drill-down -- direct bilateral exposure first,
+ * falling back to the strongest one-hop intermediary. */
+export function explainExposure(network: ExposureNetwork, fromId: string, toId: string): ExposureExplanation {
+  const i = network.nodeIds.indexOf(fromId);
+  const j = network.nodeIds.indexOf(toId);
+  if (i < 0 || j < 0) return { claimOnShocked: 0, owedToShocked: 0, viaCountry: null };
+
+  const claimOnShocked = network.exposure[i][j];
+  const owedToShocked = network.exposure[j][i];
+  if (claimOnShocked > 0 || owedToShocked > 0) {
+    return { claimOnShocked, owedToShocked, viaCountry: null };
+  }
+
+  let bestM: string | null = null;
+  let bestScore = 0;
+  for (let m = 0; m < network.nodeIds.length; m++) {
+    if (m === i || m === j) continue;
+    const score = Math.max(
+      Math.min(network.exposure[i][m], network.exposure[m][j]),
+      Math.min(network.exposure[j][m], network.exposure[m][i]),
+    );
+    if (score > bestScore) {
+      bestScore = score;
+      bestM = network.nodeIds[m];
+    }
+  }
+  return { claimOnShocked: 0, owedToShocked: 0, viaCountry: bestM };
+}
+
 /** Total in + out exposure for a country, used to size its marker. */
 export function totalExposure(yearData: YearSnapshot, countryId: string): number {
   let total = 0;
