@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import sys
 import zipfile
@@ -56,11 +57,24 @@ AGGREGATE_CODES = {"5J", "1C", "1D", "2B", "2C", "2H", "2J", "2R", "2S", "2T", "
 
 
 def _open_csv(path: Path):
+    """Returns (file-like, zf). zf is a ZipFile when `raw` came from inside
+    one (a binary stream that still needs text decoding) and None when
+    `raw` is already a plain text-mode file -- callers should key their
+    "does this need TextIOWrapper" decision off that, not off `raw`'s own
+    type (an earlier version compared it to `type(sys.stdin)`, which is
+    normally a TextIOWrapper too but isn't guaranteed to be -- e.g. under
+    pytest, where stdin is replaced by a different type, that comparison
+    came out False and wrapping an already-text stream in another
+    TextIOWrapper crashed with "should have returned a bytes-like object")."""
     if path.suffix == ".zip":
         zf = zipfile.ZipFile(path)
         name = next(n for n in zf.namelist() if n.endswith(".csv"))
         return zf.open(name), zf
     return open(path, encoding="utf-8"), None
+
+
+def _as_text(raw, zf):
+    return io.TextIOWrapper(raw, encoding="utf-8") if zf else raw
 
 
 def download_bulk_csv(dest: Path) -> None:
@@ -74,9 +88,27 @@ def download_bulk_csv(dest: Path) -> None:
                 f.write(chunk)
 
 
+def _usable_value(raw: str) -> float | None:
+    """Parses a single BIS data cell, returning None for anything that
+    isn't a real positive exposure value. BIS marks confidential/missing
+    cells as the literal string "NaN" in this bulk export, and a handful of
+    cells are negative due to data revisions/netting -- neither represents
+    a real exposure. Shared by extract_edges and extract_edges_by_year so
+    the two "which cells count" rules can't drift apart."""
+    if not raw:
+        return None
+    try:
+        num = float(raw)
+    except ValueError:
+        return None
+    if not (num == num) or num < 0:  # NaN check without importing math
+        return None
+    return num
+
+
 def extract_edges(csv_path: Path) -> list[dict]:
     raw, zf = _open_csv(csv_path)
-    text = raw if isinstance(raw, type(sys.stdin)) else __import__("io").TextIOWrapper(raw, encoding="utf-8")
+    text = _as_text(raw, zf)
 
     reader = csv.reader(text)
     header = next(reader)
@@ -104,20 +136,11 @@ def extract_edges(csv_path: Path) -> list[dict]:
             continue
 
         # find the most recent quarterly value that's an actual usable number.
-        # BIS marks confidential/missing cells as the literal string "NaN" in
-        # this bulk export, and a handful of cells are negative due to data
-        # revisions/netting -- neither represents a real positive exposure.
         latest_period = None
         latest_value = None
         for i, period in zip(time_cols, time_names):
-            val = row[i]
-            if not val:
-                continue
-            try:
-                num = float(val)
-            except ValueError:
-                continue
-            if not (num == num) or num < 0:  # NaN check without importing math
+            num = _usable_value(row[i])
+            if num is None:
                 continue
             latest_period, latest_value = period, num
 
@@ -153,7 +176,7 @@ def extract_edges_by_year(csv_path: Path, years: list[int]) -> dict[int, list[di
     whatever the most recent reported quarter happens to be. One pass over
     the ~600k-row file regardless of how many years are requested."""
     raw, zf = _open_csv(csv_path)
-    text = raw if isinstance(raw, type(sys.stdin)) else __import__("io").TextIOWrapper(raw, encoding="utf-8")
+    text = _as_text(raw, zf)
 
     reader = csv.reader(text)
     header = next(reader)
@@ -178,14 +201,8 @@ def extract_edges_by_year(csv_path: Path, years: list[int]) -> dict[int, list[di
         for year, col in year_col.items():
             if col is None:
                 continue
-            val = row[col]
-            if not val:
-                continue
-            try:
-                num = float(val)
-            except ValueError:
-                continue
-            if not (num == num) or num < 0:  # NaN / negative-revision check
+            num = _usable_value(row[col])
+            if num is None:
                 continue
             edges_by_year[year][(rep, cp)] = num
 

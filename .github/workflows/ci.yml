@@ -19,6 +19,19 @@ jobs:
       - run: pytest -q
         working-directory: model
 
+  data-pipeline:
+    name: data-pipeline (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+        working-directory: data-pipeline
+      - run: pytest -q
+        working-directory: data-pipeline
+
   web:
     name: web (typecheck, test, build)
     runs-on: ubuntu-latest
