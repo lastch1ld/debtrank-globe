@@ -7,6 +7,7 @@ import argparse
 import json
 import sys
 import time
+from datetime import date
 from pathlib import Path
 
 import requests
@@ -28,8 +29,20 @@ def fetch_countries() -> list[dict]:
     return [c for c in countries if c["region"]["id"] != "NA"]
 
 
-def fetch_indicator_latest(indicator_code: str, year_range: str = "2015:2023") -> dict[str, float]:
+# Upper bound is derived from today's date rather than hardcoded: a fixed
+# end year (e.g. "2015:2023") quietly goes stale every year this pipeline
+# is re-run, capping every country's "latest" GDP/reserves/external-debt
+# figure at whatever year the constant was written in even once newer data
+# exists. fetch_indicator_latest already picks the most recent non-null
+# value within the range, so widening the range costs nothing.
+def _default_year_range() -> str:
+    return f"2015:{date.today().year}"
+
+
+def fetch_indicator_latest(indicator_code: str, year_range: str | None = None) -> dict[str, float]:
     """Return {iso3: most_recent_non_null_value} for the given indicator."""
+    if year_range is None:
+        year_range = _default_year_range()
     values: dict[str, tuple[str, float]] = {}
     page = 1
     while True:

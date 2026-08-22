@@ -29,6 +29,41 @@ def _fetch_iso2_to_iso3() -> dict[str, str]:
     return {c["iso2Code"]: c["id"] for c in countries if c["region"]["id"] != "NA"}
 
 
+FILL_FIELDS = ("gdp_usd", "reserves_usd", "external_debt_usd")
+MAX_CARRY_FORWARD_YEARS = 3
+
+
+def _last_observation_carried_forward(node: dict, year_str: str) -> dict:
+    """World Bank annual indicators (GDP, reserves, external debt) are
+    published with a lag -- a country's most recent 1-2 years are routinely
+    still null at fetch time even though the underlying data exists and
+    will show up later. Querying each year independently (as
+    fetch_indicator_by_year does) takes that lag at face value, which
+    silently pushes ~40 countries (including real economies like Hong Kong
+    SAR, not just data-void micro-jurisdictions) onto the model's crude
+    reserves/GDP fallback for the most recent year -- exactly the year the
+    app defaults to.
+
+    Standard fix for this in longitudinal panels: last observation carried
+    forward (LOCF). If a field is null for `year_str`, use the most recent
+    prior year's value instead, capped at MAX_CARRY_FORWARD_YEARS so we
+    don't freeze a genuinely stale (e.g. discontinued-reporting) figure in
+    forever -- past that cap we fall through to null and let the model's
+    own equity fallback (see web/src/lib/network.ts equityFor) take over.
+    """
+    year = int(year_str)
+    year_values = dict(node["years"].get(year_str, {}))
+    for field in FILL_FIELDS:
+        if year_values.get(field) is not None:
+            continue
+        for back in range(1, MAX_CARRY_FORWARD_YEARS + 1):
+            prior = node["years"].get(str(year - back))
+            if prior and prior.get(field) is not None:
+                year_values[field] = prior[field]
+                break
+    return year_values
+
+
 def build_by_year(nodes_by_year_path: Path, edges_by_year_path: Path, out_dir: Path) -> None:
     """One merged snapshot per year, for the historical scrubber. Written as
     out_dir/{year}.json, each with the same {"nodes": [...], "edges": [...]}
@@ -45,7 +80,7 @@ def build_by_year(nodes_by_year_path: Path, edges_by_year_path: Path, out_dir: P
 
         nodes = []
         for n in nodes_by_year:
-            year_values = n["years"].get(year_str, {})
+            year_values = _last_observation_carried_forward(n, year_str)
             nodes.append({
                 "id": n["id"],
                 "name": n["name"],

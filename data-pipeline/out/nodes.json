@@ -5,8 +5,8 @@
       "name": "Aruba",
       "lat": 12.5167,
       "lng": -70.0167,
-      "gdp_usd": 3746573413.07565,
-      "reserves_usd": 1468151730,
+      "gdp_usd": 4167588070.29217,
+      "reserves_usd": 2231431960,
       "external_debt_usd": null
     },
     {
@@ -14,34 +14,34 @@
       "name": "Afghanistan",
       "lat": 34.5228,
       "lng": 69.1761,
-      "gdp_usd": 17152234636.8715,
+      "gdp_usd": 17778508875.7396,
       "reserves_usd": 9748946326.71795,
-      "external_debt_usd": 3428116975.5
+      "external_debt_usd": 3344095867.1
     },
     {
       "id": "AGO",
       "name": "Angola",
       "lat": -8.81155,
       "lng": 13.242,
-      "gdp_usd": 106042349567.303,
-      "reserves_usd": 13942114198.8828,
-      "external_debt_usd": 57273124300.5
+      "gdp_usd": 122174889423.635,
+      "reserves_usd": 13536065181.9187,
+      "external_debt_usd": 58733063313.6
     },
     {
       "id": "ALB",
       "name": "Albania",
       "lat": 41.3317,
       "lng": 19.8172,
-      "gdp_usd": 23491242727.4082,
-      "reserves_usd": 6455445543.45668,
-      "external_debt_usd": 11315021852.5
+      "gdp_usd": 30540188271.3421,
+      "reserves_usd": 8601612921.35767,
+      "external_debt_usd": 10712630800.8
     },
     {
       "id": "AND",
       "name": "Andorra",
       "lat": 42.5075,
       "lng": 1.5218,
-      "gdp_usd": 3785067331.88242,
+      "gdp_usd": 4500982731.80784,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -50,8 +50,8 @@
       "name": "United Arab Emirates",
       "lat": 24.4764,
       "lng": 54.3705,
-      "gdp_usd": 522622268401.125,
-      "reserves_usd": 189490945175.271,
+      "gdp_usd": 552324919095.872,
+      "reserves_usd": 292319262021.321,
       "external_debt_usd": null
     },
     {
@@ -59,18 +59,18 @@
       "name": "Argentina",
       "lat": -34.6118,
       "lng": -58.4173,
-      "gdp_usd": 649461687959.174,
-      "reserves_usd": 23080560550.2946,
-      "external_debt_usd": 252793904703.1
+      "gdp_usd": 683097891618.597,
+      "reserves_usd": 40998763986.6338,
+      "external_debt_usd": 242357155703.1
     },
     {
       "id": "ARM",
       "name": "Armenia",
       "lat": 40.1596,
       "lng": 44.509,
-      "gdp_usd": 24185982215.6543,
-      "reserves_usd": 3607482711.24985,
-      "external_debt_usd": 15838832193.4
+      "gdp_usd": 29243452882.3545,
+      "reserves_usd": 5088260146.30167,
+      "external_debt_usd": 16396165488.7
     },
     {
       "id": "ASM",
@@ -86,8 +86,8 @@
       "name": "Antigua and Barbuda",
       "lat": 17.1175,
       "lng": -61.8456,
-      "gdp_usd": 2054096296.2963,
-      "reserves_usd": 364367020.196401,
+      "gdp_usd": 2338196296.2963,
+      "reserves_usd": 378519316.134911,
       "external_debt_usd": null
     },
     {
@@ -95,8 +95,8 @@
       "name": "Australia",
       "lat": -35.282,
       "lng": 149.129,
-      "gdp_usd": 1734451264655.6,
-      "reserves_usd": 61703347652.0138,
+      "gdp_usd": 1798518933689.21,
+      "reserves_usd": 72632706749.9792,
       "external_debt_usd": null
     },
     {
@@ -104,8 +104,8 @@
       "name": "Austria",
       "lat": 48.2201,
       "lng": 16.3798,
-      "gdp_usd": 516670509628.876,
-      "reserves_usd": 31212416321.99,
+      "gdp_usd": 579470021095.418,
+      "reserves_usd": 53437030354.0066,
       "external_debt_usd": null
     },
     {
@@ -113,26 +113,26 @@
       "name": "Azerbaijan",
       "lat": 40.3834,
       "lng": 49.8932,
-      "gdp_usd": 72428470588.2353,
-      "reserves_usd": 13748751031.513,
-      "external_debt_usd": 14989804725.5
+      "gdp_usd": 75937647058.8235,
+      "reserves_usd": 13555767940.9545,
+      "external_debt_usd": 12199421517.2
     },
     {
       "id": "BDI",
       "name": "Burundi",
       "lat": -3.3784,
       "lng": 29.3639,
-      "gdp_usd": 3419558408.35408,
+      "gdp_usd": 3364713864.08488,
       "reserves_usd": 90349885.1781753,
-      "external_debt_usd": 1033705051.6
+      "external_debt_usd": 1023879227.4
     },
     {
       "id": "BEL",
       "name": "Belgium",
       "lat": 50.8371,
       "lng": 4.36761,
-      "gdp_usd": 650779364363.737,
-      "reserves_usd": 41674984631.4112,
+      "gdp_usd": 725466462859.646,
+      "reserves_usd": 56392530499.2024,
       "external_debt_usd": null
     },
     {
@@ -140,35 +140,35 @@
       "name": "Benin",
       "lat": 6.4779,
       "lng": 2.6323,
-      "gdp_usd": 19673291004.1444,
+      "gdp_usd": 24566420903.5337,
       "reserves_usd": null,
-      "external_debt_usd": 12540297201.5
+      "external_debt_usd": 14162933686.6
     },
     {
       "id": "BFA",
       "name": "Burkina Faso",
       "lat": 12.3605,
       "lng": -1.53395,
-      "gdp_usd": 20106062971.6533,
+      "gdp_usd": 27627297461.3181,
       "reserves_usd": null,
-      "external_debt_usd": 10477855860.6
+      "external_debt_usd": 10845161721.4
     },
     {
       "id": "BGD",
       "name": "Bangladesh",
       "lat": 23.7055,
       "lng": 90.4113,
-      "gdp_usd": 437415333018.291,
-      "reserves_usd": 21859709190.8892,
-      "external_debt_usd": 101370771740.3
+      "gdp_usd": 456319229255.578,
+      "reserves_usd": 28562651500.7357,
+      "external_debt_usd": 104486886261.1
     },
     {
       "id": "BGR",
       "name": "Bulgaria",
       "lat": 42.7105,
       "lng": 23.3238,
-      "gdp_usd": 102204457334.822,
-      "reserves_usd": 46333887862.1794,
+      "gdp_usd": 130777235529.606,
+      "reserves_usd": 47145331735.8056,
       "external_debt_usd": 47206483345.4
     },
     {
@@ -176,8 +176,8 @@
       "name": "Bahrain",
       "lat": 26.1921,
       "lng": 50.5354,
-      "gdp_usd": 46192260638.2979,
-      "reserves_usd": 5117552034.50774,
+      "gdp_usd": 48965725531.9149,
+      "reserves_usd": 5269794300.5237,
       "external_debt_usd": null
     },
     {
@@ -185,8 +185,8 @@
       "name": "Bahamas, The",
       "lat": 25.0661,
       "lng": -77.339,
-      "gdp_usd": 15271300000,
-      "reserves_usd": 2511681591.43478,
+      "gdp_usd": 15832800000,
+      "reserves_usd": 2632098082.6404,
       "external_debt_usd": null
     },
     {
@@ -194,34 +194,34 @@
       "name": "Bosnia and Herzegovina",
       "lat": 43.8607,
       "lng": 18.4214,
-      "gdp_usd": 27592361498.4057,
-      "reserves_usd": 9204916833.8925,
-      "external_debt_usd": 13868345420.2
+      "gdp_usd": 32599982936.3931,
+      "reserves_usd": 9418858050.22744,
+      "external_debt_usd": 13888491676.4
     },
     {
       "id": "BLR",
       "name": "Belarus",
       "lat": 53.9678,
       "lng": 27.5766,
-      "gdp_usd": 72478760370.4258,
-      "reserves_usd": 8117798862.30499,
-      "external_debt_usd": 36774534069.5
+      "gdp_usd": 93397215864.198,
+      "reserves_usd": 14519884903.0865,
+      "external_debt_usd": 34217084774.6
     },
     {
       "id": "BLZ",
       "name": "Belize",
       "lat": 17.2534,
       "lng": -88.7713,
-      "gdp_usd": 3052362650,
-      "reserves_usd": 473729034.128496,
-      "external_debt_usd": 1518303204.9
+      "gdp_usd": 3326500000,
+      "reserves_usd": 559427087.788742,
+      "external_debt_usd": 1558943630.7
     },
     {
       "id": "BMU",
       "name": "Bermuda",
       "lat": 32.3293,
       "lng": -64.706,
-      "gdp_usd": 8602360000,
+      "gdp_usd": 9194499000,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -230,26 +230,26 @@
       "name": "Bolivia",
       "lat": -13.9908,
       "lng": -66.1936,
-      "gdp_usd": 52340206946.4544,
-      "reserves_usd": 1799951502.87318,
-      "external_debt_usd": 16311190351.2
+      "gdp_usd": 64768947525.3256,
+      "reserves_usd": 579906699.89203,
+      "external_debt_usd": 15717587538.6
     },
     {
       "id": "BRA",
       "name": "Brazil",
       "lat": -15.7801,
       "lng": -47.9292,
-      "gdp_usd": 2191131765684.63,
-      "reserves_usd": 355021395541.562,
-      "external_debt_usd": 607387151485.1
+      "gdp_usd": 2279920092492.13,
+      "reserves_usd": 358513128727.455,
+      "external_debt_usd": 605463780812.8
     },
     {
       "id": "BRB",
       "name": "Barbados",
       "lat": 13.0935,
       "lng": -59.6105,
-      "gdp_usd": 7223248150,
-      "reserves_usd": 1605919490.51553,
+      "gdp_usd": 8016550000,
+      "reserves_usd": 1653675115.41191,
       "external_debt_usd": null
     },
     {
@@ -257,8 +257,8 @@
       "name": "Brunei Darussalam",
       "lat": 4.94199,
       "lng": 114.946,
-      "gdp_usd": 15095084656.1634,
-      "reserves_usd": 4482741926.02546,
+      "gdp_usd": 15031980994.1121,
+      "reserves_usd": 5488659508.70276,
       "external_debt_usd": null
     },
     {
@@ -266,35 +266,35 @@
       "name": "Bhutan",
       "lat": 27.5768,
       "lng": 89.6177,
-      "gdp_usd": 3012896789.79753,
-      "reserves_usd": 654480752.429944,
-      "external_debt_usd": 3266699740.1
+      "gdp_usd": 3579320145.13077,
+      "reserves_usd": 1191252357.26907,
+      "external_debt_usd": 3400087106.3
     },
     {
       "id": "BWA",
       "name": "Botswana",
       "lat": -24.6544,
       "lng": 25.9201,
-      "gdp_usd": 19413614554.6944,
-      "reserves_usd": 4755831848.94263,
-      "external_debt_usd": 2184503342.8
+      "gdp_usd": 19928479839.4476,
+      "reserves_usd": 3455661776.33964,
+      "external_debt_usd": 2317990593
     },
     {
       "id": "CAF",
       "name": "Central African Republic",
       "lat": 5.63056,
       "lng": 21.6407,
-      "gdp_usd": 2555492085.94725,
-      "reserves_usd": 479592712.605639,
-      "external_debt_usd": 1083496566.5
+      "gdp_usd": 3066109226.40165,
+      "reserves_usd": 489286576.286085,
+      "external_debt_usd": 1045905200.4
     },
     {
       "id": "CAN",
       "name": "Canada",
       "lat": 45.4215,
       "lng": -75.6919,
-      "gdp_usd": 2196593836347.42,
-      "reserves_usd": 117550899244.64,
+      "gdp_usd": 2319899772425.92,
+      "reserves_usd": 125626898210.334,
       "external_debt_usd": null
     },
     {
@@ -302,8 +302,8 @@
       "name": "Switzerland",
       "lat": 46.948,
       "lng": 7.44821,
-      "gdp_usd": 928435275851.707,
-      "reserves_usd": 863891876435.069,
+      "gdp_usd": 1043529899250.92,
+      "reserves_usd": 1075680064272.89,
       "external_debt_usd": null
     },
     {
@@ -320,8 +320,8 @@
       "name": "Chile",
       "lat": -33.475,
       "lng": -70.6475,
-      "gdp_usd": 335802745366.38,
-      "reserves_usd": 46377347796.8251,
+      "gdp_usd": 357371159574.862,
+      "reserves_usd": 49449773295.6302,
       "external_debt_usd": null
     },
     {
@@ -329,80 +329,80 @@
       "name": "China",
       "lat": 40.0495,
       "lng": 116.286,
-      "gdp_usd": 18270356654533.2,
-      "reserves_usd": 3449544415518.98,
-      "external_debt_usd": 2447537483872.8
+      "gdp_usd": 19498039388042.6,
+      "reserves_usd": 3748744952817.94,
+      "external_debt_usd": 2419835436491.8
     },
     {
       "id": "CIV",
       "name": "Cote d'Ivoire",
       "lat": 5.332,
       "lng": -4.0305,
-      "gdp_usd": 80780312569.1646,
+      "gdp_usd": 99773555666.1988,
       "reserves_usd": null,
-      "external_debt_usd": 36355703861.6
+      "external_debt_usd": 40560965965.1
     },
     {
       "id": "CMR",
       "name": "Cameroon",
       "lat": 3.8721,
       "lng": 11.5174,
-      "gdp_usd": 48814501547.4313,
-      "reserves_usd": 4882047276.67739,
-      "external_debt_usd": 15402026302.1
+      "gdp_usd": 58933453923.761,
+      "reserves_usd": 5061511549.89538,
+      "external_debt_usd": 15770789430.1
     },
     {
       "id": "COD",
       "name": "Congo, Dem. Rep.",
       "lat": -4.325,
       "lng": 15.3222,
-      "gdp_usd": 69843655425.2929,
+      "gdp_usd": 91030531316.9936,
       "reserves_usd": 5104181646.5526,
-      "external_debt_usd": 12008049639.2
+      "external_debt_usd": 12484889882.1
     },
     {
       "id": "COG",
       "name": "Congo, Rep.",
       "lat": -4.2767,
       "lng": 15.2662,
-      "gdp_usd": 15321055822.5167,
-      "reserves_usd": 715391052.357981,
-      "external_debt_usd": 6870144773.2
+      "gdp_usd": 16306633778.765,
+      "reserves_usd": 758550233.065437,
+      "external_debt_usd": 6728317971.4
     },
     {
       "id": "COL",
       "name": "Colombia",
       "lat": 4.60987,
       "lng": -74.082,
-      "gdp_usd": 366901643683.302,
-      "reserves_usd": 59040690523.7904,
-      "external_debt_usd": 196165876816.2
+      "gdp_usd": 457410034202.523,
+      "reserves_usd": 65806277188.961,
+      "external_debt_usd": 201763641280.4
     },
     {
       "id": "COM",
       "name": "Comoros",
       "lat": -11.6986,
       "lng": 43.2418,
-      "gdp_usd": 1465977684.31307,
-      "reserves_usd": 324560634.116795,
-      "external_debt_usd": 381730460.2
+      "gdp_usd": 1814920856.27026,
+      "reserves_usd": 409067424.497452,
+      "external_debt_usd": 385570286.6
     },
     {
       "id": "CPV",
       "name": "Cabo Verde",
       "lat": 14.9218,
       "lng": -23.5087,
-      "gdp_usd": 2504525537.51069,
-      "reserves_usd": 837880565.130438,
-      "external_debt_usd": 2462649634.6
+      "gdp_usd": 3056630435.32463,
+      "reserves_usd": 1258902686.26313,
+      "external_debt_usd": 2359581722.2
     },
     {
       "id": "CRI",
       "name": "Costa Rica",
       "lat": 9.63701,
       "lng": -84.0089,
-      "gdp_usd": 87512637055.7736,
-      "reserves_usd": 13225042447.0425,
+      "gdp_usd": 102904921157.478,
+      "reserves_usd": 17086422923.2621,
       "external_debt_usd": null
     },
     {
@@ -419,7 +419,7 @@
       "name": "Curacao",
       "lat": null,
       "lng": null,
-      "gdp_usd": 3281419329.60894,
+      "gdp_usd": 3561178212.2905,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -428,8 +428,8 @@
       "name": "Cayman Islands",
       "lat": 19.3022,
       "lng": -81.3857,
-      "gdp_usd": 7308564549.28678,
-      "reserves_usd": 234000000,
+      "gdp_usd": 7765336505.34319,
+      "reserves_usd": 252096650.4,
       "external_debt_usd": null
     },
     {
@@ -437,8 +437,8 @@
       "name": "Cyprus",
       "lat": 35.1676,
       "lng": 33.3736,
-      "gdp_usd": 35075440602.5202,
-      "reserves_usd": 1789237786.1808,
+      "gdp_usd": 41225787247.3309,
+      "reserves_usd": 2947568615.4458,
       "external_debt_usd": null
     },
     {
@@ -446,8 +446,8 @@
       "name": "Czechia",
       "lat": 50.0878,
       "lng": 14.4205,
-      "gdp_usd": 345059295659.911,
-      "reserves_usd": 148378918433.596,
+      "gdp_usd": 391026962800.475,
+      "reserves_usd": 176325883579.118,
       "external_debt_usd": null
     },
     {
@@ -455,8 +455,8 @@
       "name": "Germany",
       "lat": 52.5235,
       "lng": 13.4115,
-      "gdp_usd": 4562207532490.28,
-      "reserves_usd": 322699586274.527,
+      "gdp_usd": 5050922925047.05,
+      "reserves_usd": 572201958133.157,
       "external_debt_usd": null
     },
     {
@@ -464,26 +464,26 @@
       "name": "Djibouti",
       "lat": 11.5806,
       "lng": 43.1425,
-      "gdp_usd": 3898447007.38798,
-      "reserves_usd": 502033555.759362,
-      "external_debt_usd": 3428806710.3
+      "gdp_usd": 4624533092.31886,
+      "reserves_usd": 655743660.361958,
+      "external_debt_usd": 3457016382.4
     },
     {
       "id": "DMA",
       "name": "Dominica",
       "lat": 15.2976,
       "lng": -61.39,
-      "gdp_usd": 659311111.111111,
-      "reserves_usd": 183530007.089389,
-      "external_debt_usd": 592225919.1
+      "gdp_usd": 723859259.259259,
+      "reserves_usd": 164687978.337178,
+      "external_debt_usd": 569530343
     },
     {
       "id": "DNK",
       "name": "Denmark",
       "lat": 55.6763,
       "lng": 12.5681,
-      "gdp_usd": 404651706117.557,
-      "reserves_usd": 109370841823.918,
+      "gdp_usd": 462526660468.393,
+      "reserves_usd": 127756364612.297,
       "external_debt_usd": null
     },
     {
@@ -491,36 +491,36 @@
       "name": "Dominican Republic",
       "lat": 18.479,
       "lng": -69.8908,
-      "gdp_usd": 120456239153.739,
-      "reserves_usd": 15546714438.2444,
-      "external_debt_usd": 52188404942.6
+      "gdp_usd": 127407463759.043,
+      "reserves_usd": 14779137046.966,
+      "external_debt_usd": 53293949023.3
     },
     {
       "id": "DZA",
       "name": "Algeria",
       "lat": 36.7397,
       "lng": 3.05097,
-      "gdp_usd": 247923887214.655,
-      "reserves_usd": 81216738411.6242,
-      "external_debt_usd": 7315267064.9
+      "gdp_usd": 287031225987.736,
+      "reserves_usd": 72495669205.7541,
+      "external_debt_usd": 6898271361
     },
     {
       "id": "ECU",
       "name": "Ecuador",
       "lat": -0.229498,
       "lng": -78.5243,
-      "gdp_usd": 120792801000,
-      "reserves_usd": 4441563798.69096,
-      "external_debt_usd": 61658016751.5
+      "gdp_usd": 130320560400,
+      "reserves_usd": 9797930670.32856,
+      "external_debt_usd": 60364730466.4
     },
     {
       "id": "EGY",
       "name": "Egypt, Arab Rep.",
       "lat": 30.0982,
       "lng": 31.2461,
-      "gdp_usd": 395926071447.591,
-      "reserves_usd": 33070180836.1374,
-      "external_debt_usd": 168182236339.6
+      "gdp_usd": 365254630179.737,
+      "reserves_usd": 48875494539.269,
+      "external_debt_usd": 155972716013.2
     },
     {
       "id": "ERI",
@@ -529,15 +529,15 @@
       "lng": 38.9183,
       "gdp_usd": null,
       "reserves_usd": 191694416.403147,
-      "external_debt_usd": 725945139.1
+      "external_debt_usd": 693278616.9
     },
     {
       "id": "ESP",
       "name": "Spain",
       "lat": 40.4167,
       "lng": -3.70327,
-      "gdp_usd": 1619481980719.64,
-      "reserves_usd": 103088315527.743,
+      "gdp_usd": 1906453309985.88,
+      "reserves_usd": 128593472896.352,
       "external_debt_usd": null
     },
     {
@@ -545,8 +545,8 @@
       "name": "Estonia",
       "lat": 59.4392,
       "lng": 24.7586,
-      "gdp_usd": 41470344395.1086,
-      "reserves_usd": 2593268903.75936,
+      "gdp_usd": 47030833798.5866,
+      "reserves_usd": 2438823527.1556,
       "external_debt_usd": null
     },
     {
@@ -554,17 +554,17 @@
       "name": "Ethiopia",
       "lat": 9.02274,
       "lng": 38.7468,
-      "gdp_usd": 135874093203.18,
-      "reserves_usd": 2028214254.61106,
-      "external_debt_usd": 33273672181.5
+      "gdp_usd": 126358758448.356,
+      "reserves_usd": 3784387425.19121,
+      "external_debt_usd": 36548259483.3
     },
     {
       "id": "FIN",
       "name": "Finland",
       "lat": 60.1608,
       "lng": 24.9525,
-      "gdp_usd": 295191741637.26,
-      "reserves_usd": 16928692296.6914,
+      "gdp_usd": 317039368819.607,
+      "reserves_usd": 22457097709.867,
       "external_debt_usd": null
     },
     {
@@ -572,17 +572,17 @@
       "name": "Fiji",
       "lat": -18.1149,
       "lng": 178.399,
-      "gdp_usd": 5476673518.13788,
-      "reserves_usd": 1548302837.62548,
-      "external_debt_usd": 3347681715.8
+      "gdp_usd": 6198013062.06553,
+      "reserves_usd": 1658916057.47344,
+      "external_debt_usd": 3868919895.3
     },
     {
       "id": "FRA",
       "name": "France",
       "lat": 48.8566,
       "lng": 2.35097,
-      "gdp_usd": 3056250648138.29,
-      "reserves_usd": 240791742784.254,
+      "gdp_usd": 3366315927447.33,
+      "reserves_usd": 428208373515.726,
       "external_debt_usd": null
     },
     {
@@ -590,7 +590,7 @@
       "name": "Faroe Islands",
       "lat": 61.8926,
       "lng": -6.91181,
-      "gdp_usd": 3943131022.2291,
+      "gdp_usd": 4052937169.76536,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -599,7 +599,7 @@
       "name": "Micronesia, Fed. Sts.",
       "lat": 6.91771,
       "lng": 158.185,
-      "gdp_usd": 442975600,
+      "gdp_usd": 501797600,
       "reserves_usd": 497434120.418255,
       "external_debt_usd": null
     },
@@ -608,17 +608,17 @@
       "name": "Gabon",
       "lat": 0.38832,
       "lng": 9.45162,
-      "gdp_usd": 19388372070.9778,
-      "reserves_usd": 1447408422.70298,
-      "external_debt_usd": 7576008899
+      "gdp_usd": 21427119323.2764,
+      "reserves_usd": 638788434.429856,
+      "external_debt_usd": 6816627454.3
     },
     {
       "id": "GBR",
       "name": "United Kingdom",
       "lat": 51.5002,
       "lng": -0.126236,
-      "gdp_usd": 3420796653789.08,
-      "reserves_usd": 177915356242.234,
+      "gdp_usd": 4002587541846.01,
+      "reserves_usd": 214355349052.166,
       "external_debt_usd": null
     },
     {
@@ -626,18 +626,18 @@
       "name": "Georgia",
       "lat": 41.71,
       "lng": 44.793,
-      "gdp_usd": 30777833600.6515,
-      "reserves_usd": 5002255638.46392,
-      "external_debt_usd": 24123230482
+      "gdp_usd": 38143612855.1367,
+      "reserves_usd": 6157188673.62864,
+      "external_debt_usd": 25163122115.7
     },
     {
       "id": "GHA",
       "name": "Ghana",
       "lat": 5.57045,
       "lng": -0.20795,
-      "gdp_usd": 80547146875.9526,
-      "reserves_usd": 3623904994.58702,
-      "external_debt_usd": 41700706280.4
+      "gdp_usd": 114209905278.717,
+      "reserves_usd": 4472457558.56406,
+      "external_debt_usd": 37414621429.7
     },
     {
       "id": "GIB",
@@ -653,35 +653,35 @@
       "name": "Guinea",
       "lat": 9.51667,
       "lng": -13.7,
-      "gdp_usd": 22407615556.0571,
-      "reserves_usd": 1887171051.40105,
-      "external_debt_usd": 5163409013.9
+      "gdp_usd": 28346024753.2924,
+      "reserves_usd": 1345598715.8962,
+      "external_debt_usd": 5388299536.1
     },
     {
       "id": "GMB",
       "name": "Gambia, The",
       "lat": 13.4495,
       "lng": -16.5885,
-      "gdp_usd": 2382262185.38179,
-      "reserves_usd": 577028229.488264,
-      "external_debt_usd": 1324832841.6
+      "gdp_usd": 2593673987.53306,
+      "reserves_usd": 628849157.476695,
+      "external_debt_usd": 1642671191.3
     },
     {
       "id": "GNB",
       "name": "Guinea-Bissau",
       "lat": 11.8037,
       "lng": -15.1804,
-      "gdp_usd": 2076748678.11987,
+      "gdp_usd": 2527930272.92988,
       "reserves_usd": null,
-      "external_debt_usd": 1422541608.6
+      "external_debt_usd": 1433190116.5
     },
     {
       "id": "GNQ",
       "name": "Equatorial Guinea",
       "lat": 3.7523,
       "lng": 8.7741,
-      "gdp_usd": 12541814272.8021,
-      "reserves_usd": 1538461553.77119,
+      "gdp_usd": 12823210425.9217,
+      "reserves_usd": 1076807833.41514,
       "external_debt_usd": null
     },
     {
@@ -689,8 +689,8 @@
       "name": "Greece",
       "lat": 37.9792,
       "lng": 23.7166,
-      "gdp_usd": 242946187738.269,
-      "reserves_usd": 13608620628.7708,
+      "gdp_usd": 280635521324.441,
+      "reserves_usd": 24047515202.452,
       "external_debt_usd": null
     },
     {
@@ -698,9 +698,9 @@
       "name": "Grenada",
       "lat": 12.0653,
       "lng": -61.7449,
-      "gdp_usd": 1336418518.51852,
-      "reserves_usd": 404129916.314621,
-      "external_debt_usd": 881513363.5
+      "gdp_usd": 1420173228.56948,
+      "reserves_usd": 408148184.577921,
+      "external_debt_usd": 863278627.6
     },
     {
       "id": "GRL",
@@ -716,9 +716,9 @@
       "name": "Guatemala",
       "lat": 14.6248,
       "lng": -90.5328,
-      "gdp_usd": 104298081428.769,
-      "reserves_usd": 21311089849.3863,
-      "external_debt_usd": 25662103251.6
+      "gdp_usd": 123306008821.471,
+      "reserves_usd": 32753590398.8181,
+      "external_debt_usd": 27058876458.5
     },
     {
       "id": "GUM",
@@ -734,16 +734,16 @@
       "name": "Guyana",
       "lat": 6.80461,
       "lng": -58.1548,
-      "gdp_usd": 16918503597.1223,
-      "reserves_usd": 895275181.194153,
-      "external_debt_usd": 2952574717.3
+      "gdp_usd": 27097477218.2254,
+      "reserves_usd": 1356212379.05664,
+      "external_debt_usd": 3681569057.1
     },
     {
       "id": "HKG",
       "name": "Hong Kong SAR, China",
       "lat": 22.3964,
       "lng": 114.109,
-      "gdp_usd": 380762296025.216,
+      "gdp_usd": 427310315921.993,
       "reserves_usd": 425554111033.182,
       "external_debt_usd": null
     },
@@ -752,17 +752,17 @@
       "name": "Honduras",
       "lat": 15.1333,
       "lng": -87.4667,
-      "gdp_usd": 34355805527.9795,
-      "reserves_usd": 7543352779.92798,
-      "external_debt_usd": 12943993274.5
+      "gdp_usd": 39601409103.3005,
+      "reserves_usd": 10204178100.1231,
+      "external_debt_usd": 14299817842.8
     },
     {
       "id": "HRV",
       "name": "Croatia",
       "lat": 45.8069,
       "lng": 15.9614,
-      "gdp_usd": 85621337533.3348,
-      "reserves_usd": 3175829868.24805,
+      "gdp_usd": 105060182186.274,
+      "reserves_usd": 4216234683.48051,
       "external_debt_usd": null
     },
     {
@@ -770,17 +770,17 @@
       "name": "Haiti",
       "lat": 18.5392,
       "lng": -72.3288,
-      "gdp_usd": 19572288894.1581,
-      "reserves_usd": 2583016532.68436,
-      "external_debt_usd": 3156537449.7
+      "gdp_usd": 32077278409.2339,
+      "reserves_usd": 3393059214.4675,
+      "external_debt_usd": 944741012.3
     },
     {
       "id": "HUN",
       "name": "Hungary",
       "lat": 47.4984,
       "lng": 19.0408,
-      "gdp_usd": 213029511028.874,
-      "reserves_usd": 45718623573.4135,
+      "gdp_usd": 246490213513.054,
+      "reserves_usd": 59094575606.7599,
       "external_debt_usd": null
     },
     {
@@ -788,9 +788,9 @@
       "name": "Indonesia",
       "lat": -6.19752,
       "lng": 106.83,
-      "gdp_usd": 1371166925749.88,
-      "reserves_usd": 146358992701.848,
-      "external_debt_usd": 399613483613.1
+      "gdp_usd": 1445642584163.81,
+      "reserves_usd": 156542507869.671,
+      "external_debt_usd": 421059208493.8
     },
     {
       "id": "IMN",
@@ -806,17 +806,17 @@
       "name": "India",
       "lat": 28.6353,
       "lng": 77.225,
-      "gdp_usd": 3500906030644.76,
-      "reserves_usd": 627792750126.715,
-      "external_debt_usd": 647556415555.5
+      "gdp_usd": 3956067115771.63,
+      "reserves_usd": 700073798240.701,
+      "external_debt_usd": 716456023890.4
     },
     {
       "id": "IRL",
       "name": "Ireland",
       "lat": 53.3441,
       "lng": -6.26749,
-      "gdp_usd": 567372737459.116,
-      "reserves_usd": 12904387778.1845,
+      "gdp_usd": 721701359046.313,
+      "reserves_usd": 13659404386.8068,
       "external_debt_usd": null
     },
     {
@@ -824,26 +824,26 @@
       "name": "Iran, Islamic Rep.",
       "lat": 35.6878,
       "lng": 51.4447,
-      "gdp_usd": 457510482317.483,
+      "gdp_usd": 362682115433.364,
       "reserves_usd": null,
-      "external_debt_usd": 9900872535.1
+      "external_debt_usd": 9654298895.5
     },
     {
       "id": "IRQ",
       "name": "Iraq",
       "lat": 33.3302,
       "lng": 44.394,
-      "gdp_usd": 268881051643.549,
-      "reserves_usd": 112232897713.46,
-      "external_debt_usd": 20318433379.4
+      "gdp_usd": 254367293538.462,
+      "reserves_usd": 100690954781.588,
+      "external_debt_usd": 17517006333
     },
     {
       "id": "ISL",
       "name": "Iceland",
       "lat": 64.1353,
       "lng": -21.8952,
-      "gdp_usd": 31701996433.7807,
-      "reserves_usd": 5808710368.479,
+      "gdp_usd": 38582528789.0033,
+      "reserves_usd": 7732180037.18594,
       "external_debt_usd": null
     },
     {
@@ -851,8 +851,8 @@
       "name": "Israel",
       "lat": 31.7717,
       "lng": 35.2035,
-      "gdp_usd": 513393395491.904,
-      "reserves_usd": 204660857567.016,
+      "gdp_usd": 610777842873.595,
+      "reserves_usd": 229486904238.885,
       "external_debt_usd": null
     },
     {
@@ -860,8 +860,8 @@
       "name": "Italy",
       "lat": 41.8955,
       "lng": 12.4823,
-      "gdp_usd": 2316882296366.32,
-      "reserves_usd": 247396414253.983,
+      "gdp_usd": 2551556954100.35,
+      "reserves_usd": 434014519754.791,
       "external_debt_usd": null
     },
     {
@@ -869,26 +869,26 @@
       "name": "Jamaica",
       "lat": 17.9927,
       "lng": -76.792,
-      "gdp_usd": 21418797832.8216,
-      "reserves_usd": 4868643492.7225,
-      "external_debt_usd": 15395210849.4
+      "gdp_usd": 22704903217.5631,
+      "reserves_usd": 6303188596.9515,
+      "external_debt_usd": 14836981078.4
     },
     {
       "id": "JOR",
       "name": "Jordan",
       "lat": 31.9497,
       "lng": 35.9263,
-      "gdp_usd": 56123472112.6761,
-      "reserves_usd": 19068901690.6261,
-      "external_debt_usd": 44559287366
+      "gdp_usd": 61610052535.2113,
+      "reserves_usd": 26557371377.9991,
+      "external_debt_usd": 46966040104.7
     },
     {
       "id": "JPN",
       "name": "Japan",
       "lat": 35.67,
       "lng": 139.77,
-      "gdp_usd": 4384854269961.93,
-      "reserves_usd": 1294636035263.82,
+      "gdp_usd": 4435162999976.94,
+      "reserves_usd": 1371402218767.58,
       "external_debt_usd": null
     },
     {
@@ -896,43 +896,43 @@
       "name": "Kazakhstan",
       "lat": 51.1879,
       "lng": 71.4382,
-      "gdp_usd": 261840101059.923,
-      "reserves_usd": 35964591353.82,
-      "external_debt_usd": 171483605932.5
+      "gdp_usd": 306239209650.024,
+      "reserves_usd": 66068640110.4733,
+      "external_debt_usd": 167535209792.2
     },
     {
       "id": "KEN",
       "name": "Kenya",
       "lat": -1.27975,
       "lng": 36.8126,
-      "gdp_usd": 107500884685.013,
-      "reserves_usd": 7341776189.84466,
-      "external_debt_usd": 42910026054.2
+      "gdp_usd": 135941278878.815,
+      "reserves_usd": 12394288741.4979,
+      "external_debt_usd": 42886127218.3
     },
     {
       "id": "KGZ",
       "name": "Kyrgyz Republic",
       "lat": 42.8851,
       "lng": 74.6057,
-      "gdp_usd": 15180842369.4894,
-      "reserves_usd": 3236844683.24645,
-      "external_debt_usd": 10168018289.8
+      "gdp_usd": 22623752095.4613,
+      "reserves_usd": 5088723593.73523,
+      "external_debt_usd": 11689916629.6
     },
     {
       "id": "KHM",
       "name": "Cambodia",
       "lat": 11.5556,
       "lng": 104.874,
-      "gdp_usd": 42335646895.7984,
-      "reserves_usd": 19983916474.9418,
-      "external_debt_usd": 22533630678.5
+      "gdp_usd": 51267065842.9641,
+      "reserves_usd": 27524430820.5103,
+      "external_debt_usd": 20977325204.1
     },
     {
       "id": "KIR",
       "name": "Kiribati",
       "lat": 1.32905,
       "lng": 172.979,
-      "gdp_usd": 291657337.839517,
+      "gdp_usd": 349227254.158833,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -941,8 +941,8 @@
       "name": "St. Kitts and Nevis",
       "lat": 17.3,
       "lng": -62.7309,
-      "gdp_usd": 1055651851.85185,
-      "reserves_usd": 286074596.982653,
+      "gdp_usd": 1183514814.81481,
+      "reserves_usd": 282052160.571684,
       "external_debt_usd": null
     },
     {
@@ -950,8 +950,8 @@
       "name": "Korea, Rep.",
       "lat": 37.5323,
       "lng": 126.957,
-      "gdp_usd": 1844800934391.54,
-      "reserves_usd": 420930029064.025,
+      "gdp_usd": 1872374961553.15,
+      "reserves_usd": 436572785443.925,
       "external_debt_usd": null
     },
     {
@@ -959,8 +959,8 @@
       "name": "Kuwait",
       "lat": 29.3721,
       "lng": 47.9824,
-      "gdp_usd": 165462656226.772,
-      "reserves_usd": 52619359334.9437,
+      "gdp_usd": 157209026926.418,
+      "reserves_usd": 51737963291.5741,
       "external_debt_usd": null
     },
     {
@@ -968,35 +968,35 @@
       "name": "Lao PDR",
       "lat": 18.5826,
       "lng": 102.177,
-      "gdp_usd": 15843155731.2552,
-      "reserves_usd": 1769745792.21118,
-      "external_debt_usd": 18056503647.6
+      "gdp_usd": 18302970218.5902,
+      "reserves_usd": 2213001000.16953,
+      "external_debt_usd": 17836681019.8
     },
     {
       "id": "LBN",
       "name": "Lebanon",
       "lat": 33.8872,
       "lng": 35.5134,
-      "gdp_usd": 20078620356.9931,
-      "reserves_usd": 27489698131.497,
-      "external_debt_usd": 66329049009.2
+      "gdp_usd": 25971643441.3408,
+      "reserves_usd": 33301277509.6206,
+      "external_debt_usd": 67389006707.2
     },
     {
       "id": "LBR",
       "name": "Liberia",
       "lat": 6.30039,
       "lng": -10.7957,
-      "gdp_usd": 4390000000,
-      "reserves_usd": 441429534.738618,
-      "external_debt_usd": 2105650856.5
+      "gdp_usd": 5245938900,
+      "reserves_usd": 338800671.9524,
+      "external_debt_usd": 2234742478.9
     },
     {
       "id": "LBY",
       "name": "Libya",
       "lat": 32.8578,
       "lng": 13.1072,
-      "gdp_usd": 44027664915.187,
-      "reserves_usd": 92427294786.8624,
+      "gdp_usd": 48098909613.6316,
+      "reserves_usd": 104656885592.809,
       "external_debt_usd": null
     },
     {
@@ -1004,16 +1004,16 @@
       "name": "St. Lucia",
       "lat": 14.0,
       "lng": -60.9832,
-      "gdp_usd": 2441259259.25926,
-      "reserves_usd": 424323643.897079,
-      "external_debt_usd": 1086264196.2
+      "gdp_usd": 2656444444.44444,
+      "reserves_usd": 447150519.268178,
+      "external_debt_usd": 1193706001.5
     },
     {
       "id": "LIE",
       "name": "Liechtenstein",
       "lat": 47.1411,
       "lng": 9.52148,
-      "gdp_usd": 8239379403.22096,
+      "gdp_usd": 8905764270.4054,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1022,26 +1022,26 @@
       "name": "Sri Lanka",
       "lat": 6.92148,
       "lng": 79.8528,
-      "gdp_usd": 84080307355.5983,
-      "reserves_usd": 4405117005.00662,
-      "external_debt_usd": 60544707010.4
+      "gdp_usd": 108825231671.196,
+      "reserves_usd": 6093946546.37437,
+      "external_debt_usd": 56827528393.8
     },
     {
       "id": "LSO",
       "name": "Lesotho",
       "lat": -29.5208,
       "lng": 27.7167,
-      "gdp_usd": 2129871529.52517,
-      "reserves_usd": 854088923.807729,
-      "external_debt_usd": 1775614027.3
+      "gdp_usd": 2573572920.05159,
+      "reserves_usd": 1007862057.19677,
+      "external_debt_usd": 1773147342.7
     },
     {
       "id": "LTU",
       "name": "Lithuania",
       "lat": 54.6896,
       "lng": 25.2799,
-      "gdp_usd": 80356613554.5602,
-      "reserves_usd": 6168236355.74637,
+      "gdp_usd": 95210150818.3512,
+      "reserves_usd": 7059127324.71898,
       "external_debt_usd": null
     },
     {
@@ -1049,8 +1049,8 @@
       "name": "Luxembourg",
       "lat": 49.61,
       "lng": 6.1296,
-      "gdp_usd": 88788881539.3937,
-      "reserves_usd": 2977386520.9864,
+      "gdp_usd": 101157829491.107,
+      "reserves_usd": 3055208156.8508,
       "external_debt_usd": null
     },
     {
@@ -1058,8 +1058,8 @@
       "name": "Latvia",
       "lat": 56.9465,
       "lng": 24.1048,
-      "gdp_usd": 42779550936.838,
-      "reserves_usd": 4956647380.01986,
+      "gdp_usd": 48618869160.3254,
+      "reserves_usd": 6099392942.08427,
       "external_debt_usd": null
     },
     {
@@ -1067,8 +1067,8 @@
       "name": "Macao SAR, China",
       "lat": 22.1667,
       "lng": 113.55,
-      "gdp_usd": 45626467279.891,
-      "reserves_usd": 27770639000,
+      "gdp_usd": 52061007670.169,
+      "reserves_usd": 30638010000,
       "external_debt_usd": null
     },
     {
@@ -1085,16 +1085,16 @@
       "name": "Morocco",
       "lat": 33.9905,
       "lng": -6.8704,
-      "gdp_usd": 146036093666.762,
-      "reserves_usd": 36327701787.7523,
-      "external_debt_usd": 69632222212.5
+      "gdp_usd": 182374250612.28,
+      "reserves_usd": 48453629604.878,
+      "external_debt_usd": 67993946129.4
     },
     {
       "id": "MCO",
       "name": "Monaco",
       "lat": 43.7325,
       "lng": 7.41891,
-      "gdp_usd": 10003897341.1766,
+      "gdp_usd": 11125788838.2812,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1103,43 +1103,43 @@
       "name": "Moldova",
       "lat": 47.0167,
       "lng": 28.8497,
-      "gdp_usd": 16711906746.2133,
-      "reserves_usd": 5453111013.53607,
-      "external_debt_usd": 10662682776.4
+      "gdp_usd": 20351796275.2943,
+      "reserves_usd": 6006124070.06262,
+      "external_debt_usd": 10491120731.8
     },
     {
       "id": "MDG",
       "name": "Madagascar",
       "lat": -20.4667,
       "lng": 45.7167,
-      "gdp_usd": 16036707975.7567,
-      "reserves_usd": 2631980575.49645,
-      "external_debt_usd": 6429471661.1
+      "gdp_usd": 19620352035.7899,
+      "reserves_usd": 2784591092.62259,
+      "external_debt_usd": 6653640488.3
     },
     {
       "id": "MDV",
       "name": "Maldives",
       "lat": 4.1742,
       "lng": 73.5109,
-      "gdp_usd": 6621008703.95743,
-      "reserves_usd": 590522550.56534,
-      "external_debt_usd": 3999770239.2
+      "gdp_usd": 7741066860.6337,
+      "reserves_usd": 984573591.713979,
+      "external_debt_usd": 4692462747.8
     },
     {
       "id": "MEX",
       "name": "Mexico",
       "lat": 19.427,
       "lng": -99.1276,
-      "gdp_usd": 1794410347718.25,
-      "reserves_usd": 214316827085.02,
-      "external_debt_usd": 595981151218
+      "gdp_usd": 1832641364775.52,
+      "reserves_usd": 256178680249.028,
+      "external_debt_usd": 591255026725
     },
     {
       "id": "MHL",
       "name": "Marshall Islands",
       "lat": 7.11046,
       "lng": 171.135,
-      "gdp_usd": 264000000,
+      "gdp_usd": 308000000,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1148,26 +1148,26 @@
       "name": "North Macedonia",
       "lat": 42.0024,
       "lng": 21.4361,
-      "gdp_usd": 15855131188.9092,
-      "reserves_usd": 5014981540.03403,
-      "external_debt_usd": 12519612311.4
+      "gdp_usd": 19101199817.0174,
+      "reserves_usd": 5803955793.72208,
+      "external_debt_usd": 12837215392.3
     },
     {
       "id": "MLI",
       "name": "Mali",
       "lat": 13.5667,
       "lng": -7.50034,
-      "gdp_usd": 24777941860.767,
+      "gdp_usd": 30069148580.7688,
       "reserves_usd": null,
-      "external_debt_usd": 6470797281.1
+      "external_debt_usd": 6439962214.4
     },
     {
       "id": "MLT",
       "name": "Malta",
       "lat": 35.9042,
       "lng": 14.5189,
-      "gdp_usd": 22625329775.6867,
-      "reserves_usd": 1222949821.48281,
+      "gdp_usd": 27771821560.9411,
+      "reserves_usd": 1543517156.32491,
       "external_debt_usd": null
     },
     {
@@ -1175,27 +1175,27 @@
       "name": "Myanmar",
       "lat": 21.914,
       "lng": 95.9562,
-      "gdp_usd": 66757619000,
+      "gdp_usd": 81665773809.5238,
       "reserves_usd": 9337819633.15963,
-      "external_debt_usd": 12160041318.5
+      "external_debt_usd": 11174807782.3
     },
     {
       "id": "MNE",
       "name": "Montenegro",
       "lat": 42.4602,
       "lng": 19.2595,
-      "gdp_usd": 7643318276.40347,
-      "reserves_usd": 1573580964.08645,
-      "external_debt_usd": 8664556534.3
+      "gdp_usd": 9232801464.79257,
+      "reserves_usd": 2196370744.61095,
+      "external_debt_usd": 8741348456.1
     },
     {
       "id": "MNG",
       "name": "Mongolia",
       "lat": 47.9129,
       "lng": 106.937,
-      "gdp_usd": 20325121393.9074,
-      "reserves_usd": 4915514836.40429,
-      "external_debt_usd": 35039286449.3
+      "gdp_usd": 25369107325.4549,
+      "reserves_usd": 7004095384.43435,
+      "external_debt_usd": 38016581521.2
     },
     {
       "id": "MNP",
@@ -1211,44 +1211,44 @@
       "name": "Mozambique",
       "lat": -25.9664,
       "lng": 32.5713,
-      "gdp_usd": 20927498317.3094,
-      "reserves_usd": 3637000551.83482,
-      "external_debt_usd": 67935857527.8
+      "gdp_usd": 22337997046.1913,
+      "reserves_usd": 3842807100.82527,
+      "external_debt_usd": 69765373429.6
     },
     {
       "id": "MRT",
       "name": "Mauritania",
       "lat": 18.2367,
       "lng": -15.9824,
-      "gdp_usd": 10687541640.1299,
+      "gdp_usd": 11679910946.4371,
       "reserves_usd": 2038562789.40175,
-      "external_debt_usd": 4588008473.3
+      "external_debt_usd": 4459916731.6
     },
     {
       "id": "MUS",
       "name": "Mauritius",
       "lat": -20.1605,
       "lng": 57.4977,
-      "gdp_usd": 14072212290.4596,
-      "reserves_usd": 7247890260.49611,
-      "external_debt_usd": 19079313500.9
+      "gdp_usd": 16157804491.7614,
+      "reserves_usd": 10308130278.8725,
+      "external_debt_usd": 20364236675.8
     },
     {
       "id": "MWI",
       "name": "Malawi",
       "lat": -13.9899,
       "lng": 33.7703,
-      "gdp_usd": 13363669672.9405,
+      "gdp_usd": 14918276698.303,
       "reserves_usd": 594498493.623211,
-      "external_debt_usd": 3604152682.7
+      "external_debt_usd": 3743648285.8
     },
     {
       "id": "MYS",
       "name": "Malaysia",
       "lat": 3.12433,
       "lng": 101.684,
-      "gdp_usd": 399949418752.657,
-      "reserves_usd": 113462632023.729,
+      "gdp_usd": 472193128644.597,
+      "reserves_usd": 125629250346.156,
       "external_debt_usd": null
     },
     {
@@ -1256,8 +1256,8 @@
       "name": "Namibia",
       "lat": -22.5648,
       "lng": 17.0931,
-      "gdp_usd": 12522012873.7957,
-      "reserves_usd": 2956284637.81427,
+      "gdp_usd": 15080340653.5276,
+      "reserves_usd": 3104525016.06736,
       "external_debt_usd": null
     },
     {
@@ -1265,7 +1265,7 @@
       "name": "New Caledonia",
       "lat": -22.2677,
       "lng": 166.464,
-      "gdp_usd": 9769167530.35744,
+      "gdp_usd": 8548919387.12607,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1274,35 +1274,35 @@
       "name": "Niger",
       "lat": 13.514,
       "lng": 2.1073,
-      "gdp_usd": 16949765463.9058,
+      "gdp_usd": 21646191388.2507,
       "reserves_usd": null,
-      "external_debt_usd": 5613719022.6
+      "external_debt_usd": 5308857136.5
     },
     {
       "id": "NGA",
       "name": "Nigeria",
       "lat": 9.05804,
       "lng": 7.48906,
-      "gdp_usd": 487387801877.803,
-      "reserves_usd": 33452495121.7329,
-      "external_debt_usd": 102472750412.9
+      "gdp_usd": 290794361542.112,
+      "reserves_usd": 46024916767.4055,
+      "external_debt_usd": 108757630161.5
     },
     {
       "id": "NIC",
       "name": "Nicaragua",
       "lat": 12.1475,
       "lng": -86.2734,
-      "gdp_usd": 17805842220.7571,
-      "reserves_usd": 5446998877.80189,
-      "external_debt_usd": 15360449736.8
+      "gdp_usd": 22237167113.0916,
+      "reserves_usd": 8324385226.76038,
+      "external_debt_usd": 15490530047.6
     },
     {
       "id": "NLD",
       "name": "Netherlands",
       "lat": 52.3738,
       "lng": 4.89095,
-      "gdp_usd": 1135475867551,
-      "reserves_usd": 69829689143.2849,
+      "gdp_usd": 1332767651100.39,
+      "reserves_usd": 118056683477.992,
       "external_debt_usd": null
     },
     {
@@ -1310,8 +1310,8 @@
       "name": "Norway",
       "lat": 59.9138,
       "lng": 10.7387,
-      "gdp_usd": 502197633322.816,
-      "reserves_usd": 80459096008.3425,
+      "gdp_usd": 530755719438.879,
+      "reserves_usd": 85494772693.8953,
       "external_debt_usd": null
     },
     {
@@ -1319,16 +1319,16 @@
       "name": "Nepal",
       "lat": 27.6939,
       "lng": 85.3157,
-      "gdp_usd": 41049329851.0546,
-      "reserves_usd": 12456122668.8948,
-      "external_debt_usd": 9982808324
+      "gdp_usd": 45489810283.1132,
+      "reserves_usd": 21100332321.6852,
+      "external_debt_usd": 10152157325.7
     },
     {
       "id": "NRU",
       "name": "Naoero",
       "lat": -0.5477,
       "lng": 166.920867,
-      "gdp_usd": 161531316.884061,
+      "gdp_usd": 176040043.932346,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1337,8 +1337,8 @@
       "name": "New Zealand",
       "lat": -41.2865,
       "lng": 174.776,
-      "gdp_usd": 256372177757.764,
-      "reserves_usd": 15487380827.5418,
+      "gdp_usd": 264057413739.965,
+      "reserves_usd": 28152498623.6497,
       "external_debt_usd": null
     },
     {
@@ -1346,8 +1346,8 @@
       "name": "Oman",
       "lat": 23.6105,
       "lng": 58.5874,
-      "gdp_usd": 106174707932.38,
-      "reserves_usd": 17454630668.5072,
+      "gdp_usd": 109604780696.23,
+      "reserves_usd": 18286526117.9972,
       "external_debt_usd": null
     },
     {
@@ -1355,17 +1355,17 @@
       "name": "Pakistan",
       "lat": 30.5167,
       "lng": 72.8,
-      "gdp_usd": 336686348609.266,
-      "reserves_usd": 13730353485.3454,
-      "external_debt_usd": 131021002940.1
+      "gdp_usd": 407307214476.222,
+      "reserves_usd": 26455819675.7312,
+      "external_debt_usd": 129717513746.7
     },
     {
       "id": "PAN",
       "name": "Panama",
       "lat": 8.99427,
       "lng": -79.5188,
-      "gdp_usd": 83812155200,
-      "reserves_usd": 6756683681.74504,
+      "gdp_usd": 90462600000,
+      "reserves_usd": 6240895468.02847,
       "external_debt_usd": null
     },
     {
@@ -1373,25 +1373,25 @@
       "name": "Peru",
       "lat": -12.0931,
       "lng": -77.0465,
-      "gdp_usd": 268025009709.319,
-      "reserves_usd": 71394387239.6392,
-      "external_debt_usd": 93991708227.4
+      "gdp_usd": 334854659181.893,
+      "reserves_usd": 90393720332.2317,
+      "external_debt_usd": 93268743431.7
     },
     {
       "id": "PHL",
       "name": "Philippines",
       "lat": 14.5515,
       "lng": 121.035,
-      "gdp_usd": 437055627245.138,
-      "reserves_usd": 103742233308.668,
-      "external_debt_usd": 124472460162.5
+      "gdp_usd": 487086123720.417,
+      "reserves_usd": 110928780532.07,
+      "external_debt_usd": 137018240525.2
     },
     {
       "id": "PLW",
       "name": "Palau",
       "lat": 7.34194,
       "lng": 134.479,
-      "gdp_usd": 276157406.25,
+      "gdp_usd": 345000000,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1400,17 +1400,17 @@
       "name": "Papua New Guinea",
       "lat": -9.47357,
       "lng": 147.194,
-      "gdp_usd": 30816328065.6492,
-      "reserves_usd": 3901331641.41289,
-      "external_debt_usd": 15483629098.5
+      "gdp_usd": 32498658653.8415,
+      "reserves_usd": 3708907022.18138,
+      "external_debt_usd": 12854160687.9
     },
     {
       "id": "POL",
       "name": "Poland",
       "lat": 52.26,
       "lng": 21.02,
-      "gdp_usd": 812451193396.143,
-      "reserves_usd": 193783277723.378,
+      "gdp_usd": 1035491784197.44,
+      "reserves_usd": 271805173253.091,
       "external_debt_usd": null
     },
     {
@@ -1418,7 +1418,7 @@
       "name": "Puerto Rico (US)",
       "lat": 18.23,
       "lng": -66.0,
-      "gdp_usd": 118478754280.882,
+      "gdp_usd": 129368484000,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1436,8 +1436,8 @@
       "name": "Portugal",
       "lat": 38.7072,
       "lng": -9.13552,
-      "gdp_usd": 292323800948.839,
-      "reserves_usd": 35242560647.801,
+      "gdp_usd": 346639825141.821,
+      "reserves_usd": 68839157118.0358,
       "external_debt_usd": null
     },
     {
@@ -1445,17 +1445,17 @@
       "name": "Paraguay",
       "lat": -25.3005,
       "lng": -57.6362,
-      "gdp_usd": 43140465595.6662,
-      "reserves_usd": 9885683629.59266,
-      "external_debt_usd": 26605367216.2
+      "gdp_usd": 49278227554.3339,
+      "reserves_usd": 9567715594.05829,
+      "external_debt_usd": 29963457224.3
     },
     {
       "id": "PSE",
       "name": "West Bank and Gaza",
       "lat": null,
       "lng": null,
-      "gdp_usd": 18635100000,
-      "reserves_usd": 1323200000,
+      "gdp_usd": 17167100000,
+      "reserves_usd": 1825200000,
       "external_debt_usd": null
     },
     {
@@ -1463,7 +1463,7 @@
       "name": "French Polynesia",
       "lat": -17.535,
       "lng": -149.57,
-      "gdp_usd": 6137447782.87066,
+      "gdp_usd": 6323716355.05009,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1472,8 +1472,8 @@
       "name": "Qatar",
       "lat": 25.2948,
       "lng": 51.5082,
-      "gdp_usd": 213002809340.659,
-      "reserves_usd": 51538727785.639,
+      "gdp_usd": 215559615384.615,
+      "reserves_usd": 55847316824.2018,
       "external_debt_usd": null
     },
     {
@@ -1481,8 +1481,8 @@
       "name": "Romania",
       "lat": 44.4479,
       "lng": 26.0979,
-      "gdp_usd": 347757995758.914,
-      "reserves_usd": 72999646521.5027,
+      "gdp_usd": 428677977854.826,
+      "reserves_usd": 90648371894.6505,
       "external_debt_usd": null
     },
     {
@@ -1490,8 +1490,8 @@
       "name": "Russian Federation",
       "lat": 55.7558,
       "lng": 37.6176,
-      "gdp_usd": 2046284838151.09,
-      "reserves_usd": 597217063819.197,
+      "gdp_usd": 2561310169358.74,
+      "reserves_usd": 608360767884.902,
       "external_debt_usd": 376117000821.9
     },
     {
@@ -1499,17 +1499,17 @@
       "name": "Rwanda",
       "lat": -1.95325,
       "lng": 30.0587,
-      "gdp_usd": 14806501437.282,
-      "reserves_usd": 1834052909.65197,
-      "external_debt_usd": 11383983796.8
+      "gdp_usd": 16372132990.2271,
+      "reserves_usd": 1962663787.86036,
+      "external_debt_usd": 13050400791.1
     },
     {
       "id": "SAU",
       "name": "Saudi Arabia",
       "lat": 24.6748,
       "lng": 46.6977,
-      "gdp_usd": 1218584800000,
-      "reserves_usd": 457948635287.488,
+      "gdp_usd": 1276942933333.33,
+      "reserves_usd": 505163993094.995,
       "external_debt_usd": null
     },
     {
@@ -1517,26 +1517,26 @@
       "name": "Sudan",
       "lat": 15.5932,
       "lng": 32.5363,
-      "gdp_usd": 39898289820.7951,
+      "gdp_usd": 60162634574.4689,
       "reserves_usd": 177933851.813136,
-      "external_debt_usd": 22580297676.7
+      "external_debt_usd": 22020660462.5
     },
     {
       "id": "SEN",
       "name": "Senegal",
       "lat": 14.7247,
       "lng": -17.4734,
-      "gdp_usd": 30696331295.7826,
+      "gdp_usd": 37006536238.3731,
       "reserves_usd": null,
-      "external_debt_usd": 45458235461.2
+      "external_debt_usd": 47146494529.5
     },
     {
       "id": "SGP",
       "name": "Singapore",
       "lat": 1.28941,
       "lng": 103.85,
-      "gdp_usd": 511181761243.76,
-      "reserves_usd": 359834756845.917,
+      "gdp_usd": 603869516998.738,
+      "reserves_usd": 432113578989.259,
       "external_debt_usd": null
     },
     {
@@ -1544,27 +1544,27 @@
       "name": "Solomon Islands",
       "lat": -9.42676,
       "lng": 159.949,
-      "gdp_usd": 1506124566.40404,
-      "reserves_usd": 688220066.972769,
-      "external_debt_usd": 527817629.5
+      "gdp_usd": 1749572442.95016,
+      "reserves_usd": 685807870.563439,
+      "external_debt_usd": 596145038
     },
     {
       "id": "SLE",
       "name": "Sierra Leone",
       "lat": 8.4821,
       "lng": -13.2134,
-      "gdp_usd": 6415852766.09227,
-      "reserves_usd": 495698793.817761,
-      "external_debt_usd": 2403103683.5
+      "gdp_usd": 7464157904.43509,
+      "reserves_usd": 433270129.080483,
+      "external_debt_usd": 2329744049.4
     },
     {
       "id": "SLV",
       "name": "El Salvador",
       "lat": 13.7034,
       "lng": -89.2073,
-      "gdp_usd": 33565430000,
-      "reserves_usd": 3079168947.08155,
-      "external_debt_usd": 22861743174.6
+      "gdp_usd": 36708110000,
+      "reserves_usd": 4816331848.37457,
+      "external_debt_usd": 24961880871.3
     },
     {
       "id": "SMR",
@@ -1572,7 +1572,7 @@
       "lat": 43.9322,
       "lng": 12.4486,
       "gdp_usd": 2027243193.5116,
-      "reserves_usd": 836088074.053394,
+      "reserves_usd": 861236140.049186,
       "external_debt_usd": null
     },
     {
@@ -1580,18 +1580,18 @@
       "name": "Somalia, Fed. Rep.",
       "lat": 2.07515,
       "lng": 45.3254,
-      "gdp_usd": 10958000000,
+      "gdp_usd": 12995200000.2658,
       "reserves_usd": null,
-      "external_debt_usd": 3093994159.7
+      "external_debt_usd": 1799443760.8
     },
     {
       "id": "SRB",
       "name": "Serbia",
       "lat": 44.8024,
       "lng": 20.4656,
-      "gdp_usd": 81343999280.0179,
-      "reserves_usd": 27569406103.6015,
-      "external_debt_usd": 50259125533.2
+      "gdp_usd": 99953324472.9042,
+      "reserves_usd": 34150990742.9314,
+      "external_debt_usd": 51983619466.8
     },
     {
       "id": "SSD",
@@ -1599,7 +1599,7 @@
       "lat": 4.85,
       "lng": 31.6,
       "gdp_usd": 11997800760.2242,
-      "reserves_usd": 72880855.2161365,
+      "reserves_usd": 15961778.4894403,
       "external_debt_usd": null
     },
     {
@@ -1607,17 +1607,17 @@
       "name": "Sao Tome and Principe",
       "lat": 0.20618,
       "lng": 6.6071,
-      "gdp_usd": 690456806.696406,
-      "reserves_usd": 46247347.8884686,
-      "external_debt_usd": 318480674.3
+      "gdp_usd": 981293586.906408,
+      "reserves_usd": 58787511.7763146,
+      "external_debt_usd": 326406625.8
     },
     {
       "id": "SUR",
       "name": "Suriname",
       "lat": 5.8232,
       "lng": -55.1679,
-      "gdp_usd": 3472693412.08497,
-      "reserves_usd": 1346122670.63627,
+      "gdp_usd": 4523657796.86421,
+      "reserves_usd": 1615758213.36348,
       "external_debt_usd": 4047562766.7
     },
     {
@@ -1625,8 +1625,8 @@
       "name": "Slovak Republic",
       "lat": 48.1484,
       "lng": 17.1073,
-      "gdp_usd": 133578518423.544,
-      "reserves_usd": 11288517853.7365,
+      "gdp_usd": 154530066506.895,
+      "reserves_usd": 18161989981.1754,
       "external_debt_usd": null
     },
     {
@@ -1634,8 +1634,8 @@
       "name": "Slovenia",
       "lat": 46.0546,
       "lng": 14.5044,
-      "gdp_usd": 69255264238.3855,
-      "reserves_usd": 2370205836.30558,
+      "gdp_usd": 79648204979.3618,
+      "reserves_usd": 3549845300.95317,
       "external_debt_usd": null
     },
     {
@@ -1643,8 +1643,8 @@
       "name": "Sweden",
       "lat": 59.3327,
       "lng": 18.0645,
-      "gdp_usd": 578990915246.07,
-      "reserves_usd": 60862760991.0537,
+      "gdp_usd": 668998664082.081,
+      "reserves_usd": 74195224037.4302,
       "external_debt_usd": null
     },
     {
@@ -1652,16 +1652,16 @@
       "name": "Eswatini",
       "lat": -26.5225,
       "lng": 31.4659,
-      "gdp_usd": 4621191261.84214,
-      "reserves_usd": 479261051.167947,
-      "external_debt_usd": 1228148249.5
+      "gdp_usd": 5160679612.81734,
+      "reserves_usd": 536572585.913259,
+      "external_debt_usd": 1238600512.2
     },
     {
       "id": "SXM",
       "name": "Sint Maarten (Dutch part)",
       "lat": null,
       "lng": null,
-      "gdp_usd": 1686525977.65363,
+      "gdp_usd": 1887728480.44693,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1670,8 +1670,8 @@
       "name": "Seychelles",
       "lat": -4.6309,
       "lng": 55.4466,
-      "gdp_usd": 2171547935.38159,
-      "reserves_usd": 682793969.314271,
+      "gdp_usd": 2387022853.48583,
+      "reserves_usd": 773677575.743445,
       "external_debt_usd": null
     },
     {
@@ -1681,14 +1681,14 @@
       "lng": 36.3119,
       "gdp_usd": 23737634644.3994,
       "reserves_usd": null,
-      "external_debt_usd": 4875542720.1
+      "external_debt_usd": 4756737935.6
     },
     {
       "id": "TCA",
       "name": "Turks and Caicos Islands",
       "lat": 21.4602778,
       "lng": -71.141389,
-      "gdp_usd": 1638653000,
+      "gdp_usd": 1745378000,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1697,71 +1697,71 @@
       "name": "Chad",
       "lat": 12.1048,
       "lng": 15.0445,
-      "gdp_usd": 18352937976.2179,
-      "reserves_usd": 1049788251.30153,
-      "external_debt_usd": 3191737796.4
+      "gdp_usd": 21472835225.4338,
+      "reserves_usd": 1547604928.86707,
+      "external_debt_usd": 3348359914.3
     },
     {
       "id": "TGO",
       "name": "Togo",
       "lat": 6.1228,
       "lng": 1.2255,
-      "gdp_usd": 9723300576.72675,
+      "gdp_usd": 11889949067.4697,
       "reserves_usd": null,
-      "external_debt_usd": 3439839395.5
+      "external_debt_usd": 4294139883.4
     },
     {
       "id": "THA",
       "name": "Thailand",
       "lat": 13.7308,
       "lng": 100.521,
-      "gdp_usd": 517013369475.121,
-      "reserves_usd": 224470464418.923,
-      "external_debt_usd": 194693030257.4
+      "gdp_usd": 577009981112.015,
+      "reserves_usd": 282261124353.135,
+      "external_debt_usd": 191827376401.5
     },
     {
       "id": "TJK",
       "name": "Tajikistan",
       "lat": 38.5878,
       "lng": 68.7864,
-      "gdp_usd": 12244169292.7998,
-      "reserves_usd": 3303825209.68631,
-      "external_debt_usd": 6589051886.9
+      "gdp_usd": 17660626562.4832,
+      "reserves_usd": 4309985679.29893,
+      "external_debt_usd": 6977429758.2
     },
     {
       "id": "TKM",
       "name": "Turkmenistan",
       "lat": 37.9509,
       "lng": 58.3794,
-      "gdp_usd": 39020211239.6728,
+      "gdp_usd": 49828621355.6516,
       "reserves_usd": null,
-      "external_debt_usd": 3917747615.2
+      "external_debt_usd": 3320400762
     },
     {
       "id": "TLS",
       "name": "Timor-Leste",
       "lat": -8.56667,
       "lng": 125.567,
-      "gdp_usd": 2079767200,
-      "reserves_usd": 825304004.273166,
-      "external_debt_usd": 305742152.2
+      "gdp_usd": 1902180257.82737,
+      "reserves_usd": 850559733.202912,
+      "external_debt_usd": 296673869.1
     },
     {
       "id": "TON",
       "name": "Tonga",
       "lat": -21.136,
       "lng": -175.216,
-      "gdp_usd": 591139733.623755,
-      "reserves_usd": 396530126.417996,
-      "external_debt_usd": 196453498.6
+      "gdp_usd": 679218218.578017,
+      "reserves_usd": 412716557.109435,
+      "external_debt_usd": 173176112.1
     },
     {
       "id": "TTO",
       "name": "Trinidad and Tobago",
       "lat": 10.6596,
       "lng": -61.4789,
-      "gdp_usd": 25036993423.3664,
-      "reserves_usd": 6255633381.74802,
+      "gdp_usd": 25942749718.4685,
+      "reserves_usd": 5601120709.15512,
       "external_debt_usd": null
     },
     {
@@ -1769,25 +1769,25 @@
       "name": "Tunisia",
       "lat": 36.7899,
       "lng": 10.21,
-      "gdp_usd": 48205328303.3398,
-      "reserves_usd": 9239745488.47506,
-      "external_debt_usd": 42407399347.3
+      "gdp_usd": 57502836548.0878,
+      "reserves_usd": 9343597097.75793,
+      "external_debt_usd": 40459855368.3
     },
     {
       "id": "TUR",
       "name": "Turkiye",
       "lat": 39.7153,
       "lng": 32.3606,
-      "gdp_usd": 1141242864657.45,
-      "reserves_usd": 140868480001.696,
-      "external_debt_usd": 499814231476.7
+      "gdp_usd": 1597293229287,
+      "reserves_usd": 185567690700.458,
+      "external_debt_usd": 514989218110.8
     },
     {
       "id": "TUV",
       "name": "Tuvalu",
       "lat": -8.6314877,
       "lng": 179.089567,
-      "gdp_usd": 50491930.924381,
+      "gdp_usd": 57345434.7234984,
       "reserves_usd": null,
       "external_debt_usd": null
     },
@@ -1796,35 +1796,35 @@
       "name": "Tanzania",
       "lat": -6.17486,
       "lng": 35.7382,
-      "gdp_usd": 79030935638.1317,
+      "gdp_usd": 90143496090.4411,
       "reserves_usd": 5049646420.4773,
-      "external_debt_usd": 34584902584.9
+      "external_debt_usd": 36343119611.6
     },
     {
       "id": "UGA",
       "name": "Uganda",
       "lat": 0.314269,
       "lng": 32.5729,
-      "gdp_usd": 48768955863.3175,
-      "reserves_usd": 3939109256.17839,
-      "external_debt_usd": 20284809913.3
+      "gdp_usd": 61985829288.1496,
+      "reserves_usd": 3482906765.58962,
+      "external_debt_usd": 20534369198
     },
     {
       "id": "UKR",
       "name": "Ukraine",
       "lat": 50.4536,
       "lng": 30.5038,
-      "gdp_usd": 181221517868.744,
-      "reserves_usd": 40510106307.8863,
-      "external_debt_usd": 178988919079.3
+      "gdp_usd": 214233312784.397,
+      "reserves_usd": 57268434039.4417,
+      "external_debt_usd": 193492461258.9
     },
     {
       "id": "URY",
       "name": "Uruguay",
       "lat": -34.8941,
       "lng": -56.0675,
-      "gdp_usd": 79208725899.5531,
-      "reserves_usd": 16256769466.6151,
+      "gdp_usd": 85347696277.6859,
+      "reserves_usd": 18987045163.6795,
       "external_debt_usd": null
     },
     {
@@ -1832,8 +1832,8 @@
       "name": "United States",
       "lat": 38.8895,
       "lng": -77.032,
-      "gdp_usd": 27811517000000,
-      "reserves_usd": 773426187289.127,
+      "gdp_usd": 30769700000000,
+      "reserves_usd": 1385447111476.7,
       "external_debt_usd": null
     },
     {
@@ -1841,25 +1841,25 @@
       "name": "Uzbekistan",
       "lat": 41.3052,
       "lng": 69.269,
-      "gdp_usd": 107526539716.318,
-      "reserves_usd": 34557511091.0994,
-      "external_debt_usd": 61569881480.8
+      "gdp_usd": 147038081129.405,
+      "reserves_usd": 41236890133.3347,
+      "external_debt_usd": 70256401083.6
     },
     {
       "id": "VCT",
       "name": "St. Vincent and the Grenadines",
       "lat": 13.2035,
       "lng": -61.2653,
-      "gdp_usd": 1072237037.03704,
-      "reserves_usd": 280564003.843077,
-      "external_debt_usd": 698454746.1
+      "gdp_usd": 1255222222.22222,
+      "reserves_usd": 281217907.470522,
+      "external_debt_usd": 806447451.4
     },
     {
       "id": "VEN",
       "name": "Venezuela, RB",
       "lat": 9.08165,
       "lng": -69.8371,
-      "gdp_usd": 102377501185.925,
+      "gdp_usd": 99661244155.6306,
       "reserves_usd": 9794062064.62109,
       "external_debt_usd": null
     },
@@ -1886,36 +1886,36 @@
       "name": "Viet Nam",
       "lat": 21.0069,
       "lng": 105.825,
-      "gdp_usd": 433805036898.465,
-      "reserves_usd": 92237540812.2468,
-      "external_debt_usd": 141845082045.7
+      "gdp_usd": 514697215165.065,
+      "reserves_usd": 85580367980.9694,
+      "external_debt_usd": 132907340372.3
     },
     {
       "id": "VUT",
       "name": "Vanuatu",
       "lat": -17.7404,
       "lng": 168.321,
-      "gdp_usd": 1188137265.19047,
-      "reserves_usd": 643768389.576285,
-      "external_debt_usd": 470663727
+      "gdp_usd": 1353658840.63993,
+      "reserves_usd": 614649778.922429,
+      "external_debt_usd": 519876544.1
     },
     {
       "id": "WSM",
       "name": "Samoa",
       "lat": -13.8314,
       "lng": -171.752,
-      "gdp_usd": 1044909500.02527,
-      "reserves_usd": 447089817.094158,
-      "external_debt_usd": 432494880.4
+      "gdp_usd": 1287936621.64619,
+      "reserves_usd": 598336707.938962,
+      "external_debt_usd": 394938377.5
     },
     {
       "id": "XKX",
       "name": "Kosovo",
       "lat": 42.565,
       "lng": 20.926,
-      "gdp_usd": 10466753839.9923,
-      "reserves_usd": 1245423955.07842,
-      "external_debt_usd": 4240846707.8
+      "gdp_usd": 12456403306.8191,
+      "reserves_usd": 1516143666.30716,
+      "external_debt_usd": 4395488576.1
     },
     {
       "id": "YEM",
@@ -1924,34 +1924,34 @@
       "lng": 44.2075,
       "gdp_usd": 21606160663.0318,
       "reserves_usd": 1250826378.53556,
-      "external_debt_usd": 7283022249.3
+      "external_debt_usd": 7086874767.4
     },
     {
       "id": "ZAF",
       "name": "South Africa",
       "lat": -25.746,
       "lng": 28.1871,
-      "gdp_usd": 381440724491.232,
-      "reserves_usd": 62491675820.3129,
-      "external_debt_usd": 165839388756.3
+      "gdp_usd": 427184325997.307,
+      "reserves_usd": 76023398333.6109,
+      "external_debt_usd": 175895546993.5
     },
     {
       "id": "ZMB",
       "name": "Zambia",
       "lat": -15.3982,
       "lng": 28.2937,
-      "gdp_usd": 27577956471.244,
-      "reserves_usd": 3173177777.1366,
-      "external_debt_usd": 29076512018.8
+      "gdp_usd": 28879806220.1264,
+      "reserves_usd": 4089834507.97439,
+      "external_debt_usd": 28117735300.5
     },
     {
       "id": "ZWE",
       "name": "Zimbabwe",
       "lat": -17.8312,
       "lng": 31.0672,
-      "gdp_usd": 35871781303.429,
-      "reserves_usd": 115529709.859095,
-      "external_debt_usd": 14548534104.3
+      "gdp_usd": 51215643905.5886,
+      "reserves_usd": 484972804.72655,
+      "external_debt_usd": 14403740329.7
     }
   ]
 }

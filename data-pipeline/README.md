@@ -70,6 +70,20 @@ Earth 1:110m, public domain) used to draw real country outlines on the globe.
   regional aggregates as pseudo-country codes; `build_snapshot.py` drops any
   edge that doesn't map to a real country in the World Bank node set, which
   removes these automatically.
+- World Bank annual indicators (GDP, reserves, external debt) publish with a
+  lag, so querying a specific year in isolation (as `fetch_worldbank.py
+  --by-year` does) routinely comes back null for the most recent 1-2 years
+  even when the data exists and will appear later -- this affected ~40
+  countries' 2025 reserves figure at time of writing, including real
+  economies like Hong Kong SAR (real reserves ~$425B, silently falling back
+  to a ~$4B GDP-derived proxy). `build_snapshot.py --by-year` now applies
+  last-observation-carried-forward (capped at 3 years) when merging, so a
+  year missing that data uses the most recent prior report instead of
+  jumping straight to the model's cruder fallback. `fetch_worldbank.py`'s
+  single-snapshot path (`fetch_indicator_latest`, used for
+  `out/nodes.json`/`out/network_snapshot.json`) had a related bug: its
+  year-range upper bound was a hardcoded constant that goes stale every
+  year the pipeline is rerun; it's now derived from today's date.
 - Node "equity" (loss-absorbing buffer) for the model uses each country's
   FX reserves, falling back to 1% of GDP, then 8% of the node's own gross
   cross-border exposure (a Basel-style capital-adequacy floor), when reserves
