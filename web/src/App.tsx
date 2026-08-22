@@ -22,6 +22,7 @@ import {
 import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
 import { clearScenarioFromUrl, parseScenarioFromUrl, writeScenarioToUrl } from "./lib/scenarioUrl";
+import { PRESETS } from "./lib/presets";
 
 // Parsed once at module load (there's exactly one URL to read at startup);
 // seeds the initial state below so a shared link reproduces its scenario.
@@ -122,6 +123,23 @@ function App() {
 
   function triggerShock(id: string) {
     runShock(id, magnitude, model);
+  }
+
+  // Shared by the historical presets picker (and reproduces the same
+  // "seed state, let data load, effect fires the shock" flow the URL
+  // restore uses on mount): if the target year is already loaded, shock
+  // immediately; otherwise set state and let the existing
+  // `runShock` on network-change effect fire once that year's data arrives.
+  function applyScenario(s: { year: number; countryId: string; magnitude: number; model: Model }) {
+    setModel(s.model);
+    setMagnitude(s.magnitude);
+    setDisplayYear(s.year);
+    setShockedId(s.countryId);
+    if (s.year === year) {
+      runShock(s.countryId, s.magnitude, s.model);
+    } else {
+      setYear(s.year);
+    }
   }
 
   function onMagnitudeChange(value: number) {
@@ -326,6 +344,27 @@ function App() {
           >
             Eisenberg-Noe
           </button>
+        </div>
+
+        <div className="flex shrink-0 flex-col gap-1.5">
+          <select
+            className={`${focus} min-w-0 appearance-none rounded-xl border border-sky-200/10 bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`}
+            value=""
+            onChange={(e) => {
+              const preset = PRESETS.find((p) => p.id === e.target.value);
+              if (preset) applyScenario(preset);
+            }}
+          >
+            <option value="">Or jump to a historical scenario&hellip;</option>
+            {PRESETS.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.label}
+              </option>
+            ))}
+          </select>
+          <p className="text-[10.5px] leading-4 text-slate-500">
+            Illustrative shock magnitudes -- not empirically calibrated to actual losses.
+          </p>
         </div>
 
         <select
