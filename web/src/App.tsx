@@ -21,6 +21,11 @@ import {
 } from "./lib/network";
 import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
+import { clearScenarioFromUrl, parseScenarioFromUrl, writeScenarioToUrl } from "./lib/scenarioUrl";
+
+// Parsed once at module load (there's exactly one URL to read at startup);
+// seeds the initial state below so a shared link reproduces its scenario.
+const initialScenario = parseScenarioFromUrl();
 
 // Only "reserves" is a real observed figure -- the others are modeled
 // proxies (see equityFor() in lib/network.ts for the full rationale).
@@ -40,15 +45,16 @@ const range =
 const secondaryButton = `${focus} rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-300 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-50 disabled:cursor-default disabled:opacity-35 disabled:hover:border-sky-200/10 disabled:hover:bg-slate-950/25 disabled:hover:text-slate-300`;
 
 function App() {
-  const [year, setYear] = useState(DEFAULT_YEAR);
-  const [displayYear, setDisplayYear] = useState(DEFAULT_YEAR);
+  const [year, setYear] = useState(initialScenario?.year ?? DEFAULT_YEAR);
+  const [displayYear, setDisplayYear] = useState(initialScenario?.year ?? DEFAULT_YEAR);
   const [yearData, setYearData] = useState<YearSnapshot | null>(null);
   const [yearLoading, setYearLoading] = useState(true);
   const yearDebounceRef = useRef<number | null>(null);
 
-  const [shockedId, setShockedId] = useState<string | null>(null);
-  const [model, setModel] = useState<Model>("debtrank");
-  const [magnitude, setMagnitude] = useState(1.0);
+  const [shockedId, setShockedId] = useState<string | null>(initialScenario?.shockId ?? null);
+  const [model, setModel] = useState<Model>(initialScenario?.model ?? "debtrank");
+  const [magnitude, setMagnitude] = useState(initialScenario?.magnitude ?? 1.0);
+  const [copied, setCopied] = useState(false);
   const [result, setResult] = useState<SimResult | null>(null);
   const [iteration, setIteration] = useState(0);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -134,6 +140,18 @@ function App() {
     setResult(null);
     setIteration(0);
     setAnalysisPoints(null);
+    clearScenarioFromUrl();
+  }
+
+  async function copyLink() {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1500);
+    } catch {
+      // Clipboard API can be unavailable (insecure context, denied
+      // permission, ...) -- the URL is still visible/copyable manually.
+    }
   }
 
   async function viewAcrossYears() {
@@ -158,6 +176,12 @@ function App() {
     if (network && shockedId) runShock(shockedId, magnitude, model);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [network]);
+
+  // Mirror the live scenario into the URL so it's always a copyable link;
+  // cleared (not written) once there's no active shock to describe.
+  useEffect(() => {
+    if (shockedId) writeScenarioToUrl({ year, shockId, magnitude, model });
+  }, [year, shockedId, magnitude, model]);
 
   const distress = !result
     ? new Array(countries.length).fill(0)
@@ -304,20 +328,32 @@ function App() {
           </button>
         </div>
 
+        <select
+          className={`${focus} shrink-0 min-w-0 appearance-none rounded-xl border border-sky-200/10 bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`}
+          value={shockedId ?? ""}
+          onChange={(e) => e.target.value && triggerShock(e.target.value)}
+        >
+          <option value="">Select a country to shock&hellip;</option>
+          {sortedCountries.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+            </option>
+          ))}
+        </select>
+
         <div className="flex shrink-0 gap-2">
-          <select
-            className={`${focus} min-w-0 flex-1 appearance-none rounded-xl border border-sky-200/10 bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`}
-            value={shockedId ?? ""}
-            onChange={(e) => e.target.value && triggerShock(e.target.value)}
+          <button
+            className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
+            onClick={copyLink}
+            disabled={!shockedId}
           >
-            <option value="">Select a country to shock&hellip;</option>
-            {sortedCountries.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
-          <button className={`${secondaryButton} px-4 py-2.5 text-[13px]`} onClick={reset} disabled={!result}>
+            {copied ? "Copied" : "Copy link"}
+          </button>
+          <button
+            className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
+            onClick={reset}
+            disabled={!result}
+          >
             Reset
           </button>
         </div>
