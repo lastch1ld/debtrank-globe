@@ -1,8 +1,45 @@
-from build_snapshot import MAX_CARRY_FORWARD_YEARS, _last_observation_carried_forward
+from build_snapshot import MAX_CARRY_FORWARD_YEARS, _last_observation_carried_forward, _map_edges_to_iso3
 
 
 def _node(years: dict[str, dict]) -> dict:
     return {"id": "TST", "name": "Testland", "lat": 0, "lng": 0, "years": years}
+
+
+ISO2_TO_ISO3 = {"DE": "DEU", "FR": "FRA"}
+
+
+class TestMapEdgesToIso3:
+    def test_maps_known_pair_to_iso3(self):
+        edges = _map_edges_to_iso3(
+            [{"creditor": "DE", "debtor": "FR", "amount": 100.0}],
+            ISO2_TO_ISO3,
+            {"DEU", "FRA"},
+        )
+        assert edges == [{"creditor": "DEU", "debtor": "FRA", "amount": 100.0}]
+
+    def test_drops_edge_with_unmapped_iso2_code(self):
+        edges = _map_edges_to_iso3(
+            [{"creditor": "5J", "debtor": "FR", "amount": 100.0}],
+            ISO2_TO_ISO3,
+            {"DEU", "FRA"},
+        )
+        assert edges == []
+
+    def test_drops_edge_whose_iso3_has_no_node(self):
+        edges = _map_edges_to_iso3(
+            [{"creditor": "DE", "debtor": "FR", "amount": 100.0}],
+            ISO2_TO_ISO3,
+            {"DEU"},  # FRA has no node this year
+        )
+        assert edges == []
+
+    def test_period_field_is_carried_through_when_present(self):
+        edges = _map_edges_to_iso3(
+            [{"creditor": "DE", "debtor": "FR", "amount": 100.0, "period": "2023-Q4"}],
+            ISO2_TO_ISO3,
+            {"DEU", "FRA"},
+        )
+        assert edges == [{"creditor": "DEU", "debtor": "FRA", "amount": 100.0, "period": "2023-Q4"}]
 
 
 class TestLastObservationCarriedForward:
