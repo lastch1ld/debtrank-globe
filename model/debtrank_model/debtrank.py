@@ -56,7 +56,10 @@ def run_debtrank(
         # Impact felt by every node from currently-distressed neighbors this round.
         incoming = A[:, distressed_mask] @ h[distressed_mask]
 
-        h_next = np.minimum(1.0, h + incoming)
+        # Inactive nodes are frozen: they already propagated once and must
+        # not accumulate further distress from later rounds, even though
+        # `incoming` is computed for every node above.
+        h_next = np.where(state == INACTIVE, h, np.minimum(1.0, h + incoming))
 
         new_state = state.copy()
         # Nodes that were distressed this round have now "used up" their

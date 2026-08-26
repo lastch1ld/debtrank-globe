@@ -76,4 +76,22 @@ describe("runDebtRank", () => {
     const result = runDebtRank(net, { A: 0.4 });
     expect(result.finalDistress[1]).toBeCloseTo(0.2);
   });
+
+  it("inactive node distress stays frozen on reverberation", () => {
+    // X and Y are reciprocally exposed, each for half of their own equity.
+    // X is partially shocked (0.5); once X propagates to Y and goes
+    // INACTIVE, Y's later propagation back to X must not add to X's h.
+    const net: ExposureNetwork = {
+      nodeIds: ["X", "Y"],
+      exposure: [
+        [0, 50], // X's claim on Y
+        [50, 0], // Y's claim on X
+      ],
+      equity: [100, 100],
+    };
+    const result = runDebtRank(net, { X: 0.5 });
+    expect(result.finalDistress[0]).toBeCloseTo(0.5);
+    expect(result.finalDistress[1]).toBeCloseTo(0.25);
+    expect(result.debtrank).toBeCloseTo(0.25 * 0.5);
+  });
 });

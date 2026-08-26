@@ -90,3 +90,29 @@ def test_partial_shock_scales_linearly_through_one_hop():
     result = run_debtrank(net, shocked_nodes={"A": 0.4})
     # impact fraction is 0.5, so B's distress should be 0.5 * 0.4 = 0.2
     assert result.final_distress[net.node_ids.index("B")] == pytest.approx(0.2)
+
+
+def test_inactive_node_distress_stays_frozen_on_reverberation():
+    # X and Y are reciprocally exposed to each other, each for exactly half
+    # of their own equity (impact fraction 0.5 both ways). X is partially
+    # shocked (0.5, not a full default), so X's own distress must stay at
+    # exactly 0.5 for the rest of the run -- once X propagates to Y and goes
+    # INACTIVE, Y's later propagation back to X must NOT add to X's h.
+    net = ExposureNetwork(
+        node_ids=["X", "Y"],
+        exposure=np.array([
+            [0.0, 50.0],  # X's claim on Y: 50 (impact fraction 0.5 of X's equity)
+            [50.0, 0.0],  # Y's claim on X: 50 (impact fraction 0.5 of Y's equity)
+        ]),
+        equity=np.array([100.0, 100.0]),
+    )
+    result = run_debtrank(net, shocked_nodes={"X": 0.5})
+
+    # Round 1: X (D, h=0.5) propagates to Y -> h_Y = 0.5*0.5 = 0.25, X -> INACTIVE.
+    # Round 2: Y (D) propagates back to X, but X is INACTIVE so its h must
+    # stay frozen at 0.5, not climb to 0.625.
+    assert result.final_distress[net.node_ids.index("X")] == pytest.approx(0.5)
+    assert result.final_distress[net.node_ids.index("Y")] == pytest.approx(0.25)
+    # debtrank = sum((h_final - h_initial) * v); only Y's distress is "new"
+    # (X's h didn't change from its initial shock), v_X == v_Y == 0.5.
+    assert result.debtrank == pytest.approx(0.25 * 0.5)
