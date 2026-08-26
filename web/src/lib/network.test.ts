@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { explainExposure } from "./network";
+import { buildExposureNetwork, explainExposure, type YearSnapshot } from "./network";
 import type { ExposureNetwork } from "./debtrank";
 
 describe("explainExposure", () => {
@@ -69,5 +69,39 @@ describe("explainExposure", () => {
     };
     const explanation = explainExposure(net, "A", "B");
     expect(explanation.viaPath).toBeNull();
+  });
+});
+
+describe("buildExposureNetwork", () => {
+  // USA/DEU are real country codes in the bundled country list, since
+  // buildExposureNetwork indexes against that static list rather than
+  // whatever's in the snapshot's own nodes array.
+  const yearData: YearSnapshot = {
+    nodes: [
+      { id: "USA", gdp_usd: 1e13, reserves_usd: 1e11, external_debt_usd: null, bank_capital_ratio_pct: null },
+      { id: "DEU", gdp_usd: 1e13, reserves_usd: 1e11, external_debt_usd: null, bank_capital_ratio_pct: null },
+    ],
+    edges: [{ creditor: "USA", debtor: "DEU", amount: 5e9 }],
+    portfolio_edges: [{ creditor: "USA", debtor: "DEU", amount: 7e9 }],
+  };
+
+  it("excludes portfolio edges by default", () => {
+    const net = buildExposureNetwork(yearData);
+    const i = net.nodeIds.indexOf("USA");
+    const j = net.nodeIds.indexOf("DEU");
+    expect(net.exposure[i][j]).toBe(5e9);
+  });
+
+  it("adds portfolio edges into the exposure matrix when included", () => {
+    const net = buildExposureNetwork(yearData, { includePortfolio: true });
+    const i = net.nodeIds.indexOf("USA");
+    const j = net.nodeIds.indexOf("DEU");
+    expect(net.exposure[i][j]).toBe(5e9 + 7e9);
+  });
+
+  it("does not let portfolio edges change equity, regardless of the toggle", () => {
+    const withoutPortfolio = buildExposureNetwork(yearData);
+    const withPortfolio = buildExposureNetwork(yearData, { includePortfolio: true });
+    expect(withPortfolio.equity).toEqual(withoutPortfolio.equity);
   });
 });

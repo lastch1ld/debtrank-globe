@@ -40,6 +40,12 @@ interface YearNode {
 export interface YearSnapshot {
   nodes: YearNode[];
   edges: ExposureEdge[];
+  /** Cross-border bond/equity holdings from the IMF's Coordinated Portfolio
+   * Investment Survey (CPIS) -- a second, largely distinct contagion
+   * channel from `edges` (BIS bank-to-bank loans). Optional: only present
+   * for years/builds where data-pipeline/fetch_cpis.py has been run, and
+   * currently has no 2024/2025 coverage (CPIS reporting lags to ~2023). */
+  portfolio_edges?: ExposureEdge[];
 }
 
 const yearCache = new Map<number, YearSnapshot>();
@@ -105,7 +111,10 @@ function equityFor(n: YearNode | undefined, grossFootprint: number): { value: nu
   return { value: winner[0], source: winner[1] };
 }
 
-export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
+export function buildExposureNetwork(
+  yearData: YearSnapshot,
+  options?: { includePortfolio?: boolean },
+): ExposureNetwork {
   const nodeIds = countries.map((c) => c.id);
   const index = new Map(nodeIds.map((id, i) => [id, i]));
   const byId = new Map(yearData.nodes.map((n) => [n.id, n]));
@@ -120,6 +129,20 @@ export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
     exposure[i][j] += e.amount;
     grossFootprint[i] += e.amount;
     grossFootprint[j] += e.amount;
+  }
+
+  // Portfolio (bond/equity) exposure is added into the same matrix DebtRank
+  // and Eisenberg-Noe already operate on -- a portfolio-toggled shock
+  // propagates through this channel exactly like a banking one -- but
+  // deliberately left out of grossFootprint/equity, so a node's loss-buffer
+  // estimate doesn't shift depending on whether the toggle happens to be on.
+  if (options?.includePortfolio) {
+    for (const e of yearData.portfolio_edges ?? []) {
+      const i = index.get(e.creditor);
+      const j = index.get(e.debtor);
+      if (i === undefined || j === undefined) continue;
+      exposure[i][j] += e.amount;
+    }
   }
 
   const resolved = nodeIds.map((id, i) => equityFor(byId.get(id), grossFootprint[i]));
