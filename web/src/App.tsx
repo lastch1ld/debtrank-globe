@@ -74,6 +74,11 @@ function App() {
     [yearData],
   );
 
+  const estimatedEquity = useMemo(
+    () => network?.equitySource?.map((s) => s !== "reserves"),
+    [network],
+  );
+
   const baselineShortfall = useMemo(() => (network ? computeBaselineShortfall(network) : null), [network]);
 
   const sortedCountries = useMemo(
@@ -240,7 +245,13 @@ function App() {
       <div className="absolute inset-0">
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-            <Globe yearData={yearData} distress={distress} shockedId={shockedId} onSelect={triggerShock} />
+            <Globe
+              yearData={yearData}
+              distress={distress}
+              shockedId={shockedId}
+              onSelect={triggerShock}
+              estimatedEquity={estimatedEquity}
+            />
           </Canvas>
         )}
         {yearLoading && (
@@ -532,6 +543,10 @@ function App() {
               <span>stable</span>
               <span>default</span>
             </div>
+            <p className="text-[10.5px] leading-4 text-slate-500">
+              A faint wireframe ring marks countries whose loss-buffer equity is
+              estimated (GDP/capital-ratio/floor), not reported FX reserves.
+            </p>
           </div>
         )}
         </div>
@@ -651,10 +666,12 @@ function App() {
                               </span>
                             )}
                           </>
-                        ) : explanation.viaCountry ? (
+                        ) : explanation.viaPath ? (
                           <span className="font-sans italic">
                             No direct exposure -- likely indirect, via{" "}
-                            {countries.find((c) => c.id === explanation.viaCountry)?.name ?? explanation.viaCountry}
+                            {explanation.viaPath
+                              .map((id) => countries.find((c) => c.id === id)?.name ?? id)
+                              .join(" → ")}
                           </span>
                         ) : (
                           <span className="font-sans italic">
