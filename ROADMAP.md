@@ -20,13 +20,14 @@ shipped; unchecked items haven't been started yet.
 
 ## Model realism
 
-- [ ] **Second data layer: portfolio holdings (IMF CPIS)** — BIS only covers
+- [x] **Second data layer: portfolio holdings (IMF CPIS)** — BIS only covers
       bank-to-bank loans. IMF's Coordinated Portfolio Investment Survey
       covers cross-border bond/equity holdings, which is how sovereign debt
-      contagion actually spread in cases like Greece 2010. Add as a
-      togglable second network layer. Deferred: needs its own research pass
-      into a new external API (auth, coverage, shape) before implementation
-      planning makes sense.
+      contagion actually spread in cases like Greece 2010. Shipped as a
+      togglable second network layer ("Include portfolio investment"),
+      fetched via DBnomics' JSON mirror of the IMF SDMX API. Coverage is
+      2005-2023 (voluntary survey, reporting lag) -- the toggle is disabled
+      with a note for 2024/2025 rather than silently showing stale data.
 - [ ] **Multi-country / sequential shocks** — shock two or more countries at
       once, or in a delayed sequence, to replay scenarios like "Greece then
       Portugal then Ireland." Deferred: the DebtRank engine already supports

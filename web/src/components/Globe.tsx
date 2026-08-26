@@ -60,12 +60,13 @@ declare module "@react-three/fiber" {
   }
 }
 
-const NEUTRAL_COLOR = new Color("#334155");
+const NEUTRAL_COLOR = new Color("#94a3b8");
 const DISTRESS_MID = new Color("#f59e0b");
 const DISTRESS_HIGH = new Color("#dc2626");
 const SHOCK_COLOR = new Color("#fde047");
 const ARC_LOW = new Color("#164e63");
 const ARC_HIGH = new Color("#facc15");
+const ESTIMATED_EQUITY_RING = new Color("#64748b");
 
 function distressColor(level: number): Color {
   if (level <= 0.5) return NEUTRAL_COLOR.clone().lerp(DISTRESS_MID, level / 0.5);
@@ -77,6 +78,11 @@ interface GlobeProps {
   distress: number[];
   shockedId: string | null;
   onSelect: (id: string) => void;
+  /** true for nodes whose equity is a modeled proxy (GDP/capital-ratio/floor
+   * fallback) rather than reported FX reserves -- same provenance data the
+   * ranking list already surfaces, mirrored here as a thin ring so the
+   * globe itself signals confidence, not just the sidebar. */
+  estimatedEquity?: boolean[];
 }
 
 function ShockedMarker({ position, scale }: { position: [number, number, number]; scale: number }) {
@@ -126,7 +132,7 @@ function useBorderGeometry() {
   }, []);
 }
 
-export function Globe({ yearData, distress, shockedId, onSelect }: GlobeProps) {
+export function Globe({ yearData, distress, shockedId, onSelect, estimatedEquity }: GlobeProps) {
   const [dragging, setDragging] = useState(false);
   const borderGeometry = useBorderGeometry();
 
@@ -231,7 +237,10 @@ export function Globe({ yearData, distress, shockedId, onSelect }: GlobeProps) {
 
       <Instances limit={countries.length}>
         <sphereGeometry args={[1, 12, 12]} />
-        <meshStandardMaterial roughness={0.4} />
+        {/* Unlit: a lit material fades to near-black on the globe's far side
+            as it auto-rotates away from the point lights, which was making
+            markers nearly invisible for roughly half of every rotation. */}
+        <meshBasicMaterial toneMapped={false} />
         {countries.map((c, i) => {
           if (c.id === shockedId) return null; // rendered separately, pulsing
           const level = distress[i] ?? 0;
@@ -251,6 +260,23 @@ export function Globe({ yearData, distress, shockedId, onSelect }: GlobeProps) {
           );
         })}
       </Instances>
+
+      {estimatedEquity && (
+        <Instances limit={countries.length}>
+          <sphereGeometry args={[1, 10, 10]} />
+          <meshBasicMaterial color={ESTIMATED_EQUITY_RING} wireframe transparent opacity={0.45} toneMapped={false} />
+          {countries.map((c, i) => {
+            if (!estimatedEquity[i] || c.id === shockedId) return null;
+            return (
+              <Instance
+                key={c.id}
+                position={latLngToVector3(c.lat, c.lng, RADIUS)}
+                scale={markerScale(c.id) * 1.7}
+              />
+            );
+          })}
+        </Instances>
+      )}
 
       {shockedId &&
         (() => {

@@ -67,11 +67,19 @@ function App() {
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState<number | null>(null);
   const [hideFinancialCenters, setHideFinancialCenters] = useState(false);
+  const [includePortfolio, setIncludePortfolio] = useState(false);
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
 
+  const portfolioDataAvailable = (yearData?.portfolio_edges?.length ?? 0) > 0;
+
   const network = useMemo<ExposureNetwork | null>(
-    () => (yearData ? buildExposureNetwork(yearData) : null),
-    [yearData],
+    () => (yearData ? buildExposureNetwork(yearData, { includePortfolio }) : null),
+    [yearData, includePortfolio],
+  );
+
+  const estimatedEquity = useMemo(
+    () => network?.equitySource?.map((s) => s !== "reserves"),
+    [network],
   );
 
   const baselineShortfall = useMemo(() => (network ? computeBaselineShortfall(network) : null), [network]);
@@ -240,7 +248,13 @@ function App() {
       <div className="absolute inset-0">
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-            <Globe yearData={yearData} distress={distress} shockedId={shockedId} onSelect={triggerShock} />
+            <Globe
+              yearData={yearData}
+              distress={distress}
+              shockedId={shockedId}
+              onSelect={triggerShock}
+              estimatedEquity={estimatedEquity}
+            />
           </Canvas>
         )}
         {yearLoading && (
@@ -356,6 +370,27 @@ function App() {
             Eisenberg-Noe
           </button>
         </div>
+
+        <label
+          className={`flex shrink-0 items-center gap-2 text-[11px] text-slate-400 ${
+            portfolioDataAvailable ? "cursor-pointer" : "cursor-default opacity-40"
+          }`}
+        >
+          <input
+            type="checkbox"
+            className="size-3.5 cursor-pointer rounded border-sky-200/20 bg-slate-950/45 text-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-default"
+            checked={includePortfolio}
+            disabled={!portfolioDataAvailable}
+            onChange={(e) => setIncludePortfolio(e.target.checked)}
+          />
+          Include portfolio investment (bonds/equity)
+          {!portfolioDataAvailable && <span className="font-mono text-slate-600">(no data for {displayYear})</span>}
+        </label>
+        <p className="-mt-2 text-[10.5px] leading-4 text-slate-500">
+          Adds IMF CPIS cross-border bond/equity holdings as a second exposure
+          layer alongside BIS bank-to-bank loans -- CPIS coverage currently
+          ends around 2023.
+        </p>
 
         <div className="flex shrink-0 flex-col gap-1.5">
           <select
@@ -532,6 +567,10 @@ function App() {
               <span>stable</span>
               <span>default</span>
             </div>
+            <p className="text-[10.5px] leading-4 text-slate-500">
+              A faint wireframe ring marks countries whose loss-buffer equity is
+              estimated (GDP/capital-ratio/floor), not reported FX reserves.
+            </p>
           </div>
         )}
         </div>
@@ -651,10 +690,12 @@ function App() {
                               </span>
                             )}
                           </>
-                        ) : explanation.viaCountry ? (
+                        ) : explanation.viaPath ? (
                           <span className="font-sans italic">
                             No direct exposure -- likely indirect, via{" "}
-                            {countries.find((c) => c.id === explanation.viaCountry)?.name ?? explanation.viaCountry}
+                            {explanation.viaPath
+                              .map((id) => countries.find((c) => c.id === id)?.name ?? id)
+                              .join(" → ")}
                           </span>
                         ) : (
                           <span className="font-sans italic">

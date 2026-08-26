@@ -64,13 +64,47 @@ def _last_observation_carried_forward(node: dict, year_str: str) -> dict:
     return year_values
 
 
-def build_by_year(nodes_by_year_path: Path, edges_by_year_path: Path, out_dir: Path) -> None:
+def _map_edges_to_iso3(edges_raw: list[dict], iso2_to_iso3: dict[str, str], iso3_with_node: set[str]) -> list[dict]:
+    """Shared by the banking and portfolio edge lists: BIS/CPIS edges are
+    ISO2-keyed, node data is ISO3-keyed; this drops any edge where either
+    side isn't a real, known country (which also naturally filters out
+    aggregate/regional codes without needing to hardcode them)."""
+    edges = []
+    for e in edges_raw:
+        creditor_iso3 = iso2_to_iso3.get(e["creditor"])
+        debtor_iso3 = iso2_to_iso3.get(e["debtor"])
+        if not creditor_iso3 or not debtor_iso3:
+            continue
+        if creditor_iso3 not in iso3_with_node or debtor_iso3 not in iso3_with_node:
+            continue
+        mapped = {"creditor": creditor_iso3, "debtor": debtor_iso3, "amount": e["amount"]}
+        if "period" in e:
+            mapped["period"] = e["period"]
+        edges.append(mapped)
+    return edges
+
+
+def build_by_year(
+    nodes_by_year_path: Path,
+    edges_by_year_path: Path,
+    out_dir: Path,
+    portfolio_edges_by_year_path: Path | None = None,
+) -> None:
     """One merged snapshot per year, for the historical scrubber. Written as
     out_dir/{year}.json, each with the same {"nodes": [...], "edges": [...]}
-    shape as the single-year network_snapshot.json, so the web app's loader
-    doesn't need to know the difference."""
+    shape as the single-year network_snapshot.json, plus an optional
+    "portfolio_edges" (CPIS bond/equity holdings -- a second, togglable
+    contagion layer alongside the BIS banking "edges"), so the web app's
+    loader doesn't need to know the difference for the required fields."""
     nodes_by_year = json.loads(nodes_by_year_path.read_text(encoding="utf-8"))["nodes"]
     edges_by_year = json.loads(edges_by_year_path.read_text(encoding="utf-8"))
+    # Optional: CPIS coverage requires running fetch_cpis.py separately (a
+    # live network fetch, unlike the World Bank/BIS data this otherwise only
+    # reads from disk), so its output may not exist yet -- fall back to no
+    # portfolio layer rather than failing the whole build.
+    portfolio_by_year: dict = {}
+    if portfolio_edges_by_year_path and portfolio_edges_by_year_path.exists():
+        portfolio_by_year = json.loads(portfolio_edges_by_year_path.read_text(encoding="utf-8"))
 
     iso2_to_iso3 = _fetch_iso2_to_iso3()
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -93,24 +127,17 @@ def build_by_year(nodes_by_year_path: Path, edges_by_year_path: Path, out_dir: P
             })
         iso3_with_node = {n["id"] for n in nodes}
 
-        edges = []
-        for e in edges_raw:
-            creditor_iso3 = iso2_to_iso3.get(e["creditor"])
-            debtor_iso3 = iso2_to_iso3.get(e["debtor"])
-            if not creditor_iso3 or not debtor_iso3:
-                continue
-            if creditor_iso3 not in iso3_with_node or debtor_iso3 not in iso3_with_node:
-                continue
-            edges.append({
-                "creditor": creditor_iso3,
-                "debtor": debtor_iso3,
-                "period": e["period"],
-                "amount": e["amount"],
-            })
+        edges = _map_edges_to_iso3(edges_raw, iso2_to_iso3, iso3_with_node)
+        snapshot = {"nodes": nodes, "edges": edges}
+
+        portfolio_raw = portfolio_by_year.get(year_str)
+        if portfolio_raw is not None:
+            snapshot["portfolio_edges"] = _map_edges_to_iso3(portfolio_raw, iso2_to_iso3, iso3_with_node)
 
         out_path = out_dir / f"{year}.json"
-        out_path.write_text(json.dumps({"nodes": nodes, "edges": edges}, separators=(",", ":")), encoding="utf-8")
-        print(f"{year}: {len(nodes)} nodes, {len(edges)} edges -> {out_path}", file=sys.stderr)
+        out_path.write_text(json.dumps(snapshot, separators=(",", ":")), encoding="utf-8")
+        portfolio_note = f", {len(snapshot['portfolio_edges'])} portfolio edges" if portfolio_raw is not None else ""
+        print(f"{year}: {len(nodes)} nodes, {len(edges)} edges{portfolio_note} -> {out_path}", file=sys.stderr)
 
 
 def main() -> None:
@@ -121,6 +148,7 @@ def main() -> None:
     if known.by_year:
         parser = argparse.ArgumentParser()
         parser.add_argument("--by-year", action="store_true")
+        parser.add_argument("--portfolio-edges-by-year", default=None)
         parser.add_argument("nodes_by_year", nargs="?", default=None)
         parser.add_argument("edges_by_year", nargs="?", default=None)
         parser.add_argument("out_dir", nargs="?", default=None)
@@ -130,6 +158,7 @@ def main() -> None:
             Path(args.nodes_by_year) if args.nodes_by_year else base / "nodes_by_year.json",
             Path(args.edges_by_year) if args.edges_by_year else base / "edges_by_year.json",
             Path(args.out_dir) if args.out_dir else base / "by_year",
+            Path(args.portfolio_edges_by_year) if args.portfolio_edges_by_year else base / "cpis_edges_by_year.json",
         )
         return
 

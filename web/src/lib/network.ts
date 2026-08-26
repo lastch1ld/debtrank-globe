@@ -40,6 +40,12 @@ interface YearNode {
 export interface YearSnapshot {
   nodes: YearNode[];
   edges: ExposureEdge[];
+  /** Cross-border bond/equity holdings from the IMF's Coordinated Portfolio
+   * Investment Survey (CPIS) -- a second, largely distinct contagion
+   * channel from `edges` (BIS bank-to-bank loans). Optional: only present
+   * for years/builds where data-pipeline/fetch_cpis.py has been run, and
+   * currently has no 2024/2025 coverage (CPIS reporting lags to ~2023). */
+  portfolio_edges?: ExposureEdge[];
 }
 
 const yearCache = new Map<number, YearSnapshot>();
@@ -105,7 +111,10 @@ function equityFor(n: YearNode | undefined, grossFootprint: number): { value: nu
   return { value: winner[0], source: winner[1] };
 }
 
-export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
+export function buildExposureNetwork(
+  yearData: YearSnapshot,
+  options?: { includePortfolio?: boolean },
+): ExposureNetwork {
   const nodeIds = countries.map((c) => c.id);
   const index = new Map(nodeIds.map((id, i) => [id, i]));
   const byId = new Map(yearData.nodes.map((n) => [n.id, n]));
@@ -122,6 +131,20 @@ export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
     grossFootprint[j] += e.amount;
   }
 
+  // Portfolio (bond/equity) exposure is added into the same matrix DebtRank
+  // and Eisenberg-Noe already operate on -- a portfolio-toggled shock
+  // propagates through this channel exactly like a banking one -- but
+  // deliberately left out of grossFootprint/equity, so a node's loss-buffer
+  // estimate doesn't shift depending on whether the toggle happens to be on.
+  if (options?.includePortfolio) {
+    for (const e of yearData.portfolio_edges ?? []) {
+      const i = index.get(e.creditor);
+      const j = index.get(e.debtor);
+      if (i === undefined || j === undefined) continue;
+      exposure[i][j] += e.amount;
+    }
+  }
+
   const resolved = nodeIds.map((id, i) => equityFor(byId.get(id), grossFootprint[i]));
   const equity = resolved.map((r) => r.value);
   const equitySource = resolved.map((r) => r.source);
@@ -136,41 +159,64 @@ export interface ExposureExplanation {
   /** toId's claim on fromId -- shown for context, not itself a channel by
    * which fromId is distressed under this model's mechanics. */
   owedToShocked: number;
-  /** When neither direct figure is nonzero, the single intermediate country
-   * connecting them most strongly (min of the two hop exposures, larger of
-   * the two directions) -- an approximate explanation, not a literal
-   * decomposition of DebtRank's multi-hop propagation. */
-  viaCountry: string | null;
+  /** When neither direct figure is nonzero, the chain of intermediate
+   * countries connecting them most strongly (the widest 1- or 2-hop path,
+   * by the minimum exposure along the chain) -- an approximate explanation,
+   * not a literal decomposition of DebtRank's multi-hop propagation. */
+  viaPath: string[] | null;
+}
+
+/** Widest path (bottleneck = min edge along the chain) between `i` and `j`
+ * through the given intermediates, checked in both directions since the
+ * drill-down doesn't know a priori which side holds the claim. */
+function chainScore(network: ExposureNetwork, i: number, j: number, path: number[]): number {
+  const legs = (from: number, to: number) => {
+    let min = network.exposure[from][path[0]];
+    for (let k = 0; k < path.length - 1; k++) min = Math.min(min, network.exposure[path[k]][path[k + 1]]);
+    min = Math.min(min, network.exposure[path[path.length - 1]][to]);
+    return min;
+  };
+  return Math.max(legs(i, j), legs(j, i));
 }
 
 /** Explains why `fromId` might be exposed to `toId` (typically the shocked
  * country) for the ranking drill-down -- direct bilateral exposure first,
- * falling back to the strongest one-hop intermediary. */
+ * falling back to the widest one-hop, then two-hop, intermediary chain. */
 export function explainExposure(network: ExposureNetwork, fromId: string, toId: string): ExposureExplanation {
   const i = network.nodeIds.indexOf(fromId);
   const j = network.nodeIds.indexOf(toId);
-  if (i < 0 || j < 0) return { claimOnShocked: 0, owedToShocked: 0, viaCountry: null };
+  if (i < 0 || j < 0) return { claimOnShocked: 0, owedToShocked: 0, viaPath: null };
 
   const claimOnShocked = network.exposure[i][j];
   const owedToShocked = network.exposure[j][i];
   if (claimOnShocked > 0 || owedToShocked > 0) {
-    return { claimOnShocked, owedToShocked, viaCountry: null };
+    return { claimOnShocked, owedToShocked, viaPath: null };
   }
 
-  let bestM: string | null = null;
+  const n = network.nodeIds.length;
+  let bestPath: number[] | null = null;
   let bestScore = 0;
-  for (let m = 0; m < network.nodeIds.length; m++) {
+  for (let m = 0; m < n; m++) {
     if (m === i || m === j) continue;
-    const score = Math.max(
-      Math.min(network.exposure[i][m], network.exposure[m][j]),
-      Math.min(network.exposure[j][m], network.exposure[m][i]),
-    );
+    const score = chainScore(network, i, j, [m]);
     if (score > bestScore) {
       bestScore = score;
-      bestM = network.nodeIds[m];
+      bestPath = [m];
     }
   }
-  return { claimOnShocked: 0, owedToShocked: 0, viaCountry: bestM };
+  for (let m1 = 0; m1 < n; m1++) {
+    if (m1 === i || m1 === j) continue;
+    for (let m2 = 0; m2 < n; m2++) {
+      if (m2 === i || m2 === j || m2 === m1) continue;
+      const score = chainScore(network, i, j, [m1, m2]);
+      if (score > bestScore) {
+        bestScore = score;
+        bestPath = [m1, m2];
+      }
+    }
+  }
+
+  return { claimOnShocked: 0, owedToShocked: 0, viaPath: bestPath?.map((idx) => network.nodeIds[idx]) ?? null };
 }
 
 /** Total in + out exposure for a country, used to size its marker. */

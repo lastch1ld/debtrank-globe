@@ -83,7 +83,10 @@ export function runDebtRank(
       incoming[i] = sum;
     }
 
-    const hNext = h.map((v, i) => Math.min(1, v + incoming[i]));
+    // Inactive nodes are frozen: they already propagated once and must not
+    // accumulate further distress from later rounds, even though `incoming`
+    // is computed for every node above.
+    const hNext = h.map((v, i) => (state[i] === "I" ? v : Math.min(1, v + incoming[i])));
     const newState = state.slice();
     for (const i of distressedIdx) newState[i] = "I";
     for (let i = 0; i < n; i++) {
