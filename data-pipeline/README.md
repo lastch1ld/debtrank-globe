@@ -38,9 +38,6 @@ python fetch_bis.py /path/to/WS_LBS_D_PUB_csv_col.csv out/edges_by_year.json --b
 
 # 3. Merge into out/by_year/{year}.json (same {"nodes":[...], "edges":[...]} shape)
 python build_snapshot.py --by-year
-
-# 4. Copy into the web app's static data dir, served at runtime via fetch()
-cp out/by_year/*.json ../web/public/data/network/
 ```
 
 ### Market data (bond yields, policy rates, stock indices)
@@ -50,9 +47,26 @@ cp out/by_year/*.json ../web/public/data/network/
 # bond yield, short-term/policy interest rate, and stock index YoY change.
 # Coverage differs per series (a country can have some and not others).
 python fetch_market_data.py out/market_data.json
-
-cp out/market_data.json ../web/src/data/market_data.json
 ```
+
+## Publishing to the web app
+
+`out/` is this pipeline's build output and is not tracked in git. The web
+app's copies are — `web/src/data/` is bundled at build time and
+`web/public/data/network/` is fetched at runtime, and GitHub Pages serves
+both. So regenerating anything above is only half the job; the copy is the
+other half:
+
+```bash
+python sync_web_data.py           # copy every derived file into web/
+python sync_web_data.py --check   # report drift, exit 1 if any (no writes)
+```
+
+Run it after every pipeline run. This used to be a handful of `cp` lines in
+this README, and one of them was missing: `network_snapshot.json` was never
+listed, so the per-country `bank_capital_ratio_pct` added in 01c32ee landed
+in `out/` and stopped there. The app went on using the flat 8% fallback that
+commit existed to remove — for a month, with nothing to notice it.
 
 Output: `out/network_snapshot.json` — `{"nodes": [...], "edges": [...]}`,
 ~4,400 real bilateral country-country exposure edges across ~215 countries.
