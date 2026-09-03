@@ -9,3 +9,7 @@ dist/
 .superpowers/
 .env
 *.log
+
+# Pipeline build output. The web app's copies under web/ are the tracked,
+# deployed ones — see data-pipeline/sync_web_data.py.
+data-pipeline/out/
