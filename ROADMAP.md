@@ -1,7 +1,7 @@
 # Roadmap
 
 Candidate additions beyond the data-quality fixes already shipped (see
-[`docs/superpowers/plans/2026-08-22-data-quality-roadmap.md`](docs/superpowers/plans/2026-08-22-data-quality-roadmap.md)
+[`docs/plans/2026-08-22-data-quality-roadmap.md`](docs/plans/2026-08-22-data-quality-roadmap.md)
 for that history). Each item below is tracked as it moves from idea to
 shipped; unchecked items haven't been started yet.
 
