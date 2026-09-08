@@ -23,7 +23,13 @@ describe("GitHub Pages deployment contract", () => {
     expect(workflow).toContain("workflows: [CI]");
     expect(workflow).toContain("branches: [master]");
     expect(workflow).toContain("github.event.workflow_run.conclusion == 'success'");
-    expect(workflow).toContain("actions/upload-pages-artifact@v3");
-    expect(workflow).toContain("actions/deploy-pages@v4");
+    // The identity of the actions is the contract — deploying through
+    // GitHub's own Pages actions rather than a third-party deployer.
+    // Which major they're pinned at is not: asserting the exact version
+    // turns every legitimate upgrade into a failing test, which is how
+    // this one failed when checkout/setup-node moved off the deprecated
+    // Node 20 runtime and the Pages actions came along with them.
+    expect(workflow).toMatch(/actions\/upload-pages-artifact@v\d+/);
+    expect(workflow).toMatch(/actions\/deploy-pages@v\d+/);
   });
 });
