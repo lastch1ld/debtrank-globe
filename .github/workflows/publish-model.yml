@@ -1,0 +1,42 @@
+name: Publish model
+
+# Manual, tag-driven, and separate from CI on purpose: a push to master
+# rebuilds the site, it should not be able to ship a release to PyPI.
+# Tag the commit `model-v0.2.0` (matching pyproject's version) to publish.
+on:
+  push:
+    tags: ["model-v*"]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    name: build and publish to PyPI
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      # Trusted publishing (OIDC) — no API token stored in this repo.
+      # Requires a one-time publisher configured on PyPI for this
+      # repo/workflow/environment.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      # The tests are the reason to trust the release, so run them against
+      # the same tree that is about to be built.
+      - run: pip install -e ".[dev]"
+        working-directory: model
+      - run: pytest -q
+        working-directory: model
+
+      - run: pip install build twine
+      - run: python -m build
+        working-directory: model
+      - run: python -m twine check dist/*
+        working-directory: model
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: model/dist

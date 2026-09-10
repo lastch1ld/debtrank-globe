@@ -1,9 +1,26 @@
 [project]
 name = "debtrank-model"
-version = "0.1.1"
+version = "0.2.0"
 description = "DebtRank and Eisenberg-Noe systemic risk models for sovereign debt networks"
+readme = "README.md"
 requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "lastch1ld" }]
+keywords = ["debtrank", "systemic-risk", "contagion", "sovereign-debt", "networks", "finance"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Typing :: Typed",
+]
 dependencies = ["numpy>=1.26"]
+
+[project.urls]
+Homepage = "https://github.com/lastch1ld/debtrank-globe"
+Source = "https://github.com/lastch1ld/debtrank-globe/tree/master/model"
+"Live application" = "https://lastch1ld.github.io/debtrank-globe/"
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
@@ -12,8 +29,9 @@ dev = ["pytest>=8.0"]
 debtrank-simulate = "debtrank_model.cli:main"
 
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 include = ["debtrank_model*"]
+exclude = ["debtrank_model.tests*"]
