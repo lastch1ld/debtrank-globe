@@ -16,6 +16,17 @@ export interface Scenario {
 const MAGNITUDE_MIN = 0.05;
 const MAGNITUDE_MAX = 1;
 
+/** Chrome-less rendering for `?embed=1`: no nav, no controls panel, just
+ * the globe and a caption. The scenario parameters already make any view
+ * reproducible from a URL, so an embed needs nothing beyond a flag saying
+ * "don't draw the application around it". Read separately from
+ * parseScenarioFromUrl because it is orthogonal -- an embed with no
+ * scenario is a perfectly good idle globe. */
+export function isEmbedded(): boolean {
+  if (typeof window === "undefined") return false;
+  return new URLSearchParams(window.location.search).get("embed") === "1";
+}
+
 /** Reads a scenario out of the current URL's query string, or null if
  * absent/invalid -- never throws, so a hand-edited or stale link just falls
  * through to normal defaults instead of crashing the app. */
@@ -56,10 +67,24 @@ export function writeScenarioToUrl(scenario: Scenario): void {
   params.set("magnitude", scenario.magnitude.toFixed(2));
   params.set("model", scenario.model);
   if (scenario.includePortfolio) params.set("portfolio", "1");
+  // Carried through every rewrite: the flag is read at load, so dropping it
+  // here would un-embed the page on the viewer's next refresh.
+  if (isEmbedded()) params.set("embed", "1");
   window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
 }
 
 export function clearScenarioFromUrl(): void {
   if (typeof window === "undefined") return;
-  window.history.replaceState(null, "", window.location.pathname);
+  const suffix = isEmbedded() ? "?embed=1" : "";
+  window.history.replaceState(null, "", `${window.location.pathname}${suffix}`);
+}
+
+/** The same view in the full application, for the embed's "open in" link.
+ * Built from `window.location` rather than a stored scenario so it carries
+ * whatever the viewer has since changed inside the iframe. */
+export function fullAppUrl(): string {
+  if (typeof window === "undefined") return "";
+  const url = new URL(window.location.href);
+  url.searchParams.delete("embed");
+  return url.toString();
 }

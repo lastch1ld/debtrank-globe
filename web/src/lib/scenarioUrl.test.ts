@@ -1,13 +1,13 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { countries } from "./network";
-import { parseScenarioFromUrl, writeScenarioToUrl, type Scenario } from "./scenarioUrl";
+import { fullAppUrl, isEmbedded, parseScenarioFromUrl, writeScenarioToUrl, type Scenario } from "./scenarioUrl";
 
 const id = countries[0].id;
 
 function stubWindow(search: string) {
   const replaceState = vi.fn();
   vi.stubGlobal("window", {
-    location: { search, pathname: "/debtrank-globe/", href: "" },
+    location: { search, pathname: "/debtrank-globe/", href: `https://x.test/debtrank-globe/${search}` },
     history: { replaceState },
   });
   return replaceState;
@@ -37,5 +37,28 @@ describe("scenario round-trip", () => {
   it("still reads links shared before the parameter existed", () => {
     stubWindow(`?year=2020&shock=${id}&magnitude=0.50&model=debtrank`);
     expect(parseScenarioFromUrl()).toEqual(base);
+  });
+});
+
+describe("embed mode", () => {
+  it("is off unless the flag is set", () => {
+    stubWindow("?year=2020");
+    expect(isEmbedded()).toBe(false);
+  });
+
+  it("survives a scenario rewrite", () => {
+    // The flag is read once at load, so a rewrite that drops it would
+    // un-embed the page on the viewer's next refresh inside the iframe.
+    const replaceState = stubWindow("?embed=1");
+    writeScenarioToUrl(base);
+    expect(String(replaceState.mock.calls[0][2])).toContain("embed=1");
+  });
+
+  it("points its escape hatch at the same view, un-embedded", () => {
+    stubWindow("?year=2020&shock=ABW&magnitude=0.50&model=debtrank&embed=1");
+    const url = fullAppUrl();
+    expect(url).not.toContain("embed");
+    expect(url).toContain("year=2020");
+    expect(url).toContain("model=debtrank");
   });
 });
