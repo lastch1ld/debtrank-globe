@@ -192,7 +192,7 @@ function App() {
     if (!shockedId) return;
     setAnalysisLoading(true);
     setAnalysisProgress(YEARS[0]);
-    const points = await runAnalysisAcrossYears(shockedId, magnitude, model, setAnalysisProgress);
+    const points = await runAnalysisAcrossYears(shockedId, magnitude, model, setAnalysisProgress, includePortfolio);
     setAnalysisPoints(points);
     setAnalysisLoading(false);
     setAnalysisProgress(null);
