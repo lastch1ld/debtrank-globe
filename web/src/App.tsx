@@ -23,12 +23,23 @@ import {
 import { formatUsd } from "./lib/format";
 import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
-import { clearScenarioFromUrl, parseScenarioFromUrl, writeScenarioToUrl } from "./lib/scenarioUrl";
+import {
+  clearScenarioFromUrl,
+  fullAppUrl,
+  isEmbedded,
+  parseScenarioFromUrl,
+  writeScenarioToUrl,
+} from "./lib/scenarioUrl";
 import { PRESETS } from "./lib/presets";
 
 // Parsed once at module load (there's exactly one URL to read at startup);
 // seeds the initial state below so a shared link reproduces its scenario.
 const initialScenario = parseScenarioFromUrl();
+
+// `?embed=1`: render the globe alone, for iframing into an article or a
+// slide. Read once at module load for the same reason as the scenario --
+// there is one URL, and nothing in the app changes this flag.
+const embedded = isEmbedded();
 
 // Only "reserves" is a real observed figure -- the others are modeled
 // proxies (see equityFor() in lib/network.ts for the full rationale).
@@ -279,6 +290,37 @@ function App() {
         )}
       </div>
 
+      {/* The embed still has to say what it is showing and where it came
+          from -- a globe with no caption is an unattributed illustration,
+          and the year/model/country are the whole claim being made. */}
+      {embedded && (
+        <div className={`${glass} pointer-events-none absolute inset-x-3 bottom-3 z-10 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 rounded-xl px-3 py-2`}>
+          <span className="font-mono text-[11px] text-slate-300">
+            {shockedId ? (
+              <>
+                <strong className="font-semibold text-slate-100">
+                  {countries.find((c) => c.id === shockedId)?.name ?? shockedId}
+                </strong>
+                {` shocked ${Math.round(magnitude * 100)}% · ${displayYear} · `}
+                {model === "debtrank" ? "DebtRank" : "Eisenberg-Noe"}
+                {includePortfolio ? " · incl. portfolio" : ""}
+              </>
+            ) : (
+              <>Cross-border debt exposure network · {displayYear}</>
+            )}
+          </span>
+          <a
+            className={`${focus} pointer-events-auto font-mono text-[11px] text-sky-400 underline decoration-sky-400/30 underline-offset-2 hover:decoration-sky-400`}
+            href={fullAppUrl()}
+            target="_blank"
+            rel="noreferrer"
+          >
+            debtrank-globe &#8599;
+          </a>
+        </div>
+      )}
+
+      {!embedded && (
       <nav
         className={`${glass} fixed left-3 right-3 top-3 z-20 flex min-h-14 items-center justify-between rounded-2xl px-4 py-3 sm:left-4 sm:right-4 sm:top-4`}
       >
@@ -299,7 +341,9 @@ function App() {
           <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:-translate-y-[5px] group-aria-expanded:-rotate-45" />
         </button>
       </nav>
+      )}
 
+      {!embedded && (
       <aside
         className={`fixed bottom-0 right-0 top-20 z-30 flex min-h-0 w-full flex-col gap-4 overflow-hidden border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.985),rgba(2,7,15,0.98))] px-4 pb-5 pt-4 shadow-[-24px_0_100px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-transform duration-300 ease-out motion-reduce:transition-none sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5 ${
           panelOpen ? "translate-x-0" : "translate-x-full"
@@ -729,6 +773,7 @@ function App() {
           </div>
         )}
       </aside>
+      )}
     </div>
   );
 }
