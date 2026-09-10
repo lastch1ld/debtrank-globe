@@ -6,7 +6,7 @@ import sys
 
 import numpy as np
 
-from .debtrank import run_debtrank
+from .debtrank import Shock, run_debtrank
 from .network import ExposureNetwork
 
 
@@ -70,8 +70,10 @@ def main(argv: list[str] | None = None) -> int:
         description="Run a DebtRank shock simulation on a country exposure network snapshot."
     )
     parser.add_argument("snapshot", help="Path to nodes/edges network snapshot JSON")
-    parser.add_argument("--shock", action="append", default=[], metavar="COUNTRY=LEVEL",
-                         help="Country to shock and its initial distress level, e.g. GRC=1.0")
+    parser.add_argument("--shock", action="append", default=[], metavar="COUNTRY=LEVEL[@ROUND]",
+                         help="Country to shock and its initial distress level, e.g. GRC=1.0. "
+                              "Append @ROUND to delay its arrival by that many propagation "
+                              "rounds, e.g. PRT=0.6@2. Repeat for several countries.")
     args = parser.parse_args(argv)
 
     if not args.shock:
@@ -79,8 +81,12 @@ def main(argv: list[str] | None = None) -> int:
 
     shocked = {}
     for item in args.shock:
-        country, level = item.split("=")
-        shocked[country] = float(level)
+        try:
+            country, spec = item.split("=", 1)
+            level, _, delay = spec.partition("@")
+            shocked[country] = Shock(level=float(level), delay=int(delay) if delay else 0)
+        except ValueError:
+            parser.error(f"could not parse --shock {item!r}; expected COUNTRY=LEVEL[@ROUND]")
 
     network = _load_snapshot(args.snapshot)
     result = run_debtrank(network, shocked)

@@ -8,7 +8,7 @@ by hand and checked against the implementation.
 import numpy as np
 import pytest
 
-from debtrank_model.debtrank import run_debtrank
+from debtrank_model.debtrank import Shock, run_debtrank
 from debtrank_model.network import ExposureNetwork
 
 
@@ -116,3 +116,58 @@ def test_inactive_node_distress_stays_frozen_on_reverberation():
     # debtrank = sum((h_final - h_initial) * v); only Y's distress is "new"
     # (X's h didn't change from its initial shock), v_X == v_Y == 0.5.
     assert result.debtrank == pytest.approx(0.25 * 0.5)
+
+
+class TestSequentialShocks:
+    """A chain A -> B -> C: A holds a claim on B, B on C."""
+
+    @staticmethod
+    def chain():
+        exposure = np.array(
+            [
+                [0.0, 50.0, 0.0],
+                [0.0, 0.0, 50.0],
+                [0.0, 0.0, 0.0],
+            ]
+        )
+        return ExposureNetwork(
+            node_ids=["A", "B", "C"], exposure=exposure, equity=np.array([100.0, 100.0, 100.0])
+        )
+
+    def test_a_bare_float_still_means_an_immediate_shock(self):
+        net = self.chain()
+        assert run_debtrank(net, {"C": 1.0}).debtrank == pytest.approx(
+            run_debtrank(net, {"C": Shock(level=1.0)}).debtrank
+        )
+
+    def test_a_delayed_shock_lands_in_the_round_it_names(self):
+        net = self.chain()
+        result = run_debtrank(net, {"C": 1.0, "A": Shock(level=0.4, delay=2)})
+        assert result.history[0][net.node_ids.index("A")] == 0.0
+        assert result.history[2][net.node_ids.index("A")] == pytest.approx(0.4)
+
+    def test_a_late_shock_still_propagates_through_a_spent_node(self):
+        # B is knocked INACTIVE by the first wave from C. A second,
+        # exogenous shock to B is new information, not recirculated
+        # distress, so it must still reach A -- otherwise sequencing
+        # silently does nothing in exactly the case it exists for.
+        net = self.chain()
+        first_wave_only = run_debtrank(net, {"C": 1.0})
+        sequenced = run_debtrank(net, {"C": 1.0, "B": Shock(level=1.0, delay=2)})
+        a = net.node_ids.index("A")
+        assert sequenced.final_distress[a] > first_wave_only.final_distress[a]
+
+    def test_the_aggregate_never_counts_a_shock_as_its_own_impact(self):
+        # Injecting distress directly into an isolated node must not move
+        # the aggregate, whenever it arrives.
+        net = ExposureNetwork(
+            node_ids=["A", "B"],
+            exposure=np.zeros((2, 2)),
+            equity=np.array([100.0, 100.0]),
+        )
+        assert run_debtrank(net, {"A": 1.0}).debtrank == pytest.approx(0.0)
+        assert run_debtrank(net, {"A": Shock(level=1.0, delay=3)}).debtrank == pytest.approx(0.0)
+
+    def test_rejects_a_negative_delay(self):
+        with pytest.raises(ValueError, match="delay"):
+            run_debtrank(self.chain(), {"A": Shock(level=0.5, delay=-1)})
