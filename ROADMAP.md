@@ -28,13 +28,17 @@ shipped; unchecked items haven't been started yet.
       fetched via DBnomics' JSON mirror of the IMF SDMX API. Coverage is
       2005-2023 (voluntary survey, reporting lag) -- the toggle is disabled
       with a note for 2024/2025 rather than silently showing stale data.
-- [ ] **Multi-country / sequential shocks** — shock two or more countries at
-      once, or in a delayed sequence, to replay scenarios like "Greece then
-      Portugal then Ireland." Deferred: the DebtRank engine already supports
-      multiple shocked nodes internally, but Eisenberg-Noe, `App.tsx` state,
-      and the whole shock-selection UI are single-country throughout —
-      widening that is a real interaction-design decision (how do you pick
-      N countries + N magnitudes?) that deserves its own scoping pass.
+- [x] **Multi-country / sequential shocks** — shipped. The panel keeps a
+      primary shock (the one the market check and the ranking drill-down
+      describe, since those only mean anything about one country) and adds a
+      list of further countries beneath it, each with a magnitude and the
+      propagation round it arrives in. DebtRank's iterations are the only
+      clock the model has, so "round N" is what "then Portugal, two rounds
+      later" can honestly mean; a delayed shock re-arms a node the first wave
+      already spent, because a late exogenous shock is new information rather
+      than recirculated distress. Eisenberg-Noe takes the whole list but
+      solves a fixed point with no rounds, and the UI says so instead of
+      quietly ignoring them. Encoded as `shock=GRC:1.00,PRT:0.60@2`.
 - [x] **Historical scenario presets** — a dropdown of real crises (2008 GFC,
       2010 Greek debt crisis, 2015-16 China slowdown, 2020 COVID shock) that
       jumps to the right year and pre-fills an illustrative shock magnitude.
