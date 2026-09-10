@@ -18,6 +18,13 @@ jobs:
         working-directory: model
       - run: pytest -q
         working-directory: model
+      # The release workflow builds from this same tree; catching a broken
+      # sdist/wheel here is cheaper than catching it at tag time.
+      - run: pip install build twine
+      - run: python -m build
+        working-directory: model
+      - run: python -m twine check dist/*
+        working-directory: model
 
   data-pipeline:
     name: data-pipeline (pytest)
