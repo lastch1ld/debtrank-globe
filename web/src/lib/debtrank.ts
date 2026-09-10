@@ -47,9 +47,36 @@ function economicValueWeights(net: ExposureNetwork): number[] {
   return net.equity.map((e) => e / total);
 }
 
+/** An exogenous shock to one node, optionally arriving late. `delay` is the
+ * propagation round it lands in; 0 is the classic simultaneous shock. */
+export interface Shock {
+  level: number;
+  delay?: number;
+}
+
+export type ShockInput = number | Shock;
+
+/**
+ * `shockedNodes` maps node id to an initial distress level in (0, 1], or a
+ * Shock carrying a `delay`. A bare number means delay 0, so existing callers
+ * are unaffected.
+ *
+ * A delayed shock deliberately re-arms its node even if that node has
+ * already gone "I". "I" exists to stop *propagated* distress from
+ * reverberating around a loop and being counted twice; a late exogenous
+ * shock is new information entering the system, not recirculated distress,
+ * so it gets to propagate. Without that, "Portugal defaults two rounds after
+ * Greece" would silently do nothing whenever Portugal had already been hit
+ * by the first wave -- exactly the case anyone modelling a sequence cares
+ * about.
+ *
+ * `debtrank` is net of everything injected from outside, at whatever round
+ * it arrived, so a sequence's aggregate stays comparable with a simultaneous
+ * one.
+ */
 export function runDebtRank(
   net: ExposureNetwork,
-  shockedNodes: Record<string, number>,
+  shockedNodes: Record<string, ShockInput>,
   maxIterations = 100,
 ): DebtRankResult {
   const n = net.nodeIds.length;
@@ -58,21 +85,39 @@ export function runDebtRank(
 
   let h = new Array(n).fill(0);
   let state: State[] = new Array(n).fill("U");
+  // Total distress pushed in from outside, per node -- subtracted from the
+  // aggregate at the end so a shock is never counted as its own impact.
+  const injected = new Array(n).fill(0);
 
-  for (const [nodeId, level] of Object.entries(shockedNodes)) {
+  const arrivals = new Map<number, [number, number][]>();
+  for (const [nodeId, spec] of Object.entries(shockedNodes)) {
     const idx = index.get(nodeId);
     if (idx === undefined) continue;
-    h[idx] = level;
-    state[idx] = "D";
+    const level = typeof spec === "number" ? spec : spec.level;
+    const delay = typeof spec === "number" ? 0 : Math.max(0, Math.trunc(spec.delay ?? 0));
+    const at = arrivals.get(delay) ?? [];
+    at.push([idx, level]);
+    arrivals.set(delay, at);
+  }
+  const lastArrival = arrivals.size > 0 ? Math.max(...arrivals.keys()) : 0;
+
+  function applyArrivals(round: number) {
+    for (const [idx, level] of arrivals.get(round) ?? []) {
+      const raised = Math.max(0, Math.min(1, level) - h[idx]);
+      injected[idx] += raised;
+      h[idx] = Math.min(1, Math.max(h[idx], level));
+      if (raised > 0) state[idx] = "D";
+    }
   }
 
+  applyArrivals(0);
   const history: number[][] = [h.slice()];
 
   for (let iter = 0; iter < maxIterations; iter++) {
     const distressedIdx = state
       .map((s, i) => (s === "D" ? i : -1))
       .filter((i) => i >= 0);
-    if (distressedIdx.length === 0) break;
+    if (distressedIdx.length === 0 && iter >= lastArrival) break;
 
     const incoming = new Array(n).fill(0);
     for (let i = 0; i < n; i++) {
@@ -95,13 +140,13 @@ export function runDebtRank(
 
     h = hNext;
     state = newState;
+    applyArrivals(iter + 1);
     history.push(h.slice());
   }
 
   const v = economicValueWeights(net);
-  const initial = history[0];
   let debtrank = 0;
-  for (let i = 0; i < n; i++) debtrank += (h[i] - initial[i]) * v[i];
+  for (let i = 0; i < n; i++) debtrank += (h[i] - injected[i]) * v[i];
 
   return {
     nodeIds: net.nodeIds.slice(),

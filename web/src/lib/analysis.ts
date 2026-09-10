@@ -1,9 +1,20 @@
-import { runDebtRank, type ExposureNetwork } from "./debtrank";
+import { runDebtRank, type ExposureNetwork, type ShockInput } from "./debtrank";
 import { clearingVector } from "./eisenbergNoe";
 import { YEARS, buildExposureNetwork, loadYearData } from "./network";
 import { getBondYield, getPolicyRate, getStockChange } from "./marketData";
 
 export type Model = "debtrank" | "eisenberg-noe";
+
+/** One country's shock. `delay` is the propagation round it arrives in, so a
+ * list of these expresses "Greece, then Portugal two rounds later". The
+ * first entry is the primary shock -- the one the market panel and the
+ * ranking drill-down describe, since those only mean anything about a single
+ * country. */
+export interface ShockSpec {
+  id: string;
+  magnitude: number;
+  delay: number;
+}
 
 export type SimResult =
   | { kind: "debtrank"; nodeIds: string[]; history: number[][]; debtrank: number }
@@ -27,13 +38,14 @@ export function computeBaselineShortfall(network: ExposureNetwork): number[] {
 
 export function computeShockResult(
   network: ExposureNetwork,
-  id: string,
-  mag: number,
+  shocks: ShockSpec[],
   mdl: Model,
   baselineShortfall: number[],
 ): SimResult {
   if (mdl === "debtrank") {
-    const res = runDebtRank(network, { [id]: mag });
+    const input: Record<string, ShockInput> = {};
+    for (const s of shocks) input[s.id] = { level: s.magnitude, delay: s.delay };
+    const res = runDebtRank(network, input);
     return { kind: "debtrank", nodeIds: res.nodeIds, history: res.history, debtrank: res.debtrank };
   }
 
@@ -43,9 +55,15 @@ export function computeShockResult(
   const liabilities = Array.from({ length: n }, (_, a) =>
     Array.from({ length: n }, (_, b) => network.exposure[b][a]),
   );
-  const idx = network.nodeIds.indexOf(id);
+  // Eisenberg-Noe solves a fixed point, not a sequence: it has no notion of
+  // a propagation round, so `delay` cannot mean anything here and every
+  // shock is applied at once. The UI says so rather than silently producing
+  // a number that looks like it honoured the ordering.
   const externalAssets = network.equity.slice();
-  if (idx >= 0) externalAssets[idx] *= 1 - mag;
+  for (const s of shocks) {
+    const idx = network.nodeIds.indexOf(s.id);
+    if (idx >= 0) externalAssets[idx] *= 1 - s.magnitude;
+  }
 
   const cv = clearingVector(network.nodeIds, liabilities, externalAssets);
   const distress = cv.nominalLiabilities.map((pBar, i) => {
@@ -83,19 +101,21 @@ export interface YearPoint {
  * (2024-25) fall back to bank-only edges on their own, which is what the
  * live view's disabled toggle shows for those years too. */
 export async function runAnalysisAcrossYears(
-  countryId: string,
-  mag: number,
+  shocks: ShockSpec[],
   mdl: Model,
   onProgress?: (year: number) => void,
   includePortfolio = false,
 ): Promise<YearPoint[]> {
+  // Market data is per-country, so the chart pairs the model's impact with
+  // the primary shock's series -- the same country the market panel shows.
+  const countryId = shocks[0]?.id ?? "";
   const points: YearPoint[] = [];
   for (const year of YEARS) {
     onProgress?.(year);
     const yearData = await loadYearData(year);
     const network = buildExposureNetwork(yearData, { includePortfolio });
     const baseline = computeBaselineShortfall(network);
-    const result = computeShockResult(network, countryId, mag, mdl, baseline);
+    const result = computeShockResult(network, shocks, mdl, baseline);
     points.push({
       year,
       modelImpact: aggregateImpact(result),

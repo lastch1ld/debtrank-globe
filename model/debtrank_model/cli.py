@@ -4,7 +4,7 @@ import argparse
 import json
 import sys
 
-from .debtrank import run_debtrank
+from .debtrank import Shock, run_debtrank
 from .network import build_exposure_network
 
 
@@ -13,9 +13,10 @@ def main(argv: list[str] | None = None) -> int:
         description="Run a DebtRank shock simulation on a country exposure network snapshot."
     )
     parser.add_argument("snapshot", help="Path to nodes/edges network snapshot JSON")
-    parser.add_argument("--shock", action="append", default=[], metavar="COUNTRY=LEVEL",
+    parser.add_argument("--shock", action="append", default=[], metavar="COUNTRY=LEVEL[@ROUND]",
                          help="Country to shock and its initial distress level, e.g. GRC=1.0. "
-                              "Repeat to shock several countries at once.")
+                              "Append @ROUND to delay its arrival by that many propagation "
+                              "rounds, e.g. PRT=0.6@2. Repeat for several countries.")
     parser.add_argument("--include-portfolio", action="store_true",
                          help="Add the IMF CPIS bond/equity layer to the BIS banking edges "
                               "(matches the web app's 'Include portfolio investment' toggle). "
@@ -27,8 +28,12 @@ def main(argv: list[str] | None = None) -> int:
 
     shocked = {}
     for item in args.shock:
-        country, level = item.split("=")
-        shocked[country] = float(level)
+        try:
+            country, spec = item.split("=", 1)
+            level, _, delay = spec.partition("@")
+            shocked[country] = Shock(level=float(level), delay=int(delay) if delay else 0)
+        except ValueError:
+            parser.error(f"could not parse --shock {item!r}; expected COUNTRY=LEVEL[@ROUND]")
 
     with open(args.snapshot, encoding="utf-8") as f:
         snapshot = json.load(f)

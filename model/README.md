@@ -17,13 +17,13 @@ pip install debtrank-model
 
 ```python
 import json
-from debtrank_model import build_exposure_network, run_debtrank, clearing_vector
+from debtrank_model import Shock, build_exposure_network, run_debtrank, clearing_vector
 
 with open("2020.json") as f:                 # a network snapshot, see below
     snapshot = json.load(f)
 
 network = build_exposure_network(snapshot)   # add include_portfolio=True for the CPIS layer
-result = run_debtrank(network, {"GRC": 1.0, "PRT": 0.6})
+result = run_debtrank(network, {"GRC": 1.0, "PRT": Shock(0.6, delay=2)})
 
 print(result.debtrank)                       # aggregate impact, equity-weighted
 for node_id, distress in sorted(
@@ -43,10 +43,13 @@ the algorithm rather than being left as an exercise.
 
 ```bash
 debtrank-simulate 2020.json --shock GRC=1.0 --shock PRT=0.6
+debtrank-simulate 2020.json --shock GRC=1.0 --shock PRT=0.6@2   # Portugal, two rounds later
 debtrank-simulate 2020.json --shock USA=0.6 --include-portfolio
 ```
 
-Repeat `--shock` to shock several countries simultaneously.
+Repeat `--shock` to shock several countries. Append `@ROUND` to delay one's
+arrival by that many propagation rounds, which is how a sequence like
+"Greece, then Portugal" is expressed.
 
 ## Snapshot format
 

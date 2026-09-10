@@ -4,6 +4,7 @@ import { Globe } from "./components/Globe";
 import { YearAnalysisChart } from "./components/YearAnalysisChart";
 import {
   type Model,
+  type ShockSpec,
   type SimResult,
   type YearPoint,
   computeBaselineShortfall,
@@ -24,6 +25,7 @@ import { formatUsd } from "./lib/format";
 import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
 import {
+  MAX_DELAY,
   clearScenarioFromUrl,
   fullAppUrl,
   isEmbedded,
@@ -65,9 +67,14 @@ function App() {
   const [yearLoading, setYearLoading] = useState(true);
   const yearDebounceRef = useRef<number | null>(null);
 
-  const [shockedId, setShockedId] = useState<string | null>(initialScenario?.shockId ?? null);
+  const [shockedId, setShockedId] = useState<string | null>(initialScenario?.shocks[0]?.id ?? null);
+  // Additional countries shocked alongside the primary one, each with the
+  // propagation round it arrives in. The primary shock stays its own state
+  // because the market panel, the globe highlight and the ranking
+  // drill-down are all about one country and only make sense that way.
+  const [extraShocks, setExtraShocks] = useState<ShockSpec[]>(initialScenario?.shocks.slice(1) ?? []);
   const [model, setModel] = useState<Model>(initialScenario?.model ?? "debtrank");
-  const [magnitude, setMagnitude] = useState(initialScenario?.magnitude ?? 1.0);
+  const [magnitude, setMagnitude] = useState(initialScenario?.shocks[0]?.magnitude ?? 1.0);
   const [copied, setCopied] = useState(false);
   const [result, setResult] = useState<SimResult | null>(null);
   const [iteration, setIteration] = useState(0);
@@ -125,7 +132,12 @@ function App() {
     yearDebounceRef.current = window.setTimeout(() => setYear(value), 250);
   }
 
-  function runShock(id: string, mag: number, mdl: Model) {
+  /** The full scenario: the primary shock first, then the sequenced ones. */
+  function shockList(id: string, mag: number, extras: ShockSpec[] = extraShocks): ShockSpec[] {
+    return [{ id, magnitude: mag, delay: 0 }, ...extras.filter((e) => e.id !== id)];
+  }
+
+  function runShock(id: string, mag: number, mdl: Model, extras: ShockSpec[] = extraShocks) {
     if (!network || !baselineShortfall) return;
     if (timerRef.current) window.clearInterval(timerRef.current);
     setPanelOpen(true);
@@ -135,7 +147,7 @@ function App() {
     setAnalysisPoints(null);
     setExpandedRowId(null);
 
-    const res = computeShockResult(network, id, mag, mdl, baselineShortfall);
+    const res = computeShockResult(network, shockList(id, mag, extras), mdl, baselineShortfall);
     setResult(res);
 
     if (res.kind === "debtrank") {
@@ -149,6 +161,16 @@ function App() {
         });
       }, 500);
     }
+  }
+
+  function updateExtras(next: ShockSpec[]) {
+    setExtraShocks(next);
+    if (shockedId) runShock(shockedId, magnitude, model, next);
+  }
+
+  function addExtraShock(id: string) {
+    if (!id || id === shockedId || extraShocks.some((e) => e.id === id)) return;
+    updateExtras([...extraShocks, { id, magnitude: 0.5, delay: 1 }]);
   }
 
   function triggerShock(id: string) {
@@ -169,8 +191,11 @@ function App() {
     setMagnitude(s.magnitude);
     setDisplayYear(s.year);
     setShockedId(s.countryId);
+    // The presets are single-country events; carrying someone's half-built
+    // sequence into one would silently misattribute the result to it.
+    setExtraShocks([]);
     if (s.year === year) {
-      runShock(s.countryId, s.magnitude, s.model);
+      runShock(s.countryId, s.magnitude, s.model, []);
     } else {
       setYear(s.year);
     }
@@ -189,6 +214,7 @@ function App() {
   function reset() {
     if (timerRef.current) window.clearInterval(timerRef.current);
     setShockedId(null);
+    setExtraShocks([]);
     setResult(null);
     setIteration(0);
     analysisRunRef.current++;
@@ -214,7 +240,12 @@ function App() {
     const runId = ++analysisRunRef.current;
     setAnalysisLoading(true);
     setAnalysisProgress(YEARS[0]);
-    const points = await runAnalysisAcrossYears(shockedId, magnitude, model, setAnalysisProgress, includePortfolio);
+    const points = await runAnalysisAcrossYears(
+      shockList(shockedId, magnitude),
+      model,
+      setAnalysisProgress,
+      includePortfolio,
+    );
     // Superseded while those 21 rounds were in flight -- whoever bumped the
     // token has already reset the panel; committing here would paint a
     // chart for a scenario that is no longer on screen.
@@ -240,8 +271,9 @@ function App() {
   // Mirror the live scenario into the URL so it's always a copyable link;
   // cleared (not written) once there's no active shock to describe.
   useEffect(() => {
-    if (shockedId) writeScenarioToUrl({ year, shockId: shockedId, magnitude, model, includePortfolio });
-  }, [year, shockedId, magnitude, model, includePortfolio]);
+    if (shockedId) writeScenarioToUrl({ year, shocks: shockList(shockedId, magnitude), model, includePortfolio });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [year, shockedId, magnitude, model, includePortfolio, extraShocks]);
 
   const distress = !result
     ? new Array(countries.length).fill(0)
@@ -484,6 +516,82 @@ function App() {
             </option>
           ))}
         </select>
+
+        {/* A sequence, not just a set: DebtRank's iterations are the only
+            clock this model has, so "arrives in round N" is what "then
+            Portugal, two rounds later" can honestly mean here. */}
+        <div className="flex shrink-0 flex-col gap-2">
+          {extraShocks.map((e, i) => (
+            <div key={e.id} className="flex items-center gap-2 rounded-xl border border-sky-200/8 bg-slate-950/25 px-2.5 py-2">
+              <span className="min-w-0 flex-1 truncate text-[12px] text-slate-200">
+                {countries.find((c) => c.id === e.id)?.name ?? e.id}
+              </span>
+              <label className="flex items-center gap-1 font-mono text-[11px] text-slate-500">
+                <span className="sr-only">{`Magnitude for ${e.id}`}</span>
+                <input
+                  className={`${focus} w-11 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-0.5 text-right text-slate-100`}
+                  type="number"
+                  min={5}
+                  max={100}
+                  step={5}
+                  value={Math.round(e.magnitude * 100)}
+                  onChange={(ev) => {
+                    const pct = Math.min(100, Math.max(5, Number(ev.target.value) || 5));
+                    updateExtras(extraShocks.map((x, j) => (j === i ? { ...x, magnitude: pct / 100 } : x)));
+                  }}
+                />
+                %
+              </label>
+              <label className="flex items-center gap-1 font-mono text-[11px] text-slate-500">
+                <span className="sr-only">{`Arrival round for ${e.id}`}</span>
+                round
+                <input
+                  className={`${focus} w-9 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-0.5 text-right text-slate-100 disabled:opacity-40`}
+                  type="number"
+                  min={0}
+                  max={MAX_DELAY}
+                  value={e.delay}
+                  disabled={model !== "debtrank"}
+                  onChange={(ev) => {
+                    const d = Math.min(MAX_DELAY, Math.max(0, Math.trunc(Number(ev.target.value) || 0)));
+                    updateExtras(extraShocks.map((x, j) => (j === i ? { ...x, delay: d } : x)));
+                  }}
+                />
+              </label>
+              <button
+                className={`${focus} cursor-pointer rounded-md px-1 text-slate-500 transition hover:text-slate-100`}
+                aria-label={`Remove ${e.id} from the sequence`}
+                onClick={() => updateExtras(extraShocks.filter((_, j) => j !== i))}
+              >
+                &times;
+              </button>
+            </div>
+          ))}
+
+          <select
+            className={`${focus} min-w-0 appearance-none rounded-xl border border-dashed border-sky-200/15 bg-transparent px-3 py-2 text-[12px] text-slate-400 transition hover:border-sky-400/40 hover:text-slate-200 disabled:cursor-default disabled:opacity-35`}
+            value=""
+            disabled={!shockedId}
+            onChange={(e) => addExtraShock(e.target.value)}
+          >
+            <option value="">+ Shock another country&hellip;</option>
+            {sortedCountries
+              .filter((c) => c.id !== shockedId && !extraShocks.some((e) => e.id === c.id))
+              .map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+          </select>
+
+          {extraShocks.length > 0 && model !== "debtrank" && (
+            <p className="text-[10.5px] leading-4 text-amber-400/70">
+              Eisenberg-Noe solves a clearing fixed point, which has no
+              propagation rounds -- every country above is shocked at once and
+              the round numbers are ignored.
+            </p>
+          )}
+        </div>
 
         <div className="flex shrink-0 gap-2">
           <button

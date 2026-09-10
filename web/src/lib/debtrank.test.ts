@@ -95,3 +95,54 @@ describe("runDebtRank", () => {
     expect(result.debtrank).toBeCloseTo(0.25 * 0.5);
   });
 });
+
+// Mirrors model/debtrank_model/tests/test_debtrank.py's TestSequentialShocks
+// -- the two implementations are kept structurally identical, so the
+// sequencing semantics are pinned on both sides against the same network.
+describe("sequential shocks", () => {
+  // A chain A -> B -> C: A holds a claim on B, B on C.
+  const chain = (): ExposureNetwork => ({
+    nodeIds: ["A", "B", "C"],
+    exposure: [
+      [0, 50, 0],
+      [0, 0, 50],
+      [0, 0, 0],
+    ],
+    equity: [100, 100, 100],
+  });
+
+  it("treats a bare number as an immediate shock", () => {
+    expect(runDebtRank(chain(), { C: 1 }).debtrank).toBeCloseTo(
+      runDebtRank(chain(), { C: { level: 1 } }).debtrank,
+      12,
+    );
+  });
+
+  it("lands a delayed shock in the round it names", () => {
+    const result = runDebtRank(chain(), { C: 1, A: { level: 0.4, delay: 2 } });
+    expect(result.history[0][0]).toBe(0);
+    expect(result.history[2][0]).toBeCloseTo(0.4, 12);
+  });
+
+  it("still propagates a late shock through a node the first wave spent", () => {
+    // B is knocked inactive by the wave from C. A second, exogenous shock
+    // to B is new information, not recirculated distress, so it must still
+    // reach A -- otherwise sequencing does nothing in the case it exists for.
+    const firstWaveOnly = runDebtRank(chain(), { C: 1 });
+    const sequenced = runDebtRank(chain(), { C: 1, B: { level: 1, delay: 2 } });
+    expect(sequenced.finalDistress[0]).toBeGreaterThan(firstWaveOnly.finalDistress[0]);
+  });
+
+  it("never counts a shock as its own impact, whenever it arrives", () => {
+    const isolated: ExposureNetwork = {
+      nodeIds: ["A", "B"],
+      exposure: [
+        [0, 0],
+        [0, 0],
+      ],
+      equity: [100, 100],
+    };
+    expect(runDebtRank(isolated, { A: 1 }).debtrank).toBeCloseTo(0, 12);
+    expect(runDebtRank(isolated, { A: { level: 1, delay: 3 } }).debtrank).toBeCloseTo(0, 12);
+  });
+});
