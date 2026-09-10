@@ -66,8 +66,14 @@ function App() {
   const [analysisPoints, setAnalysisPoints] = useState<YearPoint[] | null>(null);
   const [analysisLoading, setAnalysisLoading] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState<number | null>(null);
+  // "View across years" runs 21 sequential fetch+solve rounds, and every
+  // control that defines the scenario stays interactive throughout. A run
+  // that is no longer the current one has to be dropped rather than
+  // committed -- the same guard the year-loading effect gets from its
+  // `cancelled` flag.
+  const analysisRunRef = useRef(0);
   const [hideFinancialCenters, setHideFinancialCenters] = useState(false);
-  const [includePortfolio, setIncludePortfolio] = useState(false);
+  const [includePortfolio, setIncludePortfolio] = useState(initialScenario?.includePortfolio ?? false);
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
 
   const portfolioDataAvailable = (yearData?.portfolio_edges?.length ?? 0) > 0;
@@ -114,6 +120,7 @@ function App() {
     setPanelOpen(true);
     setShockedId(id);
     setIteration(0);
+    analysisRunRef.current++;
     setAnalysisPoints(null);
     setExpandedRowId(null);
 
@@ -173,7 +180,10 @@ function App() {
     setShockedId(null);
     setResult(null);
     setIteration(0);
+    analysisRunRef.current++;
     setAnalysisPoints(null);
+    setAnalysisLoading(false);
+    setAnalysisProgress(null);
     clearScenarioFromUrl();
   }
 
@@ -190,9 +200,14 @@ function App() {
 
   async function viewAcrossYears() {
     if (!shockedId) return;
+    const runId = ++analysisRunRef.current;
     setAnalysisLoading(true);
     setAnalysisProgress(YEARS[0]);
     const points = await runAnalysisAcrossYears(shockedId, magnitude, model, setAnalysisProgress, includePortfolio);
+    // Superseded while those 21 rounds were in flight -- whoever bumped the
+    // token has already reset the panel; committing here would paint a
+    // chart for a scenario that is no longer on screen.
+    if (analysisRunRef.current !== runId) return;
     setAnalysisPoints(points);
     setAnalysisLoading(false);
     setAnalysisProgress(null);
@@ -214,8 +229,8 @@ function App() {
   // Mirror the live scenario into the URL so it's always a copyable link;
   // cleared (not written) once there's no active shock to describe.
   useEffect(() => {
-    if (shockedId) writeScenarioToUrl({ year, shockId: shockedId, magnitude, model });
-  }, [year, shockedId, magnitude, model]);
+    if (shockedId) writeScenarioToUrl({ year, shockId: shockedId, magnitude, model, includePortfolio });
+  }, [year, shockedId, magnitude, model, includePortfolio]);
 
   const distress = !result
     ? new Array(countries.length).fill(0)

@@ -6,6 +6,11 @@ export interface Scenario {
   shockId: string;
   magnitude: number;
   model: Model;
+  /** Whether the IMF CPIS portfolio layer was switched on. Part of the
+   * scenario because it changes which edges the models propagate through,
+   * so a link that drops it reproduces a different result than the one
+   * that was shared. */
+  includePortfolio: boolean;
 }
 
 const MAGNITUDE_MIN = 0.05;
@@ -33,7 +38,11 @@ export function parseScenarioFromUrl(): Scenario | null {
 
   if (modelRaw !== "debtrank" && modelRaw !== "eisenberg-noe") return null;
 
-  return { year, shockId, magnitude, model: modelRaw };
+  // Optional, unlike the four above: links shared before this parameter
+  // existed are still valid and mean the toggle was off.
+  const includePortfolio = params.get("portfolio") === "1";
+
+  return { year, shockId, magnitude, model: modelRaw, includePortfolio };
 }
 
 /** Mirrors the current scenario into the URL via replaceState (not
@@ -46,6 +55,7 @@ export function writeScenarioToUrl(scenario: Scenario): void {
   params.set("shock", scenario.shockId);
   params.set("magnitude", scenario.magnitude.toFixed(2));
   params.set("model", scenario.model);
+  if (scenario.includePortfolio) params.set("portfolio", "1");
   window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
 }
 
