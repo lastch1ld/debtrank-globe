@@ -29,6 +29,21 @@ interactive 3D globe — for any year from 2005 to 2025 via the year scrubber.
 - [`web/`](web) — React Three Fiber static site: 3D globe visualization and interactive shock
   simulation.
 
+## Use it yourself
+
+The model is on PyPI, and the per-year networks it runs on are public static JSON:
+
+```bash
+pip install debtrank-model
+debtrank-simulate 2020.json --shock GRC=1.0 --shock PRT=0.6
+```
+
+- [`model/README.md`](model/README.md) — library and CLI usage.
+- [`docs/data-api.md`](docs/data-api.md) — the snapshot schema, its URLs (2005-2025,
+  CORS-enabled), and the attribution terms for the underlying World Bank / BIS / IMF data.
+- [`notebooks/reproduce.ipynb`](notebooks/reproduce.ipynb) — fetch a year, run the model,
+  print the ranking.
+
 ## Data attribution
 
 - External debt, reserves, and GDP indicators: [World Bank Indicators API](https://api.worldbank.org/v2/),

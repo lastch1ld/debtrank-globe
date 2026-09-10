@@ -4,65 +4,8 @@ import argparse
 import json
 import sys
 
-import numpy as np
-
 from .debtrank import Shock, run_debtrank
-from .network import ExposureNetwork
-
-
-def _load_snapshot(path: str) -> ExposureNetwork:
-    with open(path, encoding="utf-8") as f:
-        snapshot = json.load(f)
-
-    node_ids = [n["id"] for n in snapshot["nodes"]]
-    index = {nid: i for i, nid in enumerate(node_ids)}
-    n = len(node_ids)
-
-    exposure = np.zeros((n, n))
-    gross_footprint = np.zeros(n)
-    for edge in snapshot["edges"]:
-        i, j = index[edge["creditor"]], index[edge["debtor"]]
-        exposure[i, j] += edge["amount"]
-        gross_footprint[i] += edge["amount"]
-        gross_footprint[j] += edge["amount"]
-
-    # Reserves/GDP are the natural loss-absorbing buffer for an ordinary
-    # sovereign, but they're meaningless proxies for cross-border financial
-    # centres (Isle of Man, Cayman, Luxembourg, Hong Kong SAR, ...): BIS
-    # counts every bank resident there, so reported claims/liabilities run
-    # to multiples of local GDP, and some report no GDP/reserves to the
-    # World Bank at all. Without a floor those nodes fall back to a flat
-    # constant against tens of billions in real exposure, saturating the
-    # impact matrix at 1 for nearly every edge -- see web/src/lib/network.ts
-    # for the mirrored TS implementation and full rationale (BIS Working
-    # Papers No. 1035 / BIS Quarterly Review, June 2022, "The outsize role
-    # of cross-border financial centres").
-    #
-    # The floor's ratio is the country's own bank-capital-to-assets ratio
-    # (World Bank FB.BNK.CAPA.ZS / IMF Financial Soundness Indicators)
-    # applied to its gross cross-border footprint when available -- real
-    # coverage runs ~4-10%, meaningfully more accurate per-country than one
-    # flat number. Only jurisdictions with no World Bank data under any of
-    # these indicators fall back to the Basel III Pillar 1 minimum (8%).
-    DEFAULT_CAPITAL_RATIO = 0.08
-
-    def _equity(n_: dict, footprint: float) -> float:
-        reserves = float(n_["reserves_usd"]) if n_.get("reserves_usd") else 0.0
-        gdp_fallback = float(n_["gdp_usd"]) * 0.01 if n_.get("gdp_usd") else 0.0
-        capital_ratio = (
-            float(n_["bank_capital_ratio_pct"]) / 100
-            if n_.get("bank_capital_ratio_pct")
-            else DEFAULT_CAPITAL_RATIO
-        )
-        footprint_floor = footprint * capital_ratio
-        return max(reserves, gdp_fallback, footprint_floor, 1e6)
-
-    equity = np.array(
-        [_equity(n_, gross_footprint[i]) for i, n_ in enumerate(snapshot["nodes"])],
-        dtype=float,
-    )
-
-    return ExposureNetwork(node_ids=node_ids, exposure=exposure, equity=equity)
+from .network import build_exposure_network
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -74,6 +17,10 @@ def main(argv: list[str] | None = None) -> int:
                          help="Country to shock and its initial distress level, e.g. GRC=1.0. "
                               "Append @ROUND to delay its arrival by that many propagation "
                               "rounds, e.g. PRT=0.6@2. Repeat for several countries.")
+    parser.add_argument("--include-portfolio", action="store_true",
+                         help="Add the IMF CPIS bond/equity layer to the BIS banking edges "
+                              "(matches the web app's 'Include portfolio investment' toggle). "
+                              "CPIS coverage ends at 2023.")
     args = parser.parse_args(argv)
 
     if not args.shock:
@@ -88,7 +35,9 @@ def main(argv: list[str] | None = None) -> int:
         except ValueError:
             parser.error(f"could not parse --shock {item!r}; expected COUNTRY=LEVEL[@ROUND]")
 
-    network = _load_snapshot(args.snapshot)
+    with open(args.snapshot, encoding="utf-8") as f:
+        snapshot = json.load(f)
+    network = build_exposure_network(snapshot, include_portfolio=args.include_portfolio)
     result = run_debtrank(network, shocked)
 
     print(f"Aggregate DebtRank impact: {result.debtrank:.4f}")
