@@ -21,8 +21,9 @@ permissions:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    # Four indicators across 21 years against an API that intermittently
-    # times out and gets retried -- this is minutes, not seconds.
+    # Four indicators across 21 years. On a runner that is ~30s; from a
+    # connection the World Bank API times out on it retries its way to
+    # ~30 minutes. The ceiling is for the bad case, not the observed one.
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v7
@@ -37,6 +38,13 @@ jobs:
       - id: refresh
         name: Refresh the published snapshots
         working-directory: data-pipeline
+        # `shell: bash` rather than the default: it adds -o pipefail, and
+        # the refresh below is piped into tee. Without it a crashed script
+        # exits through tee's status of 0, git finds nothing changed, and
+        # the job reports success having silently done nothing -- the worst
+        # possible failure mode for something that only runs monthly and
+        # that nobody is watching.
+        shell: bash
         run: |
           python refresh_worldbank.py 2>&1 | tee refresh.log
           if git diff --quiet -- ../web/public/data/network; then
