@@ -73,6 +73,11 @@ Ready-made snapshots for every year from 2005 to 2025 are published at
 see [the data reference](https://github.com/lastch1ld/debtrank-globe/blob/master/docs/data-api.md)
 for the schema, sources, and attribution terms.
 
+## Releasing
+
+See [docs/releasing.md](https://github.com/lastch1ld/debtrank-globe/blob/master/docs/releasing.md)
+— tag `model-v<version>`, after the one-time PyPI trusted-publisher setup.
+
 ## License
 
 MIT.

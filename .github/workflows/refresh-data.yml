@@ -1,0 +1,75 @@
+name: Refresh World Bank data
+
+# The full pipeline can't run here: fetch_bis.py needs a ~120MB bulk CSV
+# that has to be downloaded by hand, so the bilateral edges stay frozen
+# between manual runs. This refreshes the half that *is* fetchable -- the
+# World Bank indicator values on the existing nodes -- and never touches the
+# graph's shape. See data-pipeline/refresh_worldbank.py for why that split
+# is the whole answer to "what should a partial refresh do".
+#
+# Monthly, because World Bank annual indicators publish on the order of
+# months, not days; a nightly run would be almost entirely no-ops.
+on:
+  schedule:
+    - cron: "17 4 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    # Four indicators across 21 years against an API that intermittently
+    # times out and gets retried -- this is minutes, not seconds.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      # -dev, not the runtime file: the refresh step below is only
+      # trustworthy because the tests run against what it produced.
+      - run: pip install -r requirements-dev.txt
+        working-directory: data-pipeline
+
+      - id: refresh
+        name: Refresh the published snapshots
+        working-directory: data-pipeline
+        run: |
+          python refresh_worldbank.py 2>&1 | tee refresh.log
+          if git diff --quiet -- ../web/public/data/network; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+          {
+            echo 'summary<<SUMMARY'
+            grep -E '^[0-9]{4}:|value\(s\)' refresh.log || echo 'No per-year detail reported.'
+            echo SUMMARY
+          } >> "$GITHUB_OUTPUT"
+          rm -f refresh.log
+
+      # The tests are what makes an unattended data change trustworthy: they
+      # pin that the roster and the edges came through untouched.
+      - if: steps.refresh.outputs.changed == 'true'
+        run: pytest -q
+        working-directory: data-pipeline
+
+      - if: steps.refresh.outputs.changed == 'true'
+        name: Open a pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SUMMARY: ${{ steps.refresh.outputs.summary }}
+        run: |
+          BRANCH="data/worldbank-refresh-$(date +%Y-%m-%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add web/public/data/network
+          git commit -m "Refresh World Bank indicator values"             -m "Automated run of data-pipeline/refresh_worldbank.py. Node indicator fields only -- the node roster and both edge lists are derived from BIS/CPIS data this job cannot re-fetch and are untouched."
+          git push origin "$BRANCH"
+          gh pr create --base master --head "$BRANCH" \
+            --title "Refresh World Bank indicator values" \
+            --body "$(printf 'Scheduled run of `data-pipeline/refresh_worldbank.py`.\n\nOnly the four World Bank indicator fields on existing nodes changed. The node roster and both edge lists come from BIS/CPIS data this job cannot re-fetch, so the graph shape is untouched by construction — see the invariants in `tests/test_refresh_worldbank.py`, which ran green above.\n\n```\n%s\n```\n\nWorth a look at *which* countries moved before merging: a large jump in a country with real cross-border exposure changes its equity buffer and therefore every scenario it appears in.\n\nNote: PRs opened with `GITHUB_TOKEN` do not trigger CI. Push an empty commit or re-run CI manually if you want the full suite on this branch.' "$SUMMARY")"
