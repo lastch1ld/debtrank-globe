@@ -120,6 +120,37 @@ def fetch_indicator_by_year(indicator_code: str, year_range: str) -> dict[str, d
     return values
 
 
+def build_nodes_by_year(countries: list[dict], year_range: str) -> list[dict]:
+    """Per-country node records with one value per year, for the historical
+    scrubber. Shared with refresh_worldbank.py -- this repo has been bitten
+    once already by the same derivation living in two places (see the
+    equity fallback chain, which was duplicated between cli.py and
+    network.ts until it was promoted to a public API), so it is a function
+    rather than a loop inside main()."""
+    indicator_by_year = {}
+    for field, code in INDICATORS.items():
+        print(f"Fetching {field} ({code}) for {year_range}...", file=sys.stderr)
+        indicator_by_year[field] = fetch_indicator_by_year(code, year_range)
+
+    nodes = []
+    for c in countries:
+        iso3 = c["id"]
+        years: set[str] = set()
+        for field_values in indicator_by_year.values():
+            years.update(field_values.get(iso3, {}).keys())
+        nodes.append({
+            "id": iso3,
+            "name": c["name"],
+            "lat": float(c["latitude"]) if c["latitude"] else None,
+            "lng": float(c["longitude"]) if c["longitude"] else None,
+            "years": {
+                year: {field: indicator_by_year[field].get(iso3, {}).get(year) for field in INDICATORS}
+                for year in sorted(years)
+            },
+        })
+    return nodes
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("out", nargs="?", default=None)
@@ -138,30 +169,7 @@ def main() -> None:
         out_path = Path(args.out) if args.out else Path(__file__).parent / "out" / "nodes_by_year.json"
         out_path.parent.mkdir(parents=True, exist_ok=True)
 
-        indicator_by_year = {}
-        for field, code in INDICATORS.items():
-            print(f"Fetching {field} ({code}) for {args.by_year}...", file=sys.stderr)
-            indicator_by_year[field] = fetch_indicator_by_year(code, args.by_year)
-
-        nodes = []
-        for c in countries:
-            iso3 = c["id"]
-            years = set()
-            for field_values in indicator_by_year.values():
-                years.update(field_values.get(iso3, {}).keys())
-            nodes.append({
-                "id": iso3,
-                "name": c["name"],
-                "lat": float(c["latitude"]) if c["latitude"] else None,
-                "lng": float(c["longitude"]) if c["longitude"] else None,
-                "years": {
-                    year: {
-                        field: indicator_by_year[field].get(iso3, {}).get(year)
-                        for field in INDICATORS
-                    }
-                    for year in sorted(years)
-                },
-            })
+        nodes = build_nodes_by_year(countries, args.by_year)
 
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump({"nodes": nodes}, f, indent=2)

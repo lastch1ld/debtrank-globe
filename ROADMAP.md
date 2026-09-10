@@ -54,12 +54,15 @@ shipped; unchecked items haven't been started yet.
       `sys.stdin` isn't a plain `TextIOWrapper` (e.g. under pytest). Linting
       deferred as a separate, smaller follow-up (picking/wiring a Python
       linter is its own decision).
-- [ ] **Scheduled data refresh** — a periodic GitHub Actions job that reruns
-      the World Bank fetch and opens a PR if reserves/GDP/capital-ratio
-      values changed, so the LOCF fix doesn't quietly go stale again.
-      Deferred: the BIS edges side needs a manually-downloaded 120MB file,
-      so full automation isn't achievable without first deciding what a
-      partial (World-Bank-only) auto-refresh should do.
+- [x] **Scheduled data refresh** — shipped as
+      `data-pipeline/refresh_worldbank.py` plus a monthly
+      `.github/workflows/refresh-data.yml` that opens a PR when any value
+      moved. The deferred question — what a partial, World-Bank-only refresh
+      should do — resolves to one rule: it may change the numbers on the
+      graph, never the graph's shape. The node roster and both edge lists
+      come from BIS/CPIS data the job cannot re-fetch and are referenced by
+      id, so only the four indicator fields on existing nodes are rewritten.
+      `tests/test_refresh_worldbank.py` pins that from both directions.
 
 ## Product/UX
 

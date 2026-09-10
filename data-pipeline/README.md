@@ -73,6 +73,31 @@ Output: `out/network_snapshot.json` — `{"nodes": [...], "edges": [...]}`,
 `out/world_borders.json` holds simplified coastline/border rings (Natural
 Earth 1:110m, public domain) used to draw real country outlines on the globe.
 
+## Scheduled partial refresh
+
+The full pipeline can't run unattended: step 2 needs a ~120MB bulk CSV
+downloaded by hand, so the bilateral edges are frozen between manual runs.
+The World Bank half can refresh on its own, and does — monthly, via
+`.github/workflows/refresh-data.yml`, which opens a PR when any value moved:
+
+```bash
+python refresh_worldbank.py --check   # report drift, exit 1 if any (no writes)
+python refresh_worldbank.py           # rewrite web/public/data/network/{year}.json in place
+```
+
+The rule it holds: **a partial refresh may change the numbers on the graph,
+never the graph's shape.** It rewrites the four indicator fields on the nodes
+already published and touches nothing else — not the node roster, not
+`edges`, not `portfolio_edges`, all of which come from BIS/CPIS data this job
+cannot see and which refer to nodes by id. `tests/test_refresh_worldbank.py`
+pins that invariant from both directions.
+
+This is the answer to the roadmap's long-deferred "what should a partial
+refresh do?", and it earns its keep on its own terms: the fields it updates
+are exactly the ones the World Bank publishes late (see the LOCF note below),
+so without it the most recent year quietly drifts back onto the model's
+cruder equity proxies — the year the app opens on.
+
 ## Notes / known data caveats
 
 - BIS marks confidential or missing cells as the literal string `"NaN"` in
