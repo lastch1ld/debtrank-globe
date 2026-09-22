@@ -1,5 +1,5 @@
-import { useMemo, useRef, useState } from "react";
-import { extend, useFrame, type ThreeElement } from "@react-three/fiber";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { extend, useFrame, useThree, type ThreeElement } from "@react-three/fiber";
 import {
   Instance,
   Instances,
@@ -9,11 +9,19 @@ import {
   Stars,
   shaderMaterial,
 } from "@react-three/drei";
-import { AdditiveBlending, BackSide, BufferGeometry, Color, Float32BufferAttribute, type Group } from "three";
+import {
+  AdditiveBlending,
+  BackSide,
+  BufferGeometry,
+  Color,
+  Float32BufferAttribute,
+  type Group,
+  type PerspectiveCamera,
+} from "three";
 import { countries, latLngToVector3, loadBorders, topExposureEdges, type YearSnapshot } from "../lib/network";
 import { ATMOSPHERE_LAYERS } from "./atmosphere";
+import { RADIUS, fitScale, sidebarShift } from "./fitScale";
 
-const RADIUS = 2;
 const ARC_COUNT = 140;
 
 // Fresnel-style rim glow: the classic "planet atmosphere" shader -- intensity
@@ -83,14 +91,41 @@ interface GlobeProps {
    * ranking list already surfaces, mirrored here as a thin ring so the
    * globe itself signals confidence, not just the sidebar. */
   estimatedEquity?: boolean[];
+  /** The desktop controls sidebar is covering the right of the canvas. */
+  sidebarOpen?: boolean;
 }
 
-function ShockedMarker({ position, scale }: { position: [number, number, number]; scale: number }) {
+const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
+
+/** The panel already honours `motion-reduce:`; the scene's two continuous
+ * animations -- the idle spin and the shocked country's pulse -- are the
+ * loudest motion in the app and were the only things still ignoring it. */
+function usePrefersReducedMotion(): boolean {
+  return useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia(REDUCED_MOTION);
+      query.addEventListener("change", onChange);
+      return () => query.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(REDUCED_MOTION).matches,
+    () => false,
+  );
+}
+
+function ShockedMarker({
+  position,
+  scale,
+  pulse,
+}: {
+  position: [number, number, number];
+  scale: number;
+  pulse: boolean;
+}) {
   const ref = useRef<Group>(null);
   useFrame(({ clock }) => {
     if (!ref.current) return;
-    const pulse = 1 + 0.35 * Math.sin(clock.elapsedTime * 3.2);
-    ref.current.scale.setScalar(scale * pulse);
+    const beat = pulse ? 1 + 0.35 * Math.sin(clock.elapsedTime * 3.2) : 1.2;
+    ref.current.scale.setScalar(scale * beat);
   });
   return (
     <group ref={ref} position={position}>
@@ -132,9 +167,29 @@ function useBorderGeometry() {
   }, []);
 }
 
-export function Globe({ yearData, distress, shockedId, onSelect, estimatedEquity }: GlobeProps) {
+export function Globe({ yearData, distress, shockedId, onSelect, estimatedEquity, sidebarOpen = false }: GlobeProps) {
   const [dragging, setDragging] = useState(false);
   const borderGeometry = useBorderGeometry();
+  const reducedMotion = usePrefersReducedMotion();
+
+  // Everything drawn on the planet lives inside one scaled group so the
+  // globe fits whatever viewport it lands in -- see fitScale.ts. Stars and
+  // lights stay outside it: they are the backdrop, not the subject.
+  const size = useThree((s) => s.size);
+  const camera = useThree((s) => s.camera) as PerspectiveCamera;
+  const shift = sidebarShift(size.width, sidebarOpen);
+  // The sidebar hides `2 * shift` pixels of the canvas, so the globe has to
+  // fit -- and be centred in -- what is left of it.
+  const scale = useMemo(
+    () => fitScale(size.width - 2 * shift, size.height, camera.fov),
+    [size.width, size.height, shift, camera.fov],
+  );
+
+  useEffect(() => {
+    if (shift > 0) camera.setViewOffset(size.width, size.height, shift, 0, size.width, size.height);
+    else camera.clearViewOffset();
+    return () => camera.clearViewOffset();
+  }, [camera, size.width, size.height, shift]);
 
   const markerScale = useMemo(() => {
     const totals = new Map<string, number>();
@@ -188,12 +243,13 @@ export function Globe({ yearData, distress, shockedId, onSelect, estimatedEquity
         enablePan={false}
         minDistance={3}
         maxDistance={9}
-        autoRotate={!dragging}
+        autoRotate={!dragging && !reducedMotion}
         autoRotateSpeed={0.35}
         onStart={() => setDragging(true)}
         onEnd={() => setDragging(false)}
       />
 
+      <group scale={scale}>
       {/* Core planet -- deep ocean base, coastlines drawn on top */}
       <Sphere args={[RADIUS - 0.02, 64, 64]}>
         <meshStandardMaterial color="#050b1a" roughness={0.85} metalness={0.1} />
@@ -286,9 +342,11 @@ export function Globe({ yearData, distress, shockedId, onSelect, estimatedEquity
             <ShockedMarker
               position={latLngToVector3(c.lat, c.lng, RADIUS)}
               scale={markerScale(c.id)}
+              pulse={!reducedMotion}
             />
           );
         })()}
+      </group>
     </>
   );
 }
