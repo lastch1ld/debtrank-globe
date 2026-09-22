@@ -58,6 +58,12 @@ const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400";
 const range =
   "h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-400/15 outline-none [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-sky-400 [&::-moz-range-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)] [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-sky-400 [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)]";
+// One scrollbar treatment for every scrolling region in the panel: the
+// ranked list already had it inline, the controls column was left with the
+// platform default, which on Windows is a wide light-grey bar painted over
+// the values at the right edge.
+const scrollArea =
+  "overscroll-contain [scrollbar-color:rgba(56,189,248,0.28)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-sky-400/25 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1.5";
 const secondaryButton = `${focus} rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-300 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-50 disabled:cursor-default disabled:opacity-35 disabled:hover:border-sky-200/10 disabled:hover:bg-slate-950/25 disabled:hover:text-slate-300`;
 
 function App() {
@@ -302,7 +308,7 @@ function App() {
   const hiddenFinancialCenterCount = rankedAll.length - ranked.length;
 
   return (
-    <div className="relative h-dvh w-screen overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased selection:bg-sky-400/20 selection:text-slate-50">
+    <div className="relative h-dvh w-full overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased selection:bg-sky-400/20 selection:text-slate-50">
       <div className="absolute inset-0">
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
@@ -312,6 +318,7 @@ function App() {
               shockedId={shockedId}
               onSelect={triggerShock}
               estimatedEquity={estimatedEquity}
+              sidebarOpen={panelOpen && !embedded}
             />
           </Canvas>
         )}
@@ -399,7 +406,7 @@ function App() {
 
         <div
           data-testid="sidebar-controls"
-          className="flex min-h-0 shrink flex-col gap-4 overflow-y-auto sm:gap-5"
+          className={`${scrollArea} flex min-h-0 shrink flex-col gap-4 overflow-y-auto pr-1.5 sm:gap-5`}
         >
         <header className="flex shrink-0 flex-col">
           <span className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-400">
@@ -529,7 +536,7 @@ function App() {
               <label className="flex items-center gap-1 font-mono text-[11px] text-slate-500">
                 <span className="sr-only">{`Magnitude for ${e.id}`}</span>
                 <input
-                  className={`${focus} w-11 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-0.5 text-right text-slate-100`}
+                  className={`${focus} w-11 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-1 text-right text-slate-100`}
                   type="number"
                   min={5}
                   max={100}
@@ -546,7 +553,7 @@ function App() {
                 <span className="sr-only">{`Arrival round for ${e.id}`}</span>
                 round
                 <input
-                  className={`${focus} w-9 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-0.5 text-right text-slate-100 disabled:opacity-40`}
+                  className={`${focus} w-9 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-1 text-right text-slate-100 disabled:opacity-40`}
                   type="number"
                   min={0}
                   max={MAX_DELAY}
@@ -559,7 +566,7 @@ function App() {
                 />
               </label>
               <button
-                className={`${focus} cursor-pointer rounded-md px-1 text-slate-500 transition hover:text-slate-100`}
+                className={`${focus} flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-md text-slate-500 transition hover:bg-sky-400/5 hover:text-slate-100`}
                 aria-label={`Remove ${e.id} from the sequence`}
                 onClick={() => updateExtras(extraShocks.filter((_, j) => j !== i))}
               >
@@ -743,10 +750,10 @@ function App() {
         </div>
 
         {result && rankedAll.length > 0 && (
-          <div className="flex min-h-[240px] flex-1 flex-col overflow-y-auto border-t border-sky-200/10">
+          <div className={`${scrollArea} flex min-h-[38%] flex-1 flex-col overflow-y-auto border-t border-sky-200/10 pr-1.5`}>
             <div
               data-testid="ranking-header"
-              className="flex shrink-0 items-center justify-between bg-[#06101d] py-3 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500"
+              className="sticky top-0 z-10 flex shrink-0 items-center justify-between bg-[#06101d] py-3 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500"
             >
               <span>Propagation ranking</span>
               <span>{ranked.length} affected</span>
@@ -793,7 +800,7 @@ function App() {
             ) : (
             <div
               data-testid="ranked-results"
-              className="min-h-[140px] flex-1 overflow-y-auto pr-1 [scrollbar-color:rgba(56,189,248,0.25)_transparent] [scrollbar-width:thin]"
+              className={`${scrollArea} min-h-[140px] flex-1 overflow-y-auto pr-1.5`}
             >
             <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
               {ranked.map((r) => {
