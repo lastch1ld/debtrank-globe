@@ -56,6 +56,17 @@ const glass =
   "border border-sky-200/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
 const focus =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400";
+
+// The panel had grown nine type sizes and three letter-spacings for what is
+// really four roles. These are those four, plus the one hairline weight the
+// whole surface is drawn with.
+const hairline = "border-sky-200/10";
+const sectionLabel = "font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400";
+const note = "text-[11px] leading-4 text-slate-400";
+const section = `flex shrink-0 flex-col gap-3 border-t ${hairline} pt-4`;
+const selectField = `${focus} min-w-0 appearance-none rounded-xl border ${hairline} bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`;
+const checkbox =
+  "size-3.5 cursor-pointer rounded border-sky-200/20 bg-slate-950/45 text-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-default";
 const range =
   "h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-400/15 outline-none [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-sky-400 [&::-moz-range-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)] [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-sky-400 [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)]";
 // One scrollbar treatment for every scrolling region in the panel: the
@@ -308,7 +319,7 @@ function App() {
   const hiddenFinancialCenterCount = rankedAll.length - ranked.length;
 
   return (
-    <div className="relative h-dvh w-full overflow-hidden bg-[#02050c] font-sans text-slate-400 antialiased selection:bg-sky-400/20 selection:text-slate-50">
+    <div className="relative h-dvh w-full overflow-hidden bg-[#02050c] font-sans text-slate-300 antialiased selection:bg-sky-400/20 selection:text-slate-50">
       <div className="absolute inset-0">
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
@@ -389,11 +400,11 @@ function App() {
         }`}
       >
         <div className="hidden shrink-0 items-center justify-between sm:flex">
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+          <span className={sectionLabel}>
             Controls
           </span>
           <button
-            className={`${focus} flex size-9 cursor-pointer items-center justify-center rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-400 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-100`}
+            className={`${focus} flex size-9 cursor-pointer items-center justify-center rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-300 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-100`}
             aria-label="Close controls"
             onClick={() => setPanelOpen(false)}
           >
@@ -408,239 +419,253 @@ function App() {
           data-testid="sidebar-controls"
           className={`${scrollArea} flex min-h-0 shrink flex-col gap-4 overflow-y-auto pr-1.5 sm:gap-5`}
         >
-        <header className="flex shrink-0 flex-col">
-          <span className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-sky-400">
-            Systemic risk simulation
-          </span>
-          <p className="mb-4 text-[13px] leading-5 text-slate-400 sm:mb-5 sm:leading-6">
+        <header className="flex shrink-0 flex-col gap-3">
+          <span className={`${sectionLabel} text-sky-400`}>Systemic risk simulation</span>
+          <p className="text-[13px] leading-5 text-slate-300">
             Distress propagation over a real cross-border exposure network
             sourced from the World Bank and BIS. Click a country on the
             globe, or pick one below, to simulate a default.
           </p>
-          <dl className="flex gap-8 border-t border-sky-200/10 pt-4">
+          <dl className={`mt-1 grid grid-cols-2 gap-4 border-t ${hairline} pt-4`}>
             <div>
-              <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">Countries</dt>
-              <dd className="mt-1 font-mono text-lg tabular-nums text-slate-100">{countries.length}</dd>
+              <dt className={sectionLabel}>Countries</dt>
+              <dd className="mt-1.5 font-mono text-lg tabular-nums text-slate-100">{countries.length}</dd>
             </div>
             <div>
-              <dt className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">Exposure edges</dt>
-              <dd className="mt-1 font-mono text-lg tabular-nums text-slate-100">
-                {(yearData?.edges.length ?? 0).toLocaleString()}
+              <dt className={sectionLabel}>Exposure edges</dt>
+              <dd className="mt-1.5 font-mono text-lg tabular-nums text-slate-100">
+                {(yearData?.edges.length ?? 0).toLocaleString("en-US")}
               </dd>
             </div>
           </dl>
         </header>
 
-        <label className="flex shrink-0 flex-col gap-2.5 text-xs text-slate-400">
-          <span className="flex items-center justify-between">
-            Network year <strong className="font-mono text-sm font-medium text-slate-100">{displayYear}</strong>
-          </span>
-          <input
-            className={range}
-            type="range"
-            min={YEARS[0]}
-            max={YEARS[YEARS.length - 1]}
-            step={1}
-            value={displayYear}
-            onChange={(e) => onYearChange(Number(e.target.value))}
-          />
-        </label>
+        <section className={section}>
+          <h2 className={sectionLabel}>Network</h2>
 
-        <div className="flex shrink-0 overflow-hidden rounded-xl border border-sky-200/10 bg-slate-950/25 p-1" role="group" aria-label="Contagion model">
-          <button
-            className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
-              model === "debtrank"
-                ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
-                : "text-slate-500 hover:text-slate-200"
+          <label className="flex flex-col gap-2.5 text-xs text-slate-300">
+            <span className="flex items-center justify-between">
+              Year <strong className="font-mono text-sm font-medium text-slate-100">{displayYear}</strong>
+            </span>
+            <input
+              className={range}
+              type="range"
+              min={YEARS[0]}
+              max={YEARS[YEARS.length - 1]}
+              step={1}
+              value={displayYear}
+              onChange={(e) => onYearChange(Number(e.target.value))}
+            />
+          </label>
+
+          <label
+            className={`flex items-center gap-2 text-xs text-slate-300 ${
+              portfolioDataAvailable ? "cursor-pointer" : "cursor-default opacity-40"
             }`}
-            onClick={() => onModelChange("debtrank")}
           >
-            DebtRank
-          </button>
-          <button
-            className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
-              model === "eisenberg-noe"
-                ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
-                : "text-slate-500 hover:text-slate-200"
-            }`}
-            onClick={() => onModelChange("eisenberg-noe")}
+            <input
+              type="checkbox"
+              className={checkbox}
+              checked={includePortfolio}
+              disabled={!portfolioDataAvailable}
+              onChange={(e) => setIncludePortfolio(e.target.checked)}
+            />
+            Include portfolio investment
+            {!portfolioDataAvailable && <span className="font-mono text-slate-400">(no data for {displayYear})</span>}
+          </label>
+          <p className={`-mt-1 ${note}`}>
+            Adds IMF CPIS cross-border bond/equity holdings as a second exposure
+            layer alongside BIS bank-to-bank loans -- CPIS coverage currently
+            ends around 2023.
+          </p>
+        </section>
+
+        <section className={section}>
+          <h2 className={sectionLabel}>Scenario</h2>
+
+          <div
+            className={`flex overflow-hidden rounded-xl border ${hairline} bg-slate-950/25 p-1`}
+            role="group"
+            aria-label="Contagion model"
           >
-            Eisenberg-Noe
-          </button>
-        </div>
+            <button
+              className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
+                model === "debtrank"
+                  ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
+                  : "text-slate-300 hover:text-slate-100"
+              }`}
+              onClick={() => onModelChange("debtrank")}
+            >
+              DebtRank
+            </button>
+            <button
+              className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
+                model === "eisenberg-noe"
+                  ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
+                  : "text-slate-300 hover:text-slate-100"
+              }`}
+              onClick={() => onModelChange("eisenberg-noe")}
+            >
+              Eisenberg-Noe
+            </button>
+          </div>
 
-        <label
-          className={`flex shrink-0 items-center gap-2 text-[11px] text-slate-400 ${
-            portfolioDataAvailable ? "cursor-pointer" : "cursor-default opacity-40"
-          }`}
-        >
-          <input
-            type="checkbox"
-            className="size-3.5 cursor-pointer rounded border-sky-200/20 bg-slate-950/45 text-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-default"
-            checked={includePortfolio}
-            disabled={!portfolioDataAvailable}
-            onChange={(e) => setIncludePortfolio(e.target.checked)}
-          />
-          Include portfolio investment (bonds/equity)
-          {!portfolioDataAvailable && <span className="font-mono text-slate-600">(no data for {displayYear})</span>}
-        </label>
-        <p className="-mt-2 text-[10.5px] leading-4 text-slate-500">
-          Adds IMF CPIS cross-border bond/equity holdings as a second exposure
-          layer alongside BIS bank-to-bank loans -- CPIS coverage currently
-          ends around 2023.
-        </p>
-
-        <div className="flex shrink-0 flex-col gap-1.5">
+          <div className="flex flex-col gap-1.5">
+            <select
+              className={selectField}
+              value=""
+              onChange={(e) => {
+                const preset = PRESETS.find((p) => p.id === e.target.value);
+                if (preset) applyScenario(preset);
+              }}
+            >
+              <option value="">Or jump to a historical scenario&hellip;</option>
+              {PRESETS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+            <p className={note}>
+              Illustrative shock magnitudes -- not empirically calibrated to actual losses.
+            </p>
+          </div>
           <select
-            className={`${focus} min-w-0 appearance-none rounded-xl border border-sky-200/10 bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`}
-            value=""
-            onChange={(e) => {
-              const preset = PRESETS.find((p) => p.id === e.target.value);
-              if (preset) applyScenario(preset);
-            }}
+            className={selectField}
+            value={shockedId ?? ""}
+            onChange={(e) => e.target.value && triggerShock(e.target.value)}
           >
-            <option value="">Or jump to a historical scenario&hellip;</option>
-            {PRESETS.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.label}
+            <option value="">Select a country to shock&hellip;</option>
+            {sortedCountries.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
               </option>
             ))}
           </select>
-          <p className="text-[10.5px] leading-4 text-slate-500">
-            Illustrative shock magnitudes -- not empirically calibrated to actual losses.
-          </p>
-        </div>
 
-        <select
-          className={`${focus} shrink-0 min-w-0 appearance-none rounded-xl border border-sky-200/10 bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`}
-          value={shockedId ?? ""}
-          onChange={(e) => e.target.value && triggerShock(e.target.value)}
-        >
-          <option value="">Select a country to shock&hellip;</option>
-          {sortedCountries.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+          <label className="flex flex-col gap-2.5 text-xs text-slate-300">
+            <span className="flex items-center justify-between">
+              Shock magnitude{" "}
+              <strong className="font-mono text-sm font-medium text-slate-100">
+                {Math.round(magnitude * 100)}%
+              </strong>
+            </span>
+            <input
+              className={range}
+              type="range"
+              min={5}
+              max={100}
+              step={5}
+              value={magnitude * 100}
+              onChange={(e) => onMagnitudeChange(Number(e.target.value) / 100)}
+            />
+          </label>
 
-        {/* A sequence, not just a set: DebtRank's iterations are the only
-            clock this model has, so "arrives in round N" is what "then
-            Portugal, two rounds later" can honestly mean here. */}
-        <div className="flex shrink-0 flex-col gap-2">
-          {extraShocks.map((e, i) => (
-            <div key={e.id} className="flex items-center gap-2 rounded-xl border border-sky-200/8 bg-slate-950/25 px-2.5 py-2">
-              <span className="min-w-0 flex-1 truncate text-[12px] text-slate-200">
-                {countries.find((c) => c.id === e.id)?.name ?? e.id}
-              </span>
-              <label className="flex items-center gap-1 font-mono text-[11px] text-slate-500">
-                <span className="sr-only">{`Magnitude for ${e.id}`}</span>
-                <input
-                  className={`${focus} w-11 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-1 text-right text-slate-100`}
-                  type="number"
-                  min={5}
-                  max={100}
-                  step={5}
-                  value={Math.round(e.magnitude * 100)}
-                  onChange={(ev) => {
-                    const pct = Math.min(100, Math.max(5, Number(ev.target.value) || 5));
-                    updateExtras(extraShocks.map((x, j) => (j === i ? { ...x, magnitude: pct / 100 } : x)));
-                  }}
-                />
-                %
-              </label>
-              <label className="flex items-center gap-1 font-mono text-[11px] text-slate-500">
-                <span className="sr-only">{`Arrival round for ${e.id}`}</span>
-                round
-                <input
-                  className={`${focus} w-9 rounded-md border border-sky-200/10 bg-slate-950/50 px-1 py-1 text-right text-slate-100 disabled:opacity-40`}
-                  type="number"
-                  min={0}
-                  max={MAX_DELAY}
-                  value={e.delay}
-                  disabled={model !== "debtrank"}
-                  onChange={(ev) => {
-                    const d = Math.min(MAX_DELAY, Math.max(0, Math.trunc(Number(ev.target.value) || 0)));
-                    updateExtras(extraShocks.map((x, j) => (j === i ? { ...x, delay: d } : x)));
-                  }}
-                />
-              </label>
-              <button
-                className={`${focus} flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-md text-slate-500 transition hover:bg-sky-400/5 hover:text-slate-100`}
-                aria-label={`Remove ${e.id} from the sequence`}
-                onClick={() => updateExtras(extraShocks.filter((_, j) => j !== i))}
+          {/* A sequence, not just a set: DebtRank's iterations are the only
+              clock this model has, so "arrives in round N" is what "then
+              Portugal, two rounds later" can honestly mean here. */}
+          <div className="flex flex-col gap-2">
+            {extraShocks.map((e, i) => (
+              <div
+                key={e.id}
+                className={`flex items-center gap-2 rounded-xl border ${hairline} bg-slate-950/25 px-2.5 py-2`}
               >
-                &times;
-              </button>
-            </div>
-          ))}
+                <span className="min-w-0 flex-1 truncate text-xs text-slate-200">
+                  {countries.find((c) => c.id === e.id)?.name ?? e.id}
+                </span>
+                <label className="flex items-center gap-1 font-mono text-[11px] text-slate-300">
+                  <span className="sr-only">{`Magnitude for ${e.id}`}</span>
+                  <input
+                    className={`${focus} w-11 rounded-md border ${hairline} bg-slate-950/50 px-1 py-1 text-right text-slate-100`}
+                    type="number"
+                    min={5}
+                    max={100}
+                    step={5}
+                    value={Math.round(e.magnitude * 100)}
+                    onChange={(ev) => {
+                      const pct = Math.min(100, Math.max(5, Number(ev.target.value) || 5));
+                      updateExtras(extraShocks.map((x, j) => (j === i ? { ...x, magnitude: pct / 100 } : x)));
+                    }}
+                  />
+                  %
+                </label>
+                <label className="flex items-center gap-1 font-mono text-[11px] text-slate-300">
+                  <span className="sr-only">{`Arrival round for ${e.id}`}</span>
+                  round
+                  <input
+                    className={`${focus} w-9 rounded-md border ${hairline} bg-slate-950/50 px-1 py-1 text-right text-slate-100 disabled:opacity-40`}
+                    type="number"
+                    min={0}
+                    max={MAX_DELAY}
+                    value={e.delay}
+                    disabled={model !== "debtrank"}
+                    onChange={(ev) => {
+                      const d = Math.min(MAX_DELAY, Math.max(0, Math.trunc(Number(ev.target.value) || 0)));
+                      updateExtras(extraShocks.map((x, j) => (j === i ? { ...x, delay: d } : x)));
+                    }}
+                  />
+                </label>
+                <button
+                  className={`${focus} flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-md text-slate-300 transition hover:bg-sky-400/5 hover:text-slate-100`}
+                  aria-label={`Remove ${e.id} from the sequence`}
+                  onClick={() => updateExtras(extraShocks.filter((_, j) => j !== i))}
+                >
+                  &times;
+                </button>
+              </div>
+            ))}
 
-          <select
-            className={`${focus} min-w-0 appearance-none rounded-xl border border-dashed border-sky-200/15 bg-transparent px-3 py-2 text-[12px] text-slate-400 transition hover:border-sky-400/40 hover:text-slate-200 disabled:cursor-default disabled:opacity-35`}
-            value=""
-            disabled={!shockedId}
-            onChange={(e) => addExtraShock(e.target.value)}
-          >
-            <option value="">+ Shock another country&hellip;</option>
-            {sortedCountries
-              .filter((c) => c.id !== shockedId && !extraShocks.some((e) => e.id === c.id))
-              .map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-          </select>
+            <select
+              className={`${focus} min-w-0 appearance-none rounded-xl border border-dashed border-sky-200/15 bg-transparent px-3 py-2 text-xs text-slate-300 transition hover:border-sky-400/40 hover:text-slate-100 disabled:cursor-default disabled:opacity-35`}
+              value=""
+              disabled={!shockedId}
+              onChange={(e) => addExtraShock(e.target.value)}
+            >
+              <option value="">+ Shock another country&hellip;</option>
+              {sortedCountries
+                .filter((c) => c.id !== shockedId && !extraShocks.some((e) => e.id === c.id))
+                .map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                ))}
+            </select>
 
-          {extraShocks.length > 0 && model !== "debtrank" && (
-            <p className="text-[10.5px] leading-4 text-amber-400/70">
-              Eisenberg-Noe solves a clearing fixed point, which has no
-              propagation rounds -- every country above is shocked at once and
-              the round numbers are ignored.
-            </p>
-          )}
-        </div>
+            {extraShocks.length > 0 && model !== "debtrank" && (
+              <p className="text-[11px] leading-4 text-amber-300/80">
+                Eisenberg-Noe solves a clearing fixed point, which has no
+                propagation rounds -- every country above is shocked at once and
+                the round numbers are ignored.
+              </p>
+            )}
+          </div>
 
-        <div className="flex shrink-0 gap-2">
-          <button
-            className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
-            onClick={copyLink}
-            disabled={!shockedId}
-          >
-            {copied ? "Copied" : "Copy link"}
-          </button>
-          <button
-            className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
-            onClick={reset}
-            disabled={!result}
-          >
-            Reset
-          </button>
-        </div>
 
-        <label className="flex shrink-0 flex-col gap-2.5 text-xs text-slate-400">
-          <span className="flex items-center justify-between">
-            Shock magnitude{" "}
-            <strong className="font-mono text-sm font-medium text-slate-100">
-              {Math.round(magnitude * 100)}%
-            </strong>
-          </span>
-          <input
-            className={range}
-            type="range"
-            min={5}
-            max={100}
-            step={5}
-            value={magnitude * 100}
-            onChange={(e) => onMagnitudeChange(Number(e.target.value) / 100)}
-          />
-        </label>
+          <div className="flex gap-2">
+            <button
+              className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
+              onClick={copyLink}
+              disabled={!shockedId}
+            >
+              {copied ? "Copied" : "Copy link"}
+            </button>
+            <button
+              className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
+              onClick={reset}
+              disabled={!result}
+            >
+              Reset
+            </button>
+          </div>
+        </section>
 
         {result ? (
-          <div className="flex shrink-0 flex-col gap-3">
+          <section className={section}>
+            <h2 className={sectionLabel}>Result</h2>
             <div
               role="status"
               aria-live="polite"
-              className="flex items-center justify-between rounded-lg border border-sky-200/8 bg-sky-400/[0.035] px-2.5 py-2 font-mono text-xs text-slate-400"
+              className={`flex items-center justify-between rounded-lg border ${hairline} bg-sky-400/[0.035] px-2.5 py-2 font-mono text-xs text-slate-300`}
             >
               {result.kind === "debtrank" ? (
                 <>
@@ -662,12 +687,10 @@ function App() {
             </div>
 
             {shockedId && (
-              <div className="flex flex-col gap-1 rounded-xl border border-sky-200/10 bg-slate-950/25 px-3 py-2.5 text-xs">
-                <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">
-                  Market check ({year})
-                </span>
-                <div className="flex flex-col gap-0.5">
-                  <span className="font-mono text-slate-200 [&_strong]:font-semibold [&_strong]:text-sky-400">
+              <div className={`flex flex-col gap-1.5 rounded-xl border ${hairline} bg-slate-950/25 px-3 py-2.5`}>
+                <span className={sectionLabel}>Market check ({year})</span>
+                <div className="flex flex-col gap-0.5 text-xs">
+                  <span className="font-mono text-slate-300 [&_strong]:font-semibold [&_strong]:text-sky-400">
                     10Y yield{" "}
                     {getBondYield(shockedId, year) !== null ? (
                       <>
@@ -684,18 +707,18 @@ function App() {
                         )}
                       </>
                     ) : (
-                      <span className="font-sans italic text-slate-500">no data</span>
+                      <span className="font-sans italic text-slate-400">no data</span>
                     )}
                   </span>
-                  <span className="font-mono text-slate-200 [&_strong]:font-semibold [&_strong]:text-sky-400">
+                  <span className="font-mono text-slate-300 [&_strong]:font-semibold [&_strong]:text-sky-400">
                     Policy rate{" "}
                     {getPolicyRate(shockedId, year) !== null ? (
                       <strong>{getPolicyRate(shockedId, year)?.toFixed(2)}%</strong>
                     ) : (
-                      <span className="font-sans italic text-slate-500">no data</span>
+                      <span className="font-sans italic text-slate-400">no data</span>
                     )}
                   </span>
-                  <span className="font-mono text-slate-200 [&_strong]:font-semibold [&_strong]:text-sky-400">
+                  <span className="font-mono text-slate-300 [&_strong]:font-semibold [&_strong]:text-sky-400">
                     Stock index (YoY){" "}
                     {getStockChange(shockedId, year) !== null ? (
                       <strong>
@@ -703,7 +726,7 @@ function App() {
                         {getStockChange(shockedId, year)?.toFixed(1)}%
                       </strong>
                     ) : (
-                      <span className="font-sans italic text-slate-500">no data</span>
+                      <span className="font-sans italic text-slate-400">no data</span>
                     )}
                   </span>
                 </div>
@@ -729,162 +752,159 @@ function App() {
                 {analysisLoading ? `Loading ${analysisProgress}…` : "View across years →"}
               </button>
             )}
-
-          </div>
+          </section>
         ) : (
-          <div className="flex flex-col gap-2 pt-1">
-            <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500">
-              Distress scale
-            </span>
+          <section className={section}>
+            <h2 className={sectionLabel}>Distress scale</h2>
             <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-amber-400 to-red-500" />
-            <div className="flex justify-between text-[11px] text-slate-500">
+            <div className="-mt-1 flex justify-between text-[11px] text-slate-400">
               <span>stable</span>
               <span>default</span>
             </div>
-            <p className="text-[10.5px] leading-4 text-slate-500">
+            <p className={note}>
               A faint wireframe ring marks countries whose loss-buffer equity is
               estimated (GDP/capital-ratio/floor), not reported FX reserves.
             </p>
-          </div>
+          </section>
         )}
         </div>
 
         {result && rankedAll.length > 0 && (
-          <div className={`${scrollArea} flex min-h-[38%] flex-1 flex-col overflow-y-auto border-t border-sky-200/10 pr-1.5`}>
+          <div className={`flex min-h-[38%] flex-1 flex-col overflow-hidden border-t ${hairline}`}>
             <div
               data-testid="ranking-header"
-              className="sticky top-0 z-10 flex shrink-0 items-center justify-between bg-[#06101d] py-3 text-[10px] font-medium uppercase tracking-[0.12em] text-slate-500"
+              className={`${sectionLabel} flex shrink-0 items-center justify-between py-3`}
             >
               <span>Propagation ranking</span>
               <span>{ranked.length} affected</span>
             </div>
-            <label className="flex shrink-0 cursor-pointer items-center gap-2 pb-2.5 text-[11px] text-slate-400">
-              <input
-                type="checkbox"
-                className="size-3.5 cursor-pointer rounded border-sky-200/20 bg-slate-950/45 text-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
-                checked={hideFinancialCenters}
-                onChange={(e) => setHideFinancialCenters(e.target.checked)}
-              />
-              Hide financial centers
-              {hideFinancialCenters && hiddenFinancialCenterCount > 0 && (
-                <span className="font-mono text-slate-600">({hiddenFinancialCenterCount} hidden)</span>
-              )}
-            </label>
-            {!hideFinancialCenters && rankedAll.some((r) => isFinancialCenter(r.id)) && (
-              <p className="mb-2.5 shrink-0 text-[10.5px] leading-4 text-slate-500">
-                Marked entries are cross-border financial centres (e.g. Isle
-                of Man, Hong Kong SAR) whose gross banking exposure runs to
-                multiples of local GDP -- they tend to rank high for almost
-                any shock. See{" "}
-                <a
-                  className="underline decoration-slate-600 underline-offset-2 hover:text-sky-400"
-                  href="https://www.bis.org/publ/qtrpdf/r_qt2206b.htm"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  BIS, June 2022
-                </a>
-                .
-              </p>
-            )}
-            {rankedAll.some((r) => r.source && r.source !== "reserves") && (
-              <p className="mb-2.5 shrink-0 text-[10.5px] leading-4 text-slate-500">
-                Hatched bars use estimated, not directly reported, loss-buffer
-                data -- hover a country for its exact source.
-              </p>
-            )}
-            {ranked.length === 0 ? (
-              <p className="pb-2 text-xs italic text-slate-500">
-                All affected countries are financial centers, hidden above.
-              </p>
-            ) : (
             <div
               data-testid="ranked-results"
               className={`${scrollArea} min-h-[140px] flex-1 overflow-y-auto pr-1.5`}
             >
-            <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
-              {ranked.map((r) => {
-                const canExpand = shockedId !== null && r.id !== shockedId;
-                return (
-                <li
-                  key={r.id}
-                  className={`group grid grid-cols-[minmax(0,1fr)_72px_46px] items-center gap-2.5 rounded-lg px-1.5 py-1 text-xs transition-colors hover:bg-sky-400/[0.045] ${
-                    canExpand ? "cursor-pointer" : ""
-                  }`}
-                  onClick={() => canExpand && setExpandedRowId((id) => (id === r.id ? null : r.id))}
-                >
-                  <span
-                    className={`truncate ${
-                      r.id === shockedId ? "font-semibold text-amber-400" : "text-slate-200"
-                    }`}
-                    title={
-                      [
-                        isFinancialCenter(r.id) ? "Cross-border financial centre" : null,
-                        r.source ? EQUITY_SOURCE_LABEL[r.source] : null,
-                      ]
-                        .filter(Boolean)
-                        .join(" · ") || undefined
-                    }
+              <label className="flex shrink-0 cursor-pointer items-center gap-2 pb-2.5 text-[11px] text-slate-300">
+                <input
+                  type="checkbox"
+                  className={checkbox}
+                  checked={hideFinancialCenters}
+                  onChange={(e) => setHideFinancialCenters(e.target.checked)}
+                />
+                Hide financial centers
+                {hideFinancialCenters && hiddenFinancialCenterCount > 0 && (
+                  <span className="font-mono text-slate-400">({hiddenFinancialCenterCount} hidden)</span>
+                )}
+              </label>
+              {!hideFinancialCenters && rankedAll.some((r) => isFinancialCenter(r.id)) && (
+                <p className={`${note} mb-2.5`}>
+                  Marked entries are cross-border financial centres (e.g. Isle
+                  of Man, Hong Kong SAR) whose gross banking exposure runs to
+                  multiples of local GDP -- they tend to rank high for almost
+                  any shock. See{" "}
+                  <a
+                    className="underline decoration-slate-600 underline-offset-2 hover:text-sky-400"
+                    href="https://www.bis.org/publ/qtrpdf/r_qt2206b.htm"
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                    {r.name}
-                    {isFinancialCenter(r.id) && <span className="ml-1 text-slate-600">*</span>}
-                  </span>
-                  <span className="relative h-1.5 overflow-hidden rounded-full bg-slate-400/10">
+                    BIS, June 2022
+                  </a>
+                  .
+                </p>
+              )}
+              {rankedAll.some((r) => r.source && r.source !== "reserves") && (
+                <p className={`${note} mb-2.5`}>
+                  Hatched bars use estimated, not directly reported, loss-buffer
+                  data -- hover a country for its exact source.
+                </p>
+              )}
+              {ranked.length === 0 ? (
+                <p className="pb-2 text-xs italic text-slate-400">
+                  All affected countries are financial centers, hidden above.
+                </p>
+              ) : (
+              <ol className="m-0 flex list-none flex-col gap-2.5 p-0">
+                {ranked.map((r) => {
+                  const canExpand = shockedId !== null && r.id !== shockedId;
+                  return (
+                  <li
+                    key={r.id}
+                    className={`group grid grid-cols-[minmax(0,1fr)_88px_44px] items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-xs transition-colors hover:bg-sky-400/[0.045] ${
+                      canExpand ? "cursor-pointer" : ""
+                    }`}
+                    onClick={() => canExpand && setExpandedRowId((id) => (id === r.id ? null : r.id))}
+                  >
                     <span
-                      className="absolute inset-0 origin-left rounded-full transition-transform duration-400"
-                      style={{
-                        transform: `scaleX(${r.level})`,
-                        backgroundImage:
-                          r.source && r.source !== "reserves"
-                            ? "linear-gradient(to right, #fbbf24, #ef4444), repeating-linear-gradient(135deg, rgba(2,5,12,0.4) 0px, rgba(2,5,12,0.4) 2px, transparent 2px, transparent 5px)"
-                            : "linear-gradient(to right, #fbbf24, #ef4444)",
-                      }}
-                    />
-                  </span>
-                  <span className="text-right font-mono text-slate-400 tabular-nums">
-                    {(r.level * 100).toFixed(1)}%
-                  </span>
-                  {expandedRowId === r.id && network && shockedId && (() => {
-                    const shockedName = countries.find((c) => c.id === shockedId)?.name ?? shockedId;
-                    const explanation = explainExposure(network, r.id, shockedId);
-                    return (
-                      <div className="col-span-3 -mt-1 flex flex-col gap-0.5 rounded-lg bg-slate-950/40 px-2.5 py-2 font-mono text-[11px] text-slate-400">
-                        {explanation.claimOnShocked > 0 || explanation.owedToShocked > 0 ? (
-                          <>
-                            {explanation.claimOnShocked > 0 && (
-                              <span>
-                                Claim on {shockedName}:{" "}
-                                <strong className="text-slate-200">{formatUsd(explanation.claimOnShocked)}</strong>
-                              </span>
-                            )}
-                            {explanation.owedToShocked > 0 && (
-                              <span>
-                                Owes {shockedName}:{" "}
-                                <strong className="text-slate-200">{formatUsd(explanation.owedToShocked)}</strong>
-                              </span>
-                            )}
-                          </>
-                        ) : explanation.viaPath ? (
-                          <span className="font-sans italic">
-                            No direct exposure -- likely indirect, via{" "}
-                            {explanation.viaPath
-                              .map((id) => countries.find((c) => c.id === id)?.name ?? id)
-                              .join(" → ")}
-                          </span>
-                        ) : (
-                          <span className="font-sans italic">
-                            No direct or strongly-inferred indirect link in this year's data.
-                          </span>
-                        )}
-                      </div>
-                    );
-                  })()}
-                </li>
-                );
-              })}
-            </ol>
+                      className={`truncate ${
+                        r.id === shockedId ? "font-semibold text-amber-400" : "text-slate-200"
+                      }`}
+                      title={
+                        [
+                          isFinancialCenter(r.id) ? "Cross-border financial centre" : null,
+                          r.source ? EQUITY_SOURCE_LABEL[r.source] : null,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ") || undefined
+                      }
+                    >
+                      {r.name}
+                      {isFinancialCenter(r.id) && <span className="ml-1 text-slate-500">*</span>}
+                    </span>
+                    <span className="relative h-1.5 overflow-hidden rounded-full bg-slate-400/12">
+                      <span
+                        className="absolute inset-0 origin-left rounded-full transition-transform duration-400"
+                        style={{
+                          transform: `scaleX(${r.level})`,
+                          backgroundImage:
+                            r.source && r.source !== "reserves"
+                              ? "linear-gradient(to right, #fbbf24, #ef4444), repeating-linear-gradient(135deg, rgba(2,5,12,0.4) 0px, rgba(2,5,12,0.4) 2px, transparent 2px, transparent 5px)"
+                              : "linear-gradient(to right, #fbbf24, #ef4444)",
+                        }}
+                      />
+                    </span>
+                    <span className="text-right font-mono text-slate-300 tabular-nums">
+                      {(r.level * 100).toFixed(1)}%
+                    </span>
+                    {expandedRowId === r.id && network && shockedId && (() => {
+                      const shockedName = countries.find((c) => c.id === shockedId)?.name ?? shockedId;
+                      const explanation = explainExposure(network, r.id, shockedId);
+                      return (
+                        <div className="col-span-3 -mt-1 flex flex-col gap-0.5 rounded-lg bg-slate-950/40 px-2.5 py-2 font-mono text-[11px] text-slate-300">
+                          {explanation.claimOnShocked > 0 || explanation.owedToShocked > 0 ? (
+                            <>
+                              {explanation.claimOnShocked > 0 && (
+                                <span>
+                                  Claim on {shockedName}:{" "}
+                                  <strong className="text-slate-200">{formatUsd(explanation.claimOnShocked)}</strong>
+                                </span>
+                              )}
+                              {explanation.owedToShocked > 0 && (
+                                <span>
+                                  Owes {shockedName}:{" "}
+                                  <strong className="text-slate-200">{formatUsd(explanation.owedToShocked)}</strong>
+                                </span>
+                              )}
+                            </>
+                          ) : explanation.viaPath ? (
+                            <span className="font-sans italic">
+                              No direct exposure -- likely indirect, via{" "}
+                              {explanation.viaPath
+                                .map((id) => countries.find((c) => c.id === id)?.name ?? id)
+                                .join(" → ")}
+                            </span>
+                          ) : (
+                            <span className="font-sans italic">
+                              No direct or strongly-inferred indirect link in this year's data.
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })()}
+                  </li>
+                  );
+                })}
+              </ol>
+              )}
             </div>
-            )}
           </div>
         )}
       </aside>
