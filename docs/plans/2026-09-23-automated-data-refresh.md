@@ -41,6 +41,17 @@ Why not just rebuild everything on a timer? Most runs would be no-ops that downl
 
 ---
 
+## Phase 0: Sanity check (do this first)
+
+- [ ] **Re-run the source checks,** and record the date and results here:
+  - HEAD the BIS bulk zip: is it still `200`, and does it still send `etag` / `last-modified`?
+  - Check DBnomics `IMF/CPIS` `indexed_at`.
+  - Check whether data.imf.org has CPIS rounds newer than the mirror.
+- [ ] **Measure before designing around guesses.** Time one full BIS download plus `fetch_bis.py --by-year` on a GitHub runner (`workflow_dispatch`), and check that it fits the runner's disk and memory.
+- [ ] **Check whether the probe/rebuild split is worth it.** If the full rebuild turns out to be cheap, a simple monthly full rebuild may beat a registry, a lock file and two workflows. Pick the simpler option if it's good enough.
+- [ ] **Line up with the companion plans:** `docs/plans/2026-09-23-data-model-granularity.md` (its new sources) and `docs/plans/2026-09-23-test-strategy.md` (the diff report and tripwires share fixtures with its data-contract tests).
+- [ ] Write the result here (what changed, what was dropped) before starting Phase 1.
+
 ## Phase 1: Registry and probe
 
 - [ ] Add `sources.json` for the sources in use today (World Bank, BIS LBS, CPIS, FRED, borders), with licences taken from `docs/data-api.md`.
