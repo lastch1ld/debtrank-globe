@@ -149,6 +149,35 @@ The app is currently a single view (`web/src/App.tsx`, ~900 lines). Split it int
 - [ ] Lifecycle rule: an experiment starts in **Lab**. It becomes its own tab once it has a verified result, or it is deleted. Record which in this plan.
 - [ ] **Build order:** the tab shell plus the **Stability** tab first (no new data, and it proves the shell works), then Systemic map, then Risk climate.
 
+## Phase 10: Outlook tab (projecting forward from 2026)
+
+**Source:** IMF World Economic Outlook, through the DataMapper API (`https://www.imf.org/external/datamapper/api/v1/{indicator}`). Checked 2026-09-23: it needs no key and covers ~229 countries. **Projections run to 2031** for:
+
+- `NGDP_RPCH` (real GDP growth)
+- `GGXWDG_NGDP` (government gross debt, % of GDP)
+- `GGXCNL_NGDP` (government net lending/borrowing, i.e. the overall budget balance)
+- `PCPIPCH` (inflation)
+- `BCA_NGDPD` (current account, % of GDP)
+
+Some inputs are **historical only** and can serve only as starting points: `ie` (interest paid on public debt) and `pb` (primary balance) end at 2024, and `Reserves_ARA` / `Reserves_STD` (reserve adequacy, 65 countries) end at 2025. Check the IMF's terms of use before copying any of this data into the repo.
+
+**Framing rules (apply to every chart in the tab):**
+
+- Show which WEO edition each projection comes from (April or October of a given year) on the chart itself.
+- Label every chart "projection, not prediction": *if the IMF baseline holds*. Medium-term WEO forecasts are known to lean optimistic, so show ranges (fans), not single lines, wherever possible.
+- worlddata found predictive signals close to zero (Phase 8). Nothing here is presented as a forecast of market direction.
+
+**Models:**
+
+- [ ] **Projected networks, 2026–2031.** Extend the year scrubber past 2025, drawing projected years differently (dashed or faded). Each country's buffer grows along its WEO GDP path, and each exposure grows with both countries' nominal GDP, so today's network structure is kept. Then run DebtRank and Eisenberg-Noe as usual, and the Phase 7 fragility index runs 2005–2031. State the "same structure" assumption on the chart.
+- [ ] **Debt fan chart per country.** Use the standard debt-dynamics equation, `d(t+1) = d(t)·(1+r)/(1+g) − pb`, with the WEO debt projection as the central line. Build the fan by resampling historical growth and interest-rate surprises, following the IMF's stochastic debt-sustainability method, and show probabilities such as "P(debt > 90% of GDP by 2031)".
+- [ ] **Baseline vs. adverse scenario.** Add a toggle between the WEO baseline and a stress path (for example growth 2 points lower for two years, plus a rate shock). The stress path shrinks the projected buffers, and every Outlook chart updates.
+- [ ] **Market-implied default risk.** Convert the bond yields in `web/src/data/market_data.json` into an implied default probability (roughly spread ÷ (1 − recovery rate)) and show it next to the model's view. Only countries with yield data can be included.
+- [ ] **Turbulence outlook (12 months only).** worlddata found that volatility, unlike market direction, is predictable about a year ahead. Use a simple volatility forecast (HAR- or GARCH-style, on VIX / uncertainty) to set the default shock size. Claim no horizon beyond 12 months.
+- [ ] **Crisis early-warning probability (Lab only).** Score reserves adequacy, debt, current account and growth with a logit model, fed with WEO projections. It needs historical crisis dates to train on (the Laeven & Valencia database), whose availability and licence are unverified. Report out-of-sample accuracy (AUROC) before this leaves Lab.
+
+**Build order:** projected networks and debt fan charts first. Both use only the verified WEO data and extend the existing year scrubber.
+
 ---
 
 ## Out of scope
