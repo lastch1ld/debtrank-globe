@@ -24,6 +24,20 @@
 
 ---
 
+## Phase 0: Sanity check (do this first)
+
+This plan was written in one session, in quick iterations. Before building any of it, check that it still holds up as a whole.
+
+- [ ] **Re-check each finding against current `master`,** and record the numbers here:
+  - Count distinct banking-edge creditors in the latest year file (it was 28 of 217).
+  - Confirm `external_debt_usd` is still unused.
+  - Confirm `totalExposure` and `topExposureEdges` still ignore `portfolio_edges`.
+- [ ] **Check the model argument** behind Phase 1: that a node with no claims row really can't receive DebtRank distress. Test it with a toy network in `test_debtrank.py`, not by reasoning.
+- [ ] **Check dependencies and order.** Phases 7–10 assume the Phase 1 coverage fix and the Phase 9 tab shell. Confirm the order still makes sense, and drop or merge items that overlap (for example, the Phase 7 backtest and the Phase 8 "what happened next" view).
+- [ ] **Check the external claims.** The BIS `L_POSITION=L` and `L_CP_SECTOR=G` coverage, the CPIS debt-only indicator code, the IMF WEO terms of use, and the literature references in Phase 7 are all marked unverified. Verify each one, or mark the item as blocked.
+- [ ] **Line up with the companion plans:** `docs/plans/2026-09-23-automated-data-refresh.md` (new sources must go through its registry) and `docs/plans/2026-09-23-test-strategy.md` (every phase ships with the tests it defines).
+- [ ] Write the result here (what changed, what was dropped) before starting Phase 1.
+
 ## Phase 1: Coverage (every country can receive distress)
 
 Highest impact. It changes the ranking for most shocks, so ship it on its own before anything else.
