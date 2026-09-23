@@ -76,6 +76,30 @@ Bank-system claims are measured against central-bank reserves (problem 2 above).
 - [ ] **Option A (cheap, honest):** relabel the output as a *stress index*, not a solvency or default probability, in the UI, the README and `model/README.md`. The algorithms and data stay unchanged.
 - [ ] **Option B (more faithful):** build the buffer for the banking layer from banking-system capital (capital-to-assets ratio × banking-system assets) and keep reserves only for the sovereign channel from Phase 5. This needs a banking-system assets source and has to go into both builders. It will move rankings for every year.
 
+## Phase 7: Alternative modelling (exploratory)
+
+These are ideas, not commitments. Each item is a small experiment. Keep it only if the result says something. The literature references are from memory, so verify them before citing any of them in the UI or README.
+
+**Cheap to try, high signal (no new data):**
+
+- [ ] **Stability index over time.** Plot the largest eigenvalue (spectral radius) of `impact_matrix()` for each year, 2005–2025. Theory for linearised DebtRank says distress dies out below 1 and amplifies above 1 (Bardoscia et al., 2017, "Pathways towards instability"). Check whether the series climbs before 2008 and 2010.
+- [ ] **Importance vs. vulnerability.** Run a unit shock for every country, for every year. For each country, record how much it hurts others when it is shocked (systemic importance) and its average distress across all the other countries' shocks (vulnerability). Show both as a scatter plot animated across years. Precompute this in the pipeline if it's too slow in the browser.
+- [ ] **Backtest against markets.** For the 2010–12 euro crisis, compute the rank correlation between the ranking from a GRC shock and how much each country's bond spreads actually widened (`web/src/data/market_data.json`). Publish the result either way. A null result is still a finding.
+- [ ] **Uncertainty ranges.** Resample each estimated buffer (any `equitySource` other than `reserves`) within a plausible range and rerun a few hundred times. Show each country's rank as a range (for example "rank 3–9") instead of a single number.
+
+**New contagion channels:**
+
+- [ ] **Overlapping holdings / fire sales.** Use the CPIS holdings to find countries that hold the same issuers' debt. When a holder is forced to sell, prices fall for every other holder of the same bonds (Greenwood, Landier & Thesmar; Cont & Schaanning). This captures contagion between countries with no direct link. It's the biggest modelling upgrade for *sovereign* debt, so decide whether it becomes a full phase.
+- [ ] **Funding withdrawal (sudden stop).** Add propagation in the opposite direction: a distressed creditor cuts lending, so the countries it funds lose funding in proportion to that creditor's share of their external funding (Gai, Haldane & Kapadia). Examples: emerging Europe in 2008, Asia in 1997. This needs to be mirrored in the TS and Python models, with tests.
+- [ ] **Global currency shocks.** Use the BIS currency breakdown (`L_DENOM`: USD, EUR, ...) to support scenarios such as "USD rises 15%", which hit every country's dollar-denominated debt at once instead of shocking one country.
+
+**Filling in the data:**
+
+- [ ] **Estimate missing bilateral links.** Where a country's total claims and liabilities are known but the bilateral breakdown isn't, estimate the most consistent links with RAS / maximum entropy or the fitness model (Cimini et al., 2015). Keep the result as a separate, clearly labelled *estimated* layer that is off by default. This builds on Phase 1.
+- [ ] **Quarterly data.** Keep every BIS quarter instead of only the latest quarter per year, so the 2008 and 2020 shocks can be followed within the year. Check the impact on file size first (the yearly files already total ~16 MB).
+
+**Suggested order:** the stability index and importance vs. vulnerability first (a few hours each, no new data), then the backtest. Fire sales is the long-term priority.
+
 ---
 
 ## Out of scope
