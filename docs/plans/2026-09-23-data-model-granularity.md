@@ -100,6 +100,55 @@ These are ideas, not commitments. Each item is a small experiment. Keep it only 
 
 **Suggested order:** the stability index and importance vs. vulnerability first (a few hours each, no new data), then the backtest. Fire sales is the long-term priority.
 
+## Phase 8: worlddata integration (alternative views)
+
+Source: the sibling repo [lastch1ld/worlddata](https://github.com/lastch1ld/worlddata). These are its datasets that can be joined to this repo by country and year:
+
+| Dataset | Countries | Key | Range |
+| --- | --- | --- | --- |
+| `uncertainty_world` (World Uncertainty Index) | 144 | ISO3 | 1952 to Oct 2024 |
+| `geopolitical_risk` (Geopolitical Risk index) | 45 | ISO3 | to Aug 2026 |
+| `central_bank_rates` / `policy_changes` | 49 | ISO2 | to Aug 2026 |
+| `gdp_by_country` / `inflation_by_country` | ~200 | country name | to 2023 |
+| `elections`, `georisk_events`, `fed_communications` | dated events | name / global | varies |
+| `market_drivers`, `vix_daily`, `us_10y_yield_monthly` | global | — | varies |
+
+**Constraints:**
+
+- worlddata's **data is not MIT** (see its `LICENSE`). Its Wikipedia-derived sets (`elections`, `political_events`) are **CC BY-SA**, which requires derived work to carry the same licence. Only copy permissively licensed sets into this repo, and credit each one in `docs/data-api.md`.
+- The integration is a **pipeline step** (e.g. `data-pipeline/fetch_worlddata.py`) that writes small ISO3 × year slices into the snapshot, or a sidecar file, as an additive schema change. The app never fetches worlddata at runtime.
+- Map ISO2 codes and country names with `build_snapshot.py`'s existing ISO2→ISO3 map (and a name→ISO3 map for the name-keyed sets). Log what fails to match. Never drop rows silently.
+- Coverage ends at different years (the World Uncertainty Index at 2024, GDP and inflation at 2023). Show a gap as "no data", the same way portfolio data after 2023 is handled.
+- worlddata's own findings apply: **same-month correlations are strong, predictive ones are close to zero.** Anything shown here is "what moved together", never a forecast.
+
+**Views:**
+
+- [ ] **Risk-climate map.** Colour countries on the globe by World Uncertainty Index or Geopolitical Risk value for the selected year, with the contagion network drawn on top.
+- [ ] **Events on the year scrubber.** Mark elections, rate hikes (`policy_changes`), geopolitical events and Fed communications along the timeline. Clicking a marker jumps to that year.
+- [ ] **Data-driven shock sizes.** Offer an option to set a shock's size from the z-score of that country's uncertainty or geopolitical-risk spike, or of its rate change, instead of a round number. This addresses the uncalibrated-presets caveat in `ROADMAP.md`.
+- [ ] **Global shocks driven by real market moves.** Size Phase 7's global currency and rate shock from that year's actual VIX, US 10-year yield and Fed rate moves.
+- [ ] **What happened next.** Compare network position with rate spikes, inflation and GDP falls in the same year and the next. Label it as association, not prediction.
+
+## Phase 9: Tabbed views
+
+The app is currently a single view (`web/src/App.tsx`, ~900 lines). Split it into tabs so experiments don't crowd the main view.
+
+| Tab | Content | Depends on |
+| --- | --- | --- |
+| **Contagion** | the current globe and ranking | existing |
+| **Stability** | fragility of the whole network per year, with events overlaid | Phase 7, Phase 8 events |
+| **Systemic map** | importance vs. vulnerability scatter, animated across years | Phase 7 |
+| **Risk climate** | globe coloured by uncertainty or geopolitical risk, with the network on top | Phase 8 |
+| **Backtest** | model ranking vs. real spreads, rates and GDP | Phase 7, Phase 8 |
+| **Lab** | unfinished experiments, each marked "experimental" with a short method note | anything |
+
+- [ ] Tab shell: put the active tab in the URL (extend `scenarioUrl.ts` with `view=`) so every tab can be shared as a link. Keep the existing scenario links working, defaulting to `view=contagion`.
+- [ ] Share the year, the shocked country and the layer toggles across tabs. A tab never reloads data another tab already has (reuse `yearCache`).
+- [ ] Load each tab only when it's opened (`React.lazy`), so the Contagion tab's initial bundle doesn't grow.
+- [ ] Mobile: the tab bar scrolls sideways within the `responsive-sweep` layout, with no horizontal page scroll.
+- [ ] Lifecycle rule: an experiment starts in **Lab**. It becomes its own tab once it has a verified result, or it is deleted. Record which in this plan.
+- [ ] **Build order:** the tab shell plus the **Stability** tab first (no new data, and it proves the shell works), then Systemic map, then Risk climate.
+
 ---
 
 ## Out of scope
