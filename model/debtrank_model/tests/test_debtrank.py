@@ -171,3 +171,29 @@ class TestSequentialShocks:
     def test_rejects_a_negative_delay(self):
         with pytest.raises(ValueError, match="delay"):
             run_debtrank(self.chain(), {"A": Shock(level=0.5, delay=-1)})
+
+
+def test_node_with_no_claims_row_can_be_shocked_but_never_receives_distress():
+    # A is like a country outside BIS reporting: others hold claims on it
+    # (columns), but it holds none itself (its row is all zeros). DebtRank
+    # moves distress to a node through that node's own claims, so A absorbs
+    # nothing however hard everyone else is hit -- it can only be a source.
+    net = ExposureNetwork(
+        node_ids=["A", "B", "C"],
+        exposure=np.array([
+            [0.0, 0.0, 0.0],
+            [100.0, 0.0, 0.0],
+            [100.0, 100.0, 0.0],
+        ]),
+        equity=np.array([100.0, 100.0, 100.0]),
+    )
+    a, b, c = (net.node_ids.index(n) for n in "ABC")
+
+    others_hit = run_debtrank(net, shocked_nodes={"B": 1.0, "C": 1.0})
+    assert others_hit.final_distress[a] == pytest.approx(0.0)
+
+    # It is a real source, though: shocking A reaches the holders of claims on it.
+    a_hit = run_debtrank(net, shocked_nodes={"A": 0.6})
+    assert a_hit.final_distress[a] == pytest.approx(0.6)
+    assert a_hit.final_distress[b] > 0.0
+    assert a_hit.final_distress[c] > 0.0
