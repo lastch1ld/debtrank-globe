@@ -84,6 +84,11 @@ class TestExtractEdges:
         assert edges[0]["period"] == "2023-Q3"
         assert edges[0]["amount"] == 80 * 1_000_000
 
+    def test_latest_quarter_of_zero_is_no_edge_and_does_not_revive_an_older_quarter(self, tmp_path):
+        row = _row("DE", "Germany", "FR", "France", {"2023-Q3": "80", "2023-Q4": "0"})
+        edges, _ = extract_edges(_write_csv(tmp_path, [row]))
+        assert edges == []
+
     def test_row_with_no_usable_quarter_produces_no_edge(self, tmp_path):
         row = _row("DE", "Germany", "FR", "France", {"2023-Q4": "NaN"})
         edges, _ = extract_edges(_write_csv(tmp_path, [row]))
@@ -124,6 +129,11 @@ class TestExtractEdgesByYear:
         row = _row("DE", "Germany", "FR", "France", {"2023-Q4": "120"})
         by_year = extract_edges_by_year(_write_csv(tmp_path, [row]), [2023, 2030])
         assert by_year[2030] == []
+
+    def test_zero_q4_cell_yields_no_edge_for_that_year(self, tmp_path):
+        row = _row("DE", "Germany", "FR", "France", {"2023-Q4": "0"})
+        by_year = extract_edges_by_year(_write_csv(tmp_path, [row]), [2023])
+        assert by_year[2023] == []
 
     def test_unusable_q4_cell_yields_no_edge_for_that_year(self, tmp_path):
         row = _row("DE", "Germany", "FR", "France", {"2023-Q4": "NaN"})

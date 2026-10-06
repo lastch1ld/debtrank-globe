@@ -62,7 +62,7 @@ def fetch_reporter_series(reporter: str, session) -> list[dict]:
 def edges_from_series(reporter: str, docs: list[dict], years: set[int]) -> dict[int, list[dict]]:
     """Turns one reporter's series docs into {year: [edge, ...]}, skipping
     aggregate counterparts, self-loops, years outside the requested range,
-    and null/negative observations (CPIS represents "not reported" as a
+    and null/zero/negative observations (CPIS represents "not reported" as a
     null value in the period/value arrays, not a sentinel string like BIS's
     "NaN" -- there's nothing to parse, just filter it out)."""
     out: dict[int, list[dict]] = {y: [] for y in years}
@@ -74,7 +74,7 @@ def edges_from_series(reporter: str, docs: list[dict], years: set[int]) -> dict[
             # DBnomics represents confidential/unavailable CPIS observations
             # as the literal string "NA" (distinct from a JSON null), mixed
             # into an otherwise-numeric value array.
-            if not isinstance(value, (int, float)) or value < 0:
+            if not isinstance(value, (int, float)) or value <= 0:
                 continue
             # A handful of early observations are semi-annual ("1997-S2")
             # rather than annual -- CPIS only became a yearly survey later,

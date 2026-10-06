@@ -34,6 +34,11 @@ class TestEdgesFromSeries:
         by_year = edges_from_series("DE", docs, {2023})
         assert by_year[2023] == []
 
+    def test_zero_value_yields_no_edge(self):
+        docs = [self._doc("FR", ["2023"], [0.0])]
+        by_year = edges_from_series("DE", docs, {2023})
+        assert by_year[2023] == []
+
     def test_negative_value_yields_no_edge(self):
         docs = [self._doc("FR", ["2023"], [-5.0])]
         by_year = edges_from_series("DE", docs, {2023})
