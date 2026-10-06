@@ -9476,12 +9476,6 @@
     },
     {
       "creditor": "CHE",
-      "debtor": "NRU",
-      "period": "2016-Q4",
-      "amount": 0.0
-    },
-    {
-      "creditor": "CHE",
       "debtor": "COM",
       "period": "2025-Q4",
       "amount": 7023000.0
@@ -9785,12 +9779,6 @@
       "debtor": "CYM",
       "period": "2025-Q4",
       "amount": 22293727000.0
-    },
-    {
-      "creditor": "CHE",
-      "debtor": "PRK",
-      "period": "2025-Q1",
-      "amount": 0.0
     },
     {
       "creditor": "CHE",
@@ -12353,12 +12341,6 @@
       "debtor": "BLR",
       "period": "2024-Q4",
       "amount": 1000.0
-    },
-    {
-      "creditor": "LUX",
-      "debtor": "BTN",
-      "period": "1983-Q2",
-      "amount": 0.0
     },
     {
       "creditor": "LUX",
@@ -15698,12 +15680,6 @@
     },
     {
       "creditor": "AUT",
-      "debtor": "ATG",
-      "period": "2025-Q1",
-      "amount": 0.0
-    },
-    {
-      "creditor": "AUT",
       "debtor": "TLS",
       "period": "2021-Q3",
       "amount": 1000.0
@@ -16016,12 +15992,6 @@
     },
     {
       "creditor": "AUT",
-      "debtor": "YEM",
-      "period": "2020-Q2",
-      "amount": 0.0
-    },
-    {
-      "creditor": "AUT",
       "debtor": "ISL",
       "period": "2025-Q4",
       "amount": 62138000.0
@@ -16121,12 +16091,6 @@
       "debtor": "LBN",
       "period": "2025-Q4",
       "amount": 394000.0
-    },
-    {
-      "creditor": "AUT",
-      "debtor": "LCA",
-      "period": "2023-Q4",
-      "amount": 0.0
     },
     {
       "creditor": "AUT",
@@ -18050,12 +18014,6 @@
     },
     {
       "creditor": "DEU",
-      "debtor": "SWZ",
-      "period": "2009-Q3",
-      "amount": 0.0
-    },
-    {
-      "creditor": "DEU",
       "debtor": "SYR",
       "period": "2025-Q4",
       "amount": 1000000.0
@@ -18791,12 +18749,6 @@
       "debtor": "SSD",
       "period": "2019-Q2",
       "amount": 1000.0
-    },
-    {
-      "creditor": "DNK",
-      "debtor": "SLB",
-      "period": "1998-Q2",
-      "amount": 0.0
     },
     {
       "creditor": "DNK",
@@ -25091,12 +25043,6 @@
       "debtor": "SOM",
       "period": "2024-Q4",
       "amount": 19000.0
-    },
-    {
-      "creditor": "SWE",
-      "debtor": "TON",
-      "period": "1986-Q2",
-      "amount": 0.0
     },
     {
       "creditor": "SWE",
