@@ -75,8 +75,9 @@ Earth 1:110m, public domain) used to draw real country outlines on the globe.
 
 ## Scheduled partial refresh
 
-The full pipeline can't run unattended: step 2 needs a ~120MB bulk CSV
-downloaded by hand, so the bilateral edges are frozen between manual runs.
+The full pipeline doesn't run unattended yet: step 2 needs the ~120MB BIS bulk
+CSV. It is a plain public download, but no workflow fetches it, so the
+bilateral edges are frozen between manual runs.
 The World Bank half can refresh on its own, and does — monthly, via
 `.github/workflows/refresh-data.yml`, which opens a PR when any value moved:
 

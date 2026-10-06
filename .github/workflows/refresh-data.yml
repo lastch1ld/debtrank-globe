@@ -1,8 +1,9 @@
 name: Refresh World Bank data
 
-# The full pipeline can't run here: fetch_bis.py needs a ~120MB bulk CSV
-# that has to be downloaded by hand, so the bilateral edges stay frozen
-# between manual runs. This refreshes the half that *is* fetchable -- the
+# The full pipeline doesn't run here: fetch_bis.py needs a ~120MB bulk CSV.
+# That file is a plain public download (HEAD returns 200 with an etag), but
+# no workflow fetches and rebuilds from it yet, so the bilateral edges stay
+# frozen between manual runs. This refreshes the half that *is* automated -- the
 # World Bank indicator values on the existing nodes -- and never touches the
 # graph's shape. See data-pipeline/refresh_worldbank.py for why that split
 # is the whole answer to "what should a partial refresh do".
