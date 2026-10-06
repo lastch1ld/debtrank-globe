@@ -156,6 +156,10 @@ export interface ExposureExplanation {
   /** fromId's claim on toId -- the direct DebtRank contagion channel (i's
    * own loss when it holds an asset issued by a defaulting counterparty). */
   claimOnShocked: number;
+  /** claimOnShocked as a share of fromId's equity, capped at 1 -- the
+   * weight DebtRank actually gives this channel, so the same dollar claim
+   * can mean very different things for a large and a small buffer. */
+  impactRatio: number;
   /** toId's claim on fromId -- shown for context, not itself a channel by
    * which fromId is distressed under this model's mechanics. */
   owedToShocked: number;
@@ -185,12 +189,13 @@ function chainScore(network: ExposureNetwork, i: number, j: number, path: number
 export function explainExposure(network: ExposureNetwork, fromId: string, toId: string): ExposureExplanation {
   const i = network.nodeIds.indexOf(fromId);
   const j = network.nodeIds.indexOf(toId);
-  if (i < 0 || j < 0) return { claimOnShocked: 0, owedToShocked: 0, viaPath: null };
+  if (i < 0 || j < 0) return { claimOnShocked: 0, impactRatio: 0, owedToShocked: 0, viaPath: null };
 
   const claimOnShocked = network.exposure[i][j];
   const owedToShocked = network.exposure[j][i];
   if (claimOnShocked > 0 || owedToShocked > 0) {
-    return { claimOnShocked, owedToShocked, viaPath: null };
+    const impactRatio = claimOnShocked > 0 ? Math.min(1, claimOnShocked / network.equity[i]) : 0;
+    return { claimOnShocked, impactRatio, owedToShocked, viaPath: null };
   }
 
   const n = network.nodeIds.length;
@@ -216,7 +221,12 @@ export function explainExposure(network: ExposureNetwork, fromId: string, toId: 
     }
   }
 
-  return { claimOnShocked: 0, owedToShocked: 0, viaPath: bestPath?.map((idx) => network.nodeIds[idx]) ?? null };
+  return {
+    claimOnShocked: 0,
+    impactRatio: 0,
+    owedToShocked: 0,
+    viaPath: bestPath?.map((idx) => network.nodeIds[idx]) ?? null,
+  };
 }
 
 /** Total in + out exposure for a country, used to size its marker. */
@@ -230,9 +240,27 @@ export function totalExposure(yearData: YearSnapshot, countryId: string): number
 
 const countryIds = new Set(countries.map((c) => c.id));
 
-/** The N largest bilateral exposures, for rendering as arcs on the globe. */
-export function topExposureEdges(yearData: YearSnapshot, limit: number): ExposureEdge[] {
-  return yearData.edges
+/** The N largest bilateral exposures, for rendering as arcs on the globe.
+ * With `includePortfolio`, the portfolio layer is summed into the same
+ * pair, exactly as buildExposureNetwork does, so what the globe draws is
+ * what the model runs on. */
+export function topExposureEdges(
+  yearData: YearSnapshot,
+  limit: number,
+  options?: { includePortfolio?: boolean },
+): ExposureEdge[] {
+  let edges = yearData.edges;
+  if (options?.includePortfolio && yearData.portfolio_edges?.length) {
+    const byPair = new Map<string, ExposureEdge>();
+    for (const e of [...yearData.edges, ...yearData.portfolio_edges]) {
+      const key = `${e.creditor}|${e.debtor}`;
+      const sum = byPair.get(key);
+      if (sum) sum.amount += e.amount;
+      else byPair.set(key, { creditor: e.creditor, debtor: e.debtor, amount: e.amount });
+    }
+    edges = [...byPair.values()];
+  }
+  return edges
     .filter((e) => countryIds.has(e.creditor) && countryIds.has(e.debtor))
     .slice()
     .sort((a, b) => b.amount - a.amount)
