@@ -51,6 +51,8 @@ jobs:
         working-directory: web
       - run: npx tsc -b
         working-directory: web
+      - run: npm run lint
+        working-directory: web
       - run: npx vitest run
         working-directory: web
       - run: npm run build
