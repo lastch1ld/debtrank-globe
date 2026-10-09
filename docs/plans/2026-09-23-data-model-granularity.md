@@ -68,11 +68,11 @@ No pipeline work. Everything below is already in each year's JSON or can be deri
 
 ## Phase 4: Relation detail
 
-- [ ] Clicking an arc or a drill-down row opens a pair view for A↔B:
+- [x] Clicking a drill-down row opens a pair view for A↔B (`PairPanel` in `App.tsx`; **arc click not done**: arcs are WebGL lines with no hit target yet, and the layer from Phase 1 isn't there to show):
   - Both directions (A's claim on B and B's claim on A) for each layer, including the Phase 1 layer.
   - The impact ratio in each direction.
   - A **2005–2025 sparkline** of the pair's exposure.
-- [ ] The sparkline needs every year's file (~16 MB in total), so don't fetch them all on click. **Recommended:** the pipeline emits a small per-pair history index (`data/network/pairs.json`, limited to pairs above a size threshold) as an additive artifact. The fallback is lazily loading only the years already in `yearCache`, but that leaves gaps.
+- [x] (Done as recommended: `data-pipeline/build_pairs.py` emits `pairs.json`, pairs with a combined peak of at least $5B, ~180 kB; smaller pairs show "no history indexed".) The sparkline needs every year's file (~16 MB in total), so don't fetch them all on click. **Recommended:** the pipeline emits a small per-pair history index (`data/network/pairs.json`, limited to pairs above a size threshold) as an additive artifact. The fallback is lazily loading only the years already in `yearCache`, but that leaves gaps.
 
 ## Phase 5: Sovereign-specific granularity
 

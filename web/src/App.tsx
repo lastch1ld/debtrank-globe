@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Globe } from "./components/Globe";
+import { PairSparkline } from "./components/PairSparkline";
 import { YearAnalysisChart } from "./components/YearAnalysisChart";
 import {
   type Model,
@@ -23,6 +24,15 @@ import {
 } from "./lib/network";
 import { buildCountryProfile, type Counterparty, type CountryProfile } from "./lib/countryProfile";
 import { formatUsd } from "./lib/format";
+import {
+  buildPairProfile,
+  loadPairIndex,
+  pairSeries,
+  type Direction,
+  type PairIndex,
+  type PairProfile,
+  type PairSeries,
+} from "./lib/pairProfile";
 import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
 import {
@@ -161,6 +171,76 @@ function CountryPanel({
   );
 }
 
+function PairPanel({
+  a,
+  b,
+  profile,
+  series,
+  historyState,
+  year,
+  onClose,
+}: {
+  a: string;
+  b: string;
+  profile: PairProfile;
+  series: PairSeries | null;
+  historyState: "loading" | "failed" | "ready";
+  year: number;
+  onClose: () => void;
+}) {
+  const direction = (d: Direction) => (
+    <div className="flex flex-col gap-0.5 text-xs">
+      <span className="flex items-baseline justify-between gap-3">
+        <span className="text-slate-300">
+          {nameOf(d.from)} on {nameOf(d.to)}
+        </span>
+        <span className="font-mono text-slate-200">{formatUsd(d.total)}</span>
+      </span>
+      <span className="font-mono text-[10px] text-slate-500">
+        bank {formatUsd(d.bank)} &middot; portfolio {formatUsd(d.portfolio)}
+      </span>
+      <span className="font-mono text-[10px] text-slate-400">
+        {d.total > 0 ? `${(d.impactRatio * 100).toFixed(1)}% of ${nameOf(d.from)}\u2019s loss buffer` : "no claim"}
+      </span>
+    </div>
+  );
+
+  return (
+    <section className={section} data-testid="pair-panel">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="m-0 truncate text-sm font-semibold text-slate-100">
+          {nameOf(a)} &harr; {nameOf(b)}
+        </h2>
+        <button
+          className={`${secondaryButton} shrink-0 px-2.5 py-1 text-[11px]`}
+          onClick={onClose}
+          aria-label="Close pair view"
+        >
+          Close
+        </button>
+      </div>
+      <span className={sectionLabel}>Claims in {year}</span>
+      {direction(profile.ab)}
+      {direction(profile.ba)}
+      <p className={note}>
+        The impact ratio is what the current model run uses, so it follows the portfolio toggle; the
+        amounts always show both layers.
+      </p>
+      {series ? (
+        <PairSparkline series={series} year={year} nameA={nameOf(a)} nameB={nameOf(b)} />
+      ) : (
+        <p className={`${note} italic`}>
+          {historyState === "loading"
+            ? "Loading history\u2026"
+            : historyState === "failed"
+              ? "Couldn\u2019t load the pair history. Close and reopen to retry."
+              : "No history indexed: this pair never reached $5B combined."}
+        </p>
+      )}
+    </section>
+  );
+}
+
 function App() {
   const [year, setYear] = useState(initialScenario?.year ?? DEFAULT_YEAR);
   const [displayYear, setDisplayYear] = useState(initialScenario?.year ?? DEFAULT_YEAR);
@@ -195,21 +275,54 @@ function App() {
   const [includePortfolio, setIncludePortfolio] = useState(initialScenario?.includePortfolio ?? false);
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
+  const [pair, setPair] = useState<{ a: string; b: string } | null>(null);
+  const [pairIndex, setPairIndex] = useState<PairIndex | null>(null);
+  const [pairIndexFailed, setPairIndexFailed] = useState(false);
+  // The two panels share one slot at the end of the controls, so opening
+  // one closes the other.
+  const openDetails = (id: string) => {
+    setPair(null);
+    setDetailId(id);
+  };
+  const openPair = (a: string, b: string) => {
+    setDetailId(null);
+    setPairIndexFailed(false);
+    setPair({ a, b });
+  };
 
   const profile = useMemo(
     () => (yearData && detailId ? buildCountryProfile(yearData, detailId) : null),
     [yearData, detailId],
   );
+  const pairHistory = useMemo(
+    () => (pairIndex && pair ? pairSeries(pairIndex, pair.a, pair.b) : null),
+    [pairIndex, pair],
+  );
+  useEffect(() => {
+    if (!pair || pairIndex) return;
+    let cancelled = false;
+    loadPairIndex()
+      .then((index) => !cancelled && setPairIndex(index))
+      .catch(() => !cancelled && setPairIndexFailed(true));
+    return () => {
+      cancelled = true;
+    };
+  }, [pair, pairIndex]);
   const detailRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (detailId) detailRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  }, [detailId]);
+    if (detailId || pair) detailRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  }, [detailId, pair]);
 
   const portfolioDataAvailable = (yearData?.portfolio_edges?.length ?? 0) > 0;
 
   const network = useMemo<ExposureNetwork | null>(
     () => (yearData ? buildExposureNetwork(yearData, { includePortfolio }) : null),
     [yearData, includePortfolio],
+  );
+
+  const pairProfile = useMemo(
+    () => (yearData && network && pair ? buildPairProfile(yearData, network, pair.a, pair.b) : null),
+    [yearData, network, pair],
   );
 
   const estimatedEquity = useMemo(
@@ -787,7 +900,7 @@ function App() {
                   <span className={sectionLabel}>Market check ({year})</span>
                   <button
                     className={`${secondaryButton} px-2.5 py-1 text-[11px]`}
-                    onClick={() => setDetailId(shockedId)}
+                    onClick={() => openDetails(shockedId)}
                   >
                     Country details
                   </button>
@@ -875,14 +988,27 @@ function App() {
             </p>
           </section>
         )}
-        {detailId && profile && (
+        {((detailId && profile) || (pair && pairProfile)) && (
           <div ref={detailRef}>
-            <CountryPanel
-              id={detailId}
-              profile={profile}
-              sourceLabel={EQUITY_SOURCE_LABEL[profile.equitySource]}
-              onClose={() => setDetailId(null)}
-            />
+            {detailId && profile && (
+              <CountryPanel
+                id={detailId}
+                profile={profile}
+                sourceLabel={EQUITY_SOURCE_LABEL[profile.equitySource]}
+                onClose={() => setDetailId(null)}
+              />
+            )}
+            {pair && pairProfile && (
+              <PairPanel
+                a={pair.a}
+                b={pair.b}
+                profile={pairProfile}
+                series={pairHistory}
+                historyState={pairIndex ? "ready" : pairIndexFailed ? "failed" : "loading"}
+                year={year}
+                onClose={() => setPair(null)}
+              />
+            )}
           </div>
         )}
         </div>
@@ -1015,15 +1141,26 @@ function App() {
                               No direct or strongly-inferred indirect link in this year's data.
                             </span>
                           )}
-                          <button
-                            className={`${focus} mt-1 self-start font-sans text-[11px] text-sky-400 underline decoration-slate-600 underline-offset-2 hover:text-sky-300`}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setDetailId(r.id);
-                            }}
-                          >
-                            Country details
-                          </button>
+                          <span className="mt-1 flex gap-3 font-sans text-[11px]">
+                            <button
+                              className={`${focus} text-sky-400 underline decoration-slate-600 underline-offset-2 hover:text-sky-300`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openDetails(r.id);
+                              }}
+                            >
+                              Country details
+                            </button>
+                            <button
+                              className={`${focus} text-sky-400 underline decoration-slate-600 underline-offset-2 hover:text-sky-300`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openPair(r.id, shockedId);
+                              }}
+                            >
+                              Pair view
+                            </button>
+                          </span>
                         </div>
                       );
                     })()}
