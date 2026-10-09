@@ -39,6 +39,11 @@ gross cross-border footprint → a floor). Two callers who build their networks
 differently are not running the same model, so the construction ships with
 the algorithm rather than being left as an exercise.
 
+Read the output as a **stress index**, not a default probability: the exposure
+is a claim held by a country's private banks, while for most countries the
+buffer it is divided by is the central bank's FX reserves. Use it to compare
+scenarios and countries, not as a loss forecast.
+
 ## Use it from the command line
 
 ```bash

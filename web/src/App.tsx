@@ -759,9 +759,14 @@ function App() {
             <h2 className={sectionLabel}>Distress scale</h2>
             <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-amber-400 to-red-500" />
             <div className="-mt-1 flex justify-between text-[11px] text-slate-400">
-              <span>stable</span>
-              <span>default</span>
+              <span>no stress</span>
+              <span>full stress</span>
             </div>
+            <p className={note}>
+              A stress index from 0 to 1, not a default probability: a country&rsquo;s losses
+              on its banks&rsquo; cross-border claims, measured against a loss buffer that is
+              usually central-bank FX reserves.
+            </p>
             <p className={note}>
               A faint wireframe ring marks countries whose loss-buffer equity is
               estimated (GDP/capital-ratio/floor), not reported FX reserves.
