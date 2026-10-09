@@ -78,6 +78,26 @@ test("country details open from the ranking drill-down and from the result card"
   await expect(panel).toContainText("Greece");
 });
 
+test("pair view shows both directions and a history, and closes", async ({ page }) => {
+  await page.goto(`./${SCENARIO}`);
+  await openControls(page);
+  const history = page.waitForResponse((r) => r.url().includes("/data/network/pairs.json"));
+
+  await page.getByTestId("ranked-results").getByText("Portugal", { exact: true }).click();
+  await page.getByTestId("ranked-results").getByRole("button", { name: "Pair view" }).click();
+
+  const panel = page.getByTestId("pair-panel");
+  await expect(panel).toContainText("Portugal ↔ Greece");
+  await expect(panel).toContainText("Portugal on Greece");
+  await expect(panel).toContainText("Greece on Portugal");
+  await expect(panel).toContainText("loss buffer");
+  expect((await history).status()).toBe(200);
+  await expect(panel.getByTestId("pair-sparkline")).toBeVisible();
+
+  await panel.getByRole("button", { name: "Close pair view" }).click();
+  await expect(panel).toHaveCount(0);
+});
+
 test.describe("layout contracts", () => {
   test("ranking scrolls on its own, below a fixed header and fixed controls", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -124,6 +144,19 @@ test.describe("layout contracts", () => {
 
     const panel = page.getByTestId("country-panel");
     await expect(panel).toContainText("Greece");
+    expect((await panel.boundingBox())!.width).toBeLessThanOrEqual(375);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+
+  test("mobile: the pair view fits without sideways scroll", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(`./${SCENARIO}`);
+    await openControls(page);
+    await page.getByTestId("ranked-results").getByText("Portugal", { exact: true }).click();
+    await page.getByTestId("ranked-results").getByRole("button", { name: "Pair view" }).click();
+
+    const panel = page.getByTestId("pair-panel");
+    await expect(panel.getByTestId("pair-sparkline")).toBeVisible();
     expect((await panel.boundingBox())!.width).toBeLessThanOrEqual(375);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });

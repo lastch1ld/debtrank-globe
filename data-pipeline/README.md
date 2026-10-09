@@ -73,6 +73,14 @@ Output: `out/network_snapshot.json` — `{"nodes": [...], "edges": [...]}`,
 `out/world_borders.json` holds simplified coastline/border rings (Natural
 Earth 1:110m, public domain) used to draw real country outlines on the globe.
 
+## Pair history index
+
+`python build_pairs.py` derives `web/public/data/network/pairs.json` (~180 kB)
+from the published year files, for the app's pair view. It needs no BIS or
+CPIS download. Re-run it after any regeneration or World Bank refresh;
+`python build_pairs.py --check` (and `tests/test_published_data.py`) fail if
+it is stale. Format: [`docs/data-api.md`](../docs/data-api.md).
+
 ## Scheduled partial refresh
 
 The full pipeline doesn't run unattended yet: step 2 needs the ~120MB BIS bulk

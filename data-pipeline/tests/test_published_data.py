@@ -49,3 +49,11 @@ def test_node_ids_are_the_same_in_every_year():
     assert all(ids == reference for ids in ids_by_year.values()), {
         year: len(ids) for year, ids in ids_by_year.items()
     }
+
+
+def test_pairs_index_is_current():
+    # pairs.json is derived from the year files; regenerating one without the
+    # other leaves the pair view's sparkline showing stale history.
+    from build_pairs import build_pairs, serialise
+
+    assert (DATA_DIR / "pairs.json").read_text(encoding="utf-8") == serialise(build_pairs())

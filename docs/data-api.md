@@ -74,6 +74,24 @@ the 2020 file.
 so 2024 and 2025 carry an empty `portfolio_edges` array rather than stale
 numbers. The key is always present; check its length, don't assume data.
 
+### `pairs.json`
+
+A small history index next to the year files, for drawing how a pair's
+exposure moved without fetching all 21 years:
+`https://lastch1ld.github.io/debtrank-globe/data/network/pairs.json`.
+
+```json
+{"first_year": 2005, "unit": "usd_millions", "min_peak_usd": 5e9,
+ "pairs": {"DEU|GRC": {"ab": [0, 12, ...], "ba": [3, 4, ...]}}}
+```
+
+The key is the two ISO3 ids sorted; `ab` is the sorted-first country's claim
+on the other and `ba` the reverse, one value per year from `first_year`, in
+USD millions. Banking and portfolio layers are summed. Only pairs whose
+combined exposure ever reached `min_peak_usd` are present, so a missing pair
+means "small", not "zero". It is derived from the year files by
+`data-pipeline/build_pairs.py`; a test fails if the two drift apart.
+
 ## Reading it
 
 ```python
