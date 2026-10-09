@@ -73,6 +73,30 @@ Output: `out/network_snapshot.json` — `{"nodes": [...], "edges": [...]}`,
 `out/world_borders.json` holds simplified coastline/border rings (Natural
 Earth 1:110m, public domain) used to draw real country outlines on the globe.
 
+## Source registry and weekly probe
+
+`sources.json` lists every upstream source with its licence, attribution, fetch
+script and what it may change; a source without a licence or attribution fails
+`tests/test_probe_sources.py`. `.github/workflows/probe-sources.yml` runs
+`probe_sources.py` every Monday: one HEAD request (or one small GET) per
+source, compared with `sources.lock.json`. It opens an issue when a source has
+a newer version (`data-changed`), has stopped updating (`data-stale`, judged
+from the source's own as-of date), or can't be reached (`data-refresh-failed`),
+and never a second one for something already open. It changes nothing in the
+repo, and there is no automatic rebuild yet: a refresh is still the manual
+steps above, followed by `python probe_sources.py --update-lock` in the same
+commit.
+
+```bash
+python probe_sources.py                   # what would the weekly run say?
+python probe_sources.py --update-lock     # record upstream's current versions
+python probe_sources.py --check-registry  # validate sources.json, no network
+```
+
+The lock has an entry for the CPIS mirror only. There is none for BIS on
+purpose: the version the committed data came from is unknown, so the probe
+reports it as changed until a refresh records one.
+
 ## Pair history index
 
 `python build_pairs.py` derives `web/public/data/network/pairs.json` (~180 kB)

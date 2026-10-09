@@ -1,0 +1,66 @@
+{
+  "_comment": "Every upstream source the app's data comes from. `probe` is what the weekly probe does with it: 'change+stale' (report a new upstream version and a stale one), 'stale' (only report age; something else already refreshes it) or 'none' (not probed; recorded here for its licence and its fetch script). A new source is not accepted without a licence and an attribution (tests/test_probe_sources.py).",
+  "sources": [
+    {
+      "id": "bis_lbs",
+      "name": "BIS locational banking statistics",
+      "url": "https://data.bis.org/static/bulk/WS_LBS_D_PUB_csv_col.zip",
+      "fetch": "fetch_bis.py",
+      "may_change": ["edges"],
+      "probe": "change+stale",
+      "detect": { "type": "header" },
+      "cadence": "quarterly",
+      "stale_after_days": 150,
+      "licence": "BIS terms of permitted use; only a small derived network is redistributed",
+      "attribution": "Bank for International Settlements, Locational Banking Statistics"
+    },
+    {
+      "id": "imf_cpis",
+      "name": "IMF CPIS (via the DBnomics mirror)",
+      "url": "https://api.db.nomics.world/v22/datasets/IMF/CPIS",
+      "fetch": "fetch_cpis.py",
+      "may_change": ["portfolio_edges"],
+      "probe": "change+stale",
+      "detect": { "type": "json", "path": "datasets.docs.0.updated_at" },
+      "cadence": "semi-annual, with a long lag",
+      "stale_after_days": 270,
+      "licence": "IMF data terms, retrieved through DBnomics' JSON mirror of the IMF SDMX API",
+      "attribution": "International Monetary Fund, Coordinated Portfolio Investment Survey"
+    },
+    {
+      "id": "world_bank",
+      "name": "World Bank Indicators (International Debt Statistics)",
+      "url": "https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.CD?format=json&per_page=1&date=2023",
+      "fetch": "refresh_worldbank.py",
+      "may_change": ["node_indicators"],
+      "probe": "stale",
+      "detect": { "type": "json", "path": "0.lastupdated" },
+      "cadence": "continuous; annual indicators",
+      "stale_after_days": 90,
+      "licence": "CC BY 4.0",
+      "attribution": "World Bank, International Debt Statistics"
+    },
+    {
+      "id": "fred",
+      "name": "FRED market data",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10",
+      "fetch": "fetch_market_data.py",
+      "may_change": ["market_data"],
+      "probe": "none",
+      "cadence": "daily upstream; the app uses year-end values and rebuilds by hand",
+      "licence": "Varies per FRED series; check https://fred.stlouisfed.org/legal/ before redistributing. Not recorded in docs/data-api.md yet.",
+      "attribution": "Federal Reserve Bank of St. Louis, FRED"
+    },
+    {
+      "id": "natural_earth_borders",
+      "name": "Natural Earth 1:110m country outlines",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson",
+      "fetch": "fetch_borders.py",
+      "may_change": ["world_borders"],
+      "probe": "none",
+      "cadence": "rarely; refreshed by hand",
+      "licence": "Public domain",
+      "attribution": "Natural Earth"
+    }
+  ]
+}

@@ -43,21 +43,29 @@ Why not just rebuild everything on a timer? Most runs would be no-ops that downl
 
 ## Phase 0: Sanity check (do this first)
 
-- [ ] **Re-run the source checks,** and record the date and results here:
+- [x] **Re-run the source checks,** and record the date and results here: *Results below.*
   - HEAD the BIS bulk zip: is it still `200`, and does it still send `etag` / `last-modified`?
   - Check DBnomics `IMF/CPIS` `indexed_at`.
   - Check whether data.imf.org has CPIS rounds newer than the mirror.
-- [ ] **Measure before designing around guesses.** Time one full BIS download plus `fetch_bis.py --by-year` on a GitHub runner (`workflow_dispatch`), and check that it fits the runner's disk and memory.
-- [ ] **Check whether the probe/rebuild split is worth it.** If the full rebuild turns out to be cheap, a simple monthly full rebuild may beat a registry, a lock file and two workflows. Pick the simpler option if it's good enough.
-- [ ] **Line up with the companion plans:** `docs/plans/2026-09-23-data-model-granularity.md` (its new sources) and `docs/plans/2026-09-23-test-strategy.md` (the diff report and tripwires share fixtures with its data-contract tests).
-- [ ] Write the result here (what changed, what was dropped) before starting Phase 1.
+- [ ] **Measure before designing around guesses.** Time one full BIS download plus `fetch_bis.py --by-year` on a GitHub runner (`workflow_dispatch`), and check that it fits the runner's disk and memory. *Not done: it needs the ~117 MB BIS download, which hasn't been approved. Until it is measured, the split below stays.*
+- [x] **Check whether the probe/rebuild split is worth it.** If the full rebuild turns out to be cheap, a simple monthly full rebuild may beat a registry, a lock file and two workflows. Pick the simpler option if it's good enough. *Result: keep the split. The probe costs a HEAD request per source; the rebuild's cost is still unmeasured.*
+- [x] **Line up with the companion plans:** `docs/plans/2026-09-23-data-model-granularity.md` (its new sources) and `docs/plans/2026-09-23-test-strategy.md` (the diff report and tripwires share fixtures with its data-contract tests).
+- [x] Write the result here (what changed, what was dropped) before starting Phase 1.
+
+  **Result (2026-10-09):**
+
+  - **BIS bulk file:** still `200` with `etag` and `last-modified`, ~117 MB. `last-modified` is now **2026-10-07**, so a newer release than the plan's 2026-09-22 observation exists, and the committed data predates it.
+  - **DBnomics `IMF/CPIS`:** `updated_at: 2025-04-08`, `indexed_at: 2025-04-09`. About 549 days old against a 270-day threshold, so the probe flags it as stale. Finding 2 is confirmed for the mirror; whether newer rounds exist at data.imf.org is **still unchecked**.
+  - **World Bank:** the API reports `lastupdated: 2026-10-08` in its response header.
+  - **FRED and Natural Earth:** FRED's `Last-Modified` moves daily, so it can't signal "the data changed"; it is recorded for its licence and not probed. Natural Earth sends only an `etag` and changes rarely; also not probed.
+  - **Scope of the first PR:** Phase 1 and the alerts from Phase 4. Phases 2 and 3 (rebuild in CI, the diff report, `workflow_call`) are not built.
 
 ## Phase 1: Registry and probe
 
-- [ ] Add `sources.json` for the sources in use today (World Bank, BIS LBS, CPIS, FRED, borders), with licences taken from `docs/data-api.md`.
-- [ ] Add `data-pipeline/probe_sources.py`: reads the registry, fetches headers or a light response, compares with `sources.lock.json`, and prints the ids of changed sources. Handle servers without an `etag` by falling back to `last-modified`, then to a hash of a small response.
-- [ ] Tests: registry schema (a missing `licence` fails), and probe logic against recorded responses. No live network in unit tests.
-- [ ] `.github/workflows/probe-sources.yml`: weekly cron plus `workflow_dispatch`. It only reads, and it starts the rebuild when something changed.
+- [x] Add `sources.json` for the sources in use today (World Bank, BIS LBS, CPIS, FRED, borders), with licences taken from `docs/data-api.md`. *(`data-pipeline/sources.json`, plus `sources.lock.json`. The licences come from `docs/data-api.md`; FRED has none recorded there, so its entry says "varies per series, check before redistributing" and still needs a decision.)*
+- [x] Add `data-pipeline/probe_sources.py`: reads the registry, fetches headers or a light response, compares with `sources.lock.json`, and prints the ids of changed sources. Handle servers without an `etag` by falling back to `last-modified`, then to a hash of a small response. *(Also `probe_issues.py`, which turns its report into issues. Detection is an ETag, else Last-Modified, else a hash of the first MB, or a JSON field; the as-of date comes from Last-Modified or that field.)*
+- [x] Tests: registry schema (a missing `licence` fails), and probe logic against recorded responses. No live network in unit tests. *(`tests/test_probe_sources.py`, 33 tests, no network; one of them caught a crash on a registry entry with `detect: null`.)*
+- [x] `.github/workflows/probe-sources.yml`: weekly cron plus `workflow_dispatch`. It only reads, and it starts the rebuild when something changed. *It does not start a rebuild, because there is no rebuild workflow yet; it opens issues instead.*
 
 ## Phase 2: Full rebuild in CI
 
@@ -88,8 +96,8 @@ The PR body is the reviewer's only view of an unattended change, so it has to an
 
 ## Phase 4: Staleness and failure alerts
 
-- [ ] Staleness check in the probe: if a source hasn't changed for longer than its `cadence` plus a grace period, open or update **one** issue per source (labelled `data-stale`, de-duplicated). This is exactly how the DBnomics CPIS problem would have surfaced.
-- [ ] Failure alert: a failed probe or rebuild opens or updates a single `data-refresh-failed` issue instead of failing silently. This matters most for jobs nobody watches.
+- [x] Staleness check in the probe: if a source hasn't changed for longer than its `cadence` plus a grace period, open or update **one** issue per source (labelled `data-stale`, de-duplicated). This is exactly how the DBnomics CPIS problem would have surfaced. *(Measured from the source's own as-of date, not from when we last saw a change, so it works on the first run.)*
+- [x] Failure alert: a failed probe or rebuild opens or updates a single `data-refresh-failed` issue instead of failing silently. This matters most for jobs nobody watches. *(Probe only. The rebuild doesn't exist yet.)*
 - [ ] Show the data's age: write each source's "as of" date into an additive `meta.json` next to the year files, and show it in the app footer and in `docs/data-api.md`.
 
 ## Phase 5: New sources from the granularity plan
