@@ -20,6 +20,7 @@ import {
 } from "three";
 import { countries, latLngToVector3, loadBorders, topExposureEdges, type YearSnapshot } from "../lib/network";
 import { ATMOSPHERE_LAYERS } from "./atmosphere";
+import { token } from "../ui/token";
 import { RADIUS, fitScale, sidebarShift } from "./fitScale";
 
 const ARC_COUNT = 140;
@@ -29,7 +30,7 @@ const ARC_COUNT = 140;
 // halo at the limb instead of a flat, spray-painted edge.
 const AtmosphereMaterial = shaderMaterial(
   {
-    glowColor: new Color("#38bdf8"),
+    glowColor: new Color(), // always overridden by the glowColor prop below
     intensity: 0.68,
     opacity: 0.38,
     fresnelBias: 0.72,
@@ -68,17 +69,32 @@ declare module "@react-three/fiber" {
   }
 }
 
-const NEUTRAL_COLOR = new Color("#94a3b8");
-const DISTRESS_MID = new Color("#f59e0b");
-const DISTRESS_HIGH = new Color("#dc2626");
-const SHOCK_COLOR = new Color("#fde047");
-const ARC_LOW = new Color("#164e63");
-const ARC_HIGH = new Color("#facc15");
-const ESTIMATED_EQUITY_RING = new Color("#64748b");
+// Colours come from ui/tokens.css. They are read on first use, after the
+// stylesheet is applied, not when this module is evaluated.
+let palette: ReturnType<typeof readPalette> | null = null;
+function readPalette() {
+  return {
+    space: token("--viz-space"),
+    globeSurface: token("--viz-globe-surface"),
+    coastline: token("--viz-coastline"),
+    lightCool: token("--viz-light-cool"),
+    lightWarm: token("--viz-light-warm"),
+    accent: new Color(token("--viz-accent")),
+    neutral: new Color(token("--viz-neutral")),
+    distressMid: new Color(token("--viz-distress-mid")),
+    distressHigh: new Color(token("--viz-distress-high")),
+    shock: new Color(token("--viz-shock")),
+    arcLow: new Color(token("--viz-arc-low")),
+    arcHigh: new Color(token("--viz-arc-high")),
+    estimatedRing: new Color(token("--viz-estimated-ring")),
+  };
+}
+const viz = () => (palette ??= readPalette());
 
 function distressColor(level: number): Color {
-  if (level <= 0.5) return NEUTRAL_COLOR.clone().lerp(DISTRESS_MID, level / 0.5);
-  return DISTRESS_MID.clone().lerp(DISTRESS_HIGH, (level - 0.5) / 0.5);
+  const { neutral, distressMid, distressHigh } = viz();
+  if (level <= 0.5) return neutral.clone().lerp(distressMid, level / 0.5);
+  return distressMid.clone().lerp(distressHigh, (level - 0.5) / 0.5);
 }
 
 interface GlobeProps {
@@ -134,12 +150,12 @@ function ShockedMarker({
     <group ref={ref} position={position}>
       <mesh>
         <sphereGeometry args={[1, 16, 16]} />
-        <meshBasicMaterial color={SHOCK_COLOR} toneMapped={false} />
+        <meshBasicMaterial color={viz().shock} toneMapped={false} />
       </mesh>
       <mesh scale={2.6}>
         <sphereGeometry args={[1, 12, 12]} />
         <meshBasicMaterial
-          color={SHOCK_COLOR}
+          color={viz().shock}
           transparent
           opacity={0.25}
           blending={AdditiveBlending}
@@ -236,17 +252,17 @@ export function Globe({
           (mid[2] / midLen) * lift,
         ];
         const t = e.amount / maxAmount;
-        return { start, end, control, color: ARC_LOW.clone().lerp(ARC_HIGH, t), opacity: 0.15 + 0.45 * t };
+        return { start, end, control, color: viz().arcLow.clone().lerp(viz().arcHigh, t), opacity: 0.15 + 0.45 * t };
       })
       .filter((a): a is NonNullable<typeof a> => a !== null);
   }, [yearData, includePortfolio]);
 
   return (
     <>
-      <color attach="background" args={["#040611"]} />
+      <color attach="background" args={[viz().space]} />
       <ambientLight intensity={0.55} />
-      <pointLight position={[6, 4, 6]} intensity={1.4} color="#e0f2fe" />
-      <pointLight position={[-6, -3, -4]} intensity={0.5} color="#f59e0b" />
+      <pointLight position={[6, 4, 6]} intensity={1.4} color={viz().lightCool} />
+      <pointLight position={[-6, -3, -4]} intensity={0.5} color={viz().lightWarm} />
 
       <Stars radius={90} depth={50} count={3500} factor={2.4} fade speed={0.4} />
 
@@ -263,19 +279,19 @@ export function Globe({
       <group scale={scale}>
       {/* Core planet -- deep ocean base, coastlines drawn on top */}
       <Sphere args={[RADIUS - 0.02, 64, 64]}>
-        <meshStandardMaterial color="#050b1a" roughness={0.85} metalness={0.1} />
+        <meshStandardMaterial color={viz().globeSurface} roughness={0.85} metalness={0.1} />
       </Sphere>
 
       {/* Real country/coastline borders (Natural Earth 110m), lit up against the ocean */}
       <lineSegments geometry={borderGeometry}>
-        <lineBasicMaterial color="#a8c4e8" transparent opacity={0.65} />
+        <lineBasicMaterial color={viz().coastline} transparent opacity={0.65} />
       </lineSegments>
 
       {/* Layered Fresnel atmosphere: a defined inner rim and broad, faint outer haze. */}
       {ATMOSPHERE_LAYERS.map((layer, index) => (
         <Sphere key={index} args={[RADIUS * layer.scale, 64, 64]}>
           <atmosphereMaterial
-            glowColor={new Color("#38bdf8")}
+            glowColor={viz().accent}
             intensity={layer.intensity}
             opacity={layer.opacity}
             fresnelBias={layer.bias}
@@ -312,7 +328,7 @@ export function Globe({
           if (c.id === shockedId) return null; // rendered separately, pulsing
           const level = distress[i] ?? 0;
           const scale = markerScale(c.id);
-          const color = level > 1e-4 ? distressColor(level) : NEUTRAL_COLOR;
+          const color = level > 1e-4 ? distressColor(level) : viz().neutral;
           return (
             <Instance
               key={c.id}
@@ -331,7 +347,7 @@ export function Globe({
       {estimatedEquity && (
         <Instances limit={countries.length}>
           <sphereGeometry args={[1, 10, 10]} />
-          <meshBasicMaterial color={ESTIMATED_EQUITY_RING} wireframe transparent opacity={0.45} toneMapped={false} />
+          <meshBasicMaterial color={viz().estimatedRing} wireframe transparent opacity={0.45} toneMapped={false} />
           {countries.map((c, i) => {
             if (!estimatedEquity[i] || c.id === shockedId) return null;
             return (

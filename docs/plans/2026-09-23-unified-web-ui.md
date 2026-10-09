@@ -47,19 +47,26 @@ Extraction path, when a second consumer shows up (Phase 5): move `web/src/ui/` t
 
 ## Phase 0: Sanity check (do this first)
 
-- [ ] **Wait for PR #23** (`responsive-sweep`), which just reworked the panel's type scale and layout. Base this work on what #23 merges, and redo the inventory above against it. Building on the pre-#23 styles would lock in what #23 just fixed.
-- [ ] **Confirm reuse is real.** List which lastch1ld projects would actually use this kit and check their stack (React? Tailwind v4? three.js?). If none is React + Tailwind, keep principle 4 strict: tokens only are portable, components stay in-repo. Record the list here.
-- [ ] **Check the component list against real need.** Every component in the tree above must be backed by at least one current screen, or a screen in granularity-plan Phases 3, 4, 9 or 10. Remove any that aren't.
-- [ ] **Check colour contrast** of the existing palette (the `slate-400` text on the panel backgrounds, and the amber/red distress gradient) against WCAG AA before turning it into tokens. Tokens make whatever they hold permanent.
-- [ ] **Line up with the companion plans:** the Phase 9 tab shell (PR #24) is built after Phase 3 of this plan, and the component tests in PR #26 Phase 2 target this kit's components rather than `App.tsx`.
-- [ ] Write the result here (what changed, what was dropped) before starting Phase 1.
+- [x] **Wait for PR #23** (merged) (`responsive-sweep`), which just reworked the panel's type scale and layout. Base this work on what #23 merges, and redo the inventory above against it. Building on the pre-#23 styles would lock in what #23 just fixed.
+- [x] **Confirm reuse is real.** List which lastch1ld projects would actually use this kit and check their stack (React? Tailwind v4? three.js?). If none is React + Tailwind, keep principle 4 strict: tokens only are portable, components stay in-repo. Record the list here.
+- [x] **Check the component list against real need.** Every component in the tree above must be backed by at least one current screen, or a screen in granularity-plan Phases 3, 4, 9 or 10. Remove any that aren't.
+- [x] **Check colour contrast** of the existing palette (the `slate-400` text on the panel backgrounds, and the amber/red distress gradient) against WCAG AA before turning it into tokens. Tokens make whatever they hold permanent.
+- [x] **Line up with the companion plans:** the Phase 9 tab shell (PR #24) is built after Phase 3 of this plan, and the component tests in PR #26 Phase 2 target this kit's components rather than `App.tsx`.
+- [x] Write the result here (what changed, what was dropped) before starting Phase 1.
+
+  **Result (2026-10-09):**
+
+  - **Reuse:** the only other lastch1ld projects on record are React Native (Tripatross, vigilantVisciacca), so there is no second React + Tailwind consumer. Principle 4 stays strict: tokens are the portable part, components stay in-repo, Phase 5 stays unchecked.
+  - **Components, cut to need:** build `Button`, `IconButton`, `SegmentedToggle`, `Panel` (the country panel, pair view and result card are already three), `Tabs` and `Drawer`. Drop `Tooltip` (nothing needs more than `title`), `Switch`, `Slider`, `Select` (native elements, styled in place), `Badge` and `Stat` until a third screen needs the same thing.
+  - **Contrast against the panel (#0a1727 to #02070f):** `slate-100/200/300/400` text is 7.0 to 18.4:1, all AA. `slate-500` text is 3.8 to 4.3:1, which fails AA for small text. Six places used it, five of them the new country and pair panels, so those now use `fg-subtle` (`slate-400`). `amber-400` is 10.8:1 and `red-500` 4.8:1 (the gradient is not text).
+  - **Two colour systems that already differ:** the HTML uses Tailwind v4's oklch palette; the globe and chart use hex values from older Tailwind shades (e.g. `#38bdf8` vs v4's `sky-400`). Tokens keep both exactly as they are. Unifying them is a visible change and is a separate decision.
 
 ## Phase 1: Tokens (one source of truth)
 
-- [ ] `web/src/ui/tokens.css`: CSS custom properties for the colours in use (surfaces, borders, text levels, accent, warning, and the distress scale), radii, spacing steps actually used, the type scale from PR #23, focus ring and motion durations. Map them into Tailwind with `@theme` so utilities like `bg-surface` and `text-muted` work.
-- [ ] Replace the Tailwind palette classes in `App.tsx` with token utilities. **Visual output must not change.** Compare screenshots before and after (Playwright, once PR #26 Phase 3 lands; until then, manual screenshots attached to the PR).
-- [ ] `web/src/ui/token.ts` plus unit tests. Change `Globe.tsx`, `atmosphere.ts` and `YearAnalysisChart.tsx` to read tokens instead of hex constants. Afterwards, grep for 6-digit hex values in `web/src/` outside `tokens.css`: the result should be zero, or each remaining one has a comment saying why.
-- [ ] The distress gradient becomes a token pair, used by both the ranking bars and the globe markers.
+- [x] (Colours and the distress pair only: radii, spacing and the type scale are already Tailwind's scale, so tokens for them would add indirection and nothing else.) `web/src/ui/tokens.css`: CSS custom properties for the colours in use (surfaces, borders, text levels, accent, warning, and the distress scale), radii, spacing steps actually used, the type scale from PR #23, focus ring and motion durations. Map them into Tailwind with `@theme` so utilities like `bg-surface` and `text-muted` work.
+- [x] Replace the Tailwind palette classes in `App.tsx` with token utilities (`bg-surface`, `border-line`, `text-fg-*`, `text-accent`, `text-warn`, `bg-page`; palette shades used once or as non-text fills stay: `slate-700`/`slate-600`/`slate-100`/`slate-400` fills, `sky-100`, `slate-50`, `amber-300`). Checked by pixel diff of 7 screenshots (idle, scenario, pair, country, portfolio, chart, mobile) against `master`: all within the 200 to 1,200 px noise between two identical builds, except the intended `slate-500` to `slate-400` text in the new panels. **Visual output must not change.** Compare screenshots before and after (Playwright, once PR #26 Phase 3 lands; until then, manual screenshots attached to the PR).
+- [x] `web/src/ui/token.ts` plus unit tests (and `tests/designTokens.test.ts`, which fails on a hex colour outside `tokens.css` or a token that is used but not defined). Change `Globe.tsx`, `atmosphere.ts` and `YearAnalysisChart.tsx` to read tokens instead of hex constants. Afterwards, grep for 6-digit hex values in `web/src/` outside `tokens.css`: the result should be zero, or each remaining one has a comment saying why.
+- [ ] The distress gradient becomes a token pair, used by both the ranking bars and the globe markers. *Partly:* the ranking bars and legend use `--distress-low/high`; the globe markers keep their own `--viz-distress-mid/high` (`#f59e0b`, `#dc2626`), which differ from the bars' `#fbbf24`/`#ef4444`. Unifying them recolours the markers, so it waits for a decision.
 
 ## Phase 2: Primitives (from the styles that exist)
 
