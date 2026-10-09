@@ -1,6 +1,7 @@
 import json
 
 import numpy as np
+import pytest
 
 from debtrank_model import ExposureNetwork, run_debtrank
 from debtrank_model.tests.make_golden import GOLDEN, build_cases
@@ -9,7 +10,13 @@ from debtrank_model.tests.make_golden import GOLDEN, build_cases
 def test_golden_file_is_current():
     # Fails if the model changes without a reviewed regeneration of the file
     # the TS port is checked against.
-    assert json.loads(GOLDEN.read_text()) == json.loads(json.dumps(build_cases()))
+    # Inputs must match exactly; results only to float precision, since numpy
+    # builds differ in the last digit across platforms.
+    for have, want in zip(json.loads(GOLDEN.read_text()), build_cases(), strict=True):
+        for key in ("nodeIds", "exposure", "equity", "shocks"):
+            assert have[key] == json.loads(json.dumps(want[key]))
+        assert have["finalDistress"] == pytest.approx(want["finalDistress"], abs=1e-12)
+        assert have["debtrank"] == pytest.approx(want["debtrank"], abs=1e-12)
 
 
 def _random_net(rng):
