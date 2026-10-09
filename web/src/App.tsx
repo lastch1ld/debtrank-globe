@@ -330,6 +330,7 @@ function App() {
               onSelect={triggerShock}
               estimatedEquity={estimatedEquity}
               sidebarOpen={panelOpen && !embedded}
+              includePortfolio={includePortfolio}
             />
           </Canvas>
         )}
@@ -875,6 +876,7 @@ function App() {
                                 <span>
                                   Claim on {shockedName}:{" "}
                                   <strong className="text-slate-200">{formatUsd(explanation.claimOnShocked)}</strong>
+                                  {" "}&middot; {(explanation.impactRatio * 100).toFixed(1)}% of its loss buffer
                                 </span>
                               )}
                               {explanation.owedToShocked > 0 && (
