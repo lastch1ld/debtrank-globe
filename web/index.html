@@ -4,6 +4,20 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Interactive globe simulating how a sovereign default propagates through the real cross-border debt exposure network."
+    />
+    <!-- The app is a near-black scene mounted by JS: without these the page
+         flashes white before React paints, and mobile browser chrome draws
+         its own light bar above it. -->
+    <meta name="theme-color" content="#02050c" />
+    <style>
+      :root {
+        color-scheme: dark;
+        background-color: #02050c;
+      }
+    </style>
     <title>debtrank-globe</title>
   </head>
   <body>

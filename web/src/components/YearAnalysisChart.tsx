@@ -47,9 +47,9 @@ const SERIES: Series[] = [
 ];
 
 const WIDTH = 312;
-const BAND_HEIGHT = 54;
+const BAND_HEIGHT = 58;
 const BAND_GAP = 6;
-const LABEL_HEIGHT = 14;
+const LABEL_HEIGHT = 16;
 const PLOT_HEIGHT = BAND_HEIGHT - LABEL_HEIGHT;
 const TOTAL_HEIGHT = SERIES.length * (BAND_HEIGHT + BAND_GAP) - BAND_GAP;
 
@@ -129,7 +129,7 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
                 x={0}
                 y={10}
                 fill={series.color}
-                fontSize={8.5}
+                fontSize={9.5}
                 fontWeight={600}
                 letterSpacing="0.04em"
               >
@@ -140,9 +140,8 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
                 y={10}
                 textAnchor="end"
                 fill="#94a3b8"
-                fillOpacity={0.7}
                 fontFamily="ui-monospace, Cascadia Code, Consolas, monospace"
-                fontSize={8}
+                fontSize={9}
               >
                 {rangeLabel(values, series.format)}
               </text>
@@ -152,7 +151,7 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
                   y1={PLOT_HEIGHT}
                   x2={WIDTH}
                   y2={PLOT_HEIGHT}
-                  stroke="rgba(148, 163, 184, 0.14)"
+                  stroke="rgba(148, 163, 184, 0.18)"
                   strokeWidth={1}
                 />
                 <path
@@ -183,7 +182,7 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
         )}
       </svg>
 
-      <div className="flex justify-between px-0.5 pt-0.5 font-mono text-[10px] text-slate-500">
+      <div className="flex justify-between px-0.5 pt-0.5 font-mono text-[10px] text-slate-400">
         <span>{points[0]?.year}</span>
         <span>{points[points.length - 1]?.year}</span>
       </div>
