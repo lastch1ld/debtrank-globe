@@ -44,3 +44,15 @@ describe("tokens.css", () => {
     expect(offenders).toEqual([]);
   });
 });
+
+describe("the ui kit", () => {
+  it("imports nothing from outside src/ui", () => {
+    const escapes: string[] = [];
+    for (const file of sourceFiles(join(SRC, "ui"))) {
+      for (const m of readFileSync(file, "utf8").matchAll(/from\s+"(\.[^"]*)"/g)) {
+        if (m[1].startsWith("../")) escapes.push(`${file}: ${m[1]}`);
+      }
+    }
+    expect(escapes).toEqual([]);
+  });
+});

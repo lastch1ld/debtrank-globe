@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { Globe } from "./components/Globe";
 import { PairSparkline } from "./components/PairSparkline";
 import { YearAnalysisChart } from "./components/YearAnalysisChart";
+import { Button, Drawer, IconButton, Panel, SegmentedToggle, focus, hairline, note, sectionLabel } from "./ui";
 import {
   type Model,
   type ShockSpec,
@@ -65,16 +66,6 @@ const EQUITY_SOURCE_LABEL: Record<EquitySource, string> = {
 
 const glass =
   "border border-line/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
-const focus =
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-
-// The panel had grown nine type sizes and three letter-spacings for what is
-// really four roles. These are those four, plus the one hairline weight the
-// whole surface is drawn with.
-const hairline = "border-line/10";
-const sectionLabel = "font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-fg-subtle";
-const note = "text-[11px] leading-4 text-fg-subtle";
-const section = `flex shrink-0 flex-col gap-3 border-t ${hairline} pt-4`;
 const selectField = `${focus} min-w-0 appearance-none rounded-xl border ${hairline} bg-surface/45 px-3 py-2.5 text-[13px] text-fg-strong transition hover:border-accent/30`;
 const checkbox =
   "size-3.5 cursor-pointer rounded border-line/20 bg-surface/45 text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-default";
@@ -86,7 +77,6 @@ const range =
 // the values at the right edge.
 const scrollArea =
   "overscroll-contain [scrollbar-color:rgba(56,189,248,0.28)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-accent/25 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1.5";
-const secondaryButton = `${focus} rounded-xl border border-line/10 bg-surface/25 text-fg-muted transition hover:border-accent/50 hover:bg-accent/5 hover:text-slate-50 disabled:cursor-default disabled:opacity-35 disabled:hover:border-line/10 disabled:hover:bg-surface/25 disabled:hover:text-fg-muted`;
 
 const nameOf = (id: string) => countries.find((c) => c.id === id)?.name ?? id;
 
@@ -140,16 +130,15 @@ function CountryPanel({
   );
 
   return (
-    <section className={section} data-testid="country-panel">
+    <Panel data-testid="country-panel">
       <div className="flex items-center justify-between gap-3">
         <h2 className="m-0 truncate text-sm font-semibold text-fg-strong">{nameOf(id)}</h2>
-        <button
-          className={`${secondaryButton} shrink-0 px-2.5 py-1 text-[11px]`}
+        <Button size="xs" className="shrink-0"
           onClick={onClose}
           aria-label="Close country details"
         >
           Close
-        </button>
+        </Button>
       </div>
       <dl className="m-0 flex flex-col gap-1 text-xs">
         {row("GDP", usd(profile.gdp))}
@@ -167,7 +156,7 @@ function CountryPanel({
       </dl>
       {list("Creditors: hold claims on it", profile.creditors, profile.creditorCount)}
       {list("Debtors: it holds claims on", profile.debtors, profile.debtorCount)}
-    </section>
+    </Panel>
   );
 }
 
@@ -206,18 +195,17 @@ function PairPanel({
   );
 
   return (
-    <section className={section} data-testid="pair-panel">
+    <Panel data-testid="pair-panel">
       <div className="flex items-center justify-between gap-3">
         <h2 className="m-0 truncate text-sm font-semibold text-fg-strong">
           {nameOf(a)} &harr; {nameOf(b)}
         </h2>
-        <button
-          className={`${secondaryButton} shrink-0 px-2.5 py-1 text-[11px]`}
+        <Button size="xs" className="shrink-0"
           onClick={onClose}
           aria-label="Close pair view"
         >
           Close
-        </button>
+        </Button>
       </div>
       <span className={sectionLabel}>Claims in {year}</span>
       {direction(profile.ab)}
@@ -237,7 +225,7 @@ function PairPanel({
               : "No history indexed: this pair never reached $5B combined."}
         </p>
       )}
-    </section>
+    </Panel>
   );
 }
 
@@ -586,10 +574,7 @@ function App() {
           debt<span className="text-accent">rank</span>
           <span className="text-fg-subtle">-globe</span>
         </span>
-        <button
-          className={`${focus} group flex size-9 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-line/10 bg-surface/25 transition hover:border-accent/50 hover:bg-accent/5 ${
-            panelOpen ? "sm:hidden" : ""
-          }`}
+        <IconButton className={`group flex-col gap-1 ${panelOpen ? "sm:hidden" : ""}`}
           aria-label={panelOpen ? "Close controls" : "Open controls"}
           aria-expanded={panelOpen}
           onClick={() => setPanelOpen((v) => !v)}
@@ -597,22 +582,20 @@ function App() {
           <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:translate-y-[5px] group-aria-expanded:rotate-45" />
           <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:opacity-0" />
           <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:-translate-y-[5px] group-aria-expanded:-rotate-45" />
-        </button>
+        </IconButton>
       </nav>
       )}
 
       {!embedded && (
-      <aside
-        className={`fixed bottom-0 right-0 top-20 z-30 flex min-h-0 w-full flex-col gap-4 overflow-hidden border-l border-line/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.985),rgba(2,7,15,0.98))] px-4 pb-5 pt-4 shadow-[-24px_0_100px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-transform duration-300 ease-out motion-reduce:transition-none sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5 ${
-          panelOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+      <Drawer
+        open={panelOpen}
+        className="top-20 w-full gap-4 px-4 pb-5 pt-4 sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5"
       >
         <div className="hidden shrink-0 items-center justify-between sm:flex">
           <span className={sectionLabel}>
             Controls
           </span>
-          <button
-            className={`${focus} flex size-9 cursor-pointer items-center justify-center rounded-xl border border-line/10 bg-surface/25 text-fg-muted transition hover:border-accent/50 hover:bg-accent/5 hover:text-fg-strong`}
+          <IconButton
             aria-label="Close controls"
             onClick={() => setPanelOpen(false)}
           >
@@ -620,7 +603,7 @@ function App() {
               <span className="absolute left-0 top-1/2 block h-px w-4 -translate-y-1/2 rotate-45 rounded-full bg-current" />
               <span className="absolute left-0 top-1/2 block h-px w-4 -translate-y-1/2 -rotate-45 rounded-full bg-current" />
             </span>
-          </button>
+          </IconButton>
         </div>
 
         <div
@@ -648,8 +631,7 @@ function App() {
           </dl>
         </header>
 
-        <section className={section}>
-          <h2 className={sectionLabel}>Network</h2>
+        <Panel title="Network">
 
           <label className="flex flex-col gap-2.5 text-xs text-fg-muted">
             <span className="flex items-center justify-between">
@@ -686,37 +668,19 @@ function App() {
             layer alongside BIS bank-to-bank loans -- CPIS coverage currently
             ends around 2023.
           </p>
-        </section>
+        </Panel>
 
-        <section className={section}>
-          <h2 className={sectionLabel}>Scenario</h2>
+        <Panel title="Scenario">
 
-          <div
-            className={`flex overflow-hidden rounded-xl border ${hairline} bg-surface/25 p-1`}
-            role="group"
-            aria-label="Contagion model"
-          >
-            <button
-              className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
-                model === "debtrank"
-                  ? "bg-accent/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
-                  : "text-fg-muted hover:text-fg-strong"
-              }`}
-              onClick={() => onModelChange("debtrank")}
-            >
-              DebtRank
-            </button>
-            <button
-              className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
-                model === "eisenberg-noe"
-                  ? "bg-accent/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
-                  : "text-fg-muted hover:text-fg-strong"
-              }`}
-              onClick={() => onModelChange("eisenberg-noe")}
-            >
-              Eisenberg-Noe
-            </button>
-          </div>
+          <SegmentedToggle
+            label="Contagion model"
+            value={model}
+            onChange={onModelChange}
+            options={[
+              { value: "debtrank", label: "DebtRank" },
+              { value: "eisenberg-noe", label: "Eisenberg-Noe" },
+            ]}
+          />
 
           <div className="flex flex-col gap-1.5">
             <select
@@ -813,13 +777,12 @@ function App() {
                     }}
                   />
                 </label>
-                <button
-                  className={`${focus} flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-md text-fg-muted transition hover:bg-accent/5 hover:text-fg-strong`}
+                <IconButton size="sm"
                   aria-label={`Remove ${e.id} from the sequence`}
                   onClick={() => updateExtras(extraShocks.filter((_, j) => j !== i))}
                 >
                   &times;
-                </button>
+                </IconButton>
               </div>
             ))}
 
@@ -850,26 +813,23 @@ function App() {
 
 
           <div className="flex gap-2">
-            <button
-              className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
+            <Button size="md" className="flex-1"
               onClick={copyLink}
               disabled={!shockedId}
             >
               {copied ? "Copied" : "Copy link"}
-            </button>
-            <button
-              className={`${secondaryButton} flex-1 px-4 py-2.5 text-[13px]`}
+            </Button>
+            <Button size="md" className="flex-1"
               onClick={reset}
               disabled={!result}
             >
               Reset
-            </button>
+            </Button>
           </div>
-        </section>
+        </Panel>
 
         {result ? (
-          <section className={section}>
-            <h2 className={sectionLabel}>Result</h2>
+          <Panel title="Result">
             <div
               role="status"
               aria-live="polite"
@@ -898,12 +858,11 @@ function App() {
               <div className={`flex flex-col gap-1.5 rounded-xl border ${hairline} bg-surface/25 px-3 py-2.5`}>
                 <div className="flex items-center justify-between gap-3">
                   <span className={sectionLabel}>Market check ({year})</span>
-                  <button
-                    className={`${secondaryButton} px-2.5 py-1 text-[11px]`}
+                  <Button size="xs"
                     onClick={() => openDetails(shockedId)}
                   >
                     Country details
-                  </button>
+                  </Button>
                 </div>
                 <div className="flex flex-col gap-0.5 text-xs">
                   <span className="font-mono text-fg-muted [&_strong]:font-semibold [&_strong]:text-accent">
@@ -952,26 +911,23 @@ function App() {
             {analysisPoints ? (
               <>
                 <YearAnalysisChart points={analysisPoints} />
-                <button
-                  className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-accent`}
+                <Button size="sm" tone="accent" className="self-start"
                   onClick={() => setAnalysisPoints(null)}
                 >
                   Hide chart
-                </button>
+                </Button>
               </>
             ) : (
-              <button
-                className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-accent`}
+              <Button size="sm" tone="accent" className="self-start"
                 onClick={viewAcrossYears}
                 disabled={analysisLoading}
               >
                 {analysisLoading ? `Loading ${analysisProgress}…` : "View across years →"}
-              </button>
+              </Button>
             )}
-          </section>
+          </Panel>
         ) : (
-          <section className={section}>
-            <h2 className={sectionLabel}>Distress scale</h2>
+          <Panel title="Distress scale">
             <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-warn to-danger" />
             <div className="-mt-1 flex justify-between text-[11px] text-fg-subtle">
               <span>no stress</span>
@@ -986,7 +942,7 @@ function App() {
               A faint wireframe ring marks countries whose loss-buffer equity is
               estimated (GDP/capital-ratio/floor), not reported FX reserves.
             </p>
-          </section>
+          </Panel>
         )}
         {((detailId && profile) || (pair && pairProfile)) && (
           <div ref={detailRef}>
@@ -1172,7 +1128,7 @@ function App() {
             </div>
           </div>
         )}
-      </aside>
+      </Drawer>
       )}
     </div>
   );
