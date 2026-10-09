@@ -20,6 +20,32 @@ const MAGNITUDE_MAX = 1;
 // spin the engine's loop.
 export const MAX_DELAY = 20;
 
+export type View = "contagion" | "stability";
+
+export const VIEWS: readonly { id: View; label: string }[] = [
+  { id: "contagion", label: "Contagion" },
+  { id: "stability", label: "Stability" },
+];
+
+/** The active tab, from `?view=`. Absent or unknown means the Contagion view,
+ * so every link made before tabs existed still opens where it always did. */
+export function parseViewFromUrl(): View {
+  if (typeof window === "undefined") return "contagion";
+  const raw = new URLSearchParams(window.location.search).get("view");
+  return VIEWS.find((v) => v.id === raw)?.id ?? "contagion";
+}
+
+/** Mirrors the active tab into the URL, leaving every other parameter alone.
+ * The default view is not written, so the address stays short. */
+export function writeViewToUrl(view: View): void {
+  if (typeof window === "undefined") return;
+  const params = new URLSearchParams(window.location.search);
+  if (view === "contagion") params.delete("view");
+  else params.set("view", view);
+  const query = params.toString();
+  window.history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}`);
+}
+
 /** Chrome-less rendering for `?embed=1`: no nav, no controls panel, just
  * the globe and a caption. The scenario parameters already make any view
  * reproducible from a URL, so an embed needs nothing beyond a flag saying
@@ -100,13 +126,20 @@ export function writeScenarioToUrl(scenario: Scenario): void {
   // Carried through every rewrite: the flag is read at load, so dropping it
   // here would un-embed the page on the viewer's next refresh.
   if (isEmbedded()) params.set("embed", "1");
+  // Same reason: a scenario rewrite must not bounce the viewer off their tab.
+  const view = parseViewFromUrl();
+  if (view !== "contagion") params.set("view", view);
   window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
 }
 
 export function clearScenarioFromUrl(): void {
   if (typeof window === "undefined") return;
-  const suffix = isEmbedded() ? "?embed=1" : "";
-  window.history.replaceState(null, "", `${window.location.pathname}${suffix}`);
+  const params = new URLSearchParams();
+  if (isEmbedded()) params.set("embed", "1");
+  const view = parseViewFromUrl();
+  if (view !== "contagion") params.set("view", view);
+  const query = params.toString();
+  window.history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}`);
 }
 
 /** The same view in the full application, for the embed's "open in" link.

@@ -1,6 +1,15 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { countries } from "./network";
-import { fullAppUrl, isEmbedded, parseScenarioFromUrl, writeScenarioToUrl, type Scenario } from "./scenarioUrl";
+import {
+  clearScenarioFromUrl,
+  fullAppUrl,
+  isEmbedded,
+  parseScenarioFromUrl,
+  parseViewFromUrl,
+  writeScenarioToUrl,
+  writeViewToUrl,
+  type Scenario,
+} from "./scenarioUrl";
 
 const id = countries[0].id;
 const other = countries[1].id;
@@ -95,5 +104,42 @@ describe("embed mode", () => {
     expect(url).not.toContain("embed");
     expect(url).toContain("year=2020");
     expect(url).toContain("model=debtrank");
+  });
+});
+
+describe("the active view", () => {
+  it("defaults to Contagion, including for every link made before tabs existed", () => {
+    stubWindow("");
+    expect(parseViewFromUrl()).toBe("contagion");
+    stubWindow("?year=2010&shock=GRC:1.00&model=debtrank");
+    expect(parseViewFromUrl()).toBe("contagion");
+  });
+
+  it("reads view=stability, and falls back on anything it doesn't know", () => {
+    stubWindow("?view=stability");
+    expect(parseViewFromUrl()).toBe("stability");
+    stubWindow("?view=nope");
+    expect(parseViewFromUrl()).toBe("contagion");
+  });
+
+  it("writes the view without touching the other parameters, and drops it for the default", () => {
+    const replaceState = stubWindow("?year=2010&embed=1");
+    writeViewToUrl("stability");
+    expect(String(replaceState.mock.calls[0][2])).toBe("/debtrank-globe/?year=2010&embed=1&view=stability");
+    const again = stubWindow("?view=stability&year=2010");
+    writeViewToUrl("contagion");
+    expect(String(again.mock.calls[0][2])).toBe("/debtrank-globe/?year=2010");
+    const bare = stubWindow("?view=stability");
+    writeViewToUrl("contagion");
+    expect(String(bare.mock.calls[0][2])).toBe("/debtrank-globe/");
+  });
+
+  it("survives a scenario rewrite and a reset, so changing a toggle never bounces the viewer off their tab", () => {
+    const written = stubWindow("?view=stability");
+    writeScenarioToUrl(base);
+    expect(String(written.mock.calls[0][2])).toContain("view=stability");
+    const cleared = stubWindow("?view=stability&year=2010");
+    clearScenarioFromUrl();
+    expect(String(cleared.mock.calls[0][2])).toBe("/debtrank-globe/?view=stability");
   });
 });

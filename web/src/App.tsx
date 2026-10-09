@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Globe } from "./components/Globe";
 import { PairSparkline } from "./components/PairSparkline";
 import { YearAnalysisChart } from "./components/YearAnalysisChart";
-import { Button, Drawer, IconButton, Panel, SegmentedToggle, focus, hairline, note, sectionLabel } from "./ui";
+import { Button, Drawer, IconButton, Panel, SegmentedToggle, TabPanel, Tabs, checkbox, focus, hairline, note, sectionLabel } from "./ui";
 import {
   type Model,
   type ShockSpec,
@@ -41,7 +41,11 @@ import {
   clearScenarioFromUrl,
   fullAppUrl,
   isEmbedded,
+  VIEWS,
   parseScenarioFromUrl,
+  parseViewFromUrl,
+  writeViewToUrl,
+  type View,
   writeScenarioToUrl,
 } from "./lib/scenarioUrl";
 import { PRESETS } from "./lib/presets";
@@ -55,6 +59,9 @@ const initialScenario = parseScenarioFromUrl();
 // there is one URL, and nothing in the app changes this flag.
 const embedded = isEmbedded();
 
+// Loaded when its tab is first opened, so the Contagion view's bundle does not grow.
+const StabilityView = lazy(() => import("./components/StabilityView"));
+
 // Only "reserves" is a real observed figure -- the others are modeled
 // proxies (see equityFor() in lib/network.ts for the full rationale).
 const EQUITY_SOURCE_LABEL: Record<EquitySource, string> = {
@@ -67,8 +74,6 @@ const EQUITY_SOURCE_LABEL: Record<EquitySource, string> = {
 const glass =
   "border border-line/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
 const selectField = `${focus} min-w-0 appearance-none rounded-xl border ${hairline} bg-surface/45 px-3 py-2.5 text-[13px] text-fg-strong transition hover:border-accent/30`;
-const checkbox =
-  "size-3.5 cursor-pointer rounded border-line/20 bg-surface/45 text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-default";
 const range =
   "h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-400/15 outline-none [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-accent [&::-moz-range-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)] [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)]";
 // One scrollbar treatment for every scrolling region in the panel: the
@@ -263,6 +268,11 @@ function App() {
   const [includePortfolio, setIncludePortfolio] = useState(initialScenario?.includePortfolio ?? false);
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
+  const [view, setView] = useState<View>(parseViewFromUrl);
+  const changeView = (next: string) => {
+    setView(next as View);
+    writeViewToUrl(next as View);
+  };
   const [pair, setPair] = useState<{ a: string; b: string } | null>(null);
   const [pairIndex, setPairIndex] = useState<PairIndex | null>(null);
   const [pairIndexFailed, setPairIndexFailed] = useState(false);
@@ -515,8 +525,9 @@ function App() {
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-page font-sans text-fg-muted antialiased selection:bg-accent/20 selection:text-slate-50">
+      <TabPanel id="contagion" idPrefix="view" active={view === "contagion"}>
       <div className="absolute inset-0">
-        {yearData && (
+        {yearData && view === "contagion" && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
             <Globe
               yearData={yearData}
@@ -535,6 +546,22 @@ function App() {
           </div>
         )}
       </div>
+      </TabPanel>
+      {!embedded && (
+        <TabPanel id="stability" idPrefix="view" active={view === "stability"}>
+          {view === "stability" && (
+            <Suspense
+              fallback={
+                <div className="absolute inset-0 px-8 pt-28 font-mono text-xs text-fg-subtle" role="status">
+                  Loading&hellip;
+                </div>
+              }
+            >
+              <StabilityView year={year} includePortfolio={includePortfolio} onIncludePortfolioChange={setIncludePortfolio} />
+            </Suspense>
+          )}
+        </TabPanel>
+      )}
 
       {/* The embed still has to say what it is showing and where it came
           from -- a globe with no caption is an unattributed illustration,
@@ -574,6 +601,10 @@ function App() {
           debt<span className="text-accent">rank</span>
           <span className="text-fg-subtle">-globe</span>
         </span>
+        <div className="flex min-w-0 flex-1 justify-center px-2">
+          <Tabs tabs={VIEWS} value={view} onChange={changeView} label="Views" idPrefix="view" />
+        </div>
+        {view === "contagion" && (
         <IconButton className={`group flex-col gap-1 ${panelOpen ? "sm:hidden" : ""}`}
           aria-label={panelOpen ? "Close controls" : "Open controls"}
           aria-expanded={panelOpen}
@@ -583,10 +614,11 @@ function App() {
           <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:opacity-0" />
           <span className="block h-px w-4 rounded-full bg-slate-100 transition duration-200 group-aria-expanded:-translate-y-[5px] group-aria-expanded:-rotate-45" />
         </IconButton>
+        )}
       </nav>
       )}
 
-      {!embedded && (
+      {!embedded && view === "contagion" && (
       <Drawer
         open={panelOpen}
         className="top-20 w-full gap-4 px-4 pb-5 pt-4 sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5"

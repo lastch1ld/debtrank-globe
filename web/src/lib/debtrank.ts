@@ -31,7 +31,7 @@ export interface DebtRankResult {
 
 type State = "U" | "D" | "I";
 
-function impactMatrix(net: ExposureNetwork): number[][] {
+export function impactMatrix(net: ExposureNetwork): number[][] {
   const n = net.nodeIds.length;
   const A: number[][] = Array.from({ length: n }, () => new Array(n).fill(0));
   for (let i = 0; i < n; i++) {

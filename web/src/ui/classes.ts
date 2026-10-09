@@ -15,3 +15,6 @@ export const note = "text-[11px] leading-4 text-fg-subtle";
 /** A selected segment or tab. */
 export const selectedSurface =
   "bg-accent/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]";
+
+export const checkbox =
+  "size-3.5 cursor-pointer rounded border-line/20 bg-surface/45 text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-default";
