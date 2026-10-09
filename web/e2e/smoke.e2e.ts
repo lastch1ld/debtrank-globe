@@ -4,11 +4,15 @@ import { expect, test, type Page } from "@playwright/test";
 const SCENARIO = "?year=2010&shock=GRC:1.00,PRT:0.60@2&model=debtrank";
 
 async function openControls(page: Page) {
-  // A scenario link opens the panel on its own, so read the toggle's state
-  // instead of assuming it.
+  // A scenario link opens the panel on its own a moment after load, so retry
+  // until the toggle reports open instead of trusting a single read.
   const toggle = page.locator("button[aria-expanded]");
-  await expect(toggle).toHaveAttribute("aria-expanded", /true|false/);
-  if ((await toggle.getAttribute("aria-expanded")) === "false") await toggle.click();
+  await expect(async () => {
+    if ((await toggle.getAttribute("aria-expanded", { timeout: 1000 })) !== "true") {
+      await toggle.click({ timeout: 2000 });
+    }
+    await expect(toggle).toHaveAttribute("aria-expanded", "true", { timeout: 1000 });
+  }).toPass({ timeout: 15_000 });
   await expect(page.getByTestId("sidebar-controls")).toBeVisible();
 }
 
@@ -56,6 +60,24 @@ test("switching years loads that year's file", async ({ page }) => {
   expect((await data).status()).toBe(200);
 });
 
+test("country details open from the ranking drill-down and from the result card", async ({ page }) => {
+  await page.goto(`./${SCENARIO}`);
+  await openControls(page);
+  const panel = page.getByTestId("country-panel");
+
+  await page.getByTestId("ranked-results").getByText("Portugal", { exact: true }).click();
+  await page.getByTestId("ranked-results").getByRole("button", { name: "Country details" }).click();
+  await expect(panel).toContainText("Portugal");
+  await expect(panel).toContainText("Creditors");
+  await expect(panel).toContainText("External debt / GDP");
+
+  await panel.getByRole("button", { name: "Close country details" }).click();
+  await expect(panel).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Country details" }).first().click();
+  await expect(panel).toContainText("Greece");
+});
+
 test.describe("layout contracts", () => {
   test("ranking scrolls on its own, below a fixed header and fixed controls", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -92,6 +114,18 @@ test.describe("layout contracts", () => {
     const box = (await page.getByTestId("sidebar-controls").boundingBox())!;
     expect(box.width).toBeLessThanOrEqual(380);
     expect(box.width).toBeGreaterThan(300);
+  });
+
+  test("mobile: the country panel fits without sideways scroll", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto(`./${SCENARIO}`);
+    await openControls(page);
+    await page.getByRole("button", { name: "Country details" }).first().click();
+
+    const panel = page.getByTestId("country-panel");
+    await expect(panel).toContainText("Greece");
+    expect((await panel.boundingBox())!.width).toBeLessThanOrEqual(375);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
 
   test("mobile: drawer opens and closes, and nothing scrolls sideways", async ({ page }) => {

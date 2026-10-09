@@ -21,6 +21,7 @@ import {
   loadYearData,
   type YearSnapshot,
 } from "./lib/network";
+import { buildCountryProfile, type Counterparty, type CountryProfile } from "./lib/countryProfile";
 import { formatUsd } from "./lib/format";
 import type { EquitySource, ExposureNetwork } from "./lib/debtrank";
 import { isFinancialCenter } from "./lib/financialCenters";
@@ -77,6 +78,89 @@ const scrollArea =
   "overscroll-contain [scrollbar-color:rgba(56,189,248,0.28)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-sky-400/25 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1.5";
 const secondaryButton = `${focus} rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-300 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-50 disabled:cursor-default disabled:opacity-35 disabled:hover:border-sky-200/10 disabled:hover:bg-slate-950/25 disabled:hover:text-slate-300`;
 
+const nameOf = (id: string) => countries.find((c) => c.id === id)?.name ?? id;
+
+const pct = (x: number | null) => (x === null ? null : `${(x * 100).toFixed(x < 0.1 ? 1 : 0)}%`);
+
+function CountryPanel({
+  id,
+  profile,
+  sourceLabel,
+  onClose,
+}: {
+  id: string;
+  profile: CountryProfile;
+  sourceLabel: string;
+  onClose: () => void;
+}) {
+  const row = (label: string, value: string | null) => (
+    <div className="flex items-baseline justify-between gap-3">
+      <dt className="text-slate-400">{label}</dt>
+      <dd className={`m-0 font-mono ${value === null ? "italic text-slate-500" : "text-slate-200"}`}>
+        {value ?? "not reported"}
+      </dd>
+    </div>
+  );
+  const usd = (v: number | null) => (v === null ? null : formatUsd(v));
+  const split = (a: { bank: number; portfolio: number }) =>
+    `bank ${formatUsd(a.bank)} · portfolio ${formatUsd(a.portfolio)}`;
+  const list = (title: string, rows: Counterparty[], count: number) => (
+    <div className="flex flex-col gap-1.5">
+      <span className={sectionLabel}>
+        {title} ({count})
+      </span>
+      {rows.length === 0 ? (
+        <p className="m-0 text-xs italic text-slate-500">none in this year&rsquo;s data</p>
+      ) : (
+        <ol className="m-0 flex list-none flex-col gap-1.5 p-0">
+          {rows.map((c) => (
+            <li key={c.id} className="flex flex-col gap-0.5 text-xs">
+              <span className="flex items-baseline justify-between gap-3">
+                <span className="truncate text-slate-200">{nameOf(c.id)}</span>
+                <span className="font-mono text-slate-300 tabular-nums">
+                  {formatUsd(c.total)} &middot; {(c.share * 100).toFixed(0)}%
+                </span>
+              </span>
+              <span className="font-mono text-[10px] text-slate-500">{split(c)}</span>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+
+  return (
+    <section className={section} data-testid="country-panel">
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="m-0 truncate text-sm font-semibold text-slate-100">{nameOf(id)}</h2>
+        <button
+          className={`${secondaryButton} shrink-0 px-2.5 py-1 text-[11px]`}
+          onClick={onClose}
+          aria-label="Close country details"
+        >
+          Close
+        </button>
+      </div>
+      <dl className="m-0 flex flex-col gap-1 text-xs">
+        {row("GDP", usd(profile.gdp))}
+        {row("FX reserves", usd(profile.reserves))}
+        {row("External debt", usd(profile.externalDebt))}
+        {row("External debt / GDP", pct(profile.externalDebtToGdp))}
+        {row("Reserves / external debt", pct(profile.reservesToExternalDebt))}
+        {row("Loss buffer used by the model", formatUsd(profile.equity))}
+      </dl>
+      <p className={note}>{sourceLabel}</p>
+      <dl className="m-0 flex flex-col gap-1 text-xs">
+        {row("Claims it holds", formatUsd(profile.claims.total))}
+        {row("Claims held on it", formatUsd(profile.liabilities.total))}
+        {row("Counterparties", String(profile.counterpartyCount))}
+      </dl>
+      {list("Creditors: hold claims on it", profile.creditors, profile.creditorCount)}
+      {list("Debtors: it holds claims on", profile.debtors, profile.debtorCount)}
+    </section>
+  );
+}
+
 function App() {
   const [year, setYear] = useState(initialScenario?.year ?? DEFAULT_YEAR);
   const [displayYear, setDisplayYear] = useState(initialScenario?.year ?? DEFAULT_YEAR);
@@ -110,6 +194,16 @@ function App() {
   const [hideFinancialCenters, setHideFinancialCenters] = useState(false);
   const [includePortfolio, setIncludePortfolio] = useState(initialScenario?.includePortfolio ?? false);
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
+  const [detailId, setDetailId] = useState<string | null>(null);
+
+  const profile = useMemo(
+    () => (yearData && detailId ? buildCountryProfile(yearData, detailId) : null),
+    [yearData, detailId],
+  );
+  const detailRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (detailId) detailRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }, [detailId]);
 
   const portfolioDataAvailable = (yearData?.portfolio_edges?.length ?? 0) > 0;
 
@@ -689,7 +783,15 @@ function App() {
 
             {shockedId && (
               <div className={`flex flex-col gap-1.5 rounded-xl border ${hairline} bg-slate-950/25 px-3 py-2.5`}>
-                <span className={sectionLabel}>Market check ({year})</span>
+                <div className="flex items-center justify-between gap-3">
+                  <span className={sectionLabel}>Market check ({year})</span>
+                  <button
+                    className={`${secondaryButton} px-2.5 py-1 text-[11px]`}
+                    onClick={() => setDetailId(shockedId)}
+                  >
+                    Country details
+                  </button>
+                </div>
                 <div className="flex flex-col gap-0.5 text-xs">
                   <span className="font-mono text-slate-300 [&_strong]:font-semibold [&_strong]:text-sky-400">
                     10Y yield{" "}
@@ -772,6 +874,16 @@ function App() {
               estimated (GDP/capital-ratio/floor), not reported FX reserves.
             </p>
           </section>
+        )}
+        {detailId && profile && (
+          <div ref={detailRef}>
+            <CountryPanel
+              id={detailId}
+              profile={profile}
+              sourceLabel={EQUITY_SOURCE_LABEL[profile.equitySource]}
+              onClose={() => setDetailId(null)}
+            />
+          </div>
         )}
         </div>
 
@@ -903,6 +1015,15 @@ function App() {
                               No direct or strongly-inferred indirect link in this year's data.
                             </span>
                           )}
+                          <button
+                            className={`${focus} mt-1 self-start font-sans text-[11px] text-sky-400 underline decoration-slate-600 underline-offset-2 hover:text-sky-300`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setDetailId(r.id);
+                            }}
+                          >
+                            Country details
+                          </button>
                         </div>
                       );
                     })()}
