@@ -1,6 +1,6 @@
-"""Regenerate golden/debtrank_cases.json: seeded random networks plus the
-Python model's results. The TS port (web/src/lib/golden.test.ts) must match
-these. Regenerating is a deliberate, reviewed step:
+"""Regenerate golden/debtrank_cases.json and golden/eisenberg_noe_cases.json:
+seeded random networks plus the Python model's results. The TS port (web/src/lib/golden.test.ts) must match
+them. Regenerating is a deliberate, reviewed step:
 
     python -m debtrank_model.tests.make_golden
 """
@@ -11,9 +11,10 @@ from pathlib import Path
 
 import numpy as np
 
-from debtrank_model import ExposureNetwork, Shock, run_debtrank
+from debtrank_model import ExposureNetwork, Shock, clearing_vector, run_debtrank
 
 GOLDEN = Path(__file__).parent / "golden" / "debtrank_cases.json"
+GOLDEN_EN = Path(__file__).parent / "golden" / "eisenberg_noe_cases.json"
 
 
 def build_cases() -> list[dict]:
@@ -42,5 +43,28 @@ def build_cases() -> list[dict]:
     return cases
 
 
+def build_en_cases() -> list[dict]:
+    rng = np.random.default_rng(20261009)
+    cases = []
+    for k in range(8):
+        n = int(rng.integers(3, 9))
+        liabilities = rng.uniform(0, 100, (n, n)) * (rng.random((n, n)) < 0.5)
+        np.fill_diagonal(liabilities, 0)
+        # Low enough that some nodes cannot pay in full, so the cases exercise
+        # the clearing iteration and not only the trivial "everyone pays" fixed point.
+        external = rng.uniform(0, 60, n)
+        ids = [f"N{i}" for i in range(n)]
+        res = clearing_vector(ids, liabilities, external)
+        cases.append({
+            "nodeIds": ids,
+            "liabilities": liabilities.tolist(),
+            "externalAssets": external.tolist(),
+            "payments": res.payments.tolist(),
+            "nominalLiabilities": res.nominal_liabilities.tolist(),
+        })
+    return cases
+
+
 if __name__ == "__main__":
     GOLDEN.write_text(json.dumps(build_cases(), indent=1) + "\n")
+    GOLDEN_EN.write_text(json.dumps(build_en_cases(), indent=1) + "\n")

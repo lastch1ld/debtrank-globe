@@ -1,0 +1,58 @@
+name: Live site e2e
+
+# Runs the Playwright suite against the deployed GitHub Pages site every night.
+# It catches deploy problems a local preview can't: a wrong base path, a file
+# missing from the published artifact, a Pages outage. On failure it opens
+# one issue (or comments on the open one), not one per night.
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  e2e-live:
+    name: e2e (live site)
+    runs-on: ubuntu-latest
+    env:
+      E2E_BASE_URL: https://lastch1ld.github.io/debtrank-globe/
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - run: npm ci
+        working-directory: web
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('web/package-lock.json') }}
+      - run: npx playwright install --with-deps chromium
+        working-directory: web
+      - run: npx playwright test
+        working-directory: web
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: playwright-report-live
+          path: |
+            web/playwright-report
+            web/test-results
+      - name: Open or update the failure issue
+        if: failure()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          run_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          gh label create e2e-live-failed --color B60205 --description "Nightly e2e against the live site failed" 2>/dev/null || true
+          existing=$(gh issue list --label e2e-live-failed --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "Failed again: $run_url"
+          else
+            gh issue create --label e2e-live-failed --title "Nightly live-site e2e failed" --body "The Playwright suite failed against $E2E_BASE_URL: $run_url"
+          fi
