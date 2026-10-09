@@ -78,7 +78,7 @@ Extraction path, when a second consumer shows up (Phase 5): move `web/src/ui/` t
 
 ## Phase 3: Layout pieces for the tab plan
 
-- [x] (Built and unit-tested, not yet used by a screen: markup and key handling are tested without a DOM; focus movement is covered when Phase 9 adds the first real tab bar and its e2e flow.) `Tabs`: arrow keys move between tabs (roving tabindex), the correct ARIA roles, and a horizontally scrolling tab bar on phones. It's controlled from outside, so the app can sync it with `view=` in the URL.
+- [x] (Now used by the app's view tabs. Markup and key handling are unit-tested; arrow keys, Home and End, and the roving tabindex are covered by an e2e flow.) `Tabs`: arrow keys move between tabs (roving tabindex), the correct ARIA roles, and a horizontally scrolling tab bar on phones. It's controlled from outside, so the app can sync it with `view=` in the URL.
 - [x] `Drawer`: the mobile side panel from PR #23, extracted (the caller passes offset, width and padding; the kit owns the surface, slide and inert-while-closed).
 - [x] Gate: the Phase 9 tab shell (PR #24) starts only after this phase. *Now open.*
 

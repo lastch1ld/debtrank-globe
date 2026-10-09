@@ -6,5 +6,5 @@ export { Panel, type PanelProps } from "./Panel";
 export { SegmentedToggle, type SegmentedToggleProps } from "./SegmentedToggle";
 export { TabPanel, Tabs, type TabItem, type TabsProps } from "./Tabs";
 export { nextTabIndex } from "./tabKeys";
-export { focus, hairline, note, sectionLabel } from "./classes";
+export { checkbox, focus, hairline, note, sectionLabel } from "./classes";
 export { token } from "./token";

@@ -98,6 +98,41 @@ test("pair view shows both directions and a history, and closes", async ({ page 
   await expect(panel).toHaveCount(0);
 });
 
+test("the Stability tab opens from a link, charts every year, and tab changes go through the URL", async ({ page }) => {
+  await page.goto("./?view=stability");
+  await expect(page.getByRole("tab", { name: "Stability" })).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByTestId("stability-chart")).toBeVisible({ timeout: 60_000 });
+  // 21 yearly points on the line, and no globe on this tab
+  await expect(page.getByTestId("stability-chart").locator("circle")).toHaveCount(21);
+  await expect(page.locator("canvas")).toHaveCount(0);
+
+  await page.getByRole("tab", { name: "Contagion" }).click();
+  await expect(page.locator("canvas")).toBeVisible();
+  expect(page.url()).not.toContain("view=");
+
+  await page.getByRole("tab", { name: "Stability" }).click();
+  expect(page.url()).toContain("view=stability");
+});
+
+test("the tab bar follows the arrow keys, Home and End", async ({ page }) => {
+  await page.goto("./");
+  const contagion = page.getByRole("tab", { name: "Contagion" });
+  const stability = page.getByRole("tab", { name: "Stability" });
+  await contagion.focus();
+
+  await page.keyboard.press("ArrowRight");
+  await expect(stability).toHaveAttribute("aria-selected", "true");
+  await expect(stability).toBeFocused();
+  await page.keyboard.press("ArrowRight"); // wraps
+  await expect(contagion).toHaveAttribute("aria-selected", "true");
+  await page.keyboard.press("End");
+  await expect(stability).toBeFocused();
+  await page.keyboard.press("Home");
+  await expect(contagion).toBeFocused();
+  // only the selected tab is in the tab order
+  await expect(stability).toHaveAttribute("tabindex", "-1");
+});
+
 test.describe("layout contracts", () => {
   test("ranking scrolls on its own, below a fixed header and fixed controls", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -158,6 +193,14 @@ test.describe("layout contracts", () => {
     const panel = page.getByTestId("pair-panel");
     await expect(panel.getByTestId("pair-sparkline")).toBeVisible();
     expect((await panel.boundingBox())!.width).toBeLessThanOrEqual(375);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+
+  test("mobile: the tab bar and the Stability view fit without sideways scroll", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.goto("./?view=stability");
+    await expect(page.getByRole("tab", { name: "Stability" })).toBeVisible();
+    await expect(page.getByTestId("stability-chart")).toBeVisible({ timeout: 60_000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
 
