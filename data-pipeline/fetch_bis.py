@@ -166,6 +166,7 @@ def extract_edges(csv_path: Path) -> list[dict]:
             "amount": value * 1_000_000,  # BIS reports in millions USD
         }
         for (rep, cp), (period, value) in edges.items()
+        if value > 0  # a reported zero is a real observation, but not an edge
     ]
     return edge_list, country_names
 
@@ -215,6 +216,7 @@ def extract_edges_by_year(csv_path: Path, years: list[int]) -> dict[int, list[di
         year: [
             {"creditor": rep, "debtor": cp, "period": f"{year}-Q4", "amount": value * 1_000_000}
             for (rep, cp), value in pairs.items()
+            if value > 0
         ]
         for year, pairs in edges_by_year.items()
     }

@@ -49,7 +49,8 @@ precisely so results stay comparable.
 
 ### `edges`
 
-Bilateral cross-border **banking** claims; 3,230 in the 2020 file.
+Bilateral cross-border **banking** claims; 3,229 in the 2020 file. A pair
+that reports a zero claim has no edge, so every `amount` is above zero.
 
 | Field | Type | Meaning |
 | --- | --- | --- |
@@ -66,7 +67,7 @@ The Eisenberg–Noe liability matrix is this transposed — see
 
 Cross-border **bond and equity** holdings — a largely distinct contagion
 channel from bank lending, and the one that actually carried the 2010 euro
-sovereign crisis. Same three fields as `edges`, without `period`; 12,322 in
+sovereign crisis. Same three fields as `edges`, without `period`; 6,395 in
 the 2020 file.
 
 **Coverage ends at 2023.** CPIS is a voluntary survey with a reporting lag,
