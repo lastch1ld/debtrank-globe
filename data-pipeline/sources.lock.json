@@ -1,0 +1,10 @@
+{
+  "sources": {
+    "imf_cpis": {
+      "value": "2025-04-08",
+      "as_of": "2025-04-08",
+      "how": "json",
+      "observed_at": "2026-10-09"
+    }
+  }
+}
