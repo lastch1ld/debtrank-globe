@@ -59,12 +59,12 @@ Highest impact. It changes the ranking for most shocks, so ship it on its own be
 
 No pipeline work. Everything below is already in each year's JSON or can be derived from the built network.
 
-- [ ] A country detail panel, opened by clicking a country on the globe or a name in the ranking:
+- [x] A country detail panel (`CountryPanel` in `App.tsx`, data from `lib/countryProfile.ts`). It opens from the ranking drill-down and from the result card's "Country details" button, not from a globe click, because a globe click already starts a shock:
   - GDP, reserves, external debt, and the ratios **external debt / GDP** and **reserves / external debt**. This finally uses `external_debt_usd`. Show "not reported" for nulls, never 0.
   - The **equity the model uses** and its source (reserves, GDP estimate, capital-ratio estimate or floor). Reuse the existing `equitySource` labels.
   - **Top 5 creditors and top 5 debtors**, each with its share of the total, split by layer (banking vs. portfolio).
   - Totals: claims vs. liabilities, and the number of counterparties.
-- [ ] Mobile layout: the panel must fit the app shell from `responsive-sweep` without horizontal scroll.
+- [x] Mobile layout (e2e: no horizontal scroll at 375px): the panel must fit the app shell from `responsive-sweep` without horizontal scroll.
 
 ## Phase 4: Relation detail
 
@@ -87,7 +87,7 @@ This is what makes the tool about *sovereign* debt rather than cross-border bank
 
 Bank-system claims are measured against central-bank reserves (problem 2 above). Pick one approach and record the choice here before starting:
 
-- [x] **Option A (cheap, honest) � chosen 2026-10-09:** relabel the output as a *stress index*, not a solvency or default probability, in the UI, the README and `model/README.md`. The algorithms and data stay unchanged.
+- [x] **Option A (cheap, honest) — chosen 2026-10-09:** relabel the output as a *stress index*, not a solvency or default probability, in the UI, the README and `model/README.md`. The algorithms and data stay unchanged.
 - [ ] **Option B (more faithful), not chosen; revisit after Phase 5:** build the buffer for the banking layer from banking-system capital (capital-to-assets ratio × banking-system assets) and keep reserves only for the sovereign channel from Phase 5. This needs a banking-system assets source and has to go into both builders. It will move rankings for every year.
 
 ## Phase 7: Alternative modelling (exploratory)
