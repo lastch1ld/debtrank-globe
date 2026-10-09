@@ -18,6 +18,13 @@ The result: pick a country, dial in a shock magnitude, toggle between DebtRank a
 Eisenberg-Noe, and watch distress propagate through the real global debt network on an
 interactive 3D globe — for any year from 2005 to 2025 via the year scrubber.
 
+**How to read the numbers.** Distress is a *stress index* from 0 to 1, not a solvency measure or a
+default probability. The loss is a country's banks' cross-border claims on the shocked country; the
+buffer it is measured against is, for most countries, central-bank FX reserves (falling back to a
+share of GDP, then a bank-capital estimate; see [`model/README.md`](model/README.md)). Those two
+are not the same institution, so compare countries and scenarios with each other rather than
+reading a value as a loss forecast. Shock magnitudes are illustrative, not calibrated.
+
 ![debtrank-globe: a Belgium shock propagating through the DebtRank model, shown on the 3D globe with market indicators and a ranked distress list](docs/screenshot.png)
 
 ## Structure

@@ -87,8 +87,8 @@ This is what makes the tool about *sovereign* debt rather than cross-border bank
 
 Bank-system claims are measured against central-bank reserves (problem 2 above). Pick one approach and record the choice here before starting:
 
-- [ ] **Option A (cheap, honest):** relabel the output as a *stress index*, not a solvency or default probability, in the UI, the README and `model/README.md`. The algorithms and data stay unchanged.
-- [ ] **Option B (more faithful):** build the buffer for the banking layer from banking-system capital (capital-to-assets ratio × banking-system assets) and keep reserves only for the sovereign channel from Phase 5. This needs a banking-system assets source and has to go into both builders. It will move rankings for every year.
+- [x] **Option A (cheap, honest) � chosen 2026-10-09:** relabel the output as a *stress index*, not a solvency or default probability, in the UI, the README and `model/README.md`. The algorithms and data stay unchanged.
+- [ ] **Option B (more faithful), not chosen; revisit after Phase 5:** build the buffer for the banking layer from banking-system capital (capital-to-assets ratio × banking-system assets) and keep reserves only for the sovereign channel from Phase 5. This needs a banking-system assets source and has to go into both builders. It will move rankings for every year.
 
 ## Phase 7: Alternative modelling (exploratory)
 
