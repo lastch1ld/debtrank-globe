@@ -30,7 +30,9 @@ Every phase in those plans ships with the tests defined here.
 - [ ] **Confirm the WebGL question before committing to it.** Can headless Chromium on a GitHub runner render the three.js globe (via SwiftShader or `--use-gl=angle`)? Run it once in CI. If it can't, the E2E layer asserts on DOM and URL state only, with no canvas checks. Decide that here, not halfway through Phase 3.
 - [ ] **Check that this plan's order matches the companion plans.** The Phase 9 tab shell and the Phase 1 coverage fix in the granularity plan change what the E2E flows and golden values must be. Decide whether tests land before those changes (to pin current behaviour) or together with them.
 - [ ] **Check the cost:** keep the full E2E suite under ~5 minutes in CI, or split it into a fast smoke set for every PR and a full set on a nightly run.
-- [ ] Write the result here (what changed, what was dropped) before starting Phase 1.
+- [x] Write the result here (what changed, what was dropped) before starting Phase 1.
+
+  **Result (2026-10-09):** the table above still holds, except `oxlint` now runs in CI (#30) and `analysis.ts` has more cases (#34). Parity and property tests landed in #36, data-file checks in #33. Playwright goes in before the granularity/tabs changes, to pin current behaviour. WebGL under SwiftShader works locally (`--use-gl=angle --use-angle=swiftshader`), but is slow: run 2 workers, not 8. Whether it holds on a GitHub runner is measured by the first CI run of the `e2e` job. Two corrections to the plan: the URL does not gain `shock=` live (only "Copy link" builds it), so the shock flow asserts on the ranking instead; and `vite preview` needs `--base /debtrank-globe/` because `vite.config.ts` only applies the Pages base to `build`.
 
 ## Phase 1: Unit-test gaps (fast, no new tooling)
 
@@ -64,8 +66,8 @@ Every phase in those plans ships with the tests defined here.
 
 ## Phase 3: E2E with Playwright
 
-- [ ] Add `@playwright/test` to `web/` and create `web/e2e/`. Run the tests against `vite preview` of the **production build**, served under the Pages base path, so base-path bugs get caught.
-- [ ] **Smoke flows (run on every PR):**
+- [x] Add `@playwright/test` to `web/` and create `web/e2e/`. Run the tests against `vite preview` of the **production build**, served under the Pages base path, so base-path bugs get caught.
+- [x] **Smoke flows (run on every PR),** in `web/e2e/smoke.e2e.ts`; they also replace the layout string-matching tests in `web/tests/observatoryShell` and `responsiveShell`:
   1. The app loads with no console errors, and the default year's data request returns 200.
   2. Pick a country, apply a shock: the ranking fills in, and the URL gets `shock=`.
   3. Open a copied scenario link (`?year=2010&shock=GRC:1.00,PRT:0.60@2&model=debtrank`): the same state is restored.
@@ -86,7 +88,7 @@ Every phase in those plans ships with the tests defined here.
 ## Phase 4: CI wiring
 
 - [ ] Add `npm run lint` (oxlint) to the `web` job. It exists but never runs in CI.
-- [ ] Add an `e2e` job that needs `web` to pass first, installs only Chromium (`npx playwright install --with-deps chromium`), and caches the browser.
+- [x] Add an `e2e` job that needs `web` to pass first, installs only Chromium (`npx playwright install --with-deps chromium`), and caches the browser.
 - [ ] Make `ci.yml` callable (`workflow_call`) so the refresh plan's rebuild job can run the same suite before it opens a data PR. This is the fix for "PRs opened with `GITHUB_TOKEN` don't trigger CI" (refresh plan, Phase 3).
 - [ ] Nightly run of the full E2E set against the **live** GitHub Pages URL. It catches deploy problems (base path, CORS, missing files) that a local preview can't.
 
