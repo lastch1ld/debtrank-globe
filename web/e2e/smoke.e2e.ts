@@ -172,7 +172,11 @@ test.describe("layout contracts", () => {
     // The drawer starts below the 80px navbar, which stays reachable.
     expect((await page.getByTestId("sidebar-controls").boundingBox())!.y).toBeGreaterThanOrEqual(80);
     expect(await noSideScroll()).toBe(true);
+    const drawer = page.locator("aside");
+    expect(await drawer.evaluate((el) => (el as HTMLElement).inert)).toBe(false);
     await page.getByRole("button", { name: "Close controls" }).first().click();
     await expect(page.getByRole("button", { name: "Open controls" })).toBeVisible();
+    // Closed, the drawer is off-screen, so its controls must not be tabbable.
+    expect(await drawer.evaluate((el) => (el as HTMLElement).inert)).toBe(true);
   });
 });

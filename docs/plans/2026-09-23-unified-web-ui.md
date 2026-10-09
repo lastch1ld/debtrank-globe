@@ -70,22 +70,22 @@ Extraction path, when a second consumer shows up (Phase 5): move `web/src/ui/` t
 
 ## Phase 2: Primitives (from the styles that exist)
 
-- [ ] `Button` (the `secondaryButton` variant plus the primary one used for the active state), `IconButton` (the 9-unit square buttons), and `SegmentedToggle` (the model switch, currently two `flex-1 rounded-lg` buttons).
-- [ ] `Switch`, `Slider` and `Select` for the controls panel. Use native elements underneath (`<input type="range">`, `<select>`, a checkbox with `role="switch"`) so keyboard and screen-reader behaviour comes for free.
-- [ ] `Panel`, `Stat` (the `font-mono tabular-nums` figures), `Badge` (the equity-source and "experimental" labels) and `Tooltip`.
-- [ ] Move `App.tsx` onto these. It should shrink noticeably, with no visual change (same screenshot comparison as Phase 1).
-- [ ] Accessibility built into the primitives, not added per screen: visible focus via the shared focus token, `aria-pressed` on toggles, labelled icon buttons, and working reduced-motion handling.
+- [x] `Button` (sizes `xs`/`sm`/`md` and an accent tone, from the one bordered variant the app had; there was no separate primary), `IconButton` (the 36px bordered square and the 24px borderless one) and `SegmentedToggle` (the model switch).
+- [ ] *Dropped for now (see Phase 0 result: rule of three).* `Switch`, `Slider` and `Select` for the controls panel. Use native elements underneath (`<input type="range">`, `<select>`, a checkbox with `role="switch"`) so keyboard and screen-reader behaviour comes for free.
+- [x] `Panel` (the five sections of the controls column). *Dropped for now:* `Stat`, `Badge` and `Tooltip`; nothing needs a third copy yet.
+- [x] Move `App.tsx` onto these (`Button` x7, `IconButton` x3, `Panel` x6, `SegmentedToggle`, `Drawer`; 90 lines fewer). Pixel diff of the same 7 screenshots against the previous build: every one within the 200 to 1,200 px noise floor. The two remaining raw `<button>`s are the "Country details" / "Pair view" text links in the ranking drill-down; two uses, so not a component yet. It should shrink noticeably, with no visual change (same screenshot comparison as Phase 1).
+- [x] Accessibility built into the primitives, not added per screen (`aria-pressed` on `SegmentedToggle`, a required `aria-label` on `IconButton`, `motion-reduce` on the `Drawer` slide; new: a closed `Drawer` is `inert`, so its controls can't be tabbed to from off-screen): visible focus via the shared focus token, `aria-pressed` on toggles, labelled icon buttons, and working reduced-motion handling.
 
 ## Phase 3: Layout pieces for the tab plan
 
-- [ ] `Tabs`: arrow keys move between tabs (roving tabindex), the correct ARIA roles, and a horizontally scrolling tab bar on phones. It's controlled from outside, so the app can sync it with `view=` in the URL.
-- [ ] `Drawer`: the mobile side panel from PR #23, extracted.
-- [ ] Gate: the Phase 9 tab shell (PR #24) starts only after this phase.
+- [x] (Built and unit-tested, not yet used by a screen: markup and key handling are tested without a DOM; focus movement is covered when Phase 9 adds the first real tab bar and its e2e flow.) `Tabs`: arrow keys move between tabs (roving tabindex), the correct ARIA roles, and a horizontally scrolling tab bar on phones. It's controlled from outside, so the app can sync it with `view=` in the URL.
+- [x] `Drawer`: the mobile side panel from PR #23, extracted (the caller passes offset, width and padding; the kit owns the surface, slide and inert-while-closed).
+- [x] Gate: the Phase 9 tab shell (PR #24) starts only after this phase. *Now open.*
 
 ## Phase 4: Documentation and guardrails
 
 - [ ] **A kit page instead of Storybook:** one dev-only route (`?kit`) that renders every component in every state. It uses no new tooling. Add Storybook only if the kit is extracted and outside consumers ask for it.
-- [ ] An import rule: nothing in `web/src/ui/` may import from outside `web/src/ui/` (an oxlint or `no-restricted-imports` rule, run in CI per PR #26 Phase 4).
+- [x] (Done as a vitest check in `tests/designTokens.test.ts`, which already runs in CI, rather than a lint rule.) An import rule: nothing in `web/src/ui/` may import from outside `web/src/ui/` (an oxlint or `no-restricted-imports` rule, run in CI per PR #26 Phase 4).
 - [ ] Component tests for each primitive (PR #26 Phase 2 scope).
 - [ ] A short `web/src/ui/README.md`: the token list, when to add a component (rule of three), and the "no app knowledge" rule.
 
