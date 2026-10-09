@@ -41,29 +41,29 @@ export function PairSparkline({
           fill="none"
           strokeWidth={1.5}
           vectorEffect="non-scaling-stroke"
-          className="stroke-sky-400"
+          className="stroke-accent"
           points={sparklinePoints(series.aOnB, W, H, max)}
         />
         <polyline
           fill="none"
           strokeWidth={1.5}
           vectorEffect="non-scaling-stroke"
-          className="stroke-amber-400"
+          className="stroke-warn"
           points={sparklinePoints(series.bOnA, W, H, max)}
         />
       </svg>
-      <div className="flex justify-between font-mono text-[10px] text-slate-500">
+      <div className="flex justify-between font-mono text-[10px] text-fg-subtle">
         <span>{series.firstYear}</span>
         <span>peak {formatUsd(max)}</span>
         <span>{last}</span>
       </div>
-      <figcaption className="flex flex-col gap-0.5 text-[11px] text-slate-400">
+      <figcaption className="flex flex-col gap-0.5 text-[11px] text-fg-subtle">
         <span>
-          <span className="text-sky-400">&mdash;</span> {nameA}&rsquo;s claim on{" "}
+          <span className="text-accent">&mdash;</span> {nameA}&rsquo;s claim on{" "}
           {nameB}
         </span>
         <span>
-          <span className="text-amber-400">&mdash;</span> {nameB}&rsquo;s claim
+          <span className="text-warn">&mdash;</span> {nameB}&rsquo;s claim
           on {nameA}
         </span>
       </figcaption>

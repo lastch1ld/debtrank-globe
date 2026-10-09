@@ -64,29 +64,29 @@ const EQUITY_SOURCE_LABEL: Record<EquitySource, string> = {
 };
 
 const glass =
-  "border border-sky-200/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
+  "border border-line/10 bg-[linear-gradient(145deg,rgba(10,23,39,0.82),rgba(3,9,18,0.72))] shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl";
 const focus =
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400";
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 // The panel had grown nine type sizes and three letter-spacings for what is
 // really four roles. These are those four, plus the one hairline weight the
 // whole surface is drawn with.
-const hairline = "border-sky-200/10";
-const sectionLabel = "font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400";
-const note = "text-[11px] leading-4 text-slate-400";
+const hairline = "border-line/10";
+const sectionLabel = "font-mono text-[10px] font-semibold uppercase tracking-[0.14em] text-fg-subtle";
+const note = "text-[11px] leading-4 text-fg-subtle";
 const section = `flex shrink-0 flex-col gap-3 border-t ${hairline} pt-4`;
-const selectField = `${focus} min-w-0 appearance-none rounded-xl border ${hairline} bg-slate-950/45 px-3 py-2.5 text-[13px] text-slate-100 transition hover:border-sky-400/30`;
+const selectField = `${focus} min-w-0 appearance-none rounded-xl border ${hairline} bg-surface/45 px-3 py-2.5 text-[13px] text-fg-strong transition hover:border-accent/30`;
 const checkbox =
-  "size-3.5 cursor-pointer rounded border-sky-200/20 bg-slate-950/45 text-sky-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-default";
+  "size-3.5 cursor-pointer rounded border-line/20 bg-surface/45 text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-default";
 const range =
-  "h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-400/15 outline-none [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-sky-400 [&::-moz-range-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)] [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-sky-400 [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)]";
+  "h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-400/15 outline-none [&::-moz-range-thumb]:h-3.5 [&::-moz-range-thumb]:w-3.5 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-0 [&::-moz-range-thumb]:bg-accent [&::-moz-range-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)] [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:shadow-[0_0_0_4px_rgba(56,189,248,0.16)]";
 // One scrollbar treatment for every scrolling region in the panel: the
 // ranked list already had it inline, the controls column was left with the
 // platform default, which on Windows is a wide light-grey bar painted over
 // the values at the right edge.
 const scrollArea =
-  "overscroll-contain [scrollbar-color:rgba(56,189,248,0.28)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-sky-400/25 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1.5";
-const secondaryButton = `${focus} rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-300 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-50 disabled:cursor-default disabled:opacity-35 disabled:hover:border-sky-200/10 disabled:hover:bg-slate-950/25 disabled:hover:text-slate-300`;
+  "overscroll-contain [scrollbar-color:rgba(56,189,248,0.28)_transparent] [scrollbar-width:thin] [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-accent/25 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1.5";
+const secondaryButton = `${focus} rounded-xl border border-line/10 bg-surface/25 text-fg-muted transition hover:border-accent/50 hover:bg-accent/5 hover:text-slate-50 disabled:cursor-default disabled:opacity-35 disabled:hover:border-line/10 disabled:hover:bg-surface/25 disabled:hover:text-fg-muted`;
 
 const nameOf = (id: string) => countries.find((c) => c.id === id)?.name ?? id;
 
@@ -105,8 +105,8 @@ function CountryPanel({
 }) {
   const row = (label: string, value: string | null) => (
     <div className="flex items-baseline justify-between gap-3">
-      <dt className="text-slate-400">{label}</dt>
-      <dd className={`m-0 font-mono ${value === null ? "italic text-slate-500" : "text-slate-200"}`}>
+      <dt className="text-fg-subtle">{label}</dt>
+      <dd className={`m-0 font-mono ${value === null ? "italic text-fg-subtle" : "text-fg"}`}>
         {value ?? "not reported"}
       </dd>
     </div>
@@ -120,18 +120,18 @@ function CountryPanel({
         {title} ({count})
       </span>
       {rows.length === 0 ? (
-        <p className="m-0 text-xs italic text-slate-500">none in this year&rsquo;s data</p>
+        <p className="m-0 text-xs italic text-fg-subtle">none in this year&rsquo;s data</p>
       ) : (
         <ol className="m-0 flex list-none flex-col gap-1.5 p-0">
           {rows.map((c) => (
             <li key={c.id} className="flex flex-col gap-0.5 text-xs">
               <span className="flex items-baseline justify-between gap-3">
-                <span className="truncate text-slate-200">{nameOf(c.id)}</span>
-                <span className="font-mono text-slate-300 tabular-nums">
+                <span className="truncate text-fg">{nameOf(c.id)}</span>
+                <span className="font-mono text-fg-muted tabular-nums">
                   {formatUsd(c.total)} &middot; {(c.share * 100).toFixed(0)}%
                 </span>
               </span>
-              <span className="font-mono text-[10px] text-slate-500">{split(c)}</span>
+              <span className="font-mono text-[10px] text-fg-subtle">{split(c)}</span>
             </li>
           ))}
         </ol>
@@ -142,7 +142,7 @@ function CountryPanel({
   return (
     <section className={section} data-testid="country-panel">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="m-0 truncate text-sm font-semibold text-slate-100">{nameOf(id)}</h2>
+        <h2 className="m-0 truncate text-sm font-semibold text-fg-strong">{nameOf(id)}</h2>
         <button
           className={`${secondaryButton} shrink-0 px-2.5 py-1 text-[11px]`}
           onClick={onClose}
@@ -191,15 +191,15 @@ function PairPanel({
   const direction = (d: Direction) => (
     <div className="flex flex-col gap-0.5 text-xs">
       <span className="flex items-baseline justify-between gap-3">
-        <span className="text-slate-300">
+        <span className="text-fg-muted">
           {nameOf(d.from)} on {nameOf(d.to)}
         </span>
-        <span className="font-mono text-slate-200">{formatUsd(d.total)}</span>
+        <span className="font-mono text-fg">{formatUsd(d.total)}</span>
       </span>
-      <span className="font-mono text-[10px] text-slate-500">
+      <span className="font-mono text-[10px] text-fg-subtle">
         bank {formatUsd(d.bank)} &middot; portfolio {formatUsd(d.portfolio)}
       </span>
-      <span className="font-mono text-[10px] text-slate-400">
+      <span className="font-mono text-[10px] text-fg-subtle">
         {d.total > 0 ? `${(d.impactRatio * 100).toFixed(1)}% of ${nameOf(d.from)}\u2019s loss buffer` : "no claim"}
       </span>
     </div>
@@ -208,7 +208,7 @@ function PairPanel({
   return (
     <section className={section} data-testid="pair-panel">
       <div className="flex items-center justify-between gap-3">
-        <h2 className="m-0 truncate text-sm font-semibold text-slate-100">
+        <h2 className="m-0 truncate text-sm font-semibold text-fg-strong">
           {nameOf(a)} &harr; {nameOf(b)}
         </h2>
         <button
@@ -526,7 +526,7 @@ function App() {
   const hiddenFinancialCenterCount = rankedAll.length - ranked.length;
 
   return (
-    <div className="relative h-dvh w-full overflow-hidden bg-[#02050c] font-sans text-slate-300 antialiased selection:bg-sky-400/20 selection:text-slate-50">
+    <div className="relative h-dvh w-full overflow-hidden bg-page font-sans text-fg-muted antialiased selection:bg-accent/20 selection:text-slate-50">
       <div className="absolute inset-0">
         {yearData && (
           <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
@@ -542,7 +542,7 @@ function App() {
           </Canvas>
         )}
         {yearLoading && (
-          <div className={`${glass} absolute bottom-5 left-5 z-10 rounded-xl px-3 py-1.5 font-mono text-xs text-slate-300`}>
+          <div className={`${glass} absolute bottom-5 left-5 z-10 rounded-xl px-3 py-1.5 font-mono text-xs text-fg-muted`}>
             Loading {displayYear}&hellip;
           </div>
         )}
@@ -553,10 +553,10 @@ function App() {
           and the year/model/country are the whole claim being made. */}
       {embedded && (
         <div className={`${glass} pointer-events-none absolute inset-x-3 bottom-3 z-10 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 rounded-xl px-3 py-2`}>
-          <span className="font-mono text-[11px] text-slate-300">
+          <span className="font-mono text-[11px] text-fg-muted">
             {shockedId ? (
               <>
-                <strong className="font-semibold text-slate-100">
+                <strong className="font-semibold text-fg-strong">
                   {countries.find((c) => c.id === shockedId)?.name ?? shockedId}
                 </strong>
                 {` shocked ${Math.round(magnitude * 100)}% · ${displayYear} · `}
@@ -568,7 +568,7 @@ function App() {
             )}
           </span>
           <a
-            className={`${focus} pointer-events-auto font-mono text-[11px] text-sky-400 underline decoration-sky-400/30 underline-offset-2 hover:decoration-sky-400`}
+            className={`${focus} pointer-events-auto font-mono text-[11px] text-accent underline decoration-accent/30 underline-offset-2 hover:decoration-accent`}
             href={fullAppUrl()}
             target="_blank"
             rel="noreferrer"
@@ -582,12 +582,12 @@ function App() {
       <nav
         className={`${glass} fixed left-3 right-3 top-3 z-20 flex min-h-14 items-center justify-between rounded-2xl px-4 py-3 sm:left-4 sm:right-4 sm:top-4`}
       >
-        <span className="font-mono text-[14.5px] font-semibold tracking-[-0.02em] text-slate-100">
-          debt<span className="text-sky-400">rank</span>
-          <span className="text-slate-500">-globe</span>
+        <span className="font-mono text-[14.5px] font-semibold tracking-[-0.02em] text-fg-strong">
+          debt<span className="text-accent">rank</span>
+          <span className="text-fg-subtle">-globe</span>
         </span>
         <button
-          className={`${focus} group flex size-9 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-sky-200/10 bg-slate-950/25 transition hover:border-sky-400/50 hover:bg-sky-400/5 ${
+          className={`${focus} group flex size-9 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border border-line/10 bg-surface/25 transition hover:border-accent/50 hover:bg-accent/5 ${
             panelOpen ? "sm:hidden" : ""
           }`}
           aria-label={panelOpen ? "Close controls" : "Open controls"}
@@ -603,7 +603,7 @@ function App() {
 
       {!embedded && (
       <aside
-        className={`fixed bottom-0 right-0 top-20 z-30 flex min-h-0 w-full flex-col gap-4 overflow-hidden border-l border-sky-200/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.985),rgba(2,7,15,0.98))] px-4 pb-5 pt-4 shadow-[-24px_0_100px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-transform duration-300 ease-out motion-reduce:transition-none sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5 ${
+        className={`fixed bottom-0 right-0 top-20 z-30 flex min-h-0 w-full flex-col gap-4 overflow-hidden border-l border-line/10 bg-[linear-gradient(160deg,rgba(10,23,39,0.985),rgba(2,7,15,0.98))] px-4 pb-5 pt-4 shadow-[-24px_0_100px_rgba(0,0,0,0.28)] backdrop-blur-2xl transition-transform duration-300 ease-out motion-reduce:transition-none sm:top-0 sm:w-[380px] sm:gap-5 sm:px-6 sm:pb-6 sm:pt-5 ${
           panelOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -612,7 +612,7 @@ function App() {
             Controls
           </span>
           <button
-            className={`${focus} flex size-9 cursor-pointer items-center justify-center rounded-xl border border-sky-200/10 bg-slate-950/25 text-slate-300 transition hover:border-sky-400/50 hover:bg-sky-400/5 hover:text-slate-100`}
+            className={`${focus} flex size-9 cursor-pointer items-center justify-center rounded-xl border border-line/10 bg-surface/25 text-fg-muted transition hover:border-accent/50 hover:bg-accent/5 hover:text-fg-strong`}
             aria-label="Close controls"
             onClick={() => setPanelOpen(false)}
           >
@@ -628,8 +628,8 @@ function App() {
           className={`${scrollArea} flex min-h-0 shrink flex-col gap-4 overflow-y-auto pr-1.5 sm:gap-5`}
         >
         <header className="flex shrink-0 flex-col gap-3">
-          <span className={`${sectionLabel} text-sky-400`}>Systemic risk simulation</span>
-          <p className="text-[13px] leading-5 text-slate-300">
+          <span className={`${sectionLabel} text-accent`}>Systemic risk simulation</span>
+          <p className="text-[13px] leading-5 text-fg-muted">
             Distress propagation over a real cross-border exposure network
             sourced from the World Bank and BIS. Click a country on the
             globe, or pick one below, to simulate a default.
@@ -637,11 +637,11 @@ function App() {
           <dl className={`mt-1 grid grid-cols-2 gap-4 border-t ${hairline} pt-4`}>
             <div>
               <dt className={sectionLabel}>Countries</dt>
-              <dd className="mt-1.5 font-mono text-lg tabular-nums text-slate-100">{countries.length}</dd>
+              <dd className="mt-1.5 font-mono text-lg tabular-nums text-fg-strong">{countries.length}</dd>
             </div>
             <div>
               <dt className={sectionLabel}>Exposure edges</dt>
-              <dd className="mt-1.5 font-mono text-lg tabular-nums text-slate-100">
+              <dd className="mt-1.5 font-mono text-lg tabular-nums text-fg-strong">
                 {(yearData?.edges.length ?? 0).toLocaleString("en-US")}
               </dd>
             </div>
@@ -651,9 +651,9 @@ function App() {
         <section className={section}>
           <h2 className={sectionLabel}>Network</h2>
 
-          <label className="flex flex-col gap-2.5 text-xs text-slate-300">
+          <label className="flex flex-col gap-2.5 text-xs text-fg-muted">
             <span className="flex items-center justify-between">
-              Year <strong className="font-mono text-sm font-medium text-slate-100">{displayYear}</strong>
+              Year <strong className="font-mono text-sm font-medium text-fg-strong">{displayYear}</strong>
             </span>
             <input
               className={range}
@@ -667,7 +667,7 @@ function App() {
           </label>
 
           <label
-            className={`flex items-center gap-2 text-xs text-slate-300 ${
+            className={`flex items-center gap-2 text-xs text-fg-muted ${
               portfolioDataAvailable ? "cursor-pointer" : "cursor-default opacity-40"
             }`}
           >
@@ -679,7 +679,7 @@ function App() {
               onChange={(e) => setIncludePortfolio(e.target.checked)}
             />
             Include portfolio investment
-            {!portfolioDataAvailable && <span className="font-mono text-slate-400">(no data for {displayYear})</span>}
+            {!portfolioDataAvailable && <span className="font-mono text-fg-subtle">(no data for {displayYear})</span>}
           </label>
           <p className={`-mt-1 ${note}`}>
             Adds IMF CPIS cross-border bond/equity holdings as a second exposure
@@ -692,15 +692,15 @@ function App() {
           <h2 className={sectionLabel}>Scenario</h2>
 
           <div
-            className={`flex overflow-hidden rounded-xl border ${hairline} bg-slate-950/25 p-1`}
+            className={`flex overflow-hidden rounded-xl border ${hairline} bg-surface/25 p-1`}
             role="group"
             aria-label="Contagion model"
           >
             <button
               className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
                 model === "debtrank"
-                  ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
-                  : "text-slate-300 hover:text-slate-100"
+                  ? "bg-accent/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
+                  : "text-fg-muted hover:text-fg-strong"
               }`}
               onClick={() => onModelChange("debtrank")}
             >
@@ -709,8 +709,8 @@ function App() {
             <button
               className={`${focus} flex-1 cursor-pointer rounded-lg px-3 py-2 text-xs font-medium transition ${
                 model === "eisenberg-noe"
-                  ? "bg-sky-400/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
-                  : "text-slate-300 hover:text-slate-100"
+                  ? "bg-accent/12 text-sky-100 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.2)]"
+                  : "text-fg-muted hover:text-fg-strong"
               }`}
               onClick={() => onModelChange("eisenberg-noe")}
             >
@@ -751,10 +751,10 @@ function App() {
             ))}
           </select>
 
-          <label className="flex flex-col gap-2.5 text-xs text-slate-300">
+          <label className="flex flex-col gap-2.5 text-xs text-fg-muted">
             <span className="flex items-center justify-between">
               Shock magnitude{" "}
-              <strong className="font-mono text-sm font-medium text-slate-100">
+              <strong className="font-mono text-sm font-medium text-fg-strong">
                 {Math.round(magnitude * 100)}%
               </strong>
             </span>
@@ -776,15 +776,15 @@ function App() {
             {extraShocks.map((e, i) => (
               <div
                 key={e.id}
-                className={`flex items-center gap-2 rounded-xl border ${hairline} bg-slate-950/25 px-2.5 py-2`}
+                className={`flex items-center gap-2 rounded-xl border ${hairline} bg-surface/25 px-2.5 py-2`}
               >
-                <span className="min-w-0 flex-1 truncate text-xs text-slate-200">
+                <span className="min-w-0 flex-1 truncate text-xs text-fg">
                   {countries.find((c) => c.id === e.id)?.name ?? e.id}
                 </span>
-                <label className="flex items-center gap-1 font-mono text-[11px] text-slate-300">
+                <label className="flex items-center gap-1 font-mono text-[11px] text-fg-muted">
                   <span className="sr-only">{`Magnitude for ${e.id}`}</span>
                   <input
-                    className={`${focus} w-11 rounded-md border ${hairline} bg-slate-950/50 px-1 py-1 text-right text-slate-100`}
+                    className={`${focus} w-11 rounded-md border ${hairline} bg-surface/50 px-1 py-1 text-right text-fg-strong`}
                     type="number"
                     min={5}
                     max={100}
@@ -797,11 +797,11 @@ function App() {
                   />
                   %
                 </label>
-                <label className="flex items-center gap-1 font-mono text-[11px] text-slate-300">
+                <label className="flex items-center gap-1 font-mono text-[11px] text-fg-muted">
                   <span className="sr-only">{`Arrival round for ${e.id}`}</span>
                   round
                   <input
-                    className={`${focus} w-9 rounded-md border ${hairline} bg-slate-950/50 px-1 py-1 text-right text-slate-100 disabled:opacity-40`}
+                    className={`${focus} w-9 rounded-md border ${hairline} bg-surface/50 px-1 py-1 text-right text-fg-strong disabled:opacity-40`}
                     type="number"
                     min={0}
                     max={MAX_DELAY}
@@ -814,7 +814,7 @@ function App() {
                   />
                 </label>
                 <button
-                  className={`${focus} flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-md text-slate-300 transition hover:bg-sky-400/5 hover:text-slate-100`}
+                  className={`${focus} flex size-6 shrink-0 cursor-pointer items-center justify-center rounded-md text-fg-muted transition hover:bg-accent/5 hover:text-fg-strong`}
                   aria-label={`Remove ${e.id} from the sequence`}
                   onClick={() => updateExtras(extraShocks.filter((_, j) => j !== i))}
                 >
@@ -824,7 +824,7 @@ function App() {
             ))}
 
             <select
-              className={`${focus} min-w-0 appearance-none rounded-xl border border-dashed border-sky-200/15 bg-transparent px-3 py-2 text-xs text-slate-300 transition hover:border-sky-400/40 hover:text-slate-100 disabled:cursor-default disabled:opacity-35`}
+              className={`${focus} min-w-0 appearance-none rounded-xl border border-dashed border-line/15 bg-transparent px-3 py-2 text-xs text-fg-muted transition hover:border-accent/40 hover:text-fg-strong disabled:cursor-default disabled:opacity-35`}
               value=""
               disabled={!shockedId}
               onChange={(e) => addExtraShock(e.target.value)}
@@ -873,7 +873,7 @@ function App() {
             <div
               role="status"
               aria-live="polite"
-              className={`flex items-center justify-between rounded-lg border ${hairline} bg-sky-400/[0.035] px-2.5 py-2 font-mono text-xs text-slate-300`}
+              className={`flex items-center justify-between rounded-lg border ${hairline} bg-accent/[0.035] px-2.5 py-2 font-mono text-xs text-fg-muted`}
             >
               {result.kind === "debtrank" ? (
                 <>
@@ -881,21 +881,21 @@ function App() {
                     Iteration {iteration} / {result.history.length - 1}
                   </span>
                   <span>
-                    impact <strong className="font-semibold text-amber-400">{result.debtrank.toFixed(4)}</strong>
+                    impact <strong className="font-semibold text-warn">{result.debtrank.toFixed(4)}</strong>
                   </span>
                 </>
               ) : (
                 <>
                   <span>Converged in {result.iterations} iterations</span>
                   <span>
-                    shortfall <strong className="font-semibold text-amber-400">{result.aggregate.toFixed(4)}</strong>
+                    shortfall <strong className="font-semibold text-warn">{result.aggregate.toFixed(4)}</strong>
                   </span>
                 </>
               )}
             </div>
 
             {shockedId && (
-              <div className={`flex flex-col gap-1.5 rounded-xl border ${hairline} bg-slate-950/25 px-3 py-2.5`}>
+              <div className={`flex flex-col gap-1.5 rounded-xl border ${hairline} bg-surface/25 px-3 py-2.5`}>
                 <div className="flex items-center justify-between gap-3">
                   <span className={sectionLabel}>Market check ({year})</span>
                   <button
@@ -906,7 +906,7 @@ function App() {
                   </button>
                 </div>
                 <div className="flex flex-col gap-0.5 text-xs">
-                  <span className="font-mono text-slate-300 [&_strong]:font-semibold [&_strong]:text-sky-400">
+                  <span className="font-mono text-fg-muted [&_strong]:font-semibold [&_strong]:text-accent">
                     10Y yield{" "}
                     {getBondYield(shockedId, year) !== null ? (
                       <>
@@ -923,18 +923,18 @@ function App() {
                         )}
                       </>
                     ) : (
-                      <span className="font-sans italic text-slate-400">no data</span>
+                      <span className="font-sans italic text-fg-subtle">no data</span>
                     )}
                   </span>
-                  <span className="font-mono text-slate-300 [&_strong]:font-semibold [&_strong]:text-sky-400">
+                  <span className="font-mono text-fg-muted [&_strong]:font-semibold [&_strong]:text-accent">
                     Policy rate{" "}
                     {getPolicyRate(shockedId, year) !== null ? (
                       <strong>{getPolicyRate(shockedId, year)?.toFixed(2)}%</strong>
                     ) : (
-                      <span className="font-sans italic text-slate-400">no data</span>
+                      <span className="font-sans italic text-fg-subtle">no data</span>
                     )}
                   </span>
-                  <span className="font-mono text-slate-300 [&_strong]:font-semibold [&_strong]:text-sky-400">
+                  <span className="font-mono text-fg-muted [&_strong]:font-semibold [&_strong]:text-accent">
                     Stock index (YoY){" "}
                     {getStockChange(shockedId, year) !== null ? (
                       <strong>
@@ -942,7 +942,7 @@ function App() {
                         {getStockChange(shockedId, year)?.toFixed(1)}%
                       </strong>
                     ) : (
-                      <span className="font-sans italic text-slate-400">no data</span>
+                      <span className="font-sans italic text-fg-subtle">no data</span>
                     )}
                   </span>
                 </div>
@@ -953,7 +953,7 @@ function App() {
               <>
                 <YearAnalysisChart points={analysisPoints} />
                 <button
-                  className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-sky-400`}
+                  className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-accent`}
                   onClick={() => setAnalysisPoints(null)}
                 >
                   Hide chart
@@ -961,7 +961,7 @@ function App() {
               </>
             ) : (
               <button
-                className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-sky-400`}
+                className={`${secondaryButton} self-start px-3 py-1.5 text-xs text-accent`}
                 onClick={viewAcrossYears}
                 disabled={analysisLoading}
               >
@@ -972,8 +972,8 @@ function App() {
         ) : (
           <section className={section}>
             <h2 className={sectionLabel}>Distress scale</h2>
-            <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-amber-400 to-red-500" />
-            <div className="-mt-1 flex justify-between text-[11px] text-slate-400">
+            <div className="h-1.5 rounded-full bg-linear-to-r from-slate-700 via-warn to-danger" />
+            <div className="-mt-1 flex justify-between text-[11px] text-fg-subtle">
               <span>no stress</span>
               <span>full stress</span>
             </div>
@@ -1026,7 +1026,7 @@ function App() {
               data-testid="ranked-results"
               className={`${scrollArea} min-h-[140px] flex-1 overflow-y-auto pr-1.5`}
             >
-              <label className="flex shrink-0 cursor-pointer items-center gap-2 pb-2.5 text-[11px] text-slate-300">
+              <label className="flex shrink-0 cursor-pointer items-center gap-2 pb-2.5 text-[11px] text-fg-muted">
                 <input
                   type="checkbox"
                   className={checkbox}
@@ -1035,7 +1035,7 @@ function App() {
                 />
                 Hide financial centers
                 {hideFinancialCenters && hiddenFinancialCenterCount > 0 && (
-                  <span className="font-mono text-slate-400">({hiddenFinancialCenterCount} hidden)</span>
+                  <span className="font-mono text-fg-subtle">({hiddenFinancialCenterCount} hidden)</span>
                 )}
               </label>
               {!hideFinancialCenters && rankedAll.some((r) => isFinancialCenter(r.id)) && (
@@ -1045,7 +1045,7 @@ function App() {
                   multiples of local GDP -- they tend to rank high for almost
                   any shock. See{" "}
                   <a
-                    className="underline decoration-slate-600 underline-offset-2 hover:text-sky-400"
+                    className="underline decoration-slate-600 underline-offset-2 hover:text-accent"
                     href="https://www.bis.org/publ/qtrpdf/r_qt2206b.htm"
                     target="_blank"
                     rel="noreferrer"
@@ -1062,7 +1062,7 @@ function App() {
                 </p>
               )}
               {ranked.length === 0 ? (
-                <p className="pb-2 text-xs italic text-slate-400">
+                <p className="pb-2 text-xs italic text-fg-subtle">
                   All affected countries are financial centers, hidden above.
                 </p>
               ) : (
@@ -1072,14 +1072,14 @@ function App() {
                   return (
                   <li
                     key={r.id}
-                    className={`group grid grid-cols-[minmax(0,1fr)_88px_44px] items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-xs transition-colors hover:bg-sky-400/[0.045] ${
+                    className={`group grid grid-cols-[minmax(0,1fr)_88px_44px] items-center gap-2.5 rounded-lg px-1.5 py-1.5 text-xs transition-colors hover:bg-accent/[0.045] ${
                       canExpand ? "cursor-pointer" : ""
                     }`}
                     onClick={() => canExpand && setExpandedRowId((id) => (id === r.id ? null : r.id))}
                   >
                     <span
                       className={`truncate ${
-                        r.id === shockedId ? "font-semibold text-amber-400" : "text-slate-200"
+                        r.id === shockedId ? "font-semibold text-warn" : "text-fg"
                       }`}
                       title={
                         [
@@ -1091,7 +1091,7 @@ function App() {
                       }
                     >
                       {r.name}
-                      {isFinancialCenter(r.id) && <span className="ml-1 text-slate-500">*</span>}
+                      {isFinancialCenter(r.id) && <span className="ml-1 text-fg-subtle">*</span>}
                     </span>
                     <span className="relative h-1.5 overflow-hidden rounded-full bg-slate-400/12">
                       <span
@@ -1100,32 +1100,32 @@ function App() {
                           transform: `scaleX(${r.level})`,
                           backgroundImage:
                             r.source && r.source !== "reserves"
-                              ? "linear-gradient(to right, #fbbf24, #ef4444), repeating-linear-gradient(135deg, rgba(2,5,12,0.4) 0px, rgba(2,5,12,0.4) 2px, transparent 2px, transparent 5px)"
-                              : "linear-gradient(to right, #fbbf24, #ef4444)",
+                              ? "linear-gradient(to right, var(--distress-low), var(--distress-high)), repeating-linear-gradient(135deg, rgba(2,5,12,0.4) 0px, rgba(2,5,12,0.4) 2px, transparent 2px, transparent 5px)"
+                              : "linear-gradient(to right, var(--distress-low), var(--distress-high))",
                         }}
                       />
                     </span>
-                    <span className="text-right font-mono text-slate-300 tabular-nums">
+                    <span className="text-right font-mono text-fg-muted tabular-nums">
                       {(r.level * 100).toFixed(1)}%
                     </span>
                     {expandedRowId === r.id && network && shockedId && (() => {
                       const shockedName = countries.find((c) => c.id === shockedId)?.name ?? shockedId;
                       const explanation = explainExposure(network, r.id, shockedId);
                       return (
-                        <div className="col-span-3 -mt-1 flex flex-col gap-0.5 rounded-lg bg-slate-950/40 px-2.5 py-2 font-mono text-[11px] text-slate-300">
+                        <div className="col-span-3 -mt-1 flex flex-col gap-0.5 rounded-lg bg-surface/40 px-2.5 py-2 font-mono text-[11px] text-fg-muted">
                           {explanation.claimOnShocked > 0 || explanation.owedToShocked > 0 ? (
                             <>
                               {explanation.claimOnShocked > 0 && (
                                 <span>
                                   Claim on {shockedName}:{" "}
-                                  <strong className="text-slate-200">{formatUsd(explanation.claimOnShocked)}</strong>
+                                  <strong className="text-fg">{formatUsd(explanation.claimOnShocked)}</strong>
                                   {" "}&middot; {(explanation.impactRatio * 100).toFixed(1)}% of its loss buffer
                                 </span>
                               )}
                               {explanation.owedToShocked > 0 && (
                                 <span>
                                   Owes {shockedName}:{" "}
-                                  <strong className="text-slate-200">{formatUsd(explanation.owedToShocked)}</strong>
+                                  <strong className="text-fg">{formatUsd(explanation.owedToShocked)}</strong>
                                 </span>
                               )}
                             </>
@@ -1143,7 +1143,7 @@ function App() {
                           )}
                           <span className="mt-1 flex gap-3 font-sans text-[11px]">
                             <button
-                              className={`${focus} text-sky-400 underline decoration-slate-600 underline-offset-2 hover:text-sky-300`}
+                              className={`${focus} text-accent underline decoration-slate-600 underline-offset-2 hover:text-accent-hover`}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 openDetails(r.id);
@@ -1152,7 +1152,7 @@ function App() {
                               Country details
                             </button>
                             <button
-                              className={`${focus} text-sky-400 underline decoration-slate-600 underline-offset-2 hover:text-sky-300`}
+                              className={`${focus} text-accent underline decoration-slate-600 underline-offset-2 hover:text-accent-hover`}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 openPair(r.id, shockedId);

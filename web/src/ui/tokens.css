@@ -1,0 +1,62 @@
+/* Design tokens: the one place the app's colours live.
+ *
+ * Nothing here is new. Every value is one the app already used, so moving
+ * onto tokens changes no pixel. Three layers read them:
+ *   - the HTML, through the Tailwind utilities generated from @theme below
+ *     (bg-surface, text-fg-muted, border-line, text-accent, ...);
+ *   - the SVG chart, through var(--viz-*);
+ *   - the WebGL globe, through token("--viz-*") in ./token.ts.
+ * Changing a value here reaches all three.
+ */
+
+/* Roles over Tailwind's palette. `inline` keeps them as references, so the
+ * utilities still use the palette's own values (and opacity modifiers such
+ * as bg-surface/25 keep working). */
+@theme inline {
+  --color-surface: var(--color-slate-950);
+  --color-line: var(--color-sky-200);
+  --color-fg-strong: var(--color-slate-100);
+  --color-fg: var(--color-slate-200);
+  --color-fg-muted: var(--color-slate-300);
+  --color-fg-subtle: var(--color-slate-400);
+  --color-accent: var(--color-sky-400);
+  --color-accent-hover: var(--color-sky-300);
+  --color-warn: var(--color-amber-400);
+  --color-danger: var(--color-red-500);
+}
+
+@theme {
+  --color-page: #02050c;
+}
+
+:root {
+  /* Ranking bars and the legend. */
+  --distress-low: #fbbf24;
+  --distress-high: #ef4444;
+
+  /* The globe. Hex on purpose: three.js cannot parse the oklch values
+   * Tailwind's palette uses. Several approximate a palette shade from an
+   * older Tailwind and are not identical to it; unifying them with the HTML
+   * palette would be a visible change and is a separate decision. */
+  --viz-space: #040611;
+  --viz-globe-surface: #050b1a;
+  --viz-coastline: #a8c4e8;
+  --viz-accent: #38bdf8;
+  --viz-neutral: #94a3b8;
+  --viz-distress-mid: #f59e0b;
+  --viz-distress-high: #dc2626;
+  --viz-shock: #fde047;
+  --viz-arc-low: #164e63;
+  --viz-arc-high: #facc15;
+  --viz-estimated-ring: #64748b;
+  --viz-light-cool: #e0f2fe;
+  --viz-light-warm: #f59e0b;
+
+  /* The year chart: three validated categorical hues and a neutral for the
+   * reference series (see the note above SERIES in YearAnalysisChart.tsx). */
+  --viz-chart-reference: #e7ecf5;
+  --viz-chart-a: #3987e5;
+  --viz-chart-b: #d95926;
+  --viz-chart-c: #199e70;
+  --viz-chart-axis: #94a3b8;
+}

@@ -20,28 +20,28 @@ const SERIES: Series[] = [
     key: "modelImpact",
     label: "Model impact",
     unit: "",
-    color: "#e7ecf5",
+    color: "var(--viz-chart-reference)",
     format: (v) => v.toFixed(3),
   },
   {
     key: "bondYield",
     label: "10Y bond yield",
     unit: "%",
-    color: "#3987e5",
+    color: "var(--viz-chart-a)",
     format: (v) => `${v.toFixed(2)}%`,
   },
   {
     key: "policyRate",
     label: "Policy rate",
     unit: "%",
-    color: "#d95926",
+    color: "var(--viz-chart-b)",
     format: (v) => `${v.toFixed(2)}%`,
   },
   {
     key: "stockChange",
     label: "Stock index YoY",
     unit: "%",
-    color: "#199e70",
+    color: "var(--viz-chart-c)",
     format: (v) => `${v.toFixed(1)}%`,
   },
 ];
@@ -112,7 +112,7 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
   const crosshairX = hoverIndex !== null ? xFor(hoverIndex, points.length) : null;
 
   return (
-    <div className="relative rounded-xl border border-sky-200/10 bg-slate-950/25 px-3 pb-2 pt-3">
+    <div className="relative rounded-xl border border-line/10 bg-surface/25 px-3 pb-2 pt-3">
       <svg
         className="block overflow-visible"
         viewBox={`0 0 ${WIDTH} ${TOTAL_HEIGHT}`}
@@ -139,7 +139,7 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
                 x={WIDTH}
                 y={10}
                 textAnchor="end"
-                fill="#94a3b8"
+                fill="var(--viz-chart-axis)"
                 fontFamily="ui-monospace, Cascadia Code, Consolas, monospace"
                 fontSize={9}
               >
@@ -173,7 +173,7 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
             y1={0}
             x2={crosshairX}
             y2={TOTAL_HEIGHT}
-            stroke="#94a3b8"
+            stroke="var(--viz-chart-axis)"
             strokeDasharray="2 2"
             strokeOpacity={0.6}
             strokeWidth={1}
@@ -182,14 +182,14 @@ export function YearAnalysisChart({ points }: { points: YearPoint[] }) {
         )}
       </svg>
 
-      <div className="flex justify-between px-0.5 pt-0.5 font-mono text-[10px] text-slate-400">
+      <div className="flex justify-between px-0.5 pt-0.5 font-mono text-[10px] text-fg-subtle">
         <span>{points[0]?.year}</span>
         <span>{points[points.length - 1]?.year}</span>
       </div>
 
       {hover && (
-        <div className="pointer-events-none absolute right-2 top-2 flex flex-col gap-px rounded-lg border border-sky-200/10 bg-slate-950/95 px-2.5 py-2 font-mono text-[10.5px] shadow-xl">
-          <strong className="mb-0.5 font-sans text-slate-100">{hover.year}</strong>
+        <div className="pointer-events-none absolute right-2 top-2 flex flex-col gap-px rounded-lg border border-line/10 bg-surface/95 px-2.5 py-2 font-mono text-[10.5px] shadow-xl">
+          <strong className="mb-0.5 font-sans text-fg-strong">{hover.year}</strong>
           {SERIES.map((series) => {
             const v = hover[series.key];
             return (
