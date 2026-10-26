@@ -149,5 +149,7 @@ sources, not this repository:
   is not settled — see the [data refresh
   plan](plans/2026-09-23-automated-data-refresh.md).
 
-The derived network construction and the code are MIT — see
-[LICENSE](../LICENSE).
+The code, and the way the network is constructed from these sources, are
+MIT — see [LICENSE](../LICENSE). The data values in these files are not ours to
+license: they stay under the terms of the sources above, which are not MIT
+(the IMF's, for example, require permission for commercial reuse).
