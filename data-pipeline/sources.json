@@ -24,7 +24,7 @@
       "detect": { "type": "json", "path": "datasets.docs.0.updated_at" },
       "cadence": "semi-annual, with a long lag",
       "stale_after_days": 270,
-      "licence": "IMF data terms, retrieved through DBnomics' JSON mirror of the IMF SDMX API",
+      "licence": "IMF Special Terms for Statistical Data (https://www.imf.org/en/about/copyright-and-terms, read 2026-10-26): data may be downloaded, copied, used to make derivative works and distributed with attribution to the IMF as the source and no alteration that affects its nature or accuracy; commercial reuse needs permission from copyright@imf.org; bulk download by automated technology needs explicit permission. Retrieved today through DBnomics' mirror of the IMF SDMX API.",
       "attribution": "International Monetary Fund, Coordinated Portfolio Investment Survey"
     },
     {
@@ -42,14 +42,14 @@
     },
     {
       "id": "fred",
-      "name": "FRED market data",
-      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10",
+      "name": "OECD market series, retrieved through FRED",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=IRLTLT01USM156N",
       "fetch": "fetch_market_data.py",
       "may_change": ["market_data"],
       "probe": "none",
       "cadence": "daily upstream; the app uses year-end values and rebuilds by hand",
-      "licence": "Varies per FRED series; check https://fred.stlouisfed.org/legal/ before redistributing. Not recorded in docs/data-api.md yet.",
-      "attribution": "Federal Reserve Bank of St. Louis, FRED"
+      "licence": "The three series used (IRLTLT01, IRSTCI01, SPASTT01) are OECD data that FRED labels 'Copyrighted: Citation Required' (checked on the US series, 2026-10-26). The OECD's own terms allow copying, adapting and redistributing data, commercially too, with credit to the OECD (https://www.oecd.org/en/about/terms-conditions.html, last updated 2024-07-01), unless a dataset has third-party restrictions. UNRESOLVED: FRED's own terms (https://fred.stlouisfed.org/legal/) prohibit storing FRED content in a database or archive, which retrieving through FRED and committing market_data.json arguably does. See docs/plans/2026-09-23-automated-data-refresh.md.",
+      "attribution": "OECD (2026), Main Economic Indicators, via FRED, Federal Reserve Bank of St. Louis, https://fred.stlouisfed.org/ (retrieved 2026-07-30, the date market_data.json was last built)"
     },
     {
       "id": "natural_earth_borders",

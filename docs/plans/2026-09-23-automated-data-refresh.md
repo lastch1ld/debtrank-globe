@@ -110,6 +110,26 @@ Each new source is registry entries plus fetch scripts. No new workflows.
 - [ ] IMF WEO (granularity plan Phase 10): cadence of April and October editions, with the edition recorded in the lock file and shown on every projection chart. Check the IMF's terms of use before copying data into the repo.
 - [ ] FRED market data: yearly granularity, so a monthly probe is enough.
 
+## CPIS upstream (looked into 2026-10-26)
+
+Finding 2 holds, and the upstream has moved on:
+
+- **The IMF renamed the dataset.** CPIS is now the dataflow `PIP`, "Portfolio Investment Positions by Counterpart Economy (formerly CPIS)", `IMF.STA:PIP` version 5.0.0, on `https://api.imf.org/external/sdmx/2.1/` (no key; `dataflow/IMF.STA/all/latest` lists 189 flows, `datastructure/IMF.STA/DSD_PIP/latest` gives its dimensions: `COUNTRY`, `ACCOUNTING_ENTRY`, `INDICATOR`, `SECTOR`, `COUNTERPART_SECTOR`, `COUNTERPART_COUNTRY`, `FREQUENCY`).
+- **It has data the mirror lacks.** For the US as reporter, with 244 counterpart economies per year, it has annual positions for **2024 and 2025** and half-yearly ones through 2025-S2, against our data and the DBnomics mirror ending at 2023. I only looked at the US as reporter; whether other reporters have filed 2024 and 2025 is not checked.
+- **Indicator codes, verified** (this resolves the "debt-only" item in the granularity plan, Phase 5): `P_TOTINV_P_USD` total portfolio investment, `P_F3_P_USD` debt securities, `P_F51_P_USD` equity and fund shares, all positions in USD, with long-term (`P_F3_L_P_USD`) and short-term (`P_F3_S_P_USD`) debt split out. Our current series is the total.
+- **Licence caveat before moving to it:** the IMF's terms (https://www.imf.org/en/about/copyright-and-terms) allow copying, derivative works and distribution with attribution, but require permission for commercial reuse and prohibit bulk download by automated technology without explicit permission. A scheduled job pulling ~70 reporters' worth of series is automated download; whether the SDMX API counts as the permitted route is not stated, so ask `copyright@imf.org` first. The same terms bear on `portfolio_edges` being published here under an MIT-licensed repo.
+- **Not done:** no code change; `fetch_cpis.py` still uses the mirror.
+
+## FRED licence (looked into 2026-10-26)
+
+The market indicators (`market_data.json`) come from three OECD series that FRED serves: `IRLTLT01` (10Y yield), `IRSTCI01` (short-term rate), `SPASTT01` (share prices).
+
+- **Who owns it:** the OECD. FRED labels all three "Copyrighted: Citation Required" (read on the US series; the other countries are the same series families, which I assumed rather than checked one by one).
+- **OECD's terms (read directly on oecd.org, last updated 2024-07-01):** data may be extracted, copied, adapted, distributed and embedded for any purpose, commercial included, with credit to the OECD in the form "OECD (year), (dataset name), (data source) DOI or URL (accessed on (date))", unless a dataset has third-party ownership or extra restrictions. Nothing found suggests these three have any.
+- **FRED's terms (quoted from https://fred.stlouisfed.org/legal/ by a page-fetch tool; I did not read the page in a browser, unlike the OECD's and IMF's):** prohibit using FRED content to "store, cache, or archive any portion" of it and to "incorporate any FRED Content in any database, compilation, archive, cache, or other medium". Retrieving through FRED's CSV export and committing the result arguably does that. I am not a lawyer and did not find an exception for citation-required series.
+- **Not done:** the attribution above is now in `docs/data-api.md` and the registry, but the app itself shows these numbers with no credit line; the OECD asks for credit.
+- **Options, not chosen:** (a) leave as is and accept the FRED-terms risk; (b) fetch the same series from the OECD's own API (its SDMX service at sdmx.oecd.org; **I did not check that it offers these series**), so only the OECD's terms apply: a change to `fetch_market_data.py`, and the dataset codes there differ from FRED's `M156N` ids; (c) drop the market check. Needs a decision.
+
 ## Suggested cadences
 
 | Source | Upstream rhythm | Probe | Stale after |
