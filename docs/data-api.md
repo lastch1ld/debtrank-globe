@@ -137,5 +137,19 @@ sources, not this repository:
   Investment Survey](https://data.imf.org/CPIS), retrieved via DBnomics'
   JSON mirror of the IMF SDMX API.
 
-The derived network construction and the code are MIT — see
-[LICENSE](../LICENSE).
+- **Market indicators** (10-year bond yield, short-term rate, share-price
+  change; shown in the app's market check, bundled with the app and not part
+  of these files) — OECD Main Economic Indicators (series `IRLTLT01`,
+  `IRSTCI01`, `SPASTT01`), retrieved through [FRED](https://fred.stlouisfed.org/),
+  Federal Reserve Bank of St. Louis. OECD (2026), Main Economic Indicators,
+  https://fred.stlouisfed.org/ (retrieved 2026-07-30, when the data was last
+  built). The OECD's terms allow
+  reuse with credit; FRED labels these series "Copyrighted: Citation
+  Required". Whether FRED's own terms allow keeping a copy of what it serves
+  is not settled — see the [data refresh
+  plan](plans/2026-09-23-automated-data-refresh.md).
+
+The code, and the way the network is constructed from these sources, are
+MIT — see [LICENSE](../LICENSE). The data values in these files are not ours to
+license: they stay under the terms of the sources above, which are not MIT
+(the IMF's, for example, require permission for commercial reuse).

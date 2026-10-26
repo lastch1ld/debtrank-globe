@@ -80,7 +80,7 @@ This is what makes the tool about *sovereign* debt rather than cross-border bank
 
 - [ ] **BIS counterparty-sector split:** also fetch `L_CP_SECTOR=G` (general government). Store it as an additive `amount_gov` on edges, or as a separate list. Confirm first that coverage in the public LBS file is good enough. Many reporter/counterparty pairs don't publish the sector breakdown, so measure how much would be null before designing the UI around it.
 - [ ] Add a model option "claims on government only" so the shock follows the sovereign channel and not total banking claims.
-- [ ] **CPIS debt-only:** switch to (or add) the debt-securities indicator instead of `I_A_T_T_T_BP6_USD` (total). *Verify the exact indicator code against DBnomics before implementing. It is not confirmed here.* Keep the total as a separate field if equity holdings should still be shown.
+- [ ] **CPIS debt-only:** switch to (or add) the debt-securities indicator instead of `I_A_T_T_T_BP6_USD` (total). *Indicator code now verified, on the IMF's own API rather than DBnomics: `P_F3_P_USD` (debt securities, positions, USD) in `IMF.STA:PIP`; see the refresh plan's "CPIS upstream" section, which also covers the licence caveat.* Keep the total as a separate field if equity holdings should still be shown.
 - [ ] Show the sector and instrument split in the Phase 3 and Phase 4 panels ("of which: claims on the government").
 
 ## Phase 6: Loss vs. buffer mismatch (decision needed)
