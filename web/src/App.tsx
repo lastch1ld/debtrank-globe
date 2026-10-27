@@ -13,7 +13,7 @@ import {
   computeShockResult,
   runAnalysisAcrossYears,
 } from "./lib/analysis";
-import { getBondSpreadVsUS, getBondYield, getPolicyRate, getStockChange } from "./lib/marketData";
+import { MARKET_DATA_CREDIT, getBondSpreadVsUS, getBondYield, getPolicyRate, getStockChange } from "./lib/marketData";
 import {
   DEFAULT_YEAR,
   YEARS,
@@ -904,6 +904,18 @@ function App() {
                     )}
                   </span>
                 </div>
+                <p className={`${note} m-0`}>
+                  Source:{" "}
+                  <a
+                    className={`${focus} underline decoration-slate-600 underline-offset-2 hover:text-accent`}
+                    href={MARKET_DATA_CREDIT.url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {MARKET_DATA_CREDIT.text}
+                  </a>
+                  , retrieved {MARKET_DATA_CREDIT.retrieved}.
+                </p>
               </div>
             )}
 
