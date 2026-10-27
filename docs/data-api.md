@@ -65,14 +65,12 @@ The Eisenberg–Noe liability matrix is this transposed — see
 
 ### `portfolio_edges`
 
-Cross-border **bond and equity** holdings — a largely distinct contagion
-channel from bank lending, and the one that actually carried the 2010 euro
-sovereign crisis. Same three fields as `edges`, without `period`; 6,395 in
-the 2020 file.
-
-**Coverage ends at 2023.** CPIS is a voluntary survey with a reporting lag,
-so 2024 and 2025 carry an empty `portfolio_edges` array rather than stale
-numbers. The key is always present; check its length, don't assume data.
+**Always empty.** This list used to hold cross-border bond and equity
+holdings from the IMF's Coordinated Portfolio Investment Survey. It was
+withdrawn because the IMF's terms require permission for reuse of its data
+that has not been obtained. The key stays, so a consumer that reads it keeps
+working and simply finds nothing; do not rely on it ever being filled again.
+Earlier versions of these files are still in this repository's git history.
 
 ### `pairs.json`
 
@@ -87,7 +85,7 @@ exposure moved without fetching all 21 years:
 
 The key is the two ISO3 ids sorted; `ab` is the sorted-first country's claim
 on the other and `ba` the reverse, one value per year from `first_year`, in
-USD millions. Banking and portfolio layers are summed. Only pairs whose
+USD millions. Banking claims only. Only pairs whose
 combined exposure ever reached `min_peak_usd` are present, so a missing pair
 means "small", not "zero". It is derived from the year files by
 `data-pipeline/build_pairs.py`; a test fails if the two drift apart.
@@ -101,7 +99,7 @@ from debtrank_model import build_exposure_network, run_debtrank
 URL = "https://lastch1ld.github.io/debtrank-globe/data/network/{year}.json"
 snapshot = requests.get(URL.format(year=2020)).json()
 
-network = build_exposure_network(snapshot, include_portfolio=True)
+network = build_exposure_network(snapshot)
 result = run_debtrank(network, {"GRC": 1.0})
 print(result.debtrank)
 ```
@@ -133,9 +131,10 @@ sources, not this repository:
   use. Only a small, derived, aggregated network is redistributed here — not
   bulk BIS data. Redistributing these files onward is your call to check
   against those terms.
-- **Portfolio holdings (`portfolio_edges`)** — IMF [Coordinated Portfolio
-  Investment Survey](https://data.imf.org/CPIS), retrieved via DBnomics'
-  JSON mirror of the IMF SDMX API.
+- **Portfolio holdings (`portfolio_edges`)** — withdrawn; see above. Earlier
+  versions of the files used the IMF [Coordinated Portfolio Investment
+  Survey](https://data.imf.org/CPIS), which the IMF's terms do not let us
+  redistribute without permission.
 
 - **Market indicators** (10-year bond yield, short-term rate, share-price
   change; shown in the app's market check, bundled with the app and not part
@@ -151,5 +150,4 @@ sources, not this repository:
 
 The code, and the way the network is constructed from these sources, are
 MIT — see [LICENSE](../LICENSE). The data values in these files are not ours to
-license: they stay under the terms of the sources above, which are not MIT
-(the IMF's, for example, require permission for commercial reuse).
+license: they stay under the terms of the sources above, which are not MIT.
