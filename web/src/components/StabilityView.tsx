@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { YEARS } from "../lib/network";
 import { computeStability, type StabilityPoint } from "../lib/stability";
-import { Panel, checkbox, note, sectionLabel } from "../ui";
+import { Panel, checkbox, focus, note, sectionLabel } from "../ui";
 
 const W = 480;
 const H = 240;
@@ -106,6 +106,17 @@ export default function StabilityView({
           left out, so read the shape of the line across years, not its distance
           from 1. Whether it rises before 2008 or 2010 is something to look at,
           not a finding.
+        </p>
+
+        <p className={note}>
+          <a
+            className={`${focus} underline decoration-slate-600 underline-offset-2 hover:text-accent`}
+            href={`${import.meta.env.BASE_URL}THIRD-PARTY-NOTICES.txt`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Third-party licences
+          </a>
         </p>
       </div>
     </div>
