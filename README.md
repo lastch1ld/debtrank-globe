@@ -72,11 +72,11 @@ The code, and the original text in this repository, are MIT: see [LICENSE](LICEN
 
 That does not cover the data. The network files, the market indicators and the
 border outlines come from third parties and stay under their own terms, which
-are not MIT: World Bank (CC BY 4.0), BIS, IMF, OECD via FRED, and Natural Earth
+are not MIT: World Bank (CC BY 4.0), BIS, the OECD, and Natural Earth
 (public domain). Each source, its licence and the credit it asks for are listed
 in [`data-pipeline/sources.json`](data-pipeline/sources.json) and
 [`docs/data-api.md`](docs/data-api.md#sources-and-attribution). In particular,
-the IMF requires permission for commercial reuse of its data. Third-party code
+the OECD asks for credit, which the app shows under the market check. Third-party code
 used by the application is under its own licences, mostly MIT; the deployed app
 serves their notices at `THIRD-PARTY-NOTICES.txt`, generated at build time and
 linked from the controls panel.
