@@ -22,7 +22,7 @@ from debtrank_model import Shock, build_exposure_network, run_debtrank, clearing
 with open("2020.json") as f:                 # a network snapshot, see below
     snapshot = json.load(f)
 
-network = build_exposure_network(snapshot)   # add include_portfolio=True for the CPIS layer
+network = build_exposure_network(snapshot)
 result = run_debtrank(network, {"GRC": 1.0, "PRT": Shock(0.6, delay=2)})
 
 print(result.debtrank)                       # aggregate impact, equity-weighted
@@ -49,7 +49,6 @@ scenarios and countries, not as a loss forecast.
 ```bash
 debtrank-simulate 2020.json --shock GRC=1.0 --shock PRT=0.6
 debtrank-simulate 2020.json --shock GRC=1.0 --shock PRT=0.6@2   # Portugal, two rounds later
-debtrank-simulate 2020.json --shock USA=0.6 --include-portfolio
 ```
 
 Repeat `--shock` to shock several countries. Append `@ROUND` to delay one's
@@ -58,20 +57,23 @@ arrival by that many propagation rounds, which is how a sequence like
 
 ## Snapshot format
 
-A JSON object with `nodes`, `edges`, and optionally `portfolio_edges`:
+A JSON object with `nodes` and `edges` (published files also carry an empty
+`portfolio_edges`, which is ignored):
 
 ```json
 {
   "nodes": [{"id": "GRC", "gdp_usd": 1.9e11, "reserves_usd": 1.0e10,
              "external_debt_usd": null, "bank_capital_ratio_pct": 6.4}],
   "edges": [{"creditor": "FRA", "debtor": "GRC", "amount": 4.2e10}],
-  "portfolio_edges": [{"creditor": "DEU", "debtor": "GRC", "amount": 1.1e10}]
+  "portfolio_edges": []
 }
 ```
 
-`edges` are BIS bilateral banking claims (creditor holds a claim on debtor);
-`portfolio_edges` are IMF CPIS bond/equity holdings, a largely distinct
-contagion channel, off unless asked for.
+`edges` are BIS bilateral banking claims (creditor holds a claim on debtor).
+`portfolio_edges` used to hold IMF CPIS bond/equity holdings, a second
+contagion channel; that layer was withdrawn because the IMF's terms require
+permission for reuse, and the option that added it (`include_portfolio`,
+`--include-portfolio`) was removed.
 
 Ready-made snapshots for every year from 2005 to 2025 are published at
 `https://lastch1ld.github.io/debtrank-globe/data/network/{year}.json` —

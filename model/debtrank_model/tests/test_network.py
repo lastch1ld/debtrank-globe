@@ -56,23 +56,10 @@ class TestBuildExposureNetwork:
         )
         assert np.all(net.exposure == 0)
 
-    def test_portfolio_edges_are_off_by_default(self):
+    def test_a_portfolio_edges_key_is_ignored(self):
+        # The IMF CPIS layer was withdrawn; old snapshots may still carry it.
         snap = snapshot(portfolio_edges=[{"creditor": "BBB", "debtor": "AAA", "amount": 7e10}])
         net = build_exposure_network(snap)
         i, j = net.node_ids.index("BBB"), net.node_ids.index("AAA")
         assert net.exposure[i, j] == 0.0
-
-    def test_portfolio_edges_join_the_same_matrix_when_asked(self):
-        snap = snapshot(portfolio_edges=[{"creditor": "BBB", "debtor": "AAA", "amount": 7e10}])
-        net = build_exposure_network(snap, include_portfolio=True)
-        i, j = net.node_ids.index("BBB"), net.node_ids.index("AAA")
-        assert net.exposure[i, j] == 7e10
-
-    def test_portfolio_edges_do_not_move_the_equity_buffer(self):
-        # Mirrors web/src/lib/network.ts: the toggle must not change a
-        # node's loss buffer, or the two runs stop being comparable.
-        snap = snapshot(portfolio_edges=[{"creditor": "BBB", "debtor": "AAA", "amount": 7e13}])
-        assert np.array_equal(
-            build_exposure_network(snap).equity,
-            build_exposure_network(snap, include_portfolio=True).equity,
-        )
+        assert np.array_equal(net.equity, build_exposure_network(snapshot()).equity)

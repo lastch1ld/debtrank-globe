@@ -17,10 +17,6 @@ def main(argv: list[str] | None = None) -> int:
                          help="Country to shock and its initial distress level, e.g. GRC=1.0. "
                               "Append @ROUND to delay its arrival by that many propagation "
                               "rounds, e.g. PRT=0.6@2. Repeat for several countries.")
-    parser.add_argument("--include-portfolio", action="store_true",
-                         help="Add the IMF CPIS bond/equity layer to the BIS banking edges "
-                              "(matches the web app's 'Include portfolio investment' toggle). "
-                              "CPIS coverage ends at 2023.")
     args = parser.parse_args(argv)
 
     if not args.shock:
@@ -37,7 +33,7 @@ def main(argv: list[str] | None = None) -> int:
 
     with open(args.snapshot, encoding="utf-8") as f:
         snapshot = json.load(f)
-    network = build_exposure_network(snapshot, include_portfolio=args.include_portfolio)
+    network = build_exposure_network(snapshot)
     result = run_debtrank(network, shocked)
 
     print(f"Aggregate DebtRank impact: {result.debtrank:.4f}")
