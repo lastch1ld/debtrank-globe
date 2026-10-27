@@ -1,3 +1,6 @@
+import json
+
+import build_snapshot
 from build_snapshot import MAX_CARRY_FORWARD_YEARS, _last_observation_carried_forward, _map_edges_to_iso3
 
 
@@ -96,3 +99,23 @@ class TestLastObservationCarriedForward:
         node = _node({})
         result = _last_observation_carried_forward(node, "2025")
         assert result == {}
+
+
+class TestBuildByYear:
+    def test_every_year_file_has_an_empty_portfolio_edges(self, tmp_path, monkeypatch):
+        # The key stays so the published schema is unchanged; nothing fills it.
+        monkeypatch.setattr(build_snapshot, "_fetch_iso2_to_iso3", lambda: ISO2_TO_ISO3)
+        nodes = tmp_path / "nodes_by_year.json"
+        nodes.write_text(json.dumps({"nodes": [
+            {"id": "DEU", "name": "Germany", "lat": 0, "lng": 0, "years": {"2020": {"gdp_usd": 1.0}}},
+            {"id": "FRA", "name": "France", "lat": 0, "lng": 0, "years": {"2020": {"gdp_usd": 1.0}}},
+        ]}))
+        edges = tmp_path / "edges_by_year.json"
+        edges.write_text(json.dumps({"2020": [{"creditor": "FR", "debtor": "DE", "amount": 5.0}]}))
+
+        build_snapshot.build_by_year(nodes, edges, tmp_path / "out")
+
+        written = json.loads((tmp_path / "out" / "2020.json").read_text())
+        assert list(written) == ["nodes", "edges", "portfolio_edges"]
+        assert written["edges"] == [{"creditor": "FRA", "debtor": "DEU", "amount": 5.0}]
+        assert written["portfolio_edges"] == []

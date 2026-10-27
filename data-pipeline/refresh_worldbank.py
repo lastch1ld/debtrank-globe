@@ -9,7 +9,7 @@ on the roadmap -- "what should a partial refresh do?" had no obvious answer.
 It does have one. **A partial refresh may change the numbers on the graph;
 it may never change the graph's shape.** Every node's financial fields come
 from the World Bank API and can be re-fetched today. The node roster and
-both edge lists come from BIS/CPIS data this job cannot see, and every edge
+the edge list comes from BIS data this job cannot see (and `portfolio_edges` is empty), and every edge
 refers to nodes by id -- so adding or dropping a country here would leave
 edges pointing at nodes that no longer exist, or nodes that no edge can
 reach. This rewrites the four indicator fields on the existing nodes and
