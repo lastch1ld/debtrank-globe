@@ -6,23 +6,23 @@
       "stock_change_pct": 17.234970329883637
     },
     "2006": {
-      "bond_yield_pct": 5.69657894736842,
+      "bond_yield_pct": 5.696579,
       "policy_rate_pct": 6.25,
       "stock_change_pct": 18.861505351408447
     },
     "2007": {
-      "bond_yield_pct": 6.20763157894737,
-      "policy_rate_pct": 6.74892253422046,
+      "bond_yield_pct": 6.207632,
+      "policy_rate_pct": 6.748922,
       "stock_change_pct": 16.017713854042114
     },
     "2008": {
-      "bond_yield_pct": 4.21571428571429,
-      "policy_rate_pct": 4.34526121157324,
+      "bond_yield_pct": 4.215714,
+      "policy_rate_pct": 4.345261,
       "stock_change_pct": -44.19561076774393
     },
     "2009": {
-      "bond_yield_pct": 5.47309523809524,
-      "policy_rate_pct": 3.73809523809524,
+      "bond_yield_pct": 5.473095,
+      "policy_rate_pct": 3.738095,
       "stock_change_pct": 31.512178674147705
     },
     "2010": {
@@ -184,32 +184,32 @@
     },
     "2020": {
       "bond_yield_pct": -0.4224,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -13.226147932481814
     },
     "2021": {
       "bond_yield_pct": -0.0455,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 36.16332508631987
     },
     "2022": {
       "bond_yield_pct": 2.74,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -16.95036013530834
     },
     "2023": {
       "bond_yield_pct": 2.6803,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 8.775886303767933
     },
     "2024": {
       "bond_yield_pct": 2.6203,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 4.327808151249002
     },
     "2025": {
       "bond_yield_pct": 3.0974,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 40.312039187556834
     }
   },
@@ -225,183 +225,311 @@
       "stock_change_pct": 22.884548418753383
     },
     "2007": {
-      "bond_yield_pct": 4.412,
+      "bond_yield_pct": 4.41,
       "policy_rate_pct": 3.8791,
       "stock_change_pct": -2.1823176760051965
     },
     "2008": {
-      "bond_yield_pct": 3.866,
+      "bond_yield_pct": 3.87,
       "policy_rate_pct": 2.4864,
       "stock_change_pct": -52.404156910759795
     },
     "2009": {
-      "bond_yield_pct": 3.608,
+      "bond_yield_pct": 3.61,
       "policy_rate_pct": 0.3546,
       "stock_change_pct": 31.102221715529453
     },
     "2010": {
-      "bond_yield_pct": 3.989,
+      "bond_yield_pct": 3.99,
       "policy_rate_pct": 0.4981,
       "stock_change_pct": 6.910192628093692
     },
     "2011": {
-      "bond_yield_pct": 4.352,
+      "bond_yield_pct": 4.35,
       "policy_rate_pct": 0.627,
       "stock_change_pct": -15.663182056469715
     },
     "2012": {
-      "bond_yield_pct": 2.104,
+      "bond_yield_pct": 2.1,
       "policy_rate_pct": 0.0734,
       "stock_change_pct": 20.749842393269446
     },
     "2013": {
-      "bond_yield_pct": 2.435,
+      "bond_yield_pct": 2.43,
       "policy_rate_pct": 0.1686,
       "stock_change_pct": 17.679158190634148
     },
     "2014": {
-      "bond_yield_pct": 0.905,
+      "bond_yield_pct": 0.91,
       "policy_rate_pct": -0.0301,
       "stock_change_pct": 11.735713400457627
     },
     "2015": {
-      "bond_yield_pct": 0.893,
+      "bond_yield_pct": 0.89,
       "policy_rate_pct": -0.199,
       "stock_change_pct": 11.766450584498788
     },
     "2016": {
-      "bond_yield_pct": 0.615,
+      "bond_yield_pct": 0.61,
       "policy_rate_pct": -0.3504,
       "stock_change_pct": -3.7115762293964183
     },
     "2017": {
-      "bond_yield_pct": 0.533,
+      "bond_yield_pct": 0.53,
       "policy_rate_pct": -0.3423,
       "stock_change_pct": 5.23100760256201
     },
     "2018": {
-      "bond_yield_pct": 0.745,
+      "bond_yield_pct": 0.75,
       "policy_rate_pct": -0.3605,
       "stock_change_pct": -17.03080654620687
     },
     "2019": {
-      "bond_yield_pct": 0.006,
+      "bond_yield_pct": 0.01,
       "policy_rate_pct": -0.540201,
       "stock_change_pct": 13.362988632806161
     },
     "2020": {
-      "bond_yield_pct": -0.388,
-      "policy_rate_pct": -0.5563490909,
+      "bond_yield_pct": -0.39,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -12.990579892623034
     },
     "2021": {
       "bond_yield_pct": 0.03,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 16.61242254261992
     },
     "2022": {
       "bond_yield_pct": 2.7,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -0.8984240495220619
     },
     "2023": {
       "bond_yield_pct": 2.7,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 5.839426673112302
     },
     "2024": {
       "bond_yield_pct": 2.8,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 2.9457227399196206
     },
     "2025": {
       "bond_yield_pct": 3.32,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 18.075218075218082
+    }
+  },
+  "BGR": {
+    "2005": {
+      "bond_yield_pct": 3.49,
+      "policy_rate_pct": 2.2397,
+      "stock_change_pct": 28.384646756789465
+    },
+    "2006": {
+      "bond_yield_pct": 4.18,
+      "policy_rate_pct": 3.5181,
+      "stock_change_pct": 46.95154092752374
+    },
+    "2007": {
+      "bond_yield_pct": 5.08,
+      "policy_rate_pct": 4.7554,
+      "stock_change_pct": 44.85427944629714
+    },
+    "2008": {
+      "bond_yield_pct": 7.76,
+      "policy_rate_pct": 5.275,
+      "stock_change_pct": -79.1644586694072
+    },
+    "2009": {
+      "bond_yield_pct": 6.61,
+      "policy_rate_pct": 0.4075,
+      "stock_change_pct": 19.05867700760211
+    },
+    "2010": {
+      "bond_yield_pct": 5.76,
+      "policy_rate_pct": 0.1774,
+      "stock_change_pct": -16.005476930243844
+    },
+    "2011": {
+      "bond_yield_pct": 5.23,
+      "policy_rate_pct": 0.2194,
+      "stock_change_pct": -14.55063510986393
+    },
+    "2012": {
+      "bond_yield_pct": 3.44,
+      "policy_rate_pct": 0.0331,
+      "stock_change_pct": 7.364411238103918
+    },
+    "2013": {
+      "bond_yield_pct": 3.43,
+      "policy_rate_pct": 0.0242,
+      "stock_change_pct": 44.550494900007685
+    },
+    "2014": {
+      "bond_yield_pct": 2.96,
+      "policy_rate_pct": 0.0143,
+      "stock_change_pct": 10.111499305602244
+    },
+    "2015": {
+      "bond_yield_pct": 2.43,
+      "policy_rate_pct": 0.01,
+      "stock_change_pct": -16.318082592955253
+    },
+    "2016": {
+      "bond_yield_pct": 1.8,
+      "policy_rate_pct": -0.0385,
+      "stock_change_pct": 30.5642808221384
+    },
+    "2017": {
+      "bond_yield_pct": 1.02,
+      "policy_rate_pct": -0.4805,
+      "stock_change_pct": 15.680193383679963
+    },
+    "2018": {
+      "bond_yield_pct": 0.72,
+      "policy_rate_pct": -0.4973,
+      "stock_change_pct": -11.122980817275474
+    },
+    "2019": {
+      "bond_yield_pct": 0.18,
+      "policy_rate_pct": -0.5884,
+      "stock_change_pct": -7.034113346485937
+    },
+    "2020": {
+      "bond_yield_pct": 0.19,
+      "policy_rate_pct": -0.6836,
+      "stock_change_pct": -20.450214238217757
+    },
+    "2021": {
+      "bond_yield_pct": 0.44,
+      "policy_rate_pct": -0.4739,
+      "stock_change_pct": 42.445421731994855
+    },
+    "2022": {
+      "bond_yield_pct": 1.85,
+      "policy_rate_pct": 1.4078,
+      "stock_change_pct": -3.649725911862123
+    },
+    "2023": {
+      "bond_yield_pct": 4.01,
+      "policy_rate_pct": 3.8628,
+      "stock_change_pct": 24.28663725181215
+    },
+    "2024": {
+      "bond_yield_pct": 3.93,
+      "policy_rate_pct": 2.9823,
+      "stock_change_pct": 15.691694042141545
+    },
+    "2025": {
+      "bond_yield_pct": 3.93,
+      "policy_rate_pct": 1.8352,
+      "stock_change_pct": 30.6685465107996
     }
   },
   "BRA": {
     "2005": {
+      "bond_yield_pct": 9.75,
       "policy_rate_pct": 18.23,
       "stock_change_pct": 29.578238833226813
     },
     "2006": {
+      "bond_yield_pct": 6.85,
       "policy_rate_pct": 13.25,
       "stock_change_pct": 30.86036669249852
     },
     "2007": {
+      "bond_yield_pct": 6.25,
       "policy_rate_pct": 11.25,
       "stock_change_pct": 46.2963513422475
     },
     "2008": {
+      "bond_yield_pct": 6.25,
       "policy_rate_pct": 13.75,
       "stock_change_pct": -40.96047910204453
     },
     "2009": {
+      "bond_yield_pct": 6.0,
       "policy_rate_pct": 8.75,
       "stock_change_pct": 81.723743979769
     },
     "2010": {
+      "bond_yield_pct": 6.0,
       "policy_rate_pct": 10.75,
       "stock_change_pct": 0.7318499886665331
     },
     "2011": {
+      "bond_yield_pct": 6.0,
       "policy_rate_pct": 11.0,
       "stock_change_pct": -16.3300400177405
     },
     "2012": {
+      "bond_yield_pct": 5.5,
       "policy_rate_pct": 7.25,
       "stock_change_pct": 4.191659364779166
     },
     "2013": {
+      "bond_yield_pct": 5.0,
       "policy_rate_pct": 10.0,
       "stock_change_pct": -14.900590015204184
     },
     "2014": {
+      "bond_yield_pct": 5.0,
       "policy_rate_pct": 11.7,
       "stock_change_pct": -1.5553329054276088
     },
     "2015": {
+      "bond_yield_pct": 7.0,
       "policy_rate_pct": 14.25,
       "stock_change_pct": -11.017625847797918
     },
     "2016": {
+      "bond_yield_pct": 7.5,
       "policy_rate_pct": 13.75,
       "stock_change_pct": 32.78271457416238
     },
     "2017": {
+      "bond_yield_pct": 7.0,
       "policy_rate_pct": 7.1,
       "stock_change_pct": 24.744906972009993
     },
     "2018": {
+      "bond_yield_pct": 6.98,
       "policy_rate_pct": 6.5,
       "stock_change_pct": 17.82048558779996
     },
     "2019": {
+      "bond_yield_pct": 5.57,
       "policy_rate_pct": 4.68,
       "stock_change_pct": 30.08059120439237
     },
     "2020": {
+      "bond_yield_pct": 4.55,
       "policy_rate_pct": 2.0,
       "stock_change_pct": 2.5096962537151546
     },
     "2021": {
+      "bond_yield_pct": 5.32,
       "policy_rate_pct": 8.86,
       "stock_change_pct": -8.76340497676863
     },
     "2022": {
+      "bond_yield_pct": 7.2,
       "policy_rate_pct": 13.75,
       "stock_change_pct": 1.7582361749542308
     },
     "2023": {
+      "bond_yield_pct": 6.55,
       "policy_rate_pct": 11.96,
       "stock_change_pct": 20.82276365482261
     },
     "2024": {
+      "bond_yield_pct": 7.43,
       "policy_rate_pct": 11.9,
       "stock_change_pct": -4.841723268548703
     },
     "2025": {
+      "bond_yield_pct": 9.07,
       "policy_rate_pct": 15.0,
       "stock_change_pct": 29.12017962969069
     }
@@ -413,28 +541,28 @@
       "stock_change_pct": 22.12848955287963
     },
     "2006": {
-      "bond_yield_pct": 3.96631578947368,
-      "policy_rate_pct": 4.25332105263158,
+      "bond_yield_pct": 3.966316,
+      "policy_rate_pct": 4.253321,
       "stock_change_pct": 15.064987563747279
     },
     "2007": {
-      "bond_yield_pct": 4.01578947368421,
-      "policy_rate_pct": 4.27504736842105,
+      "bond_yield_pct": 4.01579,
+      "policy_rate_pct": 4.275047,
       "stock_change_pct": 6.482514639996784
     },
     "2008": {
-      "bond_yield_pct": 2.94571428571429,
-      "policy_rate_pct": 1.7110380952381,
+      "bond_yield_pct": 2.945714,
+      "policy_rate_pct": 1.711038,
       "stock_change_pct": -38.13608078675893
     },
     "2009": {
-      "bond_yield_pct": 3.41619047619048,
-      "policy_rate_pct": 0.243090476190476,
+      "bond_yield_pct": 3.41619,
+      "policy_rate_pct": 0.2430905,
       "stock_change_pct": 37.082570278591895
     },
     "2010": {
-      "bond_yield_pct": 3.2047619047619,
-      "policy_rate_pct": 0.997171428571429,
+      "bond_yield_pct": 3.204762,
+      "policy_rate_pct": 0.9971714,
       "stock_change_pct": 14.570673060216667
     },
     "2011": {
@@ -443,8 +571,8 @@
       "stock_change_pct": -10.67477569252363
     },
     "2012": {
-      "bond_yield_pct": 1.76789473684211,
-      "policy_rate_pct": 1.00036315789474,
+      "bond_yield_pct": 1.767895,
+      "policy_rate_pct": 1.000363,
       "stock_change_pct": 3.6341367571849803
     },
     "2013": {
@@ -453,13 +581,13 @@
       "stock_change_pct": 8.599090538098286
     },
     "2014": {
-      "bond_yield_pct": 1.85190476190476,
-      "policy_rate_pct": 1.00460952380952,
+      "bond_yield_pct": 1.851905,
+      "policy_rate_pct": 1.004609,
       "stock_change_pct": 7.4821658275535885
     },
     "2015": {
-      "bond_yield_pct": 1.45952380952381,
-      "policy_rate_pct": 0.513033333333333,
+      "bond_yield_pct": 1.459524,
+      "policy_rate_pct": 0.5130333,
       "stock_change_pct": -8.517314644352304
     },
     "2016": {
@@ -468,13 +596,13 @@
       "stock_change_pct": 16.213054682722007
     },
     "2017": {
-      "bond_yield_pct": 1.91526315789474,
-      "policy_rate_pct": 0.996078947368421,
+      "bond_yield_pct": 1.915263,
+      "policy_rate_pct": 0.996079,
       "stock_change_pct": 5.494566412291202
     },
     "2018": {
-      "bond_yield_pct": 2.05789473684211,
-      "policy_rate_pct": 1.74997368421053,
+      "bond_yield_pct": 2.057895,
+      "policy_rate_pct": 1.749974,
       "stock_change_pct": -10.0991730384713
     },
     "2019": {
@@ -483,13 +611,13 @@
       "stock_change_pct": 17.692316075106508
     },
     "2020": {
-      "bond_yield_pct": 0.730952380952381,
+      "bond_yield_pct": 0.7309524,
       "policy_rate_pct": 0.1993,
       "stock_change_pct": 2.90805048578342
     },
     "2021": {
       "bond_yield_pct": 1.45,
-      "policy_rate_pct": 0.160428571428571,
+      "policy_rate_pct": 0.1604286,
       "stock_change_pct": 19.479274452465177
     },
     "2022": {
@@ -498,8 +626,8 @@
       "stock_change_pct": -5.7653916301079295
     },
     "2023": {
-      "bond_yield_pct": 3.23421052631579,
-      "policy_rate_pct": 5.01547894736842,
+      "bond_yield_pct": 3.23421,
+      "policy_rate_pct": 5.015479,
       "stock_change_pct": 4.4661233854310645
     },
     "2024": {
@@ -508,8 +636,8 @@
       "stock_change_pct": 21.907818557991554
     },
     "2025": {
-      "bond_yield_pct": 3.38761904761905,
-      "policy_rate_pct": 2.25141904761905,
+      "bond_yield_pct": 3.387619,
+      "policy_rate_pct": 2.251419,
       "stock_change_pct": 25.565919713304996
     }
   },
@@ -611,118 +739,120 @@
     },
     "2024": {
       "bond_yield_pct": 0.317,
+      "policy_rate_pct": 0.16,
       "stock_change_pct": 3.9017655105406446
     },
     "2025": {
       "bond_yield_pct": 0.33,
+      "policy_rate_pct": -0.3,
       "stock_change_pct": 12.103650658890409
     }
   },
   "CHL": {
     "2005": {
-      "bond_yield_pct": 6.30238095238095,
+      "bond_yield_pct": 6.302381,
       "policy_rate_pct": 4.53,
       "stock_change_pct": 3.3855083010150278
     },
     "2006": {
-      "bond_yield_pct": 5.60751578947368,
+      "bond_yield_pct": 5.607516,
       "policy_rate_pct": 5.36,
       "stock_change_pct": 30.30313990569269
     },
     "2007": {
-      "bond_yield_pct": 6.36315263157895,
+      "bond_yield_pct": 6.363153,
       "policy_rate_pct": 5.93,
       "stock_change_pct": 16.867461424888553
     },
     "2008": {
-      "bond_yield_pct": 6.08306205164348,
+      "bond_yield_pct": 6.083062,
       "policy_rate_pct": 8.24,
       "stock_change_pct": -20.768070201235844
     },
     "2009": {
-      "bond_yield_pct": 6.31084997852837,
+      "bond_yield_pct": 6.31085,
       "policy_rate_pct": 0.45,
       "stock_change_pct": 43.96760072692234
     },
     "2010": {
-      "bond_yield_pct": 6.11386541874325,
+      "bond_yield_pct": 6.113865,
       "policy_rate_pct": 3.13,
       "stock_change_pct": 42.78048931131726
     },
     "2011": {
-      "bond_yield_pct": 5.29095418171185,
+      "bond_yield_pct": 5.290954,
       "policy_rate_pct": 5.23,
       "stock_change_pct": -12.889823961172663
     },
     "2012": {
-      "bond_yield_pct": 5.50861796478148,
+      "bond_yield_pct": 5.508618,
       "policy_rate_pct": 4.99,
       "stock_change_pct": 3.6108091026398226
     },
     "2013": {
-      "bond_yield_pct": 5.1389323279289,
+      "bond_yield_pct": 5.138932,
       "policy_rate_pct": 4.5,
       "stock_change_pct": -12.337370330161113
     },
     "2014": {
-      "bond_yield_pct": 4.36319932180463,
+      "bond_yield_pct": 4.363199,
       "policy_rate_pct": 3.0,
       "stock_change_pct": 3.7465850966020398
     },
     "2015": {
-      "bond_yield_pct": 4.62622352237466,
+      "bond_yield_pct": 4.626224,
       "policy_rate_pct": 3.35,
       "stock_change_pct": -5.450728207666932
     },
     "2016": {
-      "bond_yield_pct": 4.37386309732767,
+      "bond_yield_pct": 4.373863,
       "policy_rate_pct": 3.48,
       "stock_change_pct": 16.9567629279199
     },
     "2017": {
-      "bond_yield_pct": 4.61685930931621,
+      "bond_yield_pct": 4.616859,
       "policy_rate_pct": 2.5,
       "stock_change_pct": 26.738734868204904
     },
     "2018": {
-      "bond_yield_pct": 4.33986256553904,
+      "bond_yield_pct": 4.339862,
       "policy_rate_pct": 2.75,
-      "stock_change_pct": -2.1225926324207944
+      "stock_change_pct": -2.1225214164291017
     },
     "2019": {
-      "bond_yield_pct": 3.29999276166996,
+      "bond_yield_pct": 3.299993,
       "policy_rate_pct": 1.71,
-      "stock_change_pct": -8.994931510636839
+      "stock_change_pct": -8.994997726239195
     },
     "2020": {
-      "bond_yield_pct": 2.74806928880318,
+      "bond_yield_pct": 2.748069,
       "policy_rate_pct": 0.3,
       "stock_change_pct": -11.874075554667197
     },
     "2021": {
-      "bond_yield_pct": 5.69289695310481,
+      "bond_yield_pct": 5.692897,
       "policy_rate_pct": 3.33,
-      "stock_change_pct": 3.4925401570445436
+      "stock_change_pct": 3.5067839435329207
     },
     "2022": {
-      "bond_yield_pct": 5.33817877290714,
+      "bond_yield_pct": 5.338179,
       "policy_rate_pct": 11.25,
-      "stock_change_pct": 29.146836546039335
+      "stock_change_pct": 29.127574310537053
     },
     "2023": {
-      "bond_yield_pct": 5.47823529411765,
+      "bond_yield_pct": 5.478235,
       "policy_rate_pct": 8.98,
-      "stock_change_pct": 10.129933248168289
+      "stock_change_pct": 10.131204092313272
     },
     "2024": {
-      "bond_yield_pct": 5.76157894736842,
+      "bond_yield_pct": 5.761579,
       "policy_rate_pct": 5.15,
-      "stock_change_pct": 9.885149286204742
+      "stock_change_pct": 9.888477577792653
     },
     "2025": {
       "bond_yield_pct": 5.363125,
       "policy_rate_pct": 4.64,
-      "stock_change_pct": 54.01769988938972
+      "stock_change_pct": 54.0130350161816
     }
   },
   "CHN": {
@@ -763,178 +893,398 @@
       "stock_change_pct": 1.8222322423250503
     },
     "2014": {
+      "bond_yield_pct": 3.6219,
       "policy_rate_pct": 3.25,
       "stock_change_pct": 38.418887192189445
     },
     "2015": {
+      "bond_yield_pct": 2.8212,
       "policy_rate_pct": 2.9,
       "stock_change_pct": 18.417571328101488
     },
     "2016": {
+      "bond_yield_pct": 3.0115,
       "policy_rate_pct": 2.9,
       "stock_change_pct": -11.00389364134472
     },
     "2017": {
+      "bond_yield_pct": 3.88,
       "policy_rate_pct": 2.9,
       "stock_change_pct": 4.366789059141074
     },
     "2018": {
+      "bond_yield_pct": 3.23,
       "policy_rate_pct": 2.9,
       "stock_change_pct": -21.97400987876872
     },
     "2019": {
+      "bond_yield_pct": 3.1365,
       "policy_rate_pct": 2.9,
       "stock_change_pct": 15.259747590886729
     },
     "2020": {
+      "bond_yield_pct": 3.1429,
       "policy_rate_pct": 2.9,
       "stock_change_pct": 14.775347796427262
     },
     "2021": {
+      "bond_yield_pct": 2.7754,
       "policy_rate_pct": 2.9,
       "stock_change_pct": 6.686463996799374
     },
     "2022": {
+      "bond_yield_pct": 2.84,
       "policy_rate_pct": 2.9,
       "stock_change_pct": -13.554140348070398
     },
     "2023": {
+      "bond_yield_pct": 2.56,
       "policy_rate_pct": 2.9,
       "stock_change_pct": -5.75069809023635
     },
     "2024": {
+      "bond_yield_pct": 1.68,
       "policy_rate_pct": 2.9,
       "stock_change_pct": 14.677865907287568
     },
     "2025": {
+      "bond_yield_pct": 1.85,
       "stock_change_pct": 15.333950495831328
+    }
+  },
+  "COL": {
+    "2005": {
+      "bond_yield_pct": 9.23,
+      "policy_rate_pct": 5.79,
+      "stock_change_pct": 98.87307490327628
+    },
+    "2006": {
+      "bond_yield_pct": 8.96,
+      "policy_rate_pct": 7.38,
+      "stock_change_pct": 13.399854638279773
+    },
+    "2007": {
+      "bond_yield_pct": 10.37,
+      "policy_rate_pct": 9.37,
+      "stock_change_pct": 3.9544166270960135
+    },
+    "2008": {
+      "bond_yield_pct": 10.88,
+      "policy_rate_pct": 9.36,
+      "stock_change_pct": -21.05652554588573
+    },
+    "2009": {
+      "bond_yield_pct": 8.94,
+      "policy_rate_pct": 3.29,
+      "stock_change_pct": 61.35117507398502
+    },
+    "2010": {
+      "bond_yield_pct": 8.26,
+      "policy_rate_pct": 3.03,
+      "stock_change_pct": 34.551935240444685
+    },
+    "2011": {
+      "bond_yield_pct": 7.78,
+      "policy_rate_pct": 4.8,
+      "stock_change_pct": -14.095411638524046
+    },
+    "2012": {
+      "bond_yield_pct": 5.71,
+      "policy_rate_pct": 4.49,
+      "stock_change_pct": 14.85850251422165
+    },
+    "2013": {
+      "bond_yield_pct": 7.29,
+      "policy_rate_pct": 3.24,
+      "stock_change_pct": -10.74851922412039
+    },
+    "2014": {
+      "bond_yield_pct": 7.5,
+      "policy_rate_pct": 4.51,
+      "stock_change_pct": -8.863917512625619
+    },
+    "2015": {
+      "bond_yield_pct": 8.88,
+      "policy_rate_pct": 5.59,
+      "stock_change_pct": -24.440696317778944
+    },
+    "2016": {
+      "bond_yield_pct": 7.18,
+      "policy_rate_pct": 7.65,
+      "stock_change_pct": 19.72979433047297
+    },
+    "2017": {
+      "bond_yield_pct": 6.74,
+      "policy_rate_pct": 4.74,
+      "stock_change_pct": 10.657713215653342
+    },
+    "2018": {
+      "bond_yield_pct": 7.02,
+      "policy_rate_pct": 4.25,
+      "stock_change_pct": -8.101839111187992
+    },
+    "2019": {
+      "bond_yield_pct": 6.42,
+      "policy_rate_pct": 4.26,
+      "stock_change_pct": 20.21612464385636
+    },
+    "2020": {
+      "bond_yield_pct": 5.76,
+      "policy_rate_pct": 1.76,
+      "stock_change_pct": -14.890098810244002
+    },
+    "2021": {
+      "bond_yield_pct": 8.46,
+      "policy_rate_pct": 2.73,
+      "stock_change_pct": 1.0207637051882879
+    },
+    "2022": {
+      "bond_yield_pct": 13.23,
+      "policy_rate_pct": 11.41,
+      "stock_change_pct": -11.633964565288768
+    },
+    "2023": {
+      "bond_yield_pct": 9.94,
+      "policy_rate_pct": 13.13,
+      "stock_change_pct": -6.0308821233411525
+    },
+    "2024": {
+      "bond_yield_pct": 11.72,
+      "policy_rate_pct": 9.7,
+      "stock_change_pct": 18.856240023491154
+    },
+    "2025": {
+      "bond_yield_pct": 12.81,
+      "policy_rate_pct": 9.21,
+      "stock_change_pct": 51.18709018455907
+    }
+  },
+  "CRI": {
+    "2005": {
+      "policy_rate_pct": 6.45,
+      "stock_change_pct": 9.103897142158445
+    },
+    "2006": {
+      "policy_rate_pct": 9.69,
+      "stock_change_pct": 75.11125632071247
+    },
+    "2007": {
+      "policy_rate_pct": 5.23,
+      "stock_change_pct": 14.287931953148703
+    },
+    "2008": {
+      "policy_rate_pct": 3.36,
+      "stock_change_pct": -8.08349177714659
+    },
+    "2009": {
+      "policy_rate_pct": 5.73,
+      "stock_change_pct": -21.483481550792526
+    },
+    "2010": {
+      "policy_rate_pct": 4.84,
+      "stock_change_pct": -11.782894780035635
+    },
+    "2011": {
+      "bond_yield_pct": 9.82,
+      "policy_rate_pct": 5.23,
+      "stock_change_pct": 14.126757491786911
+    },
+    "2012": {
+      "bond_yield_pct": 10.16,
+      "policy_rate_pct": 4.879406,
+      "stock_change_pct": 6.154690403009044
+    },
+    "2013": {
+      "bond_yield_pct": 8.51,
+      "policy_rate_pct": 4.032129,
+      "stock_change_pct": 73.25516912980584
+    },
+    "2014": {
+      "bond_yield_pct": 10.27434,
+      "policy_rate_pct": 4.97096,
+      "stock_change_pct": 12.220889676144031
+    },
+    "2015": {
+      "bond_yield_pct": 8.478889,
+      "policy_rate_pct": 1.984479,
+      "stock_change_pct": -9.014292580458005
+    },
+    "2016": {
+      "bond_yield_pct": 8.38562,
+      "policy_rate_pct": 2.283191,
+      "stock_change_pct": 42.51513325949758
+    },
+    "2017": {
+      "bond_yield_pct": 9.947688,
+      "policy_rate_pct": 4.874889,
+      "stock_change_pct": 2.0601300124341693
+    },
+    "2018": {
+      "bond_yield_pct": 11.10375,
+      "policy_rate_pct": 5.805631,
+      "stock_change_pct": -21.076547875792283
+    },
+    "2019": {
+      "bond_yield_pct": 8.73525,
+      "policy_rate_pct": 2.879813,
+      "stock_change_pct": -15.581736648253841
+    },
+    "2020": {
+      "bond_yield_pct": 9.560391,
+      "policy_rate_pct": 0.812718,
+      "stock_change_pct": -21.009488406153864
+    },
+    "2021": {
+      "bond_yield_pct": 6.568003,
+      "policy_rate_pct": 1.016725,
+      "stock_change_pct": 54.65950917082794
+    },
+    "2022": {
+      "bond_yield_pct": 9.578482,
+      "policy_rate_pct": 8.86066,
+      "stock_change_pct": -0.01493255020403872
+    },
+    "2023": {
+      "bond_yield_pct": 7.161987,
+      "policy_rate_pct": 6.136155,
+      "stock_change_pct": -0.003378105078621907
+    },
+    "2024": {
+      "bond_yield_pct": 6.420618,
+      "policy_rate_pct": 3.961307,
+      "stock_change_pct": 0.01591319043467987
+    },
+    "2025": {
+      "bond_yield_pct": 6.686883,
+      "policy_rate_pct": 3.412281,
+      "stock_change_pct": 0.0618649069537458
     }
   },
   "CZE": {
     "2005": {
-      "bond_yield_pct": 3.61466102565584,
+      "bond_yield_pct": 3.614661,
       "policy_rate_pct": 2.0,
       "stock_change_pct": 42.353186307511926
     },
     "2006": {
-      "bond_yield_pct": 3.76596194425683,
+      "bond_yield_pct": 3.765962,
       "policy_rate_pct": 2.5,
       "stock_change_pct": 10.492815821142209
     },
     "2007": {
-      "bond_yield_pct": 4.67510440922457,
+      "bond_yield_pct": 4.675105,
       "policy_rate_pct": 3.5,
       "stock_change_pct": 12.690081281305288
     },
     "2008": {
-      "bond_yield_pct": 4.30220830904174,
+      "bond_yield_pct": 4.302208,
       "policy_rate_pct": 2.58,
       "stock_change_pct": -53.24706563398275
     },
     "2009": {
-      "bond_yield_pct": 3.97891950764465,
+      "bond_yield_pct": 3.97892,
       "policy_rate_pct": 1.14,
       "stock_change_pct": 32.56636928841989
     },
     "2010": {
-      "bond_yield_pct": 3.88872782802521,
+      "bond_yield_pct": 3.888728,
       "policy_rate_pct": 0.75,
       "stock_change_pct": 7.310079641568223
     },
     "2011": {
-      "bond_yield_pct": 3.69800598191034,
+      "bond_yield_pct": 3.698006,
       "policy_rate_pct": 0.75,
       "stock_change_pct": -26.3321375244171
     },
     "2012": {
-      "bond_yield_pct": 1.91660771266683,
+      "bond_yield_pct": 1.916608,
       "policy_rate_pct": 0.05,
       "stock_change_pct": 15.329557886593314
     },
     "2013": {
-      "bond_yield_pct": 2.2029185806444,
+      "bond_yield_pct": 2.202919,
       "policy_rate_pct": 0.05,
       "stock_change_pct": -3.4796585537697378
     },
     "2014": {
-      "bond_yield_pct": 0.667346100327341,
+      "bond_yield_pct": 0.6673461,
       "policy_rate_pct": 0.05,
       "stock_change_pct": -1.0080452078584212
     },
     "2015": {
-      "bond_yield_pct": 0.492193348449707,
+      "bond_yield_pct": 0.4921933,
       "policy_rate_pct": 0.05,
       "stock_change_pct": -3.1105124333304257
     },
     "2016": {
-      "bond_yield_pct": 0.525673709489126,
+      "bond_yield_pct": 0.5256737,
       "policy_rate_pct": 0.05,
       "stock_change_pct": -3.4834964324259587
     },
     "2017": {
-      "bond_yield_pct": 1.50349062176755,
+      "bond_yield_pct": 1.503491,
       "policy_rate_pct": 0.5,
       "stock_change_pct": 17.68826854614527
     },
     "2018": {
-      "bond_yield_pct": 2.01312978503882,
+      "bond_yield_pct": 2.01313,
       "policy_rate_pct": 1.75,
       "stock_change_pct": -4.909804024034847
     },
     "2019": {
-      "bond_yield_pct": 1.51314851834615,
+      "bond_yield_pct": 1.513149,
       "policy_rate_pct": 2.0,
       "stock_change_pct": 8.170975969507266
     },
     "2020": {
-      "bond_yield_pct": 1.25775576102066,
+      "bond_yield_pct": 1.257756,
       "policy_rate_pct": 0.25,
       "stock_change_pct": -9.63210098534011
     },
     "2021": {
-      "bond_yield_pct": 2.61761377382188,
-      "policy_rate_pct": 3.02227272727273,
+      "bond_yield_pct": 2.617614,
+      "policy_rate_pct": 3.022273,
       "stock_change_pct": 41.11018069382002
     },
     "2022": {
-      "bond_yield_pct": 4.71073233207703,
+      "bond_yield_pct": 4.710732,
       "policy_rate_pct": 7.0,
       "stock_change_pct": -15.30881869574311
     },
     "2023": {
-      "bond_yield_pct": 3.97231297665245,
-      "policy_rate_pct": 6.94736842105263,
+      "bond_yield_pct": 3.972313,
+      "policy_rate_pct": 6.947369,
       "stock_change_pct": 17.815800350133237
     },
     "2024": {
-      "bond_yield_pct": 4.13310383261151,
+      "bond_yield_pct": 4.133104,
       "policy_rate_pct": 4.0,
       "stock_change_pct": 24.39400378186132
     },
     "2025": {
-      "bond_yield_pct": 4.64783589681164,
+      "bond_yield_pct": 4.647836,
       "policy_rate_pct": 3.5,
       "stock_change_pct": 49.42474117365181
     }
   },
   "DEU": {
     "2005": {
-      "bond_yield_pct": 3.3376190476,
+      "bond_yield_pct": 3.337619,
       "policy_rate_pct": 2.2757,
       "stock_change_pct": 24.6777246121622
     },
     "2006": {
-      "bond_yield_pct": 3.7705263158,
+      "bond_yield_pct": 3.770526,
       "policy_rate_pct": 3.5011,
       "stock_change_pct": 20.579976010503987
     },
     "2007": {
-      "bond_yield_pct": 4.2058823529,
+      "bond_yield_pct": 4.205883,
       "policy_rate_pct": 3.8791,
       "stock_change_pct": 18.219997536131327
     },
     "2008": {
-      "bond_yield_pct": 3.0478947368,
+      "bond_yield_pct": 3.047895,
       "policy_rate_pct": 2.4864,
       "stock_change_pct": -46.30137785697017
     },
@@ -944,27 +1294,27 @@
       "stock_change_pct": 24.1208010259381
     },
     "2010": {
-      "bond_yield_pct": 2.9147619048,
+      "bond_yield_pct": 2.914762,
       "policy_rate_pct": 0.4981,
       "stock_change_pct": 17.796178786311344
     },
     "2011": {
-      "bond_yield_pct": 1.9276190476,
+      "bond_yield_pct": 1.927619,
       "policy_rate_pct": 0.627,
       "stock_change_pct": -18.43670516899928
     },
     "2012": {
-      "bond_yield_pct": 1.2994117647,
+      "bond_yield_pct": 1.299412,
       "policy_rate_pct": 0.0734,
       "stock_change_pct": 25.0214544342076
     },
     "2013": {
-      "bond_yield_pct": 1.7977777778,
+      "bond_yield_pct": 1.797778,
       "policy_rate_pct": 0.1686,
       "stock_change_pct": 19.984682193186607
     },
     "2014": {
-      "bond_yield_pct": 0.5889473684,
+      "bond_yield_pct": 0.5889474,
       "policy_rate_pct": -0.0301,
       "stock_change_pct": 3.1282301563629877
     },
@@ -974,53 +1324,53 @@
       "stock_change_pct": 7.951588177292979
     },
     "2016": {
-      "bond_yield_pct": 0.2519047619,
+      "bond_yield_pct": 0.2519048,
       "policy_rate_pct": -0.3504,
       "stock_change_pct": 1.8034043962117163
     },
     "2017": {
-      "bond_yield_pct": 0.2968421053,
+      "bond_yield_pct": 0.2968421,
       "policy_rate_pct": -0.3423,
       "stock_change_pct": 16.60543373619614
     },
     "2018": {
-      "bond_yield_pct": 0.1870588235,
+      "bond_yield_pct": 0.1870588,
       "policy_rate_pct": -0.3605,
       "stock_change_pct": -18.961518455346514
     },
     "2019": {
-      "bond_yield_pct": -0.2994444444,
+      "bond_yield_pct": -0.2994444,
       "policy_rate_pct": -0.540201,
       "stock_change_pct": 17.786609224000482
     },
     "2020": {
       "bond_yield_pct": -0.6185,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": 0.15352528822201172
     },
     "2021": {
-      "bond_yield_pct": -0.3842857143,
-      "policy_rate_pct": -0.5763721739,
+      "bond_yield_pct": -0.3842857,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 12.320950831525668
     },
     "2022": {
-      "bond_yield_pct": 2.0852380952,
-      "policy_rate_pct": 1.5039647619,
+      "bond_yield_pct": 2.085238,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -17.086243953781988
     },
     "2023": {
-      "bond_yield_pct": 2.1021052632,
-      "policy_rate_pct": 3.9034421053,
+      "bond_yield_pct": 2.102105,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 12.683608554084147
     },
     "2024": {
-      "bond_yield_pct": 2.1788888889,
-      "policy_rate_pct": 3.1026865,
+      "bond_yield_pct": 2.178889,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 14.591649979544808
     },
     "2025": {
-      "bond_yield_pct": 2.8142105263,
-      "policy_rate_pct": 1.9292866667,
+      "bond_yield_pct": 2.81421,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 15.956166689841012
     }
   },
@@ -1133,22 +1483,22 @@
   },
   "ESP": {
     "2005": {
-      "bond_yield_pct": 3.36857142857143,
+      "bond_yield_pct": 3.368572,
       "policy_rate_pct": 2.2757,
       "stock_change_pct": 21.45483590745101
     },
     "2006": {
-      "bond_yield_pct": 3.81626315789474,
+      "bond_yield_pct": 3.816263,
       "policy_rate_pct": 3.5011,
       "stock_change_pct": 35.752703145401064
     },
     "2007": {
-      "bond_yield_pct": 4.34770588235294,
+      "bond_yield_pct": 4.347706,
       "policy_rate_pct": 3.8791,
       "stock_change_pct": 7.959555806533247
     },
     "2008": {
-      "bond_yield_pct": 3.85817647058824,
+      "bond_yield_pct": 3.858176,
       "policy_rate_pct": 2.4864,
       "stock_change_pct": -42.670201013279566
     },
@@ -1158,17 +1508,17 @@
       "stock_change_pct": 28.312774051348622
     },
     "2010": {
-      "bond_yield_pct": 5.3743809523809505,
+      "bond_yield_pct": 5.374381,
       "policy_rate_pct": 0.4981,
       "stock_change_pct": -17.404683363734364
     },
     "2011": {
-      "bond_yield_pct": 5.50452380952381,
+      "bond_yield_pct": 5.504524,
       "policy_rate_pct": 0.627,
       "stock_change_pct": -16.88154087720246
     },
     "2012": {
-      "bond_yield_pct": 5.33994444444444,
+      "bond_yield_pct": 5.339944,
       "policy_rate_pct": 0.0734,
       "stock_change_pct": -3.870808257091618
     },
@@ -1178,27 +1528,27 @@
       "stock_change_pct": 20.117389232057747
     },
     "2014": {
-      "bond_yield_pct": 1.78536842105263,
+      "bond_yield_pct": 1.785368,
       "policy_rate_pct": -0.0301,
       "stock_change_pct": 8.195150856093235
     },
     "2015": {
-      "bond_yield_pct": 1.68561904761905,
+      "bond_yield_pct": 1.685619,
       "policy_rate_pct": -0.199,
       "stock_change_pct": -6.735332735704381
     },
     "2016": {
-      "bond_yield_pct": 1.43666666666667,
+      "bond_yield_pct": 1.436667,
       "policy_rate_pct": -0.3504,
       "stock_change_pct": -6.169071300893392
     },
     "2017": {
-      "bond_yield_pct": 1.44163157894737,
+      "bond_yield_pct": 1.441632,
       "policy_rate_pct": -0.3423,
       "stock_change_pct": 11.366662135918926
     },
     "2018": {
-      "bond_yield_pct": 1.42621052631579,
+      "bond_yield_pct": 1.426211,
       "policy_rate_pct": -0.3605,
       "stock_change_pct": -14.87201723904381
     },
@@ -1208,37 +1558,43 @@
       "stock_change_pct": 7.818806164960712
     },
     "2020": {
-      "bond_yield_pct": 0.0421818181818182,
-      "policy_rate_pct": -0.5563490909,
+      "bond_yield_pct": 0.04218182,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -14.420166317698403
     },
     "2021": {
-      "bond_yield_pct": 0.413318181818182,
-      "policy_rate_pct": -0.5763721739,
+      "bond_yield_pct": 0.4133182,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 3.0500537231130886
     },
     "2022": {
       "bond_yield_pct": 3.111,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -1.3140033868348278
     },
     "2023": {
       "bond_yield_pct": 3.141,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 21.569633447840285
     },
     "2024": {
       "bond_yield_pct": 2.89065,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 14.309071949587903
     },
     "2025": {
-      "bond_yield_pct": 3.27190476190476,
-      "policy_rate_pct": 1.9292866667,
+      "bond_yield_pct": 3.271905,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 46.02072499740466
     }
   },
   "EST": {
+    "2005": {
+      "stock_change_pct": 53.88101883958096
+    },
+    "2006": {
+      "stock_change_pct": 21.589963765702436
+    },
     "2007": {
       "policy_rate_pct": 5.41,
       "stock_change_pct": -10.098883440487583
@@ -1292,34 +1648,34 @@
       "stock_change_pct": 7.429429727649639
     },
     "2020": {
-      "policy_rate_pct": -0.5563490909,
+      "bond_yield_pct": -0.18,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": 3.71328499739334
     },
     "2021": {
-      "policy_rate_pct": -0.5763721739,
+      "bond_yield_pct": 0.11,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 51.05566558443688
     },
     "2022": {
-      "policy_rate_pct": 1.5039647619,
+      "bond_yield_pct": 3.46,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -10.87205046984665
     },
     "2023": {
-      "policy_rate_pct": 3.9034421053,
+      "bond_yield_pct": 3.21,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": -0.6310144861220945
     },
     "2024": {
-      "policy_rate_pct": 3.1026865,
+      "bond_yield_pct": 3.43,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": -2.0196458418652807
     },
     "2025": {
-      "policy_rate_pct": 1.9292866667,
+      "bond_yield_pct": 3.38,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 15.564166150031
-    },
-    "2005": {
-      "stock_change_pct": 53.88101883958096
-    },
-    "2006": {
-      "stock_change_pct": 21.589963765702436
     }
   },
   "FIN": {
@@ -1400,32 +1756,32 @@
     },
     "2020": {
       "bond_yield_pct": -0.41,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": 11.30521968470477
     },
     "2021": {
       "bond_yield_pct": -0.06184,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 17.22996903204228
     },
     "2022": {
       "bond_yield_pct": 2.41,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -12.898761065995956
     },
     "2023": {
       "bond_yield_pct": 2.68,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": -9.383265765209014
     },
     "2024": {
-      "bond_yield_pct": 2.645282353,
-      "policy_rate_pct": 3.1026865,
+      "bond_yield_pct": 2.645282,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": -4.336888229627545
     },
     "2025": {
       "bond_yield_pct": 3.164244,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 26.28170567933008
     }
   },
@@ -1507,32 +1863,32 @@
     },
     "2020": {
       "bond_yield_pct": -0.34,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -5.711890723238422
     },
     "2021": {
       "bond_yield_pct": 0.05,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 23.636112299072522
     },
     "2022": {
       "bond_yield_pct": 2.62,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -6.8484717194728155
     },
     "2023": {
       "bond_yield_pct": 2.65,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 12.53659930818587
     },
     "2024": {
       "bond_yield_pct": 3.01,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": -2.543909469300043
     },
     "2025": {
       "bond_yield_pct": 3.56,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 10.362866543089112
     }
   },
@@ -1721,33 +2077,140 @@
     },
     "2020": {
       "bond_yield_pct": 0.63,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -12.006466280366524
     },
     "2021": {
       "bond_yield_pct": 1.29,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 12.712320163669633
     },
     "2022": {
       "bond_yield_pct": 4.22,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": 3.3913489570951416
     },
     "2023": {
       "bond_yield_pct": 3.28,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 40.235471422889276
     },
     "2024": {
       "bond_yield_pct": 3.05,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 12.988428112655903
     },
     "2025": {
       "bond_yield_pct": 3.44,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 45.01222033259671
+    }
+  },
+  "HRV": {
+    "2005": {
+      "bond_yield_pct": 4.42,
+      "policy_rate_pct": 4.5,
+      "stock_change_pct": 27.571610911442335
+    },
+    "2006": {
+      "bond_yield_pct": 4.72,
+      "policy_rate_pct": 4.5,
+      "stock_change_pct": 60.6725215835469
+    },
+    "2007": {
+      "bond_yield_pct": 5.44,
+      "policy_rate_pct": 4.5,
+      "stock_change_pct": 63.23608676623096
+    },
+    "2008": {
+      "bond_yield_pct": 7.13,
+      "policy_rate_pct": 9.0,
+      "stock_change_pct": -67.12655106021379
+    },
+    "2009": {
+      "bond_yield_pct": 6.22,
+      "policy_rate_pct": 9.0,
+      "stock_change_pct": 16.362875903966966
+    },
+    "2010": {
+      "bond_yield_pct": 6.47,
+      "policy_rate_pct": 9.0,
+      "stock_change_pct": 5.332704920438447
+    },
+    "2011": {
+      "bond_yield_pct": 7.67,
+      "policy_rate_pct": 7.0,
+      "stock_change_pct": -17.561946220944524
+    },
+    "2012": {
+      "bond_yield_pct": 4.54,
+      "policy_rate_pct": 7.0,
+      "stock_change_pct": 0.010338465453618717
+    },
+    "2013": {
+      "bond_yield_pct": 5.1,
+      "policy_rate_pct": 7.0,
+      "stock_change_pct": 3.0964479114482746
+    },
+    "2014": {
+      "bond_yield_pct": 3.52,
+      "policy_rate_pct": 7.0,
+      "stock_change_pct": -2.7220191128491167
+    },
+    "2015": {
+      "bond_yield_pct": 3.92,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": -3.1974429495279733
+    },
+    "2016": {
+      "bond_yield_pct": 2.95,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": 18.063678032127317
+    },
+    "2017": {
+      "bond_yield_pct": 2.47,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": -7.618129218900682
+    },
+    "2018": {
+      "bond_yield_pct": 2.04,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": -5.104027425241442
+    },
+    "2019": {
+      "bond_yield_pct": 0.59,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": 15.360220313515471
+    },
+    "2020": {
+      "bond_yield_pct": 0.63,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": -13.786879299744559
+    },
+    "2021": {
+      "bond_yield_pct": 0.38,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": 19.55172962543017
+    },
+    "2022": {
+      "bond_yield_pct": 3.36,
+      "policy_rate_pct": 3.0,
+      "stock_change_pct": -4.783705782959524
+    },
+    "2023": {
+      "bond_yield_pct": 3.39,
+      "policy_rate_pct": 3.903442,
+      "stock_change_pct": 27.98347221530506
+    },
+    "2024": {
+      "bond_yield_pct": 3.09,
+      "policy_rate_pct": 3.102686,
+      "stock_change_pct": 25.937299242814717
+    },
+    "2025": {
+      "bond_yield_pct": 3.14,
+      "policy_rate_pct": 1.929287,
+      "stock_change_pct": 20.87241853364905
     }
   },
   "HUN": {
@@ -1768,7 +2231,7 @@
     },
     "2008": {
       "bond_yield_pct": 8.31,
-      "policy_rate_pct": 10.122238,
+      "policy_rate_pct": 10.12224,
       "stock_change_pct": -52.38677117505961
     },
     "2009": {
@@ -1887,54 +2350,67 @@
       "stock_change_pct": 2.945976234433556
     },
     "2012": {
+      "bond_yield_pct": 5.15,
       "policy_rate_pct": 5.75,
       "stock_change_pct": 13.606601789608884
     },
     "2013": {
+      "bond_yield_pct": 8.41,
       "policy_rate_pct": 7.5,
       "stock_change_pct": -1.6096033613045568
     },
     "2014": {
+      "bond_yield_pct": 7.82,
       "policy_rate_pct": 7.75,
       "stock_change_pct": 21.964210570366415
     },
     "2015": {
+      "bond_yield_pct": 8.82,
       "policy_rate_pct": 7.5,
       "stock_change_pct": -12.498155741220474
     },
     "2016": {
+      "bond_yield_pct": 7.99,
       "policy_rate_pct": 4.75,
       "stock_change_pct": 15.69245562789201
     },
     "2017": {
-      "policy_rate_pct": 3.875874211,
+      "bond_yield_pct": 6.29,
+      "policy_rate_pct": 3.875874,
       "stock_change_pct": 17.445550911886308
     },
     "2018": {
+      "bond_yield_pct": 7.97,
       "policy_rate_pct": 5.8,
       "stock_change_pct": 0.323143089619915
     },
     "2019": {
+      "bond_yield_pct": 7.0722,
       "policy_rate_pct": 4.83,
       "stock_change_pct": 1.420733763442228
     },
     "2020": {
+      "bond_yield_pct": 5.925991,
       "policy_rate_pct": 3.04,
       "stock_change_pct": -4.018054813645255
     },
     "2021": {
+      "bond_yield_pct": 6.353757,
       "policy_rate_pct": 2.79,
       "stock_change_pct": 10.13866646090651
     },
     "2022": {
+      "bond_yield_pct": 6.91,
       "policy_rate_pct": 4.87,
       "stock_change_pct": 3.8650698596844
     },
     "2023": {
+      "bond_yield_pct": 6.6,
       "policy_rate_pct": 5.87,
       "stock_change_pct": 4.818526701305448
     },
     "2024": {
+      "bond_yield_pct": 7.01,
       "policy_rate_pct": 6.07,
       "stock_change_pct": 0.36905118043666363
     },
@@ -1969,62 +2445,77 @@
       "stock_change_pct": 16.42562990808143
     },
     "2011": {
+      "bond_yield_pct": 8.56,
       "policy_rate_pct": 6.0,
       "stock_change_pct": -19.706380389880906
     },
     "2012": {
+      "bond_yield_pct": 8.1375,
       "policy_rate_pct": 9.0,
       "stock_change_pct": 21.01179098724937
     },
     "2013": {
+      "bond_yield_pct": 8.875368,
       "policy_rate_pct": 8.75,
       "stock_change_pct": 8.34894184533379
     },
     "2014": {
+      "bond_yield_pct": 7.955925,
       "policy_rate_pct": 9.0,
       "stock_change_pct": 31.75189911783798
     },
     "2015": {
+      "bond_yield_pct": 7.791575,
       "policy_rate_pct": 7.75,
       "stock_change_pct": -7.130493572725305
     },
     "2016": {
+      "bond_yield_pct": 6.52812,
       "policy_rate_pct": 6.75,
       "stock_change_pct": 2.754223309751458
     },
     "2017": {
+      "bond_yield_pct": 7.35076,
       "policy_rate_pct": 6.25,
       "stock_change_pct": 26.830670938448286
     },
     "2018": {
+      "bond_yield_pct": 7.37335,
       "policy_rate_pct": 6.75,
       "stock_change_pct": 7.177382946426225
     },
     "2019": {
+      "bond_yield_pct": 6.848575,
       "policy_rate_pct": 5.4,
       "stock_change_pct": 14.569783546810445
     },
     "2020": {
+      "bond_yield_pct": 5.8929,
       "policy_rate_pct": 4.25,
       "stock_change_pct": 12.59219887916001
     },
     "2021": {
+      "bond_yield_pct": 6.44032,
       "policy_rate_pct": 4.25,
       "stock_change_pct": 24.690640842862454
     },
     "2022": {
+      "bond_yield_pct": 7.29416,
       "policy_rate_pct": 6.43,
       "stock_change_pct": 7.117583764745183
     },
     "2023": {
+      "bond_yield_pct": 7.224,
       "policy_rate_pct": 6.75,
       "stock_change_pct": 14.104763284087007
     },
     "2024": {
+      "bond_yield_pct": 6.7775,
       "policy_rate_pct": 6.75,
       "stock_change_pct": 13.663807910196613
     },
     "2025": {
+      "bond_yield_pct": 6.6325,
       "policy_rate_pct": 5.5,
       "stock_change_pct": 6.186902706846764
     }
@@ -2107,118 +2598,118 @@
     },
     "2020": {
       "bond_yield_pct": -0.2903,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": 3.9971073336063423
     },
     "2021": {
       "bond_yield_pct": 0.0998,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 10.592104932448398
     },
     "2022": {
       "bond_yield_pct": 2.5862,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -12.2098370193495
     },
     "2023": {
       "bond_yield_pct": 2.4648,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 19.94960564692887
     },
     "2024": {
       "bond_yield_pct": 2.4906,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 12.678411105228026
     },
     "2025": {
       "bond_yield_pct": 3.0132,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 33.05728718418881
     }
   },
   "ISL": {
     "2005": {
-      "bond_yield_pct": 4.09,
+      "bond_yield_pct": 7.9441,
       "policy_rate_pct": 9.31,
       "stock_change_pct": 54.94546740108406
     },
     "2006": {
-      "bond_yield_pct": 4.8661,
+      "bond_yield_pct": 8.8531,
       "policy_rate_pct": 16.15,
       "stock_change_pct": 18.155004347574334
     },
     "2007": {
-      "bond_yield_pct": 5.30003856,
+      "bond_yield_pct": 10.22,
       "policy_rate_pct": 14.04,
       "stock_change_pct": 1.135652736243009
     },
     "2008": {
-      "bond_yield_pct": 4.22500072,
+      "bond_yield_pct": 10.79288,
       "policy_rate_pct": 18.25,
       "stock_change_pct": -88.60008212813418
     },
     "2009": {
-      "bond_yield_pct": 3.82,
+      "bond_yield_pct": 7.78,
       "policy_rate_pct": 9.0,
       "stock_change_pct": -27.460647456623622
     },
     "2010": {
-      "bond_yield_pct": 3.24,
+      "bond_yield_pct": 5.02,
       "policy_rate_pct": 4.6,
       "stock_change_pct": 17.951875692803053
     },
     "2011": {
-      "bond_yield_pct": 2.44,
+      "bond_yield_pct": 5.79,
       "policy_rate_pct": 4.3,
       "stock_change_pct": 1.2897789722264852
     },
     "2012": {
-      "bond_yield_pct": 2.4,
+      "bond_yield_pct": 6.04,
       "policy_rate_pct": 5.35,
       "stock_change_pct": 13.015298321968238
     },
     "2013": {
-      "bond_yield_pct": 2.93,
+      "bond_yield_pct": 6.38,
       "policy_rate_pct": 5.25,
       "stock_change_pct": 30.349572021788983
     },
     "2014": {
-      "bond_yield_pct": 3.19,
+      "bond_yield_pct": 5.72,
       "policy_rate_pct": 4.5,
       "stock_change_pct": 11.953072738634663
     },
     "2015": {
-      "bond_yield_pct": 2.64,
+      "bond_yield_pct": 5.83,
       "policy_rate_pct": 5.65,
       "stock_change_pct": 35.86902881227265
     },
     "2016": {
-      "bond_yield_pct": 2.61,
+      "bond_yield_pct": 4.97,
       "policy_rate_pct": 4.85,
       "stock_change_pct": -6.358173317996741
     },
     "2017": {
-      "bond_yield_pct": 1.83,
+      "bond_yield_pct": 4.85,
       "policy_rate_pct": 4.1,
       "stock_change_pct": 5.08733911155026
     },
     "2018": {
-      "bond_yield_pct": 1.5,
+      "bond_yield_pct": 5.42,
       "policy_rate_pct": 4.23,
       "stock_change_pct": -4.198129969843089
     },
     "2019": {
-      "bond_yield_pct": 1.11,
+      "bond_yield_pct": 3.38,
       "policy_rate_pct": 2.8,
       "stock_change_pct": 22.84909782823863
     },
     "2020": {
-      "bond_yield_pct": 0.8,
+      "bond_yield_pct": 2.66,
       "policy_rate_pct": 0.65,
       "stock_change_pct": 19.22699857688226
     },
     "2021": {
-      "bond_yield_pct": 0.68,
+      "bond_yield_pct": 3.94,
       "policy_rate_pct": 1.88,
       "stock_change_pct": 43.835045452306346
     },
@@ -2247,12 +2738,12 @@
     },
     "2006": {
       "bond_yield_pct": 5.67,
-      "policy_rate_pct": 4.93548387096774,
+      "policy_rate_pct": 4.935484,
       "stock_change_pct": 8.242829447149402
     },
     "2007": {
       "bond_yield_pct": 6.01,
-      "policy_rate_pct": 4.04032258064516,
+      "policy_rate_pct": 4.040323,
       "stock_change_pct": 21.469232858444286
     },
     "2008": {
@@ -2262,7 +2753,7 @@
     },
     "2009": {
       "bond_yield_pct": 5.13,
-      "policy_rate_pct": 1.00806451612903,
+      "policy_rate_pct": 1.008065,
       "stock_change_pct": 71.4418134735355
     },
     "2010": {
@@ -2277,7 +2768,7 @@
     },
     "2012": {
       "bond_yield_pct": 3.97,
-      "policy_rate_pct": 1.95967741935484,
+      "policy_rate_pct": 1.959677,
       "stock_change_pct": 6.496998641207874
     },
     "2013": {
@@ -2348,27 +2839,27 @@
   },
   "ITA": {
     "2005": {
-      "bond_yield_pct": 3.553,
+      "bond_yield_pct": 3.55319,
       "policy_rate_pct": 2.2757,
       "stock_change_pct": 15.10667540970394
     },
     "2006": {
-      "bond_yield_pct": 4.038,
+      "bond_yield_pct": 4.0376,
       "policy_rate_pct": 3.5011,
       "stock_change_pct": 18.32447099498895
     },
     "2007": {
-      "bond_yield_pct": 4.538,
+      "bond_yield_pct": 4.53849,
       "policy_rate_pct": 3.8791,
       "stock_change_pct": -6.249194762891975
     },
     "2008": {
-      "bond_yield_pct": 4.469,
+      "bond_yield_pct": 4.46882,
       "policy_rate_pct": 2.4864,
       "stock_change_pct": -49.28942891954926
     },
     "2009": {
-      "bond_yield_pct": 4.007,
+      "bond_yield_pct": 4.00728,
       "policy_rate_pct": 0.3546,
       "stock_change_pct": 18.8418808738408
     },
@@ -2378,78 +2869,78 @@
       "stock_change_pct": -6.836913585581062
     },
     "2011": {
-      "bond_yield_pct": 6.812,
+      "bond_yield_pct": 6.81193,
       "policy_rate_pct": 0.627,
       "stock_change_pct": -23.65612894022876
     },
     "2012": {
-      "bond_yield_pct": 4.542,
+      "bond_yield_pct": 4.54158,
       "policy_rate_pct": 0.0734,
       "stock_change_pct": 7.7424636881458175
     },
     "2013": {
-      "bond_yield_pct": 4.114,
+      "bond_yield_pct": 4.11398,
       "policy_rate_pct": 0.1686,
       "stock_change_pct": 17.53418903815076
     },
     "2014": {
-      "bond_yield_pct": 1.99,
+      "bond_yield_pct": 1.9898,
       "policy_rate_pct": -0.0301,
       "stock_change_pct": 3.124753557105997
     },
     "2015": {
-      "bond_yield_pct": 1.579,
+      "bond_yield_pct": 1.57864,
       "policy_rate_pct": -0.199,
       "stock_change_pct": 16.24639870164135
     },
     "2016": {
-      "bond_yield_pct": 1.886,
+      "bond_yield_pct": 1.88618,
       "policy_rate_pct": -0.3504,
       "stock_change_pct": -10.721596791897115
     },
     "2017": {
-      "bond_yield_pct": 1.795,
+      "bond_yield_pct": 1.79452,
       "policy_rate_pct": -0.3423,
       "stock_change_pct": 21.555225225663687
     },
     "2018": {
-      "bond_yield_pct": 2.975,
+      "bond_yield_pct": 2.97513,
       "policy_rate_pct": -0.3605,
       "stock_change_pct": -15.477604282576285
     },
     "2019": {
-      "bond_yield_pct": 1.37,
+      "bond_yield_pct": 1.37011,
       "policy_rate_pct": -0.540201,
       "stock_change_pct": 24.652933044211387
     },
     "2020": {
-      "bond_yield_pct": 0.578,
-      "policy_rate_pct": -0.5563490909,
+      "bond_yield_pct": 0.57801,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -6.120326082729699
     },
     "2021": {
-      "bond_yield_pct": 1.047,
-      "policy_rate_pct": -0.5763721739,
+      "bond_yield_pct": 1.04735,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 26.434396714116648
     },
     "2022": {
-      "bond_yield_pct": 4.257,
-      "policy_rate_pct": 1.5039647619,
+      "bond_yield_pct": 4.25657,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -11.00140130063334
     },
     "2023": {
-      "bond_yield_pct": 3.821,
-      "policy_rate_pct": 3.9034421053,
+      "bond_yield_pct": 3.82082,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 20.88062679611975
     },
     "2024": {
-      "bond_yield_pct": 3.321,
-      "policy_rate_pct": 3.1026865,
+      "bond_yield_pct": 3.32087,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 10.031573818507988
     },
     "2025": {
-      "bond_yield_pct": 3.552,
-      "policy_rate_pct": 1.9292866667,
+      "bond_yield_pct": 3.55156,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 25.397169852265456
     }
   },
@@ -2667,6 +3158,113 @@
       "stock_change_pct": 67.70171753367109
     }
   },
+  "LTU": {
+    "2005": {
+      "bond_yield_pct": 3.785,
+      "policy_rate_pct": 2.286,
+      "stock_change_pct": 63.88815659896962
+    },
+    "2006": {
+      "bond_yield_pct": 4.275,
+      "policy_rate_pct": 3.522105,
+      "stock_change_pct": 7.1762562590146795
+    },
+    "2007": {
+      "bond_yield_pct": 4.938,
+      "policy_rate_pct": 4.685263,
+      "stock_change_pct": 6.4294543501139945
+    },
+    "2008": {
+      "bond_yield_pct": 9.0,
+      "policy_rate_pct": 3.579048,
+      "stock_change_pct": -65.30255329673807
+    },
+    "2009": {
+      "bond_yield_pct": 9.103,
+      "policy_rate_pct": 0.59,
+      "stock_change_pct": 47.90459215658429
+    },
+    "2010": {
+      "bond_yield_pct": 5.15,
+      "policy_rate_pct": 0.5590909,
+      "stock_change_pct": 57.63265405242834
+    },
+    "2011": {
+      "bond_yield_pct": 5.75,
+      "policy_rate_pct": 0.6171429,
+      "stock_change_pct": -27.78088328756837
+    },
+    "2012": {
+      "bond_yield_pct": 4.0,
+      "policy_rate_pct": 0.2694444,
+      "stock_change_pct": 18.582842575239876
+    },
+    "2013": {
+      "bond_yield_pct": 3.69,
+      "policy_rate_pct": 0.1626316,
+      "stock_change_pct": 16.646274434700192
+    },
+    "2014": {
+      "bond_yield_pct": 1.9,
+      "policy_rate_pct": 0.08,
+      "stock_change_pct": 10.879215770106399
+    },
+    "2015": {
+      "bond_yield_pct": 1.49,
+      "policy_rate_pct": -0.199,
+      "stock_change_pct": 6.462750250357363
+    },
+    "2016": {
+      "bond_yield_pct": 0.31,
+      "policy_rate_pct": -0.3504,
+      "stock_change_pct": 15.030414976247886
+    },
+    "2017": {
+      "bond_yield_pct": 0.31,
+      "policy_rate_pct": -0.3423,
+      "stock_change_pct": 17.5752556280097
+    },
+    "2018": {
+      "bond_yield_pct": 0.31,
+      "policy_rate_pct": -0.3605,
+      "stock_change_pct": -4.482227724096521
+    },
+    "2019": {
+      "bond_yield_pct": 0.31,
+      "policy_rate_pct": -0.540201,
+      "stock_change_pct": 13.42228051423513
+    },
+    "2020": {
+      "bond_yield_pct": 0.16,
+      "policy_rate_pct": -0.5563491,
+      "stock_change_pct": 12.114486534163028
+    },
+    "2021": {
+      "bond_yield_pct": 0.16,
+      "policy_rate_pct": -0.5763721,
+      "stock_change_pct": 21.25885890294894
+    },
+    "2022": {
+      "bond_yield_pct": 2.88,
+      "policy_rate_pct": 1.503965,
+      "stock_change_pct": -1.4039706098990745
+    },
+    "2023": {
+      "bond_yield_pct": 2.88,
+      "policy_rate_pct": 3.903442,
+      "stock_change_pct": -1.159985365866134
+    },
+    "2024": {
+      "bond_yield_pct": 2.88,
+      "policy_rate_pct": 3.102686,
+      "stock_change_pct": 12.664773653816773
+    },
+    "2025": {
+      "bond_yield_pct": 2.88,
+      "policy_rate_pct": 1.929287,
+      "stock_change_pct": 23.5758666290494
+    }
+  },
   "LUX": {
     "2005": {
       "bond_yield_pct": 2.738,
@@ -2745,33 +3343,140 @@
     },
     "2020": {
       "bond_yield_pct": -0.549,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": 0.06968024294111697
     },
     "2021": {
       "bond_yield_pct": -0.218,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 34.106984512559116
     },
     "2022": {
       "bond_yield_pct": 2.676,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -9.884397094430996
     },
     "2023": {
       "bond_yield_pct": 2.533,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": -1.4582936569180527
     },
     "2024": {
       "bond_yield_pct": 2.643,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": -7.329210633946836
     },
     "2025": {
       "bond_yield_pct": 3.102,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 42.8797565375856
+    }
+  },
+  "LVA": {
+    "2005": {
+      "bond_yield_pct": 3.59,
+      "policy_rate_pct": 2.83,
+      "stock_change_pct": 66.24692088082891
+    },
+    "2006": {
+      "bond_yield_pct": 4.9,
+      "policy_rate_pct": 2.67,
+      "stock_change_pct": 0.28330026450169576
+    },
+    "2007": {
+      "bond_yield_pct": 5.1,
+      "policy_rate_pct": 5.37,
+      "stock_change_pct": -6.783366918949307
+    },
+    "2008": {
+      "bond_yield_pct": 9.03,
+      "policy_rate_pct": 8.01,
+      "stock_change_pct": -54.92374861157588
+    },
+    "2009": {
+      "bond_yield_pct": 13.75,
+      "policy_rate_pct": 1.46,
+      "stock_change_pct": 3.280592033492691
+    },
+    "2010": {
+      "bond_yield_pct": 7.55,
+      "policy_rate_pct": 0.5,
+      "stock_change_pct": 36.132454242121284
+    },
+    "2011": {
+      "bond_yield_pct": 5.93,
+      "policy_rate_pct": 0.43,
+      "stock_change_pct": -3.1180249063211707
+    },
+    "2012": {
+      "bond_yield_pct": 3.24,
+      "policy_rate_pct": 0.15,
+      "stock_change_pct": 4.529842907823656
+    },
+    "2013": {
+      "bond_yield_pct": 3.62,
+      "policy_rate_pct": 0.12,
+      "stock_change_pct": 16.38488063524126
+    },
+    "2014": {
+      "bond_yield_pct": 1.63,
+      "policy_rate_pct": -0.0301,
+      "stock_change_pct": -8.430157692069463
+    },
+    "2015": {
+      "bond_yield_pct": 1.08,
+      "policy_rate_pct": -0.199,
+      "stock_change_pct": 40.13769143365336
+    },
+    "2016": {
+      "bond_yield_pct": 0.9,
+      "policy_rate_pct": -0.3504,
+      "stock_change_pct": 26.45294736126125
+    },
+    "2017": {
+      "bond_yield_pct": 0.59,
+      "policy_rate_pct": -0.3423,
+      "stock_change_pct": 37.48561296544002
+    },
+    "2018": {
+      "bond_yield_pct": 1.05,
+      "policy_rate_pct": -0.3605,
+      "stock_change_pct": -6.139393253766235
+    },
+    "2019": {
+      "bond_yield_pct": 0.16,
+      "policy_rate_pct": -0.540201,
+      "stock_change_pct": 8.903423706103863
+    },
+    "2020": {
+      "bond_yield_pct": -0.29,
+      "policy_rate_pct": -0.5563491,
+      "stock_change_pct": 8.829008882547651
+    },
+    "2021": {
+      "bond_yield_pct": 0.3,
+      "policy_rate_pct": -0.5763721,
+      "stock_change_pct": 12.83578130501899
+    },
+    "2022": {
+      "bond_yield_pct": 3.5,
+      "policy_rate_pct": 1.503965,
+      "stock_change_pct": -10.060148642290013
+    },
+    "2023": {
+      "bond_yield_pct": 3.49,
+      "policy_rate_pct": 3.903442,
+      "stock_change_pct": 16.17545806678966
+    },
+    "2024": {
+      "bond_yield_pct": 3.04,
+      "policy_rate_pct": 3.102686,
+      "stock_change_pct": -34.57022047394081
+    },
+    "2025": {
+      "bond_yield_pct": 3.66,
+      "policy_rate_pct": 1.929287,
+      "stock_change_pct": 7.222245414517103
     }
   },
   "MEX": {
@@ -2810,6 +3515,10 @@
       "policy_rate_pct": 3.26,
       "stock_change_pct": -3.1018900430601293
     },
+    "2012": {
+      "policy_rate_pct": 3.25,
+      "stock_change_pct": 17.673521151910187
+    },
     "2013": {
       "bond_yield_pct": 6.33,
       "policy_rate_pct": 2.64,
@@ -2820,6 +3529,10 @@
       "policy_rate_pct": 2.15,
       "stock_change_pct": 0.4351331045461482
     },
+    "2015": {
+      "policy_rate_pct": 2.11,
+      "stock_change_pct": 1.3490666375546523
+    },
     "2016": {
       "bond_yield_pct": 7.25,
       "policy_rate_pct": 3.28,
@@ -2829,6 +3542,10 @@
       "bond_yield_pct": 7.53,
       "policy_rate_pct": 4.62,
       "stock_change_pct": 5.564274352918486
+    },
+    "2018": {
+      "policy_rate_pct": 5.55,
+      "stock_change_pct": -13.780129324947865
     },
     "2019": {
       "bond_yield_pct": 7.14,
@@ -2864,18 +3581,6 @@
       "bond_yield_pct": 9.2,
       "policy_rate_pct": 5.7,
       "stock_change_pct": 27.43807166459673
-    },
-    "2012": {
-      "policy_rate_pct": 3.25,
-      "stock_change_pct": 17.673521151910187
-    },
-    "2015": {
-      "policy_rate_pct": 2.11,
-      "stock_change_pct": 1.3490666375546523
-    },
-    "2018": {
-      "policy_rate_pct": 5.55,
-      "stock_change_pct": -13.780129324947865
     }
   },
   "NLD": {
@@ -2956,32 +3661,32 @@
     },
     "2020": {
       "bond_yield_pct": -0.553,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": 4.323658934945218
     },
     "2021": {
       "bond_yield_pct": -0.318,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 21.25291310885069
     },
     "2022": {
       "bond_yield_pct": 2.429,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -10.588732893106101
     },
     "2023": {
       "bond_yield_pct": 2.422,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 9.394607240950625
     },
     "2024": {
       "bond_yield_pct": 2.447,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 9.206283227964796
     },
     "2025": {
       "bond_yield_pct": 2.968,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 9.363930481119276
     }
   },
@@ -3072,22 +3777,22 @@
       "stock_change_pct": 27.16266804119416
     },
     "2022": {
-      "bond_yield_pct": 3.13588888888889,
+      "bond_yield_pct": 3.135889,
       "policy_rate_pct": 2.75,
       "stock_change_pct": 6.029356821520149
     },
     "2023": {
-      "bond_yield_pct": 3.24058333333333,
-      "policy_rate_pct": 4.45454545454545,
+      "bond_yield_pct": 3.240583,
+      "policy_rate_pct": 4.454545,
       "stock_change_pct": 9.892759414142116
     },
     "2024": {
-      "bond_yield_pct": 3.65753846153846,
+      "bond_yield_pct": 3.657538,
       "policy_rate_pct": 4.5,
       "stock_change_pct": 9.118154125917744
     },
     "2025": {
-      "bond_yield_pct": 4.09152631578947,
+      "bond_yield_pct": 4.091527,
       "policy_rate_pct": 4.0,
       "stock_change_pct": 15.040779186171328
     }
@@ -3195,6 +3900,7 @@
     },
     "2025": {
       "bond_yield_pct": 4.52,
+      "policy_rate_pct": 2.38,
       "stock_change_pct": 1.4993115406191082
     }
   },
@@ -3240,12 +3946,12 @@
       "stock_change_pct": 23.150185215881258
     },
     "2013": {
-      "bond_yield_pct": 4.416666667,
+      "bond_yield_pct": 4.416667,
       "policy_rate_pct": 2.75,
       "stock_change_pct": 10.813978496416343
     },
     "2014": {
-      "bond_yield_pct": 2.553157895,
+      "bond_yield_pct": 2.553158,
       "policy_rate_pct": 2.25,
       "stock_change_pct": 0.46328754620086343
     },
@@ -3383,33 +4089,140 @@
     },
     "2020": {
       "bond_yield_pct": 0.03,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": 8.68605766118895
     },
     "2021": {
       "bond_yield_pct": 0.36,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 14.36257068582738
     },
     "2022": {
       "bond_yield_pct": 3.1,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": 7.887453064570926
     },
     "2023": {
       "bond_yield_pct": 2.85,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 5.3274626346303755
     },
     "2024": {
       "bond_yield_pct": 2.68,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": -11.484554133933278
     },
     "2025": {
       "bond_yield_pct": 3.14,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 27.270176976340153
+    }
+  },
+  "ROU": {
+    "2005": {
+      "bond_yield_pct": 7.15,
+      "policy_rate_pct": 5.66,
+      "stock_change_pct": 57.38699061201875
+    },
+    "2006": {
+      "bond_yield_pct": 7.42,
+      "policy_rate_pct": 6.17,
+      "stock_change_pct": 20.165622173281662
+    },
+    "2007": {
+      "bond_yield_pct": 7.05,
+      "policy_rate_pct": 7.55,
+      "stock_change_pct": 18.465389039187418
+    },
+    "2008": {
+      "bond_yield_pct": 8.38,
+      "policy_rate_pct": 12.13,
+      "stock_change_pct": -69.43598509452669
+    },
+    "2009": {
+      "bond_yield_pct": 8.66,
+      "policy_rate_pct": 10.16,
+      "stock_change_pct": 63.2577503165449
+    },
+    "2010": {
+      "bond_yield_pct": 7.09,
+      "policy_rate_pct": 3.06,
+      "stock_change_pct": 8.913964767401051
+    },
+    "2011": {
+      "bond_yield_pct": 7.39,
+      "policy_rate_pct": 5.22,
+      "stock_change_pct": -16.430606385090453
+    },
+    "2012": {
+      "bond_yield_pct": 6.65,
+      "policy_rate_pct": 5.77,
+      "stock_change_pct": 13.664248423848768
+    },
+    "2013": {
+      "bond_yield_pct": 5.29,
+      "policy_rate_pct": 1.64,
+      "stock_change_pct": 29.80209688181472
+    },
+    "2014": {
+      "bond_yield_pct": 3.68,
+      "policy_rate_pct": 0.53,
+      "stock_change_pct": 7.948611054264987
+    },
+    "2015": {
+      "bond_yield_pct": 3.62,
+      "policy_rate_pct": 0.56,
+      "stock_change_pct": 1.3318723104051244
+    },
+    "2016": {
+      "bond_yield_pct": 3.73,
+      "policy_rate_pct": 0.51,
+      "stock_change_pct": 0.24612372749441835
+    },
+    "2017": {
+      "bond_yield_pct": 4.4,
+      "policy_rate_pct": 1.33,
+      "stock_change_pct": 10.432777394013627
+    },
+    "2018": {
+      "bond_yield_pct": 4.6,
+      "policy_rate_pct": 2.15,
+      "stock_change_pct": 4.892812035087357
+    },
+    "2019": {
+      "bond_yield_pct": 4.57,
+      "policy_rate_pct": 2.88,
+      "stock_change_pct": 22.486825380957143
+    },
+    "2020": {
+      "bond_yield_pct": 2.94,
+      "policy_rate_pct": 1.61,
+      "stock_change_pct": -3.1149254079390065
+    },
+    "2021": {
+      "bond_yield_pct": 5.37,
+      "policy_rate_pct": 2.28,
+      "stock_change_pct": 30.800311992532635
+    },
+    "2022": {
+      "bond_yield_pct": 7.17,
+      "policy_rate_pct": 5.9,
+      "stock_change_pct": -4.018079200006907
+    },
+    "2023": {
+      "bond_yield_pct": 6.19,
+      "policy_rate_pct": 6.03,
+      "stock_change_pct": 25.894532513749603
+    },
+    "2024": {
+      "bond_yield_pct": 6.81,
+      "policy_rate_pct": 5.65,
+      "stock_change_pct": 10.928038847296694
+    },
+    "2025": {
+      "bond_yield_pct": 6.72,
+      "policy_rate_pct": 5.7,
+      "stock_change_pct": 42.01690009365107
     }
   },
   "RUS": {
@@ -3517,7 +4330,7 @@
       "stock_change_pct": 31.594189192053747
     },
     "2006": {
-      "bond_yield_pct": 4.1492961875,
+      "bond_yield_pct": 4.149296,
       "policy_rate_pct": 3.25,
       "stock_change_pct": -0.9792708812198847
     },
@@ -3588,32 +4401,32 @@
     },
     "2020": {
       "bond_yield_pct": -0.524714,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -0.6499256599035608
     },
     "2021": {
       "bond_yield_pct": -0.019364,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 14.913846377958585
     },
     "2022": {
       "bond_yield_pct": 3.195714,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -14.459566482222531
     },
     "2023": {
       "bond_yield_pct": 3.314105,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": -7.80983591529929
     },
     "2024": {
       "bond_yield_pct": 3.216056,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": -4.347541478054717
     },
     "2025": {
       "bond_yield_pct": 3.46585,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": -4.558570655116401
     }
   },
@@ -3695,32 +4508,32 @@
     },
     "2020": {
       "bond_yield_pct": -0.23,
-      "policy_rate_pct": -0.5563490909,
+      "policy_rate_pct": -0.5563491,
       "stock_change_pct": -2.4992510875511242
     },
     "2021": {
       "bond_yield_pct": 0.17,
-      "policy_rate_pct": -0.5763721739,
+      "policy_rate_pct": -0.5763721,
       "stock_change_pct": 38.356629869772064
     },
     "2022": {
       "bond_yield_pct": 3.52,
-      "policy_rate_pct": 1.5039647619,
+      "policy_rate_pct": 1.503965,
       "stock_change_pct": -13.71997047963356
     },
     "2023": {
       "bond_yield_pct": 3.26,
-      "policy_rate_pct": 3.9034421053,
+      "policy_rate_pct": 3.903442,
       "stock_change_pct": 15.552046126763264
     },
     "2024": {
       "bond_yield_pct": 2.89,
-      "policy_rate_pct": 3.1026865,
+      "policy_rate_pct": 3.102686,
       "stock_change_pct": 35.265972707276894
     },
     "2025": {
       "bond_yield_pct": 3.25,
-      "policy_rate_pct": 1.9292866667,
+      "policy_rate_pct": 1.929287,
       "stock_change_pct": 48.36776052403491
     }
   },
@@ -3898,6 +4711,9 @@
       "policy_rate_pct": 7.5,
       "stock_change_pct": 165.8070503744119
     },
+    "2023": {
+      "stock_change_pct": 47.52644367835324
+    },
     "2024": {
       "policy_rate_pct": 46.0,
       "stock_change_pct": 28.70798578704847
@@ -3905,9 +4721,6 @@
     "2025": {
       "policy_rate_pct": 36.5,
       "stock_change_pct": 13.179646929903011
-    },
-    "2023": {
-      "stock_change_pct": 47.52644367835324
     }
   },
   "USA": {
@@ -4024,42 +4837,42 @@
       "stock_change_pct": 42.00273981059932
     },
     "2006": {
-      "bond_yield_pct": 7.7978947368,
+      "bond_yield_pct": 7.797895,
       "policy_rate_pct": 8.875,
       "stock_change_pct": 37.530664731776334
     },
     "2007": {
-      "bond_yield_pct": 8.3288235294,
-      "policy_rate_pct": 10.8947368421,
+      "bond_yield_pct": 8.328823,
+      "policy_rate_pct": 10.89474,
       "stock_change_pct": 21.801558688330026
     },
     "2008": {
       "bond_yield_pct": 7.7135,
-      "policy_rate_pct": 11.7083333333,
+      "policy_rate_pct": 11.70833,
       "stock_change_pct": -28.819088907878765
     },
     "2009": {
-      "bond_yield_pct": 9.0352380952,
+      "bond_yield_pct": 9.035238,
       "policy_rate_pct": 7.0,
       "stock_change_pct": 30.03105646679598
     },
     "2010": {
-      "bond_yield_pct": 8.3904761905,
+      "bond_yield_pct": 8.390476,
       "policy_rate_pct": 5.5,
       "stock_change_pct": 16.16247028250659
     },
     "2011": {
-      "bond_yield_pct": 8.5163157895,
+      "bond_yield_pct": 8.516315,
       "policy_rate_pct": 5.5,
       "stock_change_pct": 1.4534756178217423
     },
     "2012": {
-      "bond_yield_pct": 7.3416666667,
+      "bond_yield_pct": 7.341667,
       "policy_rate_pct": 5.0,
       "stock_change_pct": 20.372186731286114
     },
     "2013": {
-      "bond_yield_pct": 8.2684210526,
+      "bond_yield_pct": 8.268421,
       "policy_rate_pct": 5.0,
       "stock_change_pct": 14.77441313437875
     },
@@ -4069,17 +4882,17 @@
       "stock_change_pct": 10.195000386332943
     },
     "2015": {
-      "bond_yield_pct": 9.2538095238,
+      "bond_yield_pct": 9.25381,
       "policy_rate_pct": 6.25,
       "stock_change_pct": 1.7078919979251816
     },
     "2016": {
-      "bond_yield_pct": 8.9542105263,
+      "bond_yield_pct": 8.95421,
       "policy_rate_pct": 7.0,
       "stock_change_pct": 0.25412509420932317
     },
     "2017": {
-      "bond_yield_pct": 9.4994736842,
+      "bond_yield_pct": 9.499474,
       "policy_rate_pct": 6.75,
       "stock_change_pct": 16.785054773982445
     },
@@ -4089,32 +4902,32 @@
       "stock_change_pct": -11.582119252867184
     },
     "2019": {
-      "bond_yield_pct": 9.1178947368,
+      "bond_yield_pct": 9.117895,
       "policy_rate_pct": 6.5,
       "stock_change_pct": 9.253800262129918
     },
     "2020": {
-      "bond_yield_pct": 9.789047619,
+      "bond_yield_pct": 9.789047,
       "policy_rate_pct": 3.5,
       "stock_change_pct": 4.922663401047789
     },
     "2021": {
-      "bond_yield_pct": 9.9004761905,
+      "bond_yield_pct": 9.900476,
       "policy_rate_pct": 3.75,
       "stock_change_pct": 21.251617520580467
     },
     "2022": {
-      "bond_yield_pct": 11.3836842105,
+      "bond_yield_pct": 11.38368,
       "policy_rate_pct": 7.0,
       "stock_change_pct": 3.0291900488436996
     },
     "2023": {
-      "bond_yield_pct": 11.4855555556,
+      "bond_yield_pct": 11.48556,
       "policy_rate_pct": 8.25,
       "stock_change_pct": 1.2967939438125908
     },
     "2024": {
-      "bond_yield_pct": 10.2521052632,
+      "bond_yield_pct": 10.25211,
       "policy_rate_pct": 7.75,
       "stock_change_pct": 14.5315951588314
     },

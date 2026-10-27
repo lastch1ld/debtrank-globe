@@ -19,6 +19,7 @@ Usage:  python sync_web_data.py [--check]
 """
 import argparse
 import filecmp
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -28,10 +29,18 @@ WEB = Path(__file__).resolve().parent.parent / "web"
 
 # Bundled into the JS bundle at build time (imported by web/src/lib/*.ts).
 SRC_DATA = WEB / "src" / "data"
-BUNDLED = ["network_snapshot.json", "world_borders.json", "market_data.json"]
+BUNDLED = ["network_snapshot.json", "world_borders.json", "market_data.json", "market_data_source.json"]
 
 # Fetched at runtime by the year scrubber (web/src/lib/network.ts loadYear).
 PUBLIC_DATA = WEB / "public" / "data" / "network"
+
+
+def withdrawn_layer_in(path: Path) -> int:
+    """How many edges a year file carries in `portfolio_edges`. The IMF CPIS
+    layer was withdrawn (its terms require permission to reuse the data); an old
+    local pipeline run can still hold it, and copying that into web/ would
+    publish it again."""
+    return len(json.loads(path.read_text(encoding="utf-8")).get("portfolio_edges") or [])
 
 
 def planned_copies() -> list[tuple[Path, Path]]:
@@ -49,10 +58,13 @@ def main() -> int:
         print(f"error: {OUT} does not exist — run the pipeline first (see README.md).", file=sys.stderr)
         return 2
 
-    missing_source, stale, copied = [], [], []
+    missing_source, stale, copied, refused = [], [], [], []
     for source, target in planned_copies():
         if not source.exists():
             missing_source.append(source)
+            continue
+        if source.parent.name == "by_year" and (n := withdrawn_layer_in(source)):
+            refused.append((source, n))
             continue
         # shallow=False: these are regenerated files, so size and mtime say
         # nothing useful about whether the contents actually differ.
@@ -66,6 +78,12 @@ def main() -> int:
 
     for source in missing_source:
         print(f"missing:  {source.relative_to(OUT.parent)} — not generated yet, skipped")
+    for source, n in refused:
+        print(f"refused:  {source.relative_to(OUT.parent)} has {n} portfolio_edges (the withdrawn IMF CPIS layer); rebuild with build_snapshot.py --by-year")
+
+    if refused:
+        print(f"\n{len(refused)} year file(s) refused: publishing them would republish the withdrawn CPIS layer.", file=sys.stderr)
+        return 1
 
     if args.check:
         for target in stale:

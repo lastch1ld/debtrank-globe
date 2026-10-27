@@ -32,12 +32,12 @@ npm run build
   `loadYearData`.
 - **Market check**: shows the shocked country's real 10-year bond yield
   (+ spread vs. US Treasuries), short-term policy rate, and stock index
-  year-over-year change (all FRED, `src/lib/marketData.ts`) for the
+  year-over-year change (all OECD, `src/lib/marketData.ts`) for the
   selected year, next to the model's predicted impact — e.g. shocking
   Greece in 2011 shows DebtRank's predicted contagion alongside the real
   21% bond yield and -54.5% stock-index crash markets saw at the time.
-  Coverage differs per series (bond yields are OECD-only; policy rate and
-  stock index cover a broader set, e.g. Brazil, South Africa, Mexico);
+  Coverage differs per series (bond yields cover 46 countries; policy rate and
+  stock index 47, e.g. Brazil, China, India);
   each series shows its own "no data" note rather than hiding the section.
 - **Model-vs-market chart**: "View across years" (`src/lib/analysis.ts`,
   `src/components/YearAnalysisChart.tsx`) re-runs the current shock against

@@ -43,8 +43,10 @@ python build_snapshot.py --by-year
 ### Market data (bond yields, policy rates, stock indices)
 
 ```bash
-# Three FRED series, no API key needed (public CSV export): 10Y government
-# bond yield, short-term/policy interest rate, and stock index YoY change.
+# Three OECD series from the OECD's own SDMX API, no key needed (3 requests):
+# 10Y government bond yield, short-term/policy interest rate, and stock index
+# YoY change, December values, for the countries in the app's roster. Also
+# writes market_data_source.json (the retrieval date shown as the credit line).
 # Coverage differs per series (a country can have some and not others).
 python fetch_market_data.py out/market_data.json
 ```
@@ -168,10 +170,9 @@ cruder equity proxies — the year the app opens on.
   dominate every shock scenario. See the equityFor() comment in
   web/src/lib/network.ts and web/src/lib/financialCenters.ts (which powers
   an optional "hide financial centers" toggle in the UI) for details.
-- FRED's `IRLTLT01` (bond yield) series only covers ~34 mostly-OECD
-  economies; `IRSTCI01` (policy rate) and `SPASTT01` (stock index) cover a
-  broader ~40, including some non-OECD countries (e.g. Brazil, South
-  Africa, Mexico) the bond series doesn't. `fetch_market_data.py` treats a
-  404 as "not covered" per series rather than an error, and the web UI
+- The OECD's `IRLT` (bond yield) series covers 46 countries; `IRSTCI`
+  (policy rate) and `SHARE` (stock index) cover 47, including some non-OECD
+  countries (e.g. Brazil, China, India). `fetch_market_data.py` treats a
+  country missing from a series as "not covered" rather than an error, and the web UI
   shows an explicit "no data" note per series instead of hiding the whole
   market-check section when only some series are available.

@@ -138,15 +138,11 @@ sources, not this repository:
 
 - **Market indicators** (10-year bond yield, short-term rate, share-price
   change; shown in the app's market check, bundled with the app and not part
-  of these files) — OECD Main Economic Indicators (series `IRLTLT01`,
-  `IRSTCI01`, `SPASTT01`), retrieved through [FRED](https://fred.stlouisfed.org/),
-  Federal Reserve Bank of St. Louis. OECD (2026), Main Economic Indicators,
-  https://fred.stlouisfed.org/ (retrieved 2026-07-30, when the data was last
-  built). The OECD's terms allow
-  reuse with credit; FRED labels these series "Copyrighted: Citation
-  Required". Whether FRED's own terms allow keeping a copy of what it serves
-  is not settled — see the [data refresh
-  plan](plans/2026-09-23-automated-data-refresh.md).
+  of these files) — OECD (2026), Financial market (`DF_FINMARK`: measures
+  `IRLT`, `IRSTCI`, `SHARE`), https://data-explorer.oecd.org/ (retrieved
+  2026-10-27), fetched from the OECD's own SDMX API. The OECD's terms allow
+  reuse with credit; the app shows that credit under the market check. Until
+  2026-10 these came through FRED, whose terms do not allow keeping a copy.
 
 The code, and the way the network is constructed from these sources, are
 MIT — see [LICENSE](../LICENSE). The data values in these files are not ours to

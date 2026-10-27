@@ -35,6 +35,10 @@ test("a shared scenario link restores the shock and fills the ranking", async ({
 
   await expect(page.getByRole("status")).toContainText("impact");
   await expect(page.getByRole("status")).toHaveAttribute("aria-live", "polite");
+  // the market check credits the OECD, with the retrieval date, and links to it
+  const credit = page.getByRole("link", { name: /^OECD \(\d{4}\), Financial market$/ });
+  await expect(credit).toHaveAttribute("href", "https://data-explorer.oecd.org/");
+  await expect(credit.locator("xpath=..")).toContainText(/retrieved \d{4}-\d{2}-\d{2}/);
   await expect(page.getByTestId("ranking-header")).toContainText("affected");
   await expect(page.getByTestId("ranked-results")).toContainText("Portugal");
 });
