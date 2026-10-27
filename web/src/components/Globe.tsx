@@ -109,9 +109,6 @@ interface GlobeProps {
   estimatedEquity?: boolean[];
   /** The desktop controls sidebar is covering the right of the canvas. */
   sidebarOpen?: boolean;
-  /** Size markers and draw arcs from the same network the model runs on,
-   * i.e. with the portfolio layer when its toggle is on. */
-  includePortfolio?: boolean;
 }
 
 const REDUCED_MOTION = "(prefers-reduced-motion: reduce)";
@@ -193,7 +190,6 @@ export function Globe({
   onSelect,
   estimatedEquity,
   sidebarOpen = false,
-  includePortfolio = false,
 }: GlobeProps) {
   const [dragging, setDragging] = useState(false);
   const borderGeometry = useBorderGeometry();
@@ -220,17 +216,17 @@ export function Globe({
 
   const markerScale = useMemo(() => {
     const totals = new Map<string, number>();
-    for (const e of topExposureEdges(yearData, 100000, { includePortfolio })) {
+    for (const e of topExposureEdges(yearData, 100000)) {
       totals.set(e.creditor, (totals.get(e.creditor) ?? 0) + e.amount);
       totals.set(e.debtor, (totals.get(e.debtor) ?? 0) + e.amount);
     }
     const max = Math.max(...totals.values(), 1);
     return (id: string) => 0.018 + 0.032 * Math.sqrt((totals.get(id) ?? 0) / max);
-  }, [yearData, includePortfolio]);
+  }, [yearData]);
 
   const arcs = useMemo(() => {
     const byId = new Map(countries.map((c) => [c.id, c]));
-    const edges = topExposureEdges(yearData, ARC_COUNT, { includePortfolio });
+    const edges = topExposureEdges(yearData, ARC_COUNT);
     const maxAmount = Math.max(...edges.map((e) => e.amount), 1);
     return edges
       .map((e) => {
@@ -255,7 +251,7 @@ export function Globe({
         return { start, end, control, color: viz().arcLow.clone().lerp(viz().arcHigh, t), opacity: 0.15 + 0.45 * t };
       })
       .filter((a): a is NonNullable<typeof a> => a !== null);
-  }, [yearData, includePortfolio]);
+  }, [yearData]);
 
   return (
     <>

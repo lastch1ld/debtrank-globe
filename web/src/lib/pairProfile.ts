@@ -5,9 +5,8 @@ export interface Direction {
   /** `from` holds a claim on `to`. */
   from: string;
   to: string;
-  bank: number;
-  portfolio: number;
-  total: number;
+  /** USD `from` holds on `to`. */
+  amount: number;
   /** The share of `from`'s loss buffer this claim uses in the model run on
    * `network`, capped at 1: the weight DebtRank gives this channel. */
   impactRatio: number;
@@ -21,24 +20,19 @@ export interface PairProfile {
 const sumEdges = (edges: YearSnapshot["edges"], from: string, to: string) =>
   edges.reduce((s, e) => (e.creditor === from && e.debtor === to ? s + e.amount : s), 0);
 
-/** Both directions of a pair for one year, each split by layer, with the
- * impact ratio taken from the network the model actually runs on (so it
- * follows the portfolio toggle, while the layer split always shows both).
- * Null if either country is not in the network. */
+/** Both directions of a pair for one year, with the impact ratio taken from
+ * the network the model actually runs on. Null if either country is not in
+ * the network. */
 export function buildPairProfile(yearData: YearSnapshot, network: ExposureNetwork, a: string, b: string): PairProfile | null {
   const ia = network.nodeIds.indexOf(a);
   const ib = network.nodeIds.indexOf(b);
   if (ia < 0 || ib < 0) return null;
 
   const direction = (from: string, to: string, i: number, j: number): Direction => {
-    const bank = sumEdges(yearData.edges, from, to);
-    const portfolio = sumEdges(yearData.portfolio_edges ?? [], from, to);
     return {
       from,
       to,
-      bank,
-      portfolio,
-      total: bank + portfolio,
+      amount: sumEdges(yearData.edges, from, to),
       impactRatio: Math.min(1, network.exposure[i][j] / network.equity[i]),
     };
   };

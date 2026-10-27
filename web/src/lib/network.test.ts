@@ -109,60 +109,51 @@ describe("buildExposureNetwork", () => {
       { id: "DEU", gdp_usd: 1e13, reserves_usd: 1e11, external_debt_usd: null, bank_capital_ratio_pct: null },
     ],
     edges: [{ creditor: "USA", debtor: "DEU", amount: 5e9 }],
-    portfolio_edges: [{ creditor: "USA", debtor: "DEU", amount: 7e9 }],
   };
 
-  it("excludes portfolio edges by default", () => {
+  it("builds the exposure matrix from the banking edges", () => {
     const net = buildExposureNetwork(yearData);
-    const i = net.nodeIds.indexOf("USA");
-    const j = net.nodeIds.indexOf("DEU");
-    expect(net.exposure[i][j]).toBe(5e9);
+    expect(net.exposure[net.nodeIds.indexOf("USA")][net.nodeIds.indexOf("DEU")]).toBe(5e9);
   });
 
-  it("adds portfolio edges into the exposure matrix when included", () => {
-    const net = buildExposureNetwork(yearData, { includePortfolio: true });
-    const i = net.nodeIds.indexOf("USA");
-    const j = net.nodeIds.indexOf("DEU");
-    expect(net.exposure[i][j]).toBe(5e9 + 7e9);
-  });
-
-  it("does not let portfolio edges change equity, regardless of the toggle", () => {
-    const withoutPortfolio = buildExposureNetwork(yearData);
-    const withPortfolio = buildExposureNetwork(yearData, { includePortfolio: true });
-    expect(withPortfolio.equity).toEqual(withoutPortfolio.equity);
+  it("ignores the withdrawn portfolio layer even if a snapshot still carries edges in it", () => {
+    const stale: YearSnapshot = { ...yearData, portfolio_edges: [{ creditor: "USA", debtor: "DEU", amount: 7e9 }] };
+    const net = buildExposureNetwork(stale);
+    expect(net.exposure[net.nodeIds.indexOf("USA")][net.nodeIds.indexOf("DEU")]).toBe(5e9);
+    expect(net.equity).toEqual(buildExposureNetwork(yearData).equity);
   });
 });
 
 describe("topExposureEdges", () => {
   const yearData: YearSnapshot = {
     nodes: [],
-    edges: [{ creditor: "USA", debtor: "DEU", amount: 5e9 }],
-    portfolio_edges: [
-      { creditor: "USA", debtor: "DEU", amount: 7e9 },
+    edges: [
+      { creditor: "USA", debtor: "DEU", amount: 5e9 },
       { creditor: "FRA", debtor: "DEU", amount: 9e9 },
     ],
+    portfolio_edges: [{ creditor: "USA", debtor: "DEU", amount: 7e9 }],
   };
 
-  it("draws only the banking layer by default", () => {
-    expect(topExposureEdges(yearData, 10)).toEqual([{ creditor: "USA", debtor: "DEU", amount: 5e9 }]);
-  });
-
-  it("sums the portfolio layer into a shared pair and adds portfolio-only pairs", () => {
-    expect(topExposureEdges(yearData, 10, { includePortfolio: true })).toEqual([
-      { creditor: "USA", debtor: "DEU", amount: 12e9 },
+  it("lists the largest banking exposures first, and ignores the withdrawn layer", () => {
+    expect(topExposureEdges(yearData, 10)).toEqual([
       { creditor: "FRA", debtor: "DEU", amount: 9e9 },
+      { creditor: "USA", debtor: "DEU", amount: 5e9 },
     ]);
   });
 
+  it("respects the limit", () => {
+    expect(topExposureEdges(yearData, 1)).toEqual([{ creditor: "FRA", debtor: "DEU", amount: 9e9 }]);
+  });
+
   it("matches the exposure matrix the model runs on", () => {
-    const net = buildExposureNetwork(yearData, { includePortfolio: true });
-    for (const e of topExposureEdges(yearData, 10, { includePortfolio: true })) {
+    const net = buildExposureNetwork(yearData);
+    for (const e of topExposureEdges(yearData, 10)) {
       expect(net.exposure[net.nodeIds.indexOf(e.creditor)][net.nodeIds.indexOf(e.debtor)]).toBe(e.amount);
     }
   });
 
   it("does not mutate the snapshot", () => {
-    topExposureEdges(yearData, 10, { includePortfolio: true });
+    topExposureEdges(yearData, 10);
     expect(yearData.edges[0].amount).toBe(5e9);
   });
 });

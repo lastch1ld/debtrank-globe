@@ -6,11 +6,6 @@ export interface Scenario {
   /** At least one entry; the first is the primary shock. */
   shocks: ShockSpec[];
   model: Model;
-  /** Whether the IMF CPIS portfolio layer was switched on. Part of the
-   * scenario because it changes which edges the models propagate through,
-   * so a link that drops it reproduces a different result than the one
-   * that was shared. */
-  includePortfolio: boolean;
 }
 
 const MAGNITUDE_MIN = 0.05;
@@ -76,11 +71,9 @@ export function parseScenarioFromUrl(): Scenario | null {
   const shocks = parseShocks(shockRaw, params.get("magnitude"));
   if (shocks.length === 0) return null;
 
-  // Optional, unlike the rest: links shared before this parameter existed
-  // are still valid and mean the toggle was off.
-  const includePortfolio = params.get("portfolio") === "1";
-
-  return { year, shocks, model: modelRaw, includePortfolio };
+  // Links made while the portfolio layer existed carry `portfolio=1`. It is
+  // ignored: they still open, on the bank layer, which is all there is now.
+  return { year, shocks, model: modelRaw };
 }
 
 /** `GRC:1.00,PRT:0.60@2` -- id, magnitude, and an optional arrival round.
@@ -122,7 +115,6 @@ export function writeScenarioToUrl(scenario: Scenario): void {
       .join(","),
   );
   params.set("model", scenario.model);
-  if (scenario.includePortfolio) params.set("portfolio", "1");
   // Carried through every rewrite: the flag is read at load, so dropping it
   // here would un-embed the page on the viewer's next refresh.
   if (isEmbedded()) params.set("embed", "1");
