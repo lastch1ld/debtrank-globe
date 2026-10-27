@@ -1,4 +1,8 @@
-"""Fetch bilateral cross-border portfolio investment (bond/equity) holdings
+"""NOT USED: the portfolio layer this feeds was withdrawn (the IMF's terms
+require permission to reuse the data). Kept, with its tests, in case that
+permission is obtained; build_snapshot.py no longer reads its output.
+
+Fetch bilateral cross-border portfolio investment (bond/equity) holdings
 from the IMF's Coordinated Portfolio Investment Survey (CPIS), via DBnomics'
 JSON mirror of the IMF SDMX data (https://db.nomics.world/IMF/CPIS) -- no
 auth or bulk download needed, unlike BIS's locational banking statistics.

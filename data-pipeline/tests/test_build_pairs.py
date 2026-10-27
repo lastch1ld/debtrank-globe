@@ -13,13 +13,18 @@ def _edge(c, d, amount):
     return {"creditor": c, "debtor": d, "amount": amount}
 
 
-def test_sums_layers_and_keeps_direction(tmp_path):
-    _write(tmp_path, 2020, [_edge("GRC", "DEU", 2e9), _edge("DEU", "GRC", 6e9)], [_edge("DEU", "GRC", 4e9)])
+def test_keeps_direction_and_sums_repeated_edges(tmp_path):
+    _write(tmp_path, 2020, [_edge("GRC", "DEU", 2e9), _edge("DEU", "GRC", 4e9), _edge("DEU", "GRC", 2e9)])
     _write(tmp_path, 2021, [_edge("DEU", "GRC", 1e9)])
     out = build_pairs(tmp_path, min_peak_usd=5e9)
     # sorted key "DEU|GRC": ab = DEU's claim on GRC, ba = GRC's claim on DEU
     assert out["first_year"] == 2020
-    assert out["pairs"]["DEU|GRC"] == {"ab": [10000, 1000], "ba": [2000, 0]}
+    assert out["pairs"]["DEU|GRC"] == {"ab": [6000, 1000], "ba": [2000, 0]}
+
+
+def test_the_withdrawn_portfolio_layer_is_ignored(tmp_path):
+    _write(tmp_path, 2020, [_edge("A", "B", 6e9)], [_edge("A", "B", 4e9), _edge("C", "D", 9e9)])
+    assert build_pairs(tmp_path)["pairs"] == {"A|B": {"ab": [6000], "ba": [0]}}
 
 
 def test_a_pair_is_judged_on_its_combined_peak(tmp_path):

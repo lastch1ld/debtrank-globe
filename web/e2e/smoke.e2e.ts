@@ -83,19 +83,44 @@ test("pair view shows both directions and a history, and closes", async ({ page 
   await openControls(page);
   const history = page.waitForResponse((r) => r.url().includes("/data/network/pairs.json"));
 
-  await page.getByTestId("ranked-results").getByText("Portugal", { exact: true }).click();
+  await page.getByTestId("ranked-results").getByText("Germany", { exact: true }).click();
   await page.getByTestId("ranked-results").getByRole("button", { name: "Pair view" }).click();
 
   const panel = page.getByTestId("pair-panel");
-  await expect(panel).toContainText("Portugal ↔ Greece");
-  await expect(panel).toContainText("Portugal on Greece");
-  await expect(panel).toContainText("Greece on Portugal");
+  await expect(panel).toContainText("Germany ↔ Greece");
+  await expect(panel).toContainText("Germany on Greece");
+  await expect(panel).toContainText("Greece on Germany");
   await expect(panel).toContainText("loss buffer");
   expect((await history).status()).toBe(200);
   await expect(panel.getByTestId("pair-sparkline")).toBeVisible();
 
   await panel.getByRole("button", { name: "Close pair view" }).click();
   await expect(panel).toHaveCount(0);
+});
+
+test("a pair too small for the history index says so instead of drawing nothing", async ({ page }) => {
+  await page.goto(`./${SCENARIO}`);
+  await openControls(page);
+
+  // Greece and Portugal never reach the index's $5B on banking claims alone
+  await page.getByTestId("ranked-results").getByText("Portugal", { exact: true }).click();
+  await page.getByTestId("ranked-results").getByRole("button", { name: "Pair view" }).click();
+
+  const panel = page.getByTestId("pair-panel");
+  await expect(panel).toContainText("Portugal ↔ Greece");
+  await expect(panel).toContainText("No history indexed");
+  await expect(panel.getByTestId("pair-sparkline")).toHaveCount(0);
+});
+
+test("a link made while the portfolio layer existed still opens, and the layer is gone from the UI", async ({ page }) => {
+  await page.goto("./?year=2010&shock=GRC:1.00,PRT:0.60@2&model=debtrank&portfolio=1");
+  await openControls(page);
+
+  await expect(page.getByRole("status")).toContainText("impact");
+  await expect(page.getByTestId("ranked-results")).toContainText("Portugal");
+  await expect(page.getByText("Include portfolio investment")).toHaveCount(0);
+  // the app rewrites the address bar for a live scenario, dropping the old parameter
+  await expect.poll(() => page.url()).not.toContain("portfolio");
 });
 
 test("the Stability tab opens from a link, charts every year, and tab changes go through the URL", async ({ page }) => {
@@ -202,7 +227,7 @@ test.describe("layout contracts", () => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto(`./${SCENARIO}`);
     await openControls(page);
-    await page.getByTestId("ranked-results").getByText("Portugal", { exact: true }).click();
+    await page.getByTestId("ranked-results").getByText("Germany", { exact: true }).click();
     await page.getByTestId("ranked-results").getByRole("button", { name: "Pair view" }).click();
 
     const panel = page.getByTestId("pair-panel");

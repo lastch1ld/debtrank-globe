@@ -92,19 +92,11 @@ export interface YearPoint {
 
 /** Runs the given shock against every year 2005-2025, pairing the model's
  * predicted impact with that year's real market data -- the basis for the
- * "view across years" correlation chart.
- *
- * `includePortfolio` has to be passed through from the live view: the chart
- * answers "the same shock, in every year", so building these networks on
- * different channels than the globe's would put two numbers for the same
- * year/country/magnitude on screen at once. Years with no CPIS coverage
- * (2024-25) fall back to bank-only edges on their own, which is what the
- * live view's disabled toggle shows for those years too. */
+ * "view across years" correlation chart. */
 export async function runAnalysisAcrossYears(
   shocks: ShockSpec[],
   mdl: Model,
   onProgress?: (year: number) => void,
-  includePortfolio = false,
 ): Promise<YearPoint[]> {
   // Market data is per-country, so the chart pairs the model's impact with
   // the primary shock's series -- the same country the market panel shows.
@@ -113,7 +105,7 @@ export async function runAnalysisAcrossYears(
   for (const year of YEARS) {
     onProgress?.(year);
     const yearData = await loadYearData(year);
-    const network = buildExposureNetwork(yearData, { includePortfolio });
+    const network = buildExposureNetwork(yearData);
     const baseline = computeBaselineShortfall(network);
     const result = computeShockResult(network, shocks, mdl, baseline);
     points.push({

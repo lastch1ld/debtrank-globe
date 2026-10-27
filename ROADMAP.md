@@ -20,7 +20,9 @@ shipped; unchecked items haven't been started yet.
 
 ## Model realism
 
-- [x] **Second data layer: portfolio holdings (IMF CPIS)** — BIS only covers
+- [x] **Second data layer: portfolio holdings (IMF CPIS)** — *withdrawn
+      2026-10-27: the IMF's terms require permission to reuse its data, which
+      has not been obtained. The text below describes what was shipped.* BIS only covers
       bank-to-bank loans. IMF's Coordinated Portfolio Investment Survey
       covers cross-border bond/equity holdings, which is how sovereign debt
       contagion actually spread in cases like Greece 2010. Shipped as a
@@ -60,7 +62,7 @@ shipped; unchecked items haven't been started yet.
       moved. The deferred question — what a partial, World-Bank-only refresh
       should do — resolves to one rule: it may change the numbers on the
       graph, never the graph's shape. The node roster and both edge lists
-      come from BIS/CPIS data the job cannot re-fetch and are referenced by
+      come from BIS data the job cannot re-fetch and are referenced by
       id, so only the four indicator fields on existing nodes are rewritten.
       `tests/test_refresh_worldbank.py` pins that from both directions.
 

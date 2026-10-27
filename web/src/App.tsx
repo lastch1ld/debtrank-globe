@@ -107,8 +107,6 @@ function CountryPanel({
     </div>
   );
   const usd = (v: number | null) => (v === null ? null : formatUsd(v));
-  const split = (a: { bank: number; portfolio: number }) =>
-    `bank ${formatUsd(a.bank)} · portfolio ${formatUsd(a.portfolio)}`;
   const list = (title: string, rows: Counterparty[], count: number) => (
     <div className="flex flex-col gap-1.5">
       <span className={sectionLabel}>
@@ -123,10 +121,9 @@ function CountryPanel({
               <span className="flex items-baseline justify-between gap-3">
                 <span className="truncate text-fg">{nameOf(c.id)}</span>
                 <span className="font-mono text-fg-muted tabular-nums">
-                  {formatUsd(c.total)} &middot; {(c.share * 100).toFixed(0)}%
+                  {formatUsd(c.amount)} &middot; {(c.share * 100).toFixed(0)}%
                 </span>
               </span>
-              <span className="font-mono text-[10px] text-fg-subtle">{split(c)}</span>
             </li>
           ))}
         </ol>
@@ -155,8 +152,8 @@ function CountryPanel({
       </dl>
       <p className={note}>{sourceLabel}</p>
       <dl className="m-0 flex flex-col gap-1 text-xs">
-        {row("Claims it holds", formatUsd(profile.claims.total))}
-        {row("Claims held on it", formatUsd(profile.liabilities.total))}
+        {row("Claims it holds", formatUsd(profile.claims))}
+        {row("Claims held on it", formatUsd(profile.liabilities))}
         {row("Counterparties", String(profile.counterpartyCount))}
       </dl>
       {list("Creditors: hold claims on it", profile.creditors, profile.creditorCount)}
@@ -188,13 +185,10 @@ function PairPanel({
         <span className="text-fg-muted">
           {nameOf(d.from)} on {nameOf(d.to)}
         </span>
-        <span className="font-mono text-fg">{formatUsd(d.total)}</span>
+        <span className="font-mono text-fg">{formatUsd(d.amount)}</span>
       </span>
       <span className="font-mono text-[10px] text-fg-subtle">
-        bank {formatUsd(d.bank)} &middot; portfolio {formatUsd(d.portfolio)}
-      </span>
-      <span className="font-mono text-[10px] text-fg-subtle">
-        {d.total > 0 ? `${(d.impactRatio * 100).toFixed(1)}% of ${nameOf(d.from)}\u2019s loss buffer` : "no claim"}
+        {d.amount > 0 ? `${(d.impactRatio * 100).toFixed(1)}% of ${nameOf(d.from)}\u2019s loss buffer` : "no claim"}
       </span>
     </div>
   );
@@ -216,8 +210,7 @@ function PairPanel({
       {direction(profile.ab)}
       {direction(profile.ba)}
       <p className={note}>
-        The impact ratio is what the current model run uses, so it follows the portfolio toggle; the
-        amounts always show both layers.
+        The impact ratio is the share of the claimant&rsquo;s loss buffer that this claim uses in the model.
       </p>
       {series ? (
         <PairSparkline series={series} year={year} nameA={nameOf(a)} nameB={nameOf(b)} />
@@ -265,7 +258,6 @@ function App() {
   // `cancelled` flag.
   const analysisRunRef = useRef(0);
   const [hideFinancialCenters, setHideFinancialCenters] = useState(false);
-  const [includePortfolio, setIncludePortfolio] = useState(initialScenario?.includePortfolio ?? false);
   const [expandedRowId, setExpandedRowId] = useState<string | null>(null);
   const [detailId, setDetailId] = useState<string | null>(null);
   const [view, setView] = useState<View>(parseViewFromUrl);
@@ -311,11 +303,9 @@ function App() {
     if (detailId || pair) detailRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
   }, [detailId, pair]);
 
-  const portfolioDataAvailable = (yearData?.portfolio_edges?.length ?? 0) > 0;
-
   const network = useMemo<ExposureNetwork | null>(
-    () => (yearData ? buildExposureNetwork(yearData, { includePortfolio }) : null),
-    [yearData, includePortfolio],
+    () => (yearData ? buildExposureNetwork(yearData) : null),
+    [yearData],
   );
 
   const pairProfile = useMemo(
@@ -466,7 +456,6 @@ function App() {
       shockList(shockedId, magnitude),
       model,
       setAnalysisProgress,
-      includePortfolio,
     );
     // Superseded while those 21 rounds were in flight -- whoever bumped the
     // token has already reset the panel; committing here would paint a
@@ -493,9 +482,9 @@ function App() {
   // Mirror the live scenario into the URL so it's always a copyable link;
   // cleared (not written) once there's no active shock to describe.
   useEffect(() => {
-    if (shockedId) writeScenarioToUrl({ year, shocks: shockList(shockedId, magnitude), model, includePortfolio });
+    if (shockedId) writeScenarioToUrl({ year, shocks: shockList(shockedId, magnitude), model });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [year, shockedId, magnitude, model, includePortfolio, extraShocks]);
+  }, [year, shockedId, magnitude, model, extraShocks]);
 
   const distress = !result
     ? new Array(countries.length).fill(0)
@@ -536,7 +525,6 @@ function App() {
               onSelect={triggerShock}
               estimatedEquity={estimatedEquity}
               sidebarOpen={panelOpen && !embedded}
-              includePortfolio={includePortfolio}
             />
           </Canvas>
         )}
@@ -557,7 +545,7 @@ function App() {
                 </div>
               }
             >
-              <StabilityView year={year} includePortfolio={includePortfolio} onIncludePortfolioChange={setIncludePortfolio} />
+              <StabilityView year={year} />
             </Suspense>
           )}
         </TabPanel>
@@ -576,7 +564,6 @@ function App() {
                 </strong>
                 {` shocked ${Math.round(magnitude * 100)}% · ${displayYear} · `}
                 {model === "debtrank" ? "DebtRank" : "Eisenberg-Noe"}
-                {includePortfolio ? " · incl. portfolio" : ""}
               </>
             ) : (
               <>Cross-border debt exposure network · {displayYear}</>
@@ -680,26 +667,6 @@ function App() {
             />
           </label>
 
-          <label
-            className={`flex items-center gap-2 text-xs text-fg-muted ${
-              portfolioDataAvailable ? "cursor-pointer" : "cursor-default opacity-40"
-            }`}
-          >
-            <input
-              type="checkbox"
-              className={checkbox}
-              checked={includePortfolio}
-              disabled={!portfolioDataAvailable}
-              onChange={(e) => setIncludePortfolio(e.target.checked)}
-            />
-            Include portfolio investment
-            {!portfolioDataAvailable && <span className="font-mono text-fg-subtle">(no data for {displayYear})</span>}
-          </label>
-          <p className={`-mt-1 ${note}`}>
-            Adds IMF CPIS cross-border bond/equity holdings as a second exposure
-            layer alongside BIS bank-to-bank loans -- CPIS coverage currently
-            ends around 2023.
-          </p>
         </Panel>
 
         <Panel title="Scenario">

@@ -93,15 +93,14 @@ python probe_sources.py --update-lock     # record upstream's current versions
 python probe_sources.py --check-registry  # validate sources.json, no network
 ```
 
-The lock has an entry for the CPIS mirror only. There is none for BIS on
-purpose: the version the committed data came from is unknown, so the probe
-reports it as changed until a refresh records one.
+The lock has no entry for BIS on purpose: the version the committed data came
+from is unknown, so the probe reports it as changed until a refresh records one.
 
 ## Pair history index
 
 `python build_pairs.py` derives `web/public/data/network/pairs.json` (~180 kB)
-from the published year files, for the app's pair view. It needs no BIS or
-CPIS download. Re-run it after any regeneration or World Bank refresh;
+from the published year files, for the app's pair view. It needs no BIS
+download. Re-run it after any regeneration or World Bank refresh;
 `python build_pairs.py --check` (and `tests/test_published_data.py`) fail if
 it is stale. Format: [`docs/data-api.md`](../docs/data-api.md).
 
@@ -121,7 +120,7 @@ python refresh_worldbank.py           # rewrite web/public/data/network/{year}.j
 The rule it holds: **a partial refresh may change the numbers on the graph,
 never the graph's shape.** It rewrites the four indicator fields on the nodes
 already published and touches nothing else — not the node roster, not
-`edges`, not `portfolio_edges`, all of which come from BIS/CPIS data this job
+`edges`, not `portfolio_edges` (now always empty), all of which this job
 cannot see and which refer to nodes by id. `tests/test_refresh_worldbank.py`
 pins that invariant from both directions.
 

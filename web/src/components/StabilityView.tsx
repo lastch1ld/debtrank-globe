@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { YEARS } from "../lib/network";
 import { computeStability, type StabilityPoint } from "../lib/stability";
-import { Panel, checkbox, focus, note, sectionLabel } from "../ui";
+import { Panel, focus, note, sectionLabel } from "../ui";
 
 const W = 480;
 const H = 240;
@@ -10,49 +10,29 @@ const M = { left: 40, right: 12, top: 12, bottom: 28 };
 interface Props {
   /** The year picked on the Contagion view, marked on the chart. */
   year: number;
-  includePortfolio: boolean;
-  onIncludePortfolioChange: (on: boolean) => void;
 }
 
-export default function StabilityView({
-  year,
-  includePortfolio,
-  onIncludePortfolioChange,
-}: Props) {
-  // Progress and result belong to one toggle setting; a different setting
-  // starts from nothing, derived here rather than reset inside the effect.
+export default function StabilityView({ year }: Props) {
   const [run, setRun] = useState<{
-    for: boolean;
     done: number;
     points?: StabilityPoint[];
     failed?: boolean;
-  } | null>(null);
-  const current = run?.for === includePortfolio ? run : null;
-  const points = current?.points ?? null;
-  const done = current?.done ?? 0;
-  const failed = current?.failed ?? false;
+  }>({ done: 0 });
+  const { done, failed = false } = run;
+  const points = run.points ?? null;
 
   useEffect(() => {
     let cancelled = false;
     computeStability(
-      includePortfolio,
-      (n) => !cancelled && setRun({ for: includePortfolio, done: n }),
+      (n) => !cancelled && setRun({ done: n }),
       () => cancelled,
     )
-      .then(
-        (p) =>
-          !cancelled &&
-          setRun({ for: includePortfolio, done: p.length, points: p }),
-      )
-      .catch(
-        () =>
-          !cancelled &&
-          setRun({ for: includePortfolio, done: 0, failed: true }),
-      );
+      .then((p) => !cancelled && setRun({ done: p.length, points: p }))
+      .catch(() => !cancelled && setRun({ done: 0, failed: true }));
     return () => {
       cancelled = true;
     };
-  }, [includePortfolio]);
+  }, []);
 
   return (
     <div className="absolute inset-0 overflow-y-auto px-4 pb-10 pt-24 sm:px-8 sm:pt-28">
@@ -70,17 +50,6 @@ export default function StabilityView({
             above it.
           </p>
         </header>
-
-        <label className="flex cursor-pointer items-center gap-2 text-xs text-fg-muted">
-          <input
-            type="checkbox"
-            className={checkbox}
-            checked={includePortfolio}
-            onChange={(e) => onIncludePortfolioChange(e.target.checked)}
-          />
-          Include portfolio investment
-          <span className="font-mono text-fg-subtle">(no data after 2023)</span>
-        </label>
 
         <Panel title="Spectral radius by year">
           {failed ? (

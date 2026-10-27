@@ -61,7 +61,7 @@ def plan_issues(report: dict | None, exit_code: int) -> list[Issue]:
                 Issue(
                     "data-stale",
                     f"Source stale: {r['name']}",
-                    f"Its own as-of date is {r['as_of']}, {r['age_days']} days ago; the registry expects it to update within {r['stale_after_days']} days.\n\nThe source may have moved or stopped (see `docs/plans/2026-09-23-automated-data-refresh.md`, finding 2, for the CPIS mirror). Check upstream, then either point `data-pipeline/{r['fetch']}` at the new location or raise `stale_after_days` in `data-pipeline/sources.json`.",
+                    f"Its own as-of date is {r['as_of']}, {r['age_days']} days ago; the registry expects it to update within {r['stale_after_days']} days.\n\nThe source may have moved or stopped (see `docs/plans/2026-09-23-automated-data-refresh.md`, finding 2, for how a stale mirror looked). Check upstream, then either point `data-pipeline/{r['fetch']}` at the new location or raise `stale_after_days` in `data-pipeline/sources.json`.",
                 )
             )
     for e in report["errors"]:

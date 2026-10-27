@@ -23,10 +23,6 @@ const snapshot: YearSnapshot = {
     { creditor: "FRA", debtor: "GRC", amount: 10e9 },
     { creditor: "GRC", debtor: "USA", amount: 2e9 },
   ],
-  portfolio_edges: [
-    { creditor: "DEU", debtor: "GRC", amount: 10e9 },
-    { creditor: "USA", debtor: "GRC", amount: 50e9 },
-  ],
 };
 
 describe("buildCountryProfile", () => {
@@ -49,23 +45,22 @@ describe("buildCountryProfile", () => {
     expect(p.equitySource).toBe("reserves");
   });
 
-  it("totals what others hold on the country, split by layer", () => {
-    expect(p.liabilities).toEqual({ bank: 40e9, portfolio: 60e9, total: 100e9 });
-    expect(p.claims).toEqual({ bank: 2e9, portfolio: 0, total: 2e9 });
+  it("totals what others hold on the country, and what it holds on others", () => {
+    expect(p.liabilities).toBe(40e9);
+    expect(p.claims).toBe(2e9);
   });
 
-  it("ranks creditors by combined amount, with layer split and share", () => {
-    expect(p.creditors.map((c) => c.id)).toEqual(["USA", "DEU", "FRA"]);
-    expect(p.creditors[1]).toMatchObject({ id: "DEU", bank: 30e9, portfolio: 10e9, total: 40e9 });
-    expect(p.creditors[1].share).toBeCloseTo(0.4);
+  it("ranks creditors by amount, with each one's share", () => {
+    expect(p.creditors.map((c) => c.id)).toEqual(["DEU", "FRA"]);
+    expect(p.creditors[0]).toEqual({ id: "DEU", amount: 30e9, share: 0.75 });
     expect(p.creditors.reduce((s, c) => s + c.share, 0)).toBeCloseTo(1);
   });
 
   it("lists the countries it holds claims on, and counts counterparties", () => {
-    expect(p.debtors).toEqual([{ id: "USA", bank: 2e9, portfolio: 0, total: 2e9, share: 1 }]);
-    expect(p.creditorCount).toBe(3);
+    expect(p.debtors).toEqual([{ id: "USA", amount: 2e9, share: 1 }]);
+    expect(p.creditorCount).toBe(2);
     expect(p.debtorCount).toBe(1);
-    expect(p.counterpartyCount).toBe(3); // USA is on both sides
+    expect(p.counterpartyCount).toBe(3);
   });
 
   it("keeps only the five largest", () => {
@@ -85,8 +80,11 @@ describe("buildCountryProfile", () => {
     expect(buildCountryProfile(snapshot, "XXX")).toBeNull();
   });
 
-  it("copes with a snapshot without a portfolio layer", () => {
-    const bankOnly = buildCountryProfile({ nodes: snapshot.nodes, edges: snapshot.edges }, "GRC")!;
-    expect(bankOnly.liabilities).toEqual({ bank: 40e9, portfolio: 0, total: 40e9 });
+  it("ignores the withdrawn portfolio layer even if a snapshot still carries edges in it", () => {
+    const stale: YearSnapshot = {
+      ...snapshot,
+      portfolio_edges: [{ creditor: "USA", debtor: "GRC", amount: 50e9 }],
+    };
+    expect(buildCountryProfile(stale, "GRC")).toEqual(p);
   });
 });

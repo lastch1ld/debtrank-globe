@@ -29,27 +29,21 @@ const base: Scenario = {
   year: 2020,
   shocks: [{ id, magnitude: 0.5, delay: 0 }],
   model: "debtrank",
-  includePortfolio: false,
 };
 
 describe("scenario round-trip", () => {
-  it("carries the portfolio layer through a link", () => {
-    const replaceState = stubWindow("");
-    writeScenarioToUrl({ ...base, includePortfolio: true });
-    const written = String(replaceState.mock.calls[0][2]);
-    expect(written).toContain("portfolio=1");
-
-    stubWindow(written.slice(written.indexOf("?")));
-    expect(parseScenarioFromUrl()).toEqual({ ...base, includePortfolio: true });
-  });
-
-  it("leaves the parameter out when the layer is off", () => {
+  it("writes no portfolio parameter any more", () => {
     const replaceState = stubWindow("");
     writeScenarioToUrl(base);
     expect(String(replaceState.mock.calls[0][2])).not.toContain("portfolio");
   });
 
-  it("still reads links shared before the parameter existed", () => {
+  it("still opens links made while the portfolio layer existed, ignoring the parameter", () => {
+    stubWindow(`?year=2020&shock=${id}:0.50&model=debtrank&portfolio=1`);
+    expect(parseScenarioFromUrl()).toEqual(base);
+  });
+
+  it("still reads the oldest links, with the magnitude in its own parameter", () => {
     stubWindow(`?year=2020&shock=${id}&magnitude=0.50&model=debtrank`);
     expect(parseScenarioFromUrl()).toEqual(base);
   });

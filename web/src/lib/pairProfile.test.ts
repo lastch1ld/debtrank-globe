@@ -16,23 +16,27 @@ const snapshot: YearSnapshot = {
     { creditor: "DEU", debtor: "GRC", amount: 30e9 },
     { creditor: "GRC", debtor: "DEU", amount: 2e9 },
   ],
-  portfolio_edges: [{ creditor: "DEU", debtor: "GRC", amount: 20e9 }],
 };
 
 describe("buildPairProfile", () => {
-  it("splits each direction by layer, whatever the toggle", () => {
+  it("gives each direction's amount", () => {
     const net = buildExposureNetwork(snapshot);
     const p = buildPairProfile(snapshot, net, "GRC", "DEU")!;
-    expect(p.ba).toMatchObject({ from: "DEU", to: "GRC", bank: 30e9, portfolio: 20e9, total: 50e9 });
-    expect(p.ab).toMatchObject({ from: "GRC", to: "DEU", bank: 2e9, portfolio: 0, total: 2e9 });
+    expect(p.ba).toMatchObject({ from: "DEU", to: "GRC", amount: 30e9 });
+    expect(p.ab).toMatchObject({ from: "GRC", to: "DEU", amount: 2e9 });
   });
 
   it("takes the impact ratio from the network the model runs on", () => {
-    const bankOnly = buildPairProfile(snapshot, buildExposureNetwork(snapshot), "GRC", "DEU")!;
-    const both = buildPairProfile(snapshot, buildExposureNetwork(snapshot, { includePortfolio: true }), "GRC", "DEU")!;
-    expect(bankOnly.ba.impactRatio).toBeCloseTo(0.3); // 30B of DEU's 100B buffer
-    expect(both.ba.impactRatio).toBeCloseTo(0.5);
-    expect(bankOnly.ab.impactRatio).toBe(0.2); // 2B of GRC's 10B
+    const p = buildPairProfile(snapshot, buildExposureNetwork(snapshot), "GRC", "DEU")!;
+    expect(p.ba.impactRatio).toBeCloseTo(0.3); // 30B of DEU's 100B buffer
+    expect(p.ab.impactRatio).toBe(0.2); // 2B of GRC's 10B
+  });
+
+  it("ignores the withdrawn portfolio layer even if a snapshot still carries edges in it", () => {
+    const stale: YearSnapshot = { ...snapshot, portfolio_edges: [{ creditor: "DEU", debtor: "GRC", amount: 20e9 }] };
+    expect(buildPairProfile(stale, buildExposureNetwork(stale), "GRC", "DEU")).toEqual(
+      buildPairProfile(snapshot, buildExposureNetwork(snapshot), "GRC", "DEU"),
+    );
   });
 
   it("caps the ratio at 1 and is null for a country outside the network", () => {

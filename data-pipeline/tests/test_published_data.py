@@ -43,6 +43,15 @@ class TestYearFile:
             assert all(c != d for c, d in pairs), f"self edge in {layer}"
 
 
+@pytest.mark.parametrize("path", YEAR_FILES, ids=lambda p: p.stem)
+def test_the_withdrawn_portfolio_layer_stays_empty(path):
+    # The IMF CPIS layer was withdrawn (the IMF's terms require permission to
+    # reuse its data). The key stays for schema stability; filling it again
+    # is a licensing decision, not a regeneration side effect.
+    data = _load(path)
+    assert "portfolio_edges" in data and data["portfolio_edges"] == []
+
+
 def test_node_ids_are_the_same_in_every_year():
     ids_by_year = {p.stem: {n["id"] for n in _load(p)["nodes"]} for p in YEAR_FILES}
     reference = next(iter(ids_by_year.values()))

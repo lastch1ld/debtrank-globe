@@ -24,6 +24,8 @@
 
 ---
 
+> **Update 2026-10-27:** the IMF CPIS portfolio layer was withdrawn (the IMF's terms require permission to reuse its data, not obtained). Wherever this plan says "portfolio layer", "portfolio toggle" or "`includePortfolio`", that layer no longer exists; Phase 1's new liability layer would be the app's only extra layer and gets its own toggle on its own terms. Phase 2's globe-follows-the-toggle fix and Phase 3/4's banking/portfolio split shipped before the withdrawal and were simplified with it.
+
 ## Phase 0: Sanity check (do this first)
 
 This plan was written in one session, in quick iterations. Before building any of it, check that it still holds up as a whole.
@@ -80,7 +82,7 @@ This is what makes the tool about *sovereign* debt rather than cross-border bank
 
 - [ ] **BIS counterparty-sector split:** also fetch `L_CP_SECTOR=G` (general government). Store it as an additive `amount_gov` on edges, or as a separate list. Confirm first that coverage in the public LBS file is good enough. Many reporter/counterparty pairs don't publish the sector breakdown, so measure how much would be null before designing the UI around it.
 - [ ] Add a model option "claims on government only" so the shock follows the sovereign channel and not total banking claims.
-- [ ] **CPIS debt-only:** switch to (or add) the debt-securities indicator instead of `I_A_T_T_T_BP6_USD` (total). *Indicator code now verified, on the IMF's own API rather than DBnomics: `P_F3_P_USD` (debt securities, positions, USD) in `IMF.STA:PIP`; see the refresh plan's "CPIS upstream" section, which also covers the licence caveat.* Keep the total as a separate field if equity holdings should still be shown.
+- [ ] *Superseded 2026-10-27: the CPIS portfolio layer was withdrawn (the IMF's terms require permission to reuse its data), so there is nothing to switch. Revisit only if that permission is obtained.* **CPIS debt-only:** switch to (or add) the debt-securities indicator instead of `I_A_T_T_T_BP6_USD` (total). *Indicator code now verified, on the IMF's own API rather than DBnomics: `P_F3_P_USD` (debt securities, positions, USD) in `IMF.STA:PIP`; see the refresh plan's "CPIS upstream" section, which also covers the licence caveat.* Keep the total as a separate field if equity holdings should still be shown.
 - [ ] Show the sector and instrument split in the Phase 3 and Phase 4 panels ("of which: claims on the government").
 
 ## Phase 6: Loss vs. buffer mismatch (decision needed)

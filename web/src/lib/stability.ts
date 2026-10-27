@@ -45,18 +45,16 @@ export interface StabilityPoint {
   radius: number;
 }
 
-const cache = new Map<boolean, StabilityPoint[]>();
+let cache: StabilityPoint[] | null = null;
 
 /** The spectral radius of the impact matrix for every year. Loads each year's
  * file the way "View across years" does (and shares its cache), one at a
  * time, and keeps the finished series so reopening the tab is instant. */
 export async function computeStability(
-  includePortfolio: boolean,
   onProgress?: (done: number) => void,
   cancelled?: () => boolean,
 ): Promise<StabilityPoint[]> {
-  const hit = cache.get(includePortfolio);
-  if (hit) return hit;
+  if (cache) return cache;
 
   const points: StabilityPoint[] = [];
   for (const year of YEARS) {
@@ -64,12 +62,10 @@ export async function computeStability(
     const data = await loadYearData(year);
     points.push({
       year,
-      radius: spectralRadius(
-        impactMatrix(buildExposureNetwork(data, { includePortfolio })),
-      ),
+      radius: spectralRadius(impactMatrix(buildExposureNetwork(data))),
     });
     onProgress?.(points.length);
   }
-  cache.set(includePortfolio, points);
+  cache = points;
   return points;
 }

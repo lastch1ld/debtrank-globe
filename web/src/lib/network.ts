@@ -40,11 +40,10 @@ interface YearNode {
 export interface YearSnapshot {
   nodes: YearNode[];
   edges: ExposureEdge[];
-  /** Cross-border bond/equity holdings from the IMF's Coordinated Portfolio
-   * Investment Survey (CPIS) -- a second, largely distinct contagion
-   * channel from `edges` (BIS bank-to-bank loans). Optional: only present
-   * for years/builds where data-pipeline/fetch_cpis.py has been run, and
-   * currently has no 2024/2025 coverage (CPIS reporting lags to ~2023). */
+  /** Always empty. The IMF CPIS portfolio layer that used to live here was
+   * withdrawn because the IMF's terms require permission for reuse; the key
+   * stays so the published schema is unchanged (docs/data-api.md). Nothing
+   * in the app reads it. */
   portfolio_edges?: ExposureEdge[];
 }
 
@@ -111,10 +110,7 @@ function equityFor(n: YearNode | undefined, grossFootprint: number): { value: nu
   return { value: winner[0], source: winner[1] };
 }
 
-export function buildExposureNetwork(
-  yearData: YearSnapshot,
-  options?: { includePortfolio?: boolean },
-): ExposureNetwork {
+export function buildExposureNetwork(yearData: YearSnapshot): ExposureNetwork {
   const nodeIds = countries.map((c) => c.id);
   const index = new Map(nodeIds.map((id, i) => [id, i]));
   const byId = new Map(yearData.nodes.map((n) => [n.id, n]));
@@ -129,20 +125,6 @@ export function buildExposureNetwork(
     exposure[i][j] += e.amount;
     grossFootprint[i] += e.amount;
     grossFootprint[j] += e.amount;
-  }
-
-  // Portfolio (bond/equity) exposure is added into the same matrix DebtRank
-  // and Eisenberg-Noe already operate on -- a portfolio-toggled shock
-  // propagates through this channel exactly like a banking one -- but
-  // deliberately left out of grossFootprint/equity, so a node's loss-buffer
-  // estimate doesn't shift depending on whether the toggle happens to be on.
-  if (options?.includePortfolio) {
-    for (const e of yearData.portfolio_edges ?? []) {
-      const i = index.get(e.creditor);
-      const j = index.get(e.debtor);
-      if (i === undefined || j === undefined) continue;
-      exposure[i][j] += e.amount;
-    }
   }
 
   const resolved = nodeIds.map((id, i) => equityFor(byId.get(id), grossFootprint[i]));
@@ -240,27 +222,9 @@ export function totalExposure(yearData: YearSnapshot, countryId: string): number
 
 const countryIds = new Set(countries.map((c) => c.id));
 
-/** The N largest bilateral exposures, for rendering as arcs on the globe.
- * With `includePortfolio`, the portfolio layer is summed into the same
- * pair, exactly as buildExposureNetwork does, so what the globe draws is
- * what the model runs on. */
-export function topExposureEdges(
-  yearData: YearSnapshot,
-  limit: number,
-  options?: { includePortfolio?: boolean },
-): ExposureEdge[] {
-  let edges = yearData.edges;
-  if (options?.includePortfolio && yearData.portfolio_edges?.length) {
-    const byPair = new Map<string, ExposureEdge>();
-    for (const e of [...yearData.edges, ...yearData.portfolio_edges]) {
-      const key = `${e.creditor}|${e.debtor}`;
-      const sum = byPair.get(key);
-      if (sum) sum.amount += e.amount;
-      else byPair.set(key, { creditor: e.creditor, debtor: e.debtor, amount: e.amount });
-    }
-    edges = [...byPair.values()];
-  }
-  return edges
+/** The N largest bilateral exposures, for rendering as arcs on the globe. */
+export function topExposureEdges(yearData: YearSnapshot, limit: number): ExposureEdge[] {
+  return yearData.edges
     .filter((e) => countryIds.has(e.creditor) && countryIds.has(e.debtor))
     .slice()
     .sort((a, b) => b.amount - a.amount)
