@@ -999,6 +999,16 @@ function App() {
             )}
           </div>
         )}
+        <p className={`${note} shrink-0`}>
+          <a
+            className={`${focus} underline decoration-slate-600 underline-offset-2 hover:text-accent`}
+            href={`${import.meta.env.BASE_URL}THIRD-PARTY-NOTICES.txt`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Third-party licences
+          </a>
+        </p>
         </div>
 
         {result && rankedAll.length > 0 && (

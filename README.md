@@ -77,4 +77,6 @@ are not MIT: World Bank (CC BY 4.0), BIS, IMF, OECD via FRED, and Natural Earth
 in [`data-pipeline/sources.json`](data-pipeline/sources.json) and
 [`docs/data-api.md`](docs/data-api.md#sources-and-attribution). In particular,
 the IMF requires permission for commercial reuse of its data. Third-party code
-used by the application is under its own licences, mostly MIT.
+used by the application is under its own licences, mostly MIT; the deployed app
+serves their notices at `THIRD-PARTY-NOTICES.txt`, generated at build time and
+linked from the controls panel.

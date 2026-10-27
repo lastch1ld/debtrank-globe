@@ -133,6 +133,21 @@ test("the tab bar follows the arrow keys, Home and End", async ({ page }) => {
   await expect(stability).toHaveAttribute("tabindex", "-1");
 });
 
+test("the third-party licence notices are served and linked from the app", async ({ page }) => {
+  await page.goto("./");
+  await openControls(page);
+  const link = page.getByRole("link", { name: "Third-party licences" });
+  const href = await link.getAttribute("href");
+  expect(href).toMatch(/\/THIRD-PARTY-NOTICES\.txt$/);
+
+  const res = await page.request.get(href!);
+  expect(res.status()).toBe(200);
+  const text = await res.text();
+  // the packages the bundle is built from, each with its licence text
+  for (const name of ["react ", "three ", "@react-three/fiber "]) expect(text).toContain(name);
+  expect(text).toContain("Permission is hereby granted");
+});
+
 test.describe("layout contracts", () => {
   test("ranking scrolls on its own, below a fixed header and fixed controls", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
